@@ -1,0 +1,25 @@
+[16-Oct-2019 14:26:37 America/Chicago] PHP Fatal error:  Uncaught exception 'PHPExcel_Calculation_Exception' with message 'Caja CCF !G14 -> Formula Error: Unexpected ,' in /home4/byvnilval/desarrollo.formalsi.com/formalsidev/dev/excel_novedades/PHPExcel/Classes/PHPExcel/Cell.php:291
+Stack trace:
+#0 /home4/byvnilval/desarrollo.formalsi.com/formalsidev/dev/excel_novedades/leer.php(65): PHPExcel_Cell->getCalculatedValue()
+#1 {main}
+  thrown in /home4/byvnilval/desarrollo.formalsi.com/formalsidev/dev/excel_novedades/PHPExcel/Classes/PHPExcel/Cell.php on line 291
+[16-Oct-2019 14:28:28 America/Chicago] PHP Fatal error:  Uncaught exception 'PHPExcel_Calculation_Exception' with message 'Caja CCF !G14 -> Formula Error: Unexpected ,' in /home4/byvnilval/desarrollo.formalsi.com/formalsidev/dev/excel_novedades/PHPExcel/Classes/PHPExcel/Cell.php:291
+Stack trace:
+#0 /home4/byvnilval/desarrollo.formalsi.com/formalsidev/dev/excel_novedades/leer.php(65): PHPExcel_Cell->getCalculatedValue()
+#1 {main}
+  thrown in /home4/byvnilval/desarrollo.formalsi.com/formalsidev/dev/excel_novedades/PHPExcel/Classes/PHPExcel/Cell.php on line 291
+[16-Oct-2019 14:28:31 America/Chicago] PHP Fatal error:  Uncaught exception 'PHPExcel_Calculation_Exception' with message 'Caja CCF !G14 -> Formula Error: Unexpected ,' in /home4/byvnilval/desarrollo.formalsi.com/formalsidev/dev/excel_novedades/PHPExcel/Classes/PHPExcel/Cell.php:291
+Stack trace:
+#0 /home4/byvnilval/desarrollo.formalsi.com/formalsidev/dev/excel_novedades/leer.php(65): PHPExcel_Cell->getCalculatedValue()
+#1 {main}
+  thrown in /home4/byvnilval/desarrollo.formalsi.com/formalsidev/dev/excel_novedades/PHPExcel/Classes/PHPExcel/Cell.php on line 291
+[16-Oct-2019 14:28:35 America/Chicago] PHP Fatal error:  Uncaught exception 'PHPExcel_Calculation_Exception' with message 'Caja CCF !G14 -> Formula Error: Unexpected ,' in /home4/byvnilval/desarrollo.formalsi.com/formalsidev/dev/excel_novedades/PHPExcel/Classes/PHPExcel/Cell.php:291
+Stack trace:
+#0 /home4/byvnilval/desarrollo.formalsi.com/formalsidev/dev/excel_novedades/leer.php(65): PHPExcel_Cell->getCalculatedValue()
+#1 {main}
+  thrown in /home4/byvnilval/desarrollo.formalsi.com/formalsidev/dev/excel_novedades/PHPExcel/Classes/PHPExcel/Cell.php on line 291
+[16-Oct-2019 14:29:06 America/Chicago] PHP Fatal error:  Uncaught exception 'PHPExcel_Calculation_Exception' with message 'Caja CCF !G14 -> Formula Error: Unexpected ,' in /home4/byvnilval/desarrollo.formalsi.com/formalsidev/dev/excel_novedades/PHPExcel/Classes/PHPExcel/Cell.php:291
+Stack trace:
+#0 /home4/byvnilval/desarrollo.formalsi.com/formalsidev/dev/excel_novedades/leer.php(66): PHPExcel_Cell->getCalculatedValue()
+#1 {main}
+  thrown in /home4/byvnilval/desarrollo.formalsi.com/formalsidev/dev/excel_novedades/PHPExcel/Classes/PHPExcel/Cell.php on line 291
