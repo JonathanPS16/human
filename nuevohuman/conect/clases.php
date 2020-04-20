@@ -81,6 +81,24 @@ public function menulateral(){
     return $dato;
 }
 
+public function obtenerCertificadosCedula($numero){
+    $conn = $this->conec();
+    $dato=array();
+    $consultas = "SELECT contrato,nombre_empleado,cedula,fecha_ingreso,fecha_retiro FROM certificados where cedula='$numero'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function obtenerCertificadosporContrato($contrato,$numero){
+    $conn = $this->conec();
+    $dato=array();
+    $consultas = "SELECT * FROM certificados where contrato='$contrato' and cedula='$numero'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+
+
 
 
 }

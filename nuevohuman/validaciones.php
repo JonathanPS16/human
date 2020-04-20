@@ -21,10 +21,59 @@
         case "getionusuarios":
             echo "i es un pastel";
             break;
-
         case "buscardorCertificados":
-            $titulo = "Buscador de Certificados";
-            include('vistas/vistaBuscadorCertificados.php');
+            $acc = $_GET['acc'];
+            switch ($acc) {
+                case "validarGen":
+                    $tipocertificado=$_POST['tipocertificado'];
+                    $numero=$_POST['documento'];
+                    $anio=$_POST['anio'];
+                    $anios=$_POST['anios'];
+                    $mes=$_POST['mes'];
+                    $periodo=$_POST['periodo'];
+                    $usuarioregistrado=$_POST['usuarioregistrado'];
+                    $rolusuario=$_POST['rolusuario'];
+                    $anyoarl=$_POST['anyoarl'];
+                    $mesarl=$_POST['mesarl'];
+                    switch ($tipocertificado) {
+                        case 1:
+                            //header("Location: comprobante.php?anios=$anios&mes=$mes&periodo=$periodo&documento=$numero");
+                            include('vistas/vistaComprobante.php');
+                        break;
+                        case 2:
+                            if(intval($anio)<=2016)
+                            {
+                                header("Location: generadorir.php?anio=$anio&documento=$numero&tipocertificado=$tipocertificado");
+                            }
+                            else			
+                            {
+                                header("Location: generadorir2017.php?anio=$anio&documento=$numero&tipocertificado=$tipocertificado");
+                            }
+                    
+                        break;
+                        case 3:
+                            $certificados=$objconsulta->obtenerCertificadosCedula($numero);
+                            include('vistas/vistaBuscadorContrato.php');
+                    
+                        break;
+                        case 4:
+                            header("Location: ../../folderarl/carpeta.php?anyoarl=$anyoarl&mesarl=$mesarl&documento=$numero&colaborador=1");
+                        break;
+                    }
+                break;
+                case "generador":
+                    $contrato=$_POST['contrato'];
+	                $numero=$_POST['numero'];   
+                    $certificados=$objconsulta->obtenerCertificadosporContrato($contrato,$numero);
+                    include('vistas/generador.php');
+                break;
+                default;
+                    $titulo = "Buscador de Certificados";
+                    include('vistas/vistaBuscadorCertificados.php');
+                break; 
+            }
+
+            
         break;  
 
         default;

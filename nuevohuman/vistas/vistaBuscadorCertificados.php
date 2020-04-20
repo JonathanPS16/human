@@ -1,6 +1,6 @@
 <h1 class="h2"><?php echo $titulo ;?></h1>
 
-<form class="generador" id="form1" name="form1" method="post" action="consultar.php">
+<form class="generador" id="form1" name="form1" method="post" action="home.php?ctr=buscardorCertificados&acc=validarGen">
 
 <?php $usuarioregistrado=$_GET['usuario']; 
       $rolusuario=$_GET['rolusuario']; 
@@ -41,20 +41,27 @@
   
 	<div id="periodo" style="display:none;" >
 		<div class="cont" >
-			<div>
-				<label>A&ntilde;o</br>
-				<select name="anios" required >
-				<!--option value="2016">2016</option-->
-				<option value="2017">2017</option>
-				<option value="2018">2018</option>
-				<option value="2019">2019</option>
-				</select>
-				</label>
-			</div>
-			<div>	
-				<label>Mes</br>
-				<select name="mes"  required >
-				<option value="1">Enero</option>
+			
+                        <!-- Select Basic -->
+            <div class="form-group">
+            <label class="col-md-4 control-label" for="anios">Año</label>
+            <div class="col-md-4">
+                <select id="anios" name="anios" class="form-control">
+                <?php 
+                for($i=2005;$i<=date('Y');$i++){
+                    echo "<option value='{$i}'>{$i}</option>";
+                }
+                ?>
+                </select>
+            </div>
+            </div>
+
+            <!-- Select Basic -->
+            <div class="form-group">
+            <label class="col-md-4 control-label" for="mes">Mes</label>
+            <div class="col-md-4">
+                <select id="mes" name="mes" class="form-control" required>
+                <option value="1">Enero</option>
 				<option value="2">Febrero</option>
 				<option value="3">Marzo</option>
 				<option value="4">Abril</option>
@@ -66,71 +73,82 @@
 				<option value="10">Octubre</option>
 				<option value="11">Noviembre</option>
 				<option value="12">Diciembre</option>
-				</select>
-				</label>
-			</div>
-			<div>
-				<label>Periodo</br>
-				<select name="periodo"  required>
-				<option value="1">1</option>
-				<option value="2">2</option>
-				</select>
-				</label>
-			</div>
-		</div>
-	</div>
-  
-    <div id="anio" style="display:none;" >
-		<div>
-			<label>A&ntilde;o</br>
-				<select name="anio" required>
-				<option value="2011">2011</option>
-				<option value="2012">2012</option>
-				<option value="2013">2013</option>
-				<option value="2014">2014</option>
-				<option value="2015">2015</option>
-				<option value="2016">2016</option>
-				<option value="2017">2017</option>
-				<option value="2018">2018</option>
+                </select>
+            </div>
+            </div>
 
-				</select>
-				</label>
+            <!-- Select Basic -->
+            <div class="form-group">
+            <label class="col-md-4 control-label" for="periodo">Periodo</label>
+            <div class="col-md-4">
+                <select id="periodo" name="periodo" class="form-control" required>
+                <option value="1">1</option>
+				<option value="2">2</option>
+                </select>
+            </div>
+            </div>			
 		</div>
 	</div>
-	
+
+    <div class="form-group" id="anio" style="display:none;" >
+            <label class="col-md-4 control-label" for="anios">Año</label>
+            <div class="col-md-4">
+                <select id="anio" name="anio" class="form-control">
+                <?php 
+                for($i=2011;$i<=date('Y');$i++){
+                    echo "<option value='{$i}'>{$i}</option>";
+                }
+                ?>
+                </select>
+            </div>
+    </div>
+
     <div id="arl" style="display:none;" >
 		<div class="aniomes"> 
-		  <label>A&ntilde;o</br>
-		  	<!--select multiple name="anyo"-->    
-			<select  name="anyoarl">    
-				<option value="2017">2017</option>
-				<option value="2018">2018</option>    
-				<option value="2019">2019</option> 
-			</select>
-		  </label>
-		
-		  <label>Mes</br>
-		  	<select  name="mesarl">    
-				<option value="01">Enero</option>    
-				<option value="02">Febrero</option>    
-				<option value="03">Marzo</option>    
-				<option value="04">Abril</option>    
-				<option value="05">Mayo</option>   
-				<option value="06">Junio</option>   
-				<option value="07">Julio</option>   
-				<option value="08">Agosto</option>   
-				<option value="09">Septiembre</option>   
-				<option value="10">Octubre</option>   
-				<option value="11">Noviembre</option>   
-				<option value="12">Diciembre</option>   
-			</select>
 
-		  </label>
+ <!-- Select Basic -->
+ <div class="form-group">
+            <label class="col-md-4 control-label" for="anios">Año</label>
+            <div class="col-md-4">
+                <select id="anyoarl" name="anyoarl" class="form-control">
+                <?php 
+                for($i=2005;$i<=date('Y');$i++){
+                    echo "<option value='{$i}'>{$i}</option>";
+                }
+                ?>
+                </select>
+            </div>
+            </div>
+
+            <!-- Select Basic -->
+            <div class="form-group">
+            <label class="col-md-4 control-label" for="mes">Mes</label>
+            <div class="col-md-4">
+                <select id="mesarl" name="mesarl" class="form-control" required>
+                <option value="1">Enero</option>
+				<option value="2">Febrero</option>
+				<option value="3">Marzo</option>
+				<option value="4">Abril</option>
+				<option value="5">Mayo</option>
+				<option value="6">Junio</option>
+				<option value="7">Julio</option>
+				<option value="8">Agosto</option>
+				<option value="9">Septiembre</option>
+				<option value="10">Octubre</option>
+				<option value="11">Noviembre</option>
+				<option value="12">Diciembre</option>
+                </select>
+            </div>
+            </div>
 		 </div> 
 	</div>
+	<div class="form-group">
+        <label class="col-md-4 control-label" for="buscar"></label>
+        <div class="col-md-4">
+            <input type="submit" id="buscar" name="buscar" value="Enviar" class="btn btn-primary"/>
+        </div>
+    </div>
 	
-	<input class="btn" type="submit" name="buscar" id="buscar" value="Enviar" />
-	<a href="index.php" class="btn">Volver</a>
   	<!--div id="SPACE_TOTAL"></div-->
 </form>
 
