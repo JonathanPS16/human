@@ -1,24 +1,8 @@
 <?php
-$mysqli = new mysqli("localhost", "byvnilva_drupal", "admByV$", "byvnilva_humantalents");
-if ($mysqli->connect_errno) {
-    echo "Falló la conexión a MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-}
-$numero=$_GET['documento'];
-$anios=$_GET['anios'];
-$mes=$_GET['mes'];
-$periodo=$_GET['periodo'];
-$resultado = $mysqli->query("SELECT * FROM volantes where anio='$anios' and mes='$mes' and periodo='$periodo' and cedula='$numero' group by concepto");
-$resultado->data_seek(0);
-$i=0;
-while ($fila = $resultado->fetch_assoc()) {
-    $i++;
-     $datos[] = $fila;
-}
- ob_start(); ?>
-<html>
- <!DOCTYPE html>
- <head><meta http-equiv="Content-Type" content="text/html; charset=gb18030"><?php header("Content-Type: text/html;charset=utf-8"); ?>
-	
+ob_start(); 
+$i =count($certificados);
+$datos=$certificados;
+ ?>
 	<style type="text/css">
 		.datagrid table {
 			 border-collapse: collapse;
@@ -67,8 +51,7 @@ while ($fila = $resultado->fetch_assoc()) {
 			 border-bottom: none;
 		}
 	</style>
- </head>
- <body>
+
   <table width="80%" border="0" align="center"><br><br><br> <tr><td colspan="6"><img src="img/logo_negro.jpg" width="200px" height="50px"></td></tr></table>
   <table width="95%" border="0"  align="center" cellpadding="1px">
     <tr>
@@ -134,22 +117,19 @@ while ($fila = $resultado->fetch_assoc()) {
 	<label><div align="left">***Conceptos que no afectan el neto a pagar</div></label>
 	<label><div align="left" style="font-size:10px;">Generado desde El portal web www.humantalentsas.com en la fecha <?php echo date("Y-m-d H:i:s ");  ?></div></label>
 
- </body>
-</html>
 <?php 
 require_once("dompdf/dompdf_config.inc.php");
-/* $f;
-$l;
-if(headers_sent($f,$l))
-{
-    echo $f,'<br/>',$l,'<br/>';
-    die('now detect line');
-}
- */$dompdf = new DOMPDF();
+$dompdf = new DOMPDF();
 $dompdf->load_html(ob_get_clean());
 $dompdf->render();
 $pdf = $dompdf->output();
 $filename = "Comprobante".'.pdf';
-//file_put_contents($filename, $pdf); //esta linea guarda el archivo en el servidor
-$dompdf->stream($filename);
+file_put_contents($filename, $pdf); //esta linea guarda el archivo en el servidor
+//$dompdf->stream($filename);
 ?>
+<div class="form-group">
+  <div class="col-md-8">
+    <a href="Comprobante.pdf" target="_black" class="btn btn-info">Descargar Archivo</a>
+    <a href="home.php?ctr=buscardorCertificados&acc=buscador" class="btn btn-primary">Nueva Consulta</a>
+  </div>
+</div>

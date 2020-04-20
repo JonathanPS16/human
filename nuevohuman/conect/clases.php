@@ -97,6 +97,14 @@ public function obtenerCertificadosporContrato($contrato,$numero){
     return $consultas;
 }
 
+public function obtenerVolantes($anios,$mes,$periodo,$numero){
+    $conn = $this->conec();
+    $dato=array();
+    $consultas = "SELECT * FROM volantes where anio='$anios' and mes='$mes' and periodo='$periodo' and cedula='$numero' group by concepto";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
 
 
 

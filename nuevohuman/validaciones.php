@@ -37,6 +37,12 @@
                     $mesarl=$_POST['mesarl'];
                     switch ($tipocertificado) {
                         case 1:
+                            //print_r($_POST);
+                            $numero=$_POST['documento'];
+                            $anios=$_POST['anios'];
+                            $mes=$_POST['mes'];
+                            $periodo=$_POST['periodo'];
+                            $certificados=$objconsulta->obtenerVolantes($anios,$mes,$periodo,$numero);
                             //header("Location: comprobante.php?anios=$anios&mes=$mes&periodo=$periodo&documento=$numero");
                             include('vistas/vistaComprobante.php');
                         break;
