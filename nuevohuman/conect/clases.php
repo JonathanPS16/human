@@ -105,6 +105,22 @@ public function obtenerVolantes($anios,$mes,$periodo,$numero){
     return $consultas;
 }
 
+public function obtenerIngresosRete($documento,$anio){
+    $conn = $this->conec();
+    $dato=array();
+    $consultas = "SELECT * FROM ingresos_retenciones where CEDULA='$documento' and ANIO='$anio'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function obtenerIngresosReteunosiete($documento){
+    $conn = $this->conec();
+    $dato=array();
+    $consultas = "SELECT * FROM ingresos_ret_2017 where CEDULA='$documento'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
 
 
 

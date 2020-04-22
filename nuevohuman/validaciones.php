@@ -37,23 +37,25 @@
                     $mesarl=$_POST['mesarl'];
                     switch ($tipocertificado) {
                         case 1:
-                            //print_r($_POST);
                             $numero=$_POST['documento'];
                             $anios=$_POST['anios'];
                             $mes=$_POST['mes'];
                             $periodo=$_POST['periodo'];
                             $certificados=$objconsulta->obtenerVolantes($anios,$mes,$periodo,$numero);
-                            //header("Location: comprobante.php?anios=$anios&mes=$mes&periodo=$periodo&documento=$numero");
                             include('vistas/vistaComprobante.php');
                         break;
                         case 2:
                             if(intval($anio)<=2016)
                             {
-                                header("Location: generadorir.php?anio=$anio&documento=$numero&tipocertificado=$tipocertificado");
+                                $certificados=$objconsulta->obtenerIngresosRete($numero,$anio);
+                                include('vistas/generadorir.php');
+                                //header("Location: generadorir.php?anio=$anio&documento=$numero&tipocertificado=$tipocertificado");
                             }
                             else			
                             {
-                                header("Location: generadorir2017.php?anio=$anio&documento=$numero&tipocertificado=$tipocertificado");
+                                $certificados=$objconsulta->obtenerIngresosReteunosiete($numero);
+                                include('vistas/generadorir2017.php');
+                                //header("Location: generadorir2017.php?anio=$anio&documento=$numero&tipocertificado=$tipocertificado");
                             }
                     
                         break;
@@ -63,7 +65,8 @@
                     
                         break;
                         case 4:
-                            header("Location: ../../folderarl/carpeta.php?anyoarl=$anyoarl&mesarl=$mesarl&documento=$numero&colaborador=1");
+                            include('vistas/vistaBuscadorArl.php');
+                            //header("Location: ../../folderarl/carpeta.php?anyoarl=$anyoarl&mesarl=$mesarl&documento=$numero&colaborador=1");
                         break;
                     }
                 break;
