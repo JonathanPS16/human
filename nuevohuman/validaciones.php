@@ -84,6 +84,31 @@
 
             
         break;  
+        case "buscardorCarpetas":
+            $acc = $_GET['acc'];
+            switch ($acc) {
+                case "buscador":
+                    include('vistas/vistaBuscadorCarpeta.php');        
+                break;
+                case "buscadorFiltro":
+                    include('vistas/vistaBuscadorcarpetaFiltrado.php');
+                            
+                break;
+                case "buscadorArl":
+                    
+                    include('vistas/vistaBuscadorCarpetaArl.php');
+                break;
+                case "buscadorArlFiltro":
+                    include('vistas/vistaBuscadorcarpetaFiltradoArl.php');
+                            
+                break;
+                default;
+                    //$titulo = "Buscador de Certificados";
+                    //include('vistas/vistaBuscadorCertificados.php');
+                break; 
+            }
+        break;
+
 
         default;
             $titulo = "Inicial";
