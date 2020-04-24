@@ -108,7 +108,70 @@
                 break; 
             }
         break;
+        case "requisicion":
+            $acc = $_GET['acc'];
+            switch ($acc) {
+                
+                case "crearRequisicion":
+                    $id = 0;
+                    $ide=$_GET['id'];
+                    if($ide>0){
+                        $id=$_GET['id'];
+                        
+                    }
+                    include('vistas/reque.php');
+                break;
+                case "guardarReq":
+                   //print_r($_POST);
+                   $id=$_POST['id'];
+                   $cargo=$_POST['cargo'];
+                   $edadminima=$_POST['edadminima'];
+                   $edadmaxima=$_POST['edadmaxima'];
+                   $edadindiferente=$_POST['edadindiferente'];
+                   $horario=$_POST['horario'];
+                   $tipocontrato=$_POST['tipocontrato'];
+                   $checkestados=$_POST['checkestados'];
+                   $strsta= "";
+                   if(count($checkestados)>0){
+                   foreach($checkestados as $estado){
+                        $strsta.=$estado.",";
+                    }
+                    }
 
+                    $checkgenero=$_POST['checkgenero'];
+                   $strstagene= "";
+                   if(count($checkgenero)>0){
+                   foreach($checkgenero as $genero){
+                        $strstagene.=$genero.",";
+                    }
+                }
+                    $cantidad=$_POST['cantidad'];
+                    $ciudadlaboral=$_POST['ciudadlaboral'];
+                    $jornadalaboral= $_POST['jornadalaboral'];
+
+                    $lastid = $objconsulta->guardarRequi($id,
+                    $cargo,
+                    $edadminima,
+                    $edadmaxima,
+                    $edadindiferente,
+                    $horario,
+                    $tipocontrato,
+                    $strsta,
+                    $strstagene,
+                    $cantidad,
+                    $ciudadlaboral,
+                    $jornadalaboral
+                );
+                echo "<script>alert('Informacion Guardada Correctamente');
+                window.location.href = 'home.php?ctr=requisicion&acc=crearRequisicion&id=".$lastid."';
+                </script>";
+                break;
+                default;
+                    $titulo = "Buscador de Certificados";
+                    include('vistas/vistaBuscadorCertificados.php');
+                break; 
+            }
+        break;
 
         default;
             $titulo = "Inicial";

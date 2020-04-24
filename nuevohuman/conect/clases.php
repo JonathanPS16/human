@@ -121,7 +121,41 @@ public function obtenerIngresosReteunosiete($documento){
     return $consultas;
 }
 
+public function guardarRequi($id,$cargo,$edadminima,$edadmaxima,$edadindiferente,$horario,
+$tipocontrato,
+$strsta,
+$strstagene,
+$cantidad,
+$ciudadlaboral,
+$jornadalaboral
+) 
+{
+    $conn = $this->conec();
+    if($id>0){
+        $dat=date('Y-m-d H:i:s');
+       $SQL ="UPDATE req SET fechamodificacion='$dat',cargo='$cargo',edadminima='$edadminima',edadmaxima='$edadmaxima',
+       edadindiferente='$edadindiferente',horario='$horario',tipocontrato='$tipocontrato',
+       estado='$strsta',genero='$strstagene',cantidad='$cantidad',ciudadlaboral='$ciudadlaboral',
+       jornadalaboral='$jornadalaboral' where id=$id";
+       $conn->Execute($SQL);
+       return $id;
+    } else {
 
+        $campos = "cargo,edadminima,edadmaxima,edadindiferente,horario,
+        tipocontrato,estado,genero,cantidad,ciudadlaboral,jornadalaboral";
+        $valores = "'$cargo','$edadminima','$edadmaxima','$edadindiferente','$horario',
+        '$tipocontrato',
+        '$strsta',
+        '$strstagene',
+        '$cantidad',
+        '$ciudadlaboral',
+        '$jornadalaboral'";
+        $SQL= "INSERT INTO req (".$campos.") values (".$valores.")";
+        $conn->Execute($SQL);
+        $lastId = $conn->insert_Id();
+        return $lastId;
+    }
+}
 
 
 
