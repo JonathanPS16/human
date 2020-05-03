@@ -213,6 +213,48 @@ $experienciahomolo
        return $id;
 }
 
+public function guardarRequiHabilida($id,
+$adaptabilidad,
+$administracion,
+$analisis,
+$gestion,
+$negociacion,
+$normas,
+$aprendizaje,
+$flexibilidad,
+$riesgo,
+$innovacion,
+$ambiente,
+$observacion,
+$resultados,
+$cliente,
+$comunicacion,
+$tecnologica,
+$planeacion,
+$relaciones,
+$liderazgo,
+$sensibilidad,
+$conflictos,
+$tolerancia,
+$equipo,
+$habilidades)
+{
+    $conn = $this->conec();
+    $dat=date('Y-m-d H:i:s');
+       $SQL ="UPDATE req SET adaptabilidad='$adaptabilidad',fechamodificacion='$dat', 
+       administracion='$administracion',analisis='$analisis',gestion='$gestion',negociacion='$negociacion',
+       normas='$normas',aprendizaje='$aprendizaje',flexibilidad='$flexibilidad',
+       riesgo='$riesgo',innovacion='$innovacion',ambiente='$ambiente',
+       observacion='$observacion',resultados='$resultados',cliente='$cliente',
+       comunicacion='$comunicacion',tecnologica='$tecnologica',planeacion='$planeacion',
+       relaciones='$relaciones',liderazgo='$liderazgo',sensibilidad='$sensibilidad',
+       conflictos='$conflictos',tolerancia='$tolerancia',equipo='$equipo',
+       habilidades='$habilidades' where id=$id";
+       $conn->Execute($SQL);
+       return $id;
+
+}
+
 
 }
 ?>

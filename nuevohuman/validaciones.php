@@ -243,7 +243,7 @@
                 </script>";
                 break;
                 case "guardarReqHabilidades":
-                print_r($_POST);
+                //print_r($_POST);
                 $id= $_POST['id'];
                 $adaptabilidad= $_POST['adaptabilidad'];
                 $administracion= $_POST['administracion'];
@@ -269,7 +269,34 @@
                 $tolerancia= $_POST['tolerancia'];
                 $equipo= $_POST['equipo'];
                 $habilidades= $_POST['habilidades'];
-                
+                $lastid = $objconsulta->guardarRequiHabilida($id,
+                $adaptabilidad,
+                $administracion,
+                $analisis,
+                $gestion,
+                $negociacion,
+                $normas,
+                $aprendizaje,
+                $flexibilidad,
+                $riesgo,
+                $innovacion,
+                $ambiente,
+                $observacion,
+                $resultados,
+                $cliente,
+                $comunicacion,
+                $tecnologica,
+                $planeacion,
+                $relaciones,
+                $liderazgo,
+                $sensibilidad,
+                $conflictos,
+                $tolerancia,
+                $equipo,
+                $habilidades);
+                echo "<script>alert('Informacion Guardada Correctamente');
+                window.location.href = 'home.php?ctr=requisicion&acc=crearRequisicion&id=".$lastid."';
+                </script>";
                 break;
                 default;
                     $titulo = "Buscador de Certificados";
