@@ -214,6 +214,63 @@
                 window.location.href = 'home.php?ctr=requisicion&acc=crearRequisicion&id=".$lastid."';
                 </script>";
                 break;
+
+                case "guardarReqExper":
+                    $id=$_POST['id'];
+                    $primaria=$_POST['primaria'];
+                    $secundaria=$_POST['secundaria'];
+                    $tecnico=$_POST['tecnico'];
+                    $tecnologo=$_POST['tecnologo'];
+                    $tecnologo=$_POST['tecnologo'];
+                    $profesional=$_POST['profesional'];
+                    $otrosestudios=$_POST['otrosestudios'];
+                    $experienciahomolo=$_POST['experienciahomolo'];
+                    $minimaexpe=$_POST['minimaexpe'];
+                    $observacionesexp=$_POST['observacionesexp'];
+                    $lastid = $objconsulta->guardarRequiExper($id,
+                        $primaria,
+                        $secundaria,
+                        $tecnico,
+                        $tecnologo,
+                        $profesional,
+                        $otrosestudios,
+                        $minimaexpe,
+                        $observacionesexp,
+                        $experienciahomolo
+                     );
+                    echo "<script>alert('Informacion Guardada Correctamente');
+                window.location.href = 'home.php?ctr=requisicion&acc=crearRequisicion&id=".$lastid."';
+                </script>";
+                break;
+                case "guardarReqHabilidades":
+                print_r($_POST);
+                $id= $_POST['id'];
+                $adaptabilidad= $_POST['adaptabilidad'];
+                $administracion= $_POST['administracion'];
+                $analisis= $_POST['analisis'];
+                $gestion= $_POST['gestion'];
+                $negociacion= $_POST['negociacion'];
+                $normas= $_POST['normas'];
+                $aprendizaje= $_POST['aprendizaje'];
+                $flexibilidad= $_POST['flexibilidad'];
+                $riesgo= $_POST['riesgo'];
+                $innovacion= $_POST['innovacion'];
+                $ambiente= $_POST['ambiente'];
+                $observacion= $_POST['observacion'];
+                $resultados= $_POST['resultados'];
+                $cliente= $_POST['cliente'];
+                $comunicacion= $_POST['comunicacion'];
+                $tecnologica= $_POST['tecnologica'];
+                $planeacion= $_POST['planeacion'];
+                $relaciones= $_POST['relaciones'];
+                $liderazgo= $_POST['liderazgo'];
+                $sensibilidad= $_POST['sensibilidad'];
+                $conflictos= $_POST['conflictos'];
+                $tolerancia= $_POST['tolerancia'];
+                $equipo= $_POST['equipo'];
+                $habilidades= $_POST['habilidades'];
+                
+                break;
                 default;
                     $titulo = "Buscador de Certificados";
                     include('vistas/vistaBuscadorCertificados.php');

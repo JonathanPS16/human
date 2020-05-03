@@ -185,14 +185,33 @@ $valores,
 $otrosresponsabilidades){
     $conn = $this->conec();
     $dat=date('Y-m-d H:i:s');
-       $SQL ="UPDATE req SET acargo='$acargo',equipos='$equipos',dinero='$dinero',materiales='$materiales',
+       $SQL ="UPDATE req SET fechamodificacion='$dat', acargo='$acargo',equipos='$equipos',dinero='$dinero',materiales='$materiales',
        herramientas='$herramientas',documentos='$documentos',confidencial='$confidencial',
        valores='$valores',otrosresponsabilidades='$otrosresponsabilidades' where id=$id";
        $conn->Execute($SQL);
        return $id;
 
 }
-
+public function guardarRequiExper($id,
+$primaria,
+$secundaria,
+$tecnico,
+$tecnologo,
+$profesional,
+$otrosestudios,
+$minimaexpe,
+$observacionesexp,
+$experienciahomolo
+)
+{
+    $conn = $this->conec();
+    $dat=date('Y-m-d H:i:s');
+       $SQL ="UPDATE req SET experienciahomolo='$experienciahomolo',fechamodificacion='$dat', primaria='$primaria',secundaria='$secundaria',tecnico='$tecnico',tecnologo='$tecnologo',
+       profesional='$profesional',otrosestudios='$otrosestudios',minimaexpe='$minimaexpe',
+       observacionesexp='$observacionesexp' where id=$id";
+       $conn->Execute($SQL);
+       return $id;
+}
 
 
 }
