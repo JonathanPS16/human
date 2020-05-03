@@ -166,6 +166,54 @@
                 window.location.href = 'home.php?ctr=requisicion&acc=crearRequisicion&id=".$lastid."';
                 </script>";
                 break;
+                case 'guardarReqCondiciones':
+                    $id=$_POST['id'];
+                    $salariobasico=$_POST['salariobasico'];
+                    $comisiones=$_POST['comisiones'];
+                    $rodamiento=$_POST['rodamiento'];
+                    $bonificacion=$_POST['bonificacion'];
+                    $otraingreso=$_POST['otraingreso'];
+                    $funciones=$_POST['funciones'];
+                    $lastid = $objconsulta->guardarRequiCondiciones($id,
+                    $salariobasico,
+                    $comisiones,
+                    $rodamiento,
+                    $bonificacion,
+                    $otraingreso,
+                    $funciones
+                );
+                echo "<script>alert('Informacion Guardada Correctamente');
+                window.location.href = 'home.php?ctr=requisicion&acc=crearRequisicion&id=".$lastid."';
+                </script>";
+
+                break;
+
+                case "guardarReqRespo":
+                    $id=$_POST['id'];
+                    $acargo=$_POST['acargo'];
+                    $equipos=$_POST['equipos'];
+                    $dinero=$_POST['dinero'];
+                    $materiales=$_POST['materiales'];
+                    $herramientas=$_POST['herramientas'];
+                    $documentos=$_POST['documentos'];
+                    $confidencial=$_POST['confidencial'];
+                    $valores=$_POST['valores'];
+                    $otrosresponsabilidades=$_POST['otrosresponsabilidades'];
+                    $lastid = $objconsulta->guardarRequiResponsa($id,
+                    $acargo,
+                    $equipos,
+                    $dinero,
+                    $materiales,
+                    $herramientas,
+                    $documentos,
+                    $confidencial,
+                    $valores,
+                    $otrosresponsabilidades);
+
+                    echo "<script>alert('Informacion Guardada Correctamente');
+                window.location.href = 'home.php?ctr=requisicion&acc=crearRequisicion&id=".$lastid."';
+                </script>";
+                break;
                 default;
                     $titulo = "Buscador de Certificados";
                     include('vistas/vistaBuscadorCertificados.php');

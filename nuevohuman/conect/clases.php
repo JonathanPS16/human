@@ -157,6 +157,42 @@ $jornadalaboral
     }
 }
 
+public function guardarRequiCondiciones($id,
+$salariobasico,
+$comisiones,
+$rodamiento,
+$bonificacion,
+$otraingreso,
+$funciones
+){
+    $dat=date('Y-m-d H:i:s');
+    $conn = $this->conec();
+    $SQL ="UPDATE req SET funciones='$funciones', fechamodificacion='$dat',salariobasico='$salariobasico',comisiones='$comisiones',rodamiento='$rodamiento',bonificacion='$bonificacion',
+    otraingreso='$otraingreso' where id=$id";
+    $conn->Execute($SQL);
+    return $id;
+}
+
+public function guardarRequiResponsa($id,
+$acargo,
+$equipos,
+$dinero,
+$materiales,
+$herramientas,
+$documentos,
+$confidencial,
+$valores,
+$otrosresponsabilidades){
+    $conn = $this->conec();
+    $dat=date('Y-m-d H:i:s');
+       $SQL ="UPDATE req SET acargo='$acargo',equipos='$equipos',dinero='$dinero',materiales='$materiales',
+       herramientas='$herramientas',documentos='$documentos',confidencial='$confidencial',
+       valores='$valores',otrosresponsabilidades='$otrosresponsabilidades' where id=$id";
+       $conn->Execute($SQL);
+       return $id;
+
+}
+
 
 
 }
