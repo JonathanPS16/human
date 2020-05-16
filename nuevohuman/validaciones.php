@@ -114,13 +114,21 @@
                 
                 case "crearRequisicion":
                     $id = 0;
+                    $mireq=array();
                     $ide=$_GET['id'];
                     if($ide>0){
+
                         $id=$_GET['id'];
+                        $mireq=$objconsulta->obteneRes($id);
                         
                     }
                     include('vistas/reque.php');
                 break;
+                case "listadoReq":
+                    $listadoreq=$objconsulta->obteneRes();
+                    include('vistas/listadoreq.php');
+                break;
+
                 case "guardarReq":
                    //print_r($_POST);
                    $id=$_POST['id'];

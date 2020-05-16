@@ -255,6 +255,20 @@ $habilidades)
 
 }
 
+public function obteneRes($ide=0){
+  //echo $ide;
+    $conn = $this->conec();
+    $dato=array();
+    $where="";
+    if ($ide != 0) {
+      $where .="and id= ".$ide;
+    } 
+    $consultas = "SELECT * FROM req where 1=1 ".$where."";
+    echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
 
 }
 ?>

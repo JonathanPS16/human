@@ -1,4 +1,5 @@
 <?php 
+var_dump($mireq[0]['id']);
 $title="FORMULARIO REQUISICION";
 if($id>0){
   ?>
@@ -36,7 +37,7 @@ HABILIDADES Y COMPETENCIAS
 <div class="form-group">
   <label class="col-md-4 control-label" for="salariobasico">Salario  Básico 	</label>  
   <div class="col-md-8">
-  <input id="salariobasico" name="salariobasico" type="text" placeholder="Salario  Básico 	" class="form-control input-md">
+  <input id="salariobasico" name="salariobasico" type="text" placeholder="Salario  Básico" class="form-control input-md" value ="<?php echo $mireq[0]['salariobasico']; ?>">
     
   </div>
 </div>
@@ -45,7 +46,7 @@ HABILIDADES Y COMPETENCIAS
 <div class="form-group">
   <label class="col-md-4 control-label" for="comisiones">Comisiones 	</label>  
   <div class="col-md-8">
-  <input id="comisiones" name="comisiones" type="text" placeholder="Comisiones 	" class="form-control input-md">
+  <input id="comisiones" name="comisiones" type="text" placeholder="Comisiones" class="form-control input-md" value ="<?php echo $mireq[0]['comisiones']; ?>">
     
   </div>
 </div>
@@ -54,7 +55,7 @@ HABILIDADES Y COMPETENCIAS
 <div class="form-group">
   <label class="col-md-4 control-label" for="rodamiento">Rodamiento	</label>  
   <div class="col-md-8">
-  <input id="rodamiento" name="rodamiento" type="text" placeholder="Rodamiento	" class="form-control input-md">
+  <input id="rodamiento" name="rodamiento" type="text" placeholder="Rodamiento	" class="form-control input-md" value ="<?php echo $mireq[0]['rodamiento']; ?>">
     
   </div>
 </div>
@@ -63,7 +64,7 @@ HABILIDADES Y COMPETENCIAS
 <div class="form-group">
   <label class="col-md-4 control-label" for="bonificacion">Bonificacion 	</label>  
   <div class="col-md-8">
-  <input id="bonificacion" name="bonificacion" type="text" placeholder="Bonificacion 	" class="form-control input-md">
+  <input id="bonificacion" name="bonificacion" type="text" placeholder="Bonificacion 	" class="form-control input-md" value ="<?php echo $mireq[0]['bonificacion']; ?>">
     
   </div>
 </div>
@@ -72,7 +73,7 @@ HABILIDADES Y COMPETENCIAS
 <div class="form-group">
   <label class="col-md-4 control-label" for="otraingreso">Otro 	</label>  
   <div class="col-md-8">
-  <input id="otraingreso" name="otraingreso" type="text" placeholder="Otro 	" class="form-control input-md">
+  <input id="otraingreso" name="otraingreso" type="text" placeholder="Otro 	" class="form-control input-md" value ="<?php echo $mireq[0]['otraingreso']; ?>">
     
   </div>
 </div>
@@ -80,7 +81,7 @@ HABILIDADES Y COMPETENCIAS
 <div class="form-group">
   <label class="col-md-4 control-label" for="funciones">Funciones</label>  
   <div class="col-md-8">
-  <input id="funciones" name="funciones" type="text" placeholder="Funciones" class="form-control input-md" required="">
+  <input id="funciones" name="funciones" type="text" placeholder="Funciones" class="form-control input-md" required="" value ="<?php echo $mireq[0]['funciones']; ?>" >
     
   </div>
 </div>
@@ -122,11 +123,11 @@ HABILIDADES Y COMPETENCIAS
     <label class="col-4">Personas a Cargo</label> 
     <div class="col-8">
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="acargo" id="acargo_0" type="radio" required="required" class="custom-control-input" value="SI"> 
+        <input <?php if($mireq[0]['acargo'] =="SI") { ?> checked <?php } ?> name="acargo" id="acargo_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="acargo_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="acargo" id="acargo_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['acargo'] =="NO") { ?> checked <?php } ?> name="acargo" id="acargo_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="acargo_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -135,11 +136,11 @@ HABILIDADES Y COMPETENCIAS
     <label class="col-4">Equipos</label> 
     <div class="col-8">
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="equipos" id="equipos_0" type="radio" class="custom-control-input" value="SI" required="required"> 
+        <input <?php if($mireq[0]['equipos'] =="SI") { ?> checked <?php } ?> name="equipos" id="equipos_0" type="radio" class="custom-control-input" value="SI" required="required"> 
         <label for="equipos_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="equipos" id="equipos_1" type="radio" class="custom-control-input" value="NO" required="required"> 
+        <input <?php if($mireq[0]['equipos'] =="NO") { ?> checked <?php } ?> name="equipos" id="equipos_1" type="radio" class="custom-control-input" value="NO" required="required"> 
         <label for="equipos_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -148,11 +149,11 @@ HABILIDADES Y COMPETENCIAS
     <label class="col-4">Dinero</label> 
     <div class="col-8">
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="dinero" id="dinero_0" type="radio" required="required" class="custom-control-input" value="SI"> 
+        <input <?php if($mireq[0]['dinero'] =="SI") { ?> checked <?php } ?> name="dinero" id="dinero_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="dinero_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="dinero" id="dinero_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['dinero'] =="NO") { ?> checked <?php } ?> name="dinero" id="dinero_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="dinero_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -161,11 +162,11 @@ HABILIDADES Y COMPETENCIAS
     <label class="col-4">Materiales y Mercancía</label> 
     <div class="col-8">
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="materiales" id="materiales_0" type="radio" class="custom-control-input" value="SI" required="required"> 
+        <input <?php if($mireq[0]['materiales'] =="SI") { ?> checked <?php } ?> name="materiales" id="materiales_0" type="radio" class="custom-control-input" value="SI" required="required"> 
         <label for="materiales_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="materiales" id="materiales_1" type="radio" class="custom-control-input" value="NO" required="required"> 
+        <input <?php if($mireq[0]['materiales'] =="NO") { ?> checked <?php } ?> name="materiales" id="materiales_1" type="radio" class="custom-control-input" value="NO" required="required"> 
         <label for="materiales_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -174,11 +175,11 @@ HABILIDADES Y COMPETENCIAS
     <label class="col-4">Herramientas</label> 
     <div class="col-8">
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="herramientas" id="herramientas_0" type="radio" class="custom-control-input" value="SI" required="required"> 
+        <input <?php if($mireq[0]['herramientas'] =="SI") { ?> checked <?php } ?> name="herramientas" id="herramientas_0" type="radio" class="custom-control-input" value="SI" required="required"> 
         <label for="herramientas_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="herramientas" id="herramientas_1" type="radio" class="custom-control-input" value="NO" required="required"> 
+        <input  <?php if($mireq[0]['herramientas'] =="NO") { ?> checked <?php } ?> name="herramientas" id="herramientas_1" type="radio" class="custom-control-input" value="NO" required="required"> 
         <label for="herramientas_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -187,11 +188,11 @@ HABILIDADES Y COMPETENCIAS
     <label class="col-4">Documentos</label> 
     <div class="col-8">
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="documentos" id="documentos_0" type="radio" class="custom-control-input" value="SI" required="required"> 
+        <input <?php if($mireq[0]['documentos'] =="SI") { ?> checked <?php } ?> name="documentos" id="documentos_0" type="radio" class="custom-control-input" value="SI" required="required"> 
         <label for="documentos_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="documentos" id="documentos_1" type="radio" class="custom-control-input" value="NO" required="required"> 
+        <input <?php if($mireq[0]['documentos'] =="NO") { ?> checked <?php } ?> name="documentos" id="documentos_1" type="radio" class="custom-control-input" value="NO" required="required"> 
         <label for="documentos_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -200,11 +201,11 @@ HABILIDADES Y COMPETENCIAS
     <label class="col-4">Información Confidencial</label> 
     <div class="col-8">
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="confidencial" id="confidencial_0" type="radio" class="custom-control-input" value="SI" required="required"> 
+        <input <?php if($mireq[0]['confidencial'] =="SI") { ?> checked <?php } ?> name="confidencial" id="confidencial_0" type="radio" class="custom-control-input" value="SI" required="required"> 
         <label for="confidencial_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="confidencial" id="confidencial_1" type="radio" class="custom-control-input" value="NO" required="required"> 
+        <input <?php if($mireq[0]['confidencial'] =="NO") { ?> checked <?php } ?> name="confidencial" id="confidencial_1" type="radio" class="custom-control-input" value="NO" required="required"> 
         <label for="confidencial_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -213,11 +214,11 @@ HABILIDADES Y COMPETENCIAS
     <label class="col-4">Valores</label> 
     <div class="col-8">
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="valores" id="valores_0" type="radio" class="custom-control-input" value="SI" required="required"> 
+        <input <?php if($mireq[0]['valores'] =="SI") { ?> checked <?php } ?> name="valores" id="valores_0" type="radio" class="custom-control-input" value="SI" required="required"> 
         <label for="valores_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="valores" id="valores_1" type="radio" class="custom-control-input" value="NO" required="required"> 
+        <input <?php if($mireq[0]['valores'] =="NO") { ?> checked <?php } ?> name="valores" id="valores_1" type="radio" class="custom-control-input" value="NO" required="required"> 
         <label for="valores_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -225,7 +226,7 @@ HABILIDADES Y COMPETENCIAS
   <div class="form-group row">
     <label for="otrosresponsabilidades" class="col-4 col-form-label">Otros</label> 
     <div class="col-8">
-      <textarea id="otrosresponsabilidades" name="otrosresponsabilidades" cols="40" rows="5" class="form-control"></textarea>
+      <textarea id="otrosresponsabilidades" name="otrosresponsabilidades" cols="40" rows="5" class="form-control"><?php echo $mireq[0]['otrosresponsabilidades'];?></textarea>
     </div>
   </div> 
   <div class="form-group row">
@@ -263,37 +264,37 @@ HABILIDADES Y COMPETENCIAS
   <div class="form-group row">
     <label for="primaria" class="col-4 col-form-label">Primaria</label> 
     <div class="col-8">
-      <input id="primaria" name="primaria" placeholder="Titulo Obtenido / Nivel Mínimo" type="text" class="form-control" required="required">
+      <input id="primaria" name="primaria" placeholder="Titulo Obtenido / Nivel Mínimo" type="text" class="form-control" required="required" value="<?php echo $mireq[0]['primaria'];?>">
     </div>
   </div>
   <div class="form-group row">
     <label for="secundaria" class="col-4 col-form-label">Secundaria</label> 
     <div class="col-8">
-      <input id="secundaria" name="secundaria" placeholder="Titulo Obtenido / Nivel Mínimo " type="text" class="form-control" required="required">
+      <input id="secundaria" name="secundaria" placeholder="Titulo Obtenido / Nivel Mínimo " type="text" class="form-control" required="required" value="<?php echo $mireq[0]['secundaria'];?>">
     </div>
   </div>
   <div class="form-group row">
     <label for="tecnico" class="col-4 col-form-label">Técnico</label> 
     <div class="col-8">
-      <input id="tecnico" name="tecnico" placeholder="Titulo Obtenido / Nivel Mínimo 				" type="text" class="form-control" required="required">
+      <input id="tecnico" name="tecnico" placeholder="Titulo Obtenido / Nivel Mínimo 				" type="text" class="form-control" required="required" value="<?php echo $mireq[0]['tecnico'];?>">
     </div>
   </div>
   <div class="form-group row">
     <label for="tecnologo" class="col-4 col-form-label">Tecnólogo</label> 
     <div class="col-8">
-      <input id="tecnologo" name="tecnologo" placeholder="Titulo Obtenido / Nivel Mínimo 	" type="text" class="form-control" required="required">
+      <input id="tecnologo" name="tecnologo" placeholder="Titulo Obtenido / Nivel Mínimo 	" type="text" class="form-control" required="required" value="<?php echo $mireq[0]['tecnologo'];?>">
     </div>
   </div>
   <div class="form-group row">
     <label for="profesional" class="col-4 col-form-label">Profesional</label> 
     <div class="col-8">
-      <input id="profesional" name="profesional" placeholder="Titulo Obtenido / Nivel Mínimo 	" type="text" class="form-control" required="required">
+      <input id="profesional" name="profesional" placeholder="Titulo Obtenido / Nivel Mínimo 	" type="text" class="form-control" required="required" value="<?php echo $mireq[0]['profesional'];?>">
     </div>
   </div>
   <div class="form-group row">
     <label for="otrosestudios" class="col-4 col-form-label">Otros</label> 
     <div class="col-8">
-      <textarea id="otrosestudios" name="otrosestudios" cols="40" rows="5" class="form-control" required="required"></textarea>
+      <textarea id="otrosestudios" name="otrosestudios" cols="40" rows="5" class="form-control" required="required"><?php echo $mireq[0]['otrosestudios'];?></textarea>
     </div>
   </div>
   <div class="form-group row">
@@ -304,18 +305,18 @@ HABILIDADES Y COMPETENCIAS
   <div class="form-group row">
     <label for="minimaexpe" class="col-4 col-form-label">Mínimo de  Experiencia</label> 
     <div class="col-8">
-      <input id="minimaexpe" name="minimaexpe" placeholder="Experiencia Minima" type="text" class="form-control" required="required">
+      <input id="minimaexpe" name="minimaexpe" placeholder="Experiencia Minima" type="text" class="form-control" required="required" value="<?php echo $mireq[0]['minimaexpe'];?>">
     </div>
   </div>
   <div class="form-group row">
     <label class="col-4">Educación homologable  por Experiencia</label> 
     <div class="col-8">
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="experienciahomolo" id="experienciahomolo_0" type="radio" class="custom-control-input" value="SI" required="required"> 
+        <input <?php if($mireq[0]['experienciahomolo'] =="SI") { ?> checked <?php } ?> name="experienciahomolo" id="experienciahomolo_0" type="radio" class="custom-control-input" value="SI" required="required" > 
         <label for="experienciahomolo_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input name="experienciahomolo" id="experienciahomolo_1" type="radio" class="custom-control-input" value="NO" required="required"> 
+        <input <?php if($mireq[0]['experienciahomolo'] =="NO") { ?> checked <?php } ?> name="experienciahomolo" id="experienciahomolo_1" type="radio" class="custom-control-input" value="NO" required="required"> 
         <label for="experienciahomolo_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -323,7 +324,7 @@ HABILIDADES Y COMPETENCIAS
   <div class="form-group row">
     <label for="observacionesexp" class="col-4 col-form-label">Observaciones Experiencia Laboral</label> 
     <div class="col-8">
-      <textarea id="observacionesexp" name="observacionesexp" cols="40" rows="5" required="required" class="form-control"></textarea>
+      <textarea id="observacionesexp" name="observacionesexp" cols="40" rows="5" required="required" class="form-control"><?php echo $mireq[0]['observacionesexp'];?></textarea>
     </div>
   </div> 
   <div class="form-group row">
