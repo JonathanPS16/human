@@ -264,9 +264,58 @@ public function obteneRes($ide=0){
       $where .="and id= ".$ide;
     } 
     $consultas = "SELECT * FROM req where 1=1 ".$where."";
-    echo $consultas;
+    //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
+}
+
+public function obteneMisRes($ide=0){
+  //echo $ide;
+    $conn = $this->conec();
+    $dato=array();
+    $where="";
+    if ($ide != 0) {
+      $where .="and id= ".$ide;
+    } 
+    $consultas = "SELECT * FROM req";
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function obtenercandidatos($ide=0){
+  //echo $ide;
+    $conn = $this->conec();
+    $dato=array();
+    $where="";
+    if ($ide != 0) {
+      $where .="and id_requisision= ".$ide;
+    } 
+    $consultas = "SELECT * FROM req_candidatos WHERE 1=1 ";
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function guardarCandidato($idreq,
+                        $nombre,
+                        $cedula,
+                        $telefono,
+                        $correo
+                    )
+{
+  $conn = $this->conec();
+
+  $SQL ="INSERT INTO req_candidatos (id_requisision,nombre,cedula,telefono,correo) VALUES ($idreq,'$nombre','$cedula','$telefono','$correo')";
+       $conn->Execute($SQL);
+
+}
+
+public function actualizaEnvioPrue($usuario)
+{
+
+   $SQL ="UPDATE req_candidatos SET enviocorreo=1 WHERE id=".$usuario;
+   $conn->Execute($SQL);
 }
 
 

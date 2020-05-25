@@ -129,6 +129,42 @@
                     include('vistas/listadoreq.php');
                 break;
 
+                case "milistadoReq":
+                    $listadoreq=$objconsulta->obteneMisRes();
+                    include('vistas/listadomisreq.php');
+                break;
+
+                case "listaCandidatos":
+                    $idreq = $_GET["id"];
+                    $listadoreq=$objconsulta->obtenercandidatos($idreq);
+                    include('vistas/listadoyformcandidatos.php');
+                break;
+
+                case "guardarNuevoCandidato":
+                    $idreq = $_POST['id'];
+                    $nombre = $_POST['nombre'];
+                    $cedula = $_POST['cedula'];
+                    $telefono = $_POST['telefono'];
+                    $correo = $_POST['correo'];
+                    $guardarcan = $objconsulta->guardarCandidato($idreq,
+                        $nombre,
+                        $cedula,
+                        $telefono,
+                        $correo
+                    );
+
+                    echo "<script>alert('Informacion Guardada Correctamente');
+                window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$idreq."';
+                </script>";
+                break;
+                case "enviarCorreoPrueba":
+                $usuario = $_GET['id'];
+                $idreq = $_GET['idreq'];
+                $guardarcan = $objconsulta->actualizaEnvioPrue($usuario);
+                echo "<script>alert('Correo Envia Correctamente');
+                window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$idreq."';
+                </script>";
+                break;
                 case "guardarReq":
                    //print_r($_POST);
                    $id=$_POST['id'];
