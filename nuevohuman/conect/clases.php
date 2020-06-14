@@ -315,7 +315,7 @@ public function actualizaEnvioPrue($usuario)
 {
 
    $SQL ="UPDATE req_candidatos SET enviocorreo=1 WHERE id=".$usuario;
-   $conn->Execute($SQL);
+    $conn->Execute($SQL);
 }
 
 
