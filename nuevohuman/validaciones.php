@@ -5,7 +5,11 @@
             <meta http-equiv="refresh" content="0; url=<?php echo DIRWEB;?>">
             <?php
         }
-
+        $datosgene = array();
+        foreach ($_GET as $clave => $valor) {
+            $datosgene[$clave]=strip_tags($valor);
+        }
+        $_GET = $datosgene;
         $ctr = $_GET['ctr'];
         switch ($ctr) {
         case "home":
@@ -285,6 +289,53 @@
                     echo "<script>alert('Informacion Guardada Correctamente');
                 window.location.href = 'home.php?ctr=requisicion&acc=crearRequisicion&id=".$lastid."';
                 </script>";
+                break;
+                case "guardarentrevista":
+                  $datos = array();
+                   //var_export($_POST);
+                    $parentesco = $_POST['parentesco'];
+                    foreach ($parentesco as $clave => $valor) {
+                        foreach ($valor as $llavegene => $valorgene) {
+                            $campo = str_replace("'","",$llavegene.$clave);
+                            $valor = $valorgene;
+                            $datos[]=array($campo=>$valor);
+                        }
+                    }
+                    $experiencia = $_POST['experiencia'];
+                    foreach ($experiencia as $clave => $valor) {
+                        foreach ($valor as $llavegene => $valorgene) {
+                            $campo = str_replace("'","",$llavegene.$clave);
+                            $valor = $valorgene;
+                            $datos[]=array($campo=>$valor);
+                        }
+                    }
+                    $estudio = $_POST['estudio'];
+                    foreach ($estudio as $clave => $valor) {
+                        //echo "{$clave} => {$valor}";
+                        foreach ($valor as $llavegene => $valorgene) {
+                            $campo = str_replace("'","",$llavegene.$clave);
+                            $valor = $valorgene;
+                            $datos[]=array($campo=>$valor);
+                        }
+                    }
+                    $campossql = "id_req,id_can";
+                    $camposvalue = "{$_POST['idreq']},{$_POST['idcan']}";
+                    foreach ($datos as $clave => $valor) {
+                        foreach ($valor as $llavegene => $valorgene) {
+                            $campossql.=",{$llavegene}";
+                            $camposvalue.=",'{$valorgene}'";
+                        }
+                        
+                    }
+                    $sql = "INSERT INTO entrevistas (".$campossql.") VALUES (".$camposvalue.")";
+                    //echo $sql;
+                    $objconsulta->guardarEntre($sql);
+                    echo "<script>alert('Informacion Guardada Correctamente');
+                window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$_POST['idreq']."';
+                </script>";
+
+                   // var_dump($datos);
+
                 break;
                 case "guardarReqHabilidades":
                 //print_r($_POST);

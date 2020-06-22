@@ -313,8 +313,14 @@ public function guardarCandidato($idreq,
 
 public function actualizaEnvioPrue($usuario)
 {
-
+    $conn = $this->conec();
    $SQL ="UPDATE req_candidatos SET enviocorreo=1 WHERE id=".$usuario;
+    $conn->Execute($SQL);
+}
+
+public function guardarEntre($sql){
+    $conn = $this->conec();
+    $SQL =$sql;
     $conn->Execute($SQL);
 }
 

@@ -125,47 +125,27 @@ foreach ($datos as $estado) {
 	$cantidadestudios.='<div id="cona"><h5>'.ucfirst($estado).'</h5><div class="form-group row">
     <label for="'.$estado.'" class="col-4 col-form-label">Institución Educativa</label> 
     <div class="col-8">
-      <input id="estudio['.$estado.']" name="estudio['.$estado.']" placeholder="Institución Educativa" type="text" class="form-control">
+      <input id="estudio['.$estado.'][\'institucion\']" name="estudio['.$estado.'][\'institucion\']" placeholder="Institución Educativa" type="text" class="form-control">
     </div>
   </div>
   <div class="form-group row">
     <label for="'.$estado.'" class="col-4 col-form-label">Titulo Obtenido</label> 
     <div class="col-8">
-      <input id="estudio['.$estado.']" name="estudio['.$estado.']" placeholder="Titulo Obtenido" type="text" class="form-control">
+      <input id="estudio['.$estado.'][\'titulo\']" name="estudio['.$estado.'][\'titulo\']" placeholder="Titulo Obtenido" type="text" class="form-control">
     </div>
   </div>
   <div class="form-group row">
     <label for="'.$estado.'" class="col-4 col-form-label">Año Terminación</label> 
     <div class="col-8">
-      <input id="estudio['.$estado.']" name="estudio['.$estado.']" placeholder="Año Terminación" type="text" class="form-control">
+      <input id="estudio['.$estado.'][\'terminacion\']" name="estudio['.$estado.'][\'terminacion\']" placeholder="Año Terminación" type="text" class="form-control">
     </div>
   </div></div>';
 	# code...
 }
 
-/*
-  <div class="form-group row">
-    <label for="text" class="col-4 col-form-label">Institución Educativa</label> 
-    <div class="col-8">
-      <input id="text" name="text" placeholder="Institución Educativa" type="text" class="form-control">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="text1" class="col-4 col-form-label">Titulo Obtenido</label> 
-    <div class="col-8">
-      <input id="text1" name="text1" placeholder="Titulo Obtenido" type="text" class="form-control">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="text2" class="col-4 col-form-label">Año Terminación</label> 
-    <div class="col-8">
-      <input id="text2" name="text2" placeholder="Año Terminación" type="text" class="form-control">
-    </div>
-  </div> */
 for($j=0; $j<5;$j++){
-	//echo $j;
 
-    $cantidad .= '<div id="cona"><h5>Familiar '.($j+1).'</h5><br><div class="form-group row">
+    $cantidad .= '<p onclick="change('.$j.',\'parentesco\')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Pariente '.($j+1).'</p><div class="cona" id="parentesco'.$j.'" style="display:none"><h5>Familiar '.($j+1).'</h5><br><div class="form-group row">
 
     <label for="parentesco['.$j.'][\'nombre\']" class="col-4 col-form-label">Nombre</label> 
     <div class="col-8">
@@ -198,7 +178,7 @@ $cantidadexplab="";
 
 for($j=0; $j<5;$j++){
 
-	$cantidadexplab.='<div id="cona"><h5>Experiencia '.($j+1).'</h5><br><div class="form-group row">
+	$cantidadexplab.='<p onclick="change('.$j.',\'experiencia\')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Experiencia '.($j+1).'</p><div class="cona" id ="experiencia'.$j.'" style="display:none"><h5>Experiencia '.($j+1).'</h5><br><div class="form-group row">
     <label for="experiencia['.$j.'][\'empresa\']" class="col-4 col-form-label">Empresa</label> 
     <div class="col-8">
       <input id="experiencia['.$j.'][\'empresa\']" name="experiencia['.$j.'][\'empresa\']" placeholder="Empresa" type="text" class="form-control">
@@ -249,7 +229,7 @@ for($j=0; $j<5;$j++){
       <div class="modal-body">
      
 
-        <form class="form-horizontal" action="home.php?ctr=requisicion&acc=guardarPrueba" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" action="home.php?ctr=requisicion&acc=guardarentrevista" method="post" enctype="multipart/form-data">
 		<fieldset>
 		<div id ="listadoparientes">
 		<center><h4>Información Grupo Familiar <br>(Personas con las que vive )</h4><hr></center>
@@ -266,7 +246,9 @@ for($j=0; $j<5;$j++){
   		</div>
   <div class="form-group row">
     <div class="offset-4 col-8">
-      <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+    <input type="hidden" name="idreq" id="idreq" value="'.$idreq.'">
+    <input type="hidden" name="idcan" id="idcan" value="'.$idper.'">
+      <button name="submit" type="submit" class="btn btn-primary">Guardar Entrevista</button>
     </div>
 
   </div>
@@ -314,7 +296,31 @@ $botonentre ='<button type="button" class="btn btn-primary" data-toggle="modal" 
     padding: 10px;
     color: white;
 }
+
+.cona{
+		border: 1px solid black;
+		padding: 5px;
+		margin-bottom: 10px;
+	}
+	.cona h5 {
+    color: blue;
+    text-align: center;
+    background-color: #BDBDBD;
+    padding: 10px;
+    color: white;
+}
+
 #listadoparientes h4{
 	color: gray;
 }
+
 </style>
+<script>
+function change(id,campo){
+  var campo = campo+''+id;
+  if (document.getElementById){ //se obtiene el id
+    var el = document.getElementById(campo); //se define la variable "el" igual a nuestro div
+    el.style.display = (el.style.display == 'none') ? 'block' : 'none'; //damos un atributo display:none que oculta el div
+  }
+}
+</script>
