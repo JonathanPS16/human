@@ -345,7 +345,9 @@ public function enviarCorreoReq($ide,$req){
       $conn = $this->conec();
       $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
       //echo $consultas;
-      $mensaje = "Se a creado  una nueva requisision con el identificador {$req}";
+      $mensaje = "Se a creado  una nueva requisision con el identificador {$req} <br><br>
+      Recuerde que para que el lick sea valedero debe usted tener la sesion iniciada en el sistema <br><br>
+      Para visualizar de click <a href='https://humantalentsas.com/nuevohuman/home.php?ctr=requisicion&acc=listaCandidatos&id={$req}'><strong>AQUI</strong></a>";
       $consultas= $conn->Execute($consultas)-> getRows();
       for($i= 0; $i<count($consultas); $i++) {
         $correos = explode(",", $consultas[$i]['correosselecccion']);
