@@ -120,6 +120,7 @@
                     $id = 0;
                     $mireq=array();
                     $ide=$_GET['id'];
+                    $listatemporales=$objconsulta->obteneTemporales();
                     if($ide>0){
 
                         $id=$_GET['id'];
@@ -131,6 +132,11 @@
                 case "listadoReq":
                     $listadoreq=$objconsulta->obteneRes();
                     include('vistas/listadoreq.php');
+                break;
+
+                case "testcorreo":
+                    $listadoreq=$objconsulta->enviarCorreoReq(1,1);
+                    //include('vistas/listadoreq.php');
                 break;
 
                 case "milistadoReq":
@@ -172,6 +178,10 @@
                 case "guardarReq":
                    //print_r($_POST);
                    $id=$_POST['id'];
+                   $tipocargosele=$_POST['tipocargosele'];
+                   $empresaclientet=$_POST['empresaclientet'];
+                   $fechareqcargo=$_POST['fechareqcargo'];
+                   $empresacliente=$_POST['empresacliente'];
                    $cargo=$_POST['cargo'];
                    $edadminima=$_POST['edadminima'];
                    $edadmaxima=$_POST['edadmaxima'];
@@ -208,8 +218,19 @@
                     $strstagene,
                     $cantidad,
                     $ciudadlaboral,
-                    $jornadalaboral
+                    $jornadalaboral,
+                    $tipocargosele,
+                    $empresaclientet,
+                    $fechareqcargo,
+                    $empresacliente
                 );
+
+                /*AREA DE ENVIO DE CORREOS*/
+                $enviarcorreo = $objconsulta->enviarCorreoReq($empresaclientet,$lastid);
+
+
+                /***/
+
                 echo "<script>alert('Informacion Guardada Correctamente');
                 window.location.href = 'home.php?ctr=requisicion&acc=crearRequisicion&id=".$lastid."';
                 </script>";

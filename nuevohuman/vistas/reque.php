@@ -1,5 +1,4 @@
 <?php 
-var_dump($mireq[0]['id']);
 $title="FORMULARIO REQUISICION";
 if($id>0){
   ?>
@@ -700,6 +699,59 @@ HABILIDADES Y COMPETENCIAS
 <!-- Form Name -->
 <legend><?=$title?></legend>
 
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="cargo">Tipo Cargo</label>  
+  <div class="col-md-4">
+  <select id="tipocargosele" name="tipocargosele" class="form-control">
+    <option value="1" <?php if($mireq[0]['tipocargosele']==1) { echo 'selected="selected"'; } ?>>Operativo</option>
+    <option value="2" <?php if($mireq[0]['tipocargosele']==2) { echo 'selected="selected"';} ?>>Adminsitrativos</option>
+    <option value="3" <?php if($mireq[0]['tipocargosele']==3) { echo 'selected="selected"';} ?>>Comercial</option>
+    <option value="4" <?php if($mireq[0]['tipocargosele']==4) { echo 'selected="selected"';} ?>>Jefatura</option>
+    <option value="5" <?php if($mireq[0]['tipocargosele']==5) { echo 'selected="selected"';} ?>>Directivos</option>
+
+  </select>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="cargo">Empresa Temporal</label>  
+  <div class="col-md-4">
+  <select id="empresaclientet" name="empresaclientet" class="form-control">
+  <?php 
+  for($i=0; $i<count($listatemporales);$i++){
+    $id_temporal=$listatemporales[$i]['id_temporal'];
+    $nombretemporal=$listatemporales[$i]['nombretemporal'];
+    $slr = "";
+    if ($mireq[0]['empresaclientet']== $id_temporal){
+      $slr = 'selected="selected"';
+    }
+    echo '<option value="'.$id_temporal.'"  '.$slr.'>'.$nombretemporal.'</option>';
+  }
+  ?>
+  </select>
+  </div>
+</div>
+
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="cargo">Fecha Requerida Cargo </label>  
+  <div class="col-md-4">
+  <input id="fechareqcargo" value ="<?php echo $mireq[0]['fechareqcargo']; ?>" name="fechareqcargo" type="text" placeholder="YYYY-mm-dd" class="form-control input-md" required="">
+    
+  </div>
+</div>
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="cargo">Nombre Empresa Cliente</label>  
+  <div class="col-md-4">
+  <input id="empresacliente" value ="<?php echo $mireq[0]['empresacliente']; ?>" name="empresacliente" type="text" placeholder="Nombre Empresa Cliente" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="cargo">Nombre de Cargo</label>  
@@ -753,34 +805,56 @@ HABILIDADES Y COMPETENCIAS
     
   </div>
 </div>
-
+<?php
+$estados = $mireq[0]['estado']; 
+?>
 <!-- Multiple Checkboxes -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="checkestados">Estado Civil</label>
   <div class="col-md-4">
   <div class="checkbox">
     <label for="checkestados-0">
-      <input type="checkbox" name="checkestados[]" id="checkestados-0" value="1">
+      <input type="checkbox" name="checkestados[]" id="checkestados-0" value="1" <?php 
+$pos = strpos($estados, "1,");
+if ($pos === false) {
+  $checked1="";
+  } else {
+  $checked1= "checked";
+}
+?>>
       Soltero
     </label>
 	</div>
   <div class="checkbox">
     <label for="checkestados-1">
-      <input type="checkbox" name="checkestados[]" id="checkestados-1" value="2">
+      <input type="checkbox" name="checkestados[]" id="checkestados-1" value="2" <?php 
+$pos = strpos($estados, "2,");
+if ($pos === false) {
+  $checked1="";
+  } else {
+  $checked1= "checked";
+}
+?>>
       Casado
     </label>
 	</div>
   <div class="checkbox">
     <label for="checkestados-2">
-      <input type="checkbox" name="checkestados[]" id="checkestados-2" value="3">
+      <input type="checkbox" name="checkestados[]" id="checkestados-2" value="3" <?php 
+$pos = strpos($estados, "3,");
+if ($pos === false) {
+  $checked1="";
+  } else {
+  $checked1= "checked";
+}
+?>>
       Indiferente
     </label>
 	</div>
   </div>
 </div>
 <?php 
-$estados = $mireq[0]['estado']; 
-echo $estados;
+$estados = $mireq[0]['genero']; 
 
 ?>
 

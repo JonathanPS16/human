@@ -1,6 +1,7 @@
 <?php 
 session_start();
 define("DIRWEB", "https://".$_SERVER["HTTP_HOST"]."/nuevohuman/");
+require("phpmailer/class.phpmailer.php");
 class consultas {
 public function  consultarusuario($usuario,$clave) {
 	$this->_usuarioconectado($usuario,$clave);
@@ -105,6 +106,14 @@ public function obtenerVolantes($anios,$mes,$periodo,$numero){
     return $consultas;
 }
 
+public function obteneTemporales(){
+    $conn = $this->conec();
+    $dato=array();
+    $consultas = "SELECT * FROM empresasterporales";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
 public function obtenerIngresosRete($documento,$anio){
     $conn = $this->conec();
     $dato=array();
@@ -127,7 +136,11 @@ $strsta,
 $strstagene,
 $cantidad,
 $ciudadlaboral,
-$jornadalaboral
+$jornadalaboral,
+$tipocargosele,
+$empresaclientet,
+$fechareqcargo,
+$empresacliente
 ) 
 {
     $conn = $this->conec();
@@ -142,14 +155,18 @@ $jornadalaboral
     } else {
 
         $campos = "cargo,edadminima,edadmaxima,edadindiferente,horario,
-        tipocontrato,estado,genero,cantidad,ciudadlaboral,jornadalaboral";
+        tipocontrato,estado,genero,cantidad,ciudadlaboral,jornadalaboral,tipocargosele,empresaclientet,fechareqcargo,empresacliente";
         $valores = "'$cargo','$edadminima','$edadmaxima','$edadindiferente','$horario',
         '$tipocontrato',
         '$strsta',
         '$strstagene',
         '$cantidad',
         '$ciudadlaboral',
-        '$jornadalaboral'";
+        '$jornadalaboral',
+        '$tipocargosele',
+        '$empresaclientet',
+        '$fechareqcargo',
+        '$empresacliente'";
         $SQL= "INSERT INTO req (".$campos.") values (".$valores.")";
         $conn->Execute($SQL);
         $lastId = $conn->insert_Id();
@@ -324,6 +341,45 @@ public function guardarEntre($sql){
     $conn->Execute($SQL);
 }
 
+public function enviarCorreoReq($ide,$req){
+      $conn = $this->conec();
+      $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
+      //echo $consultas;
+      $mensaje = "Se a creado  una nueva requisision con el identificador {$req}";
+      $consultas= $conn->Execute($consultas)-> getRows();
+      for($i= 0; $i<count($consultas); $i++) {
+        $correos = explode(",", $consultas[$i]['correosselecccion']);
+        for($j=0; $j<count($correos); $j++){
+            $consultascorr = "SELECT mail FROM users WHERE uid= ".$correos[$j];
+            $consultasresp= $conn->Execute($consultascorr)-> getRows();
+            $envio = $this->enviocorreo($consultasresp[0]['mail'], $mensaje);
+        }
 
+      }
+      //var_dump ($consultas);
+      //return $consultas;*/
+  }
+
+  public function enviocorreo($correo,$mensaje)
+  {
+    $titulo2 = "Creacion de Nueva Requisision";
+    $cuerpo2 = "<p>Señor Usuario <br />".$mensaje."  Para su Seguimiento y/o Gestion <br /><br><br>
+                  &copy; ".date('Y')." humantalentsas.com - Todos los derechos reservados </p>";
+    $maildos = new PHPMailer();
+    $maildos->IsSMTP();
+    $maildos->SMTPAuth = true;
+    $maildos->SMTPSecure = "ssl"; 
+    $maildos->Host = "smtp.zoho.com"; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
+    $maildos->Username = "info@formalsi.com"; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
+    $maildos->Password = "2019FormalSiMarzo*"; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
+    $maildos->Port = 465; // Puerto de conexión al servidor de envio. 
+    $maildos->SetFrom('info@formalsi.com', 'Formalsi');
+    $maildos->AddAddress($correo, "Usuario");
+    $maildos->Subject = utf8_decode($titulo2); // Este es el titulo del email. 
+    $maildos->MsgHTML(utf8_decode($cuerpo2));
+    $maildos->Send(); // Envía el correo
+  }
 }
+
+
 ?>
