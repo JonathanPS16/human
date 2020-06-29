@@ -17,14 +17,16 @@ public function  consultarusuario($usuario,$clave) {
 
 private function _usuarioconectado($usuario,$clave) {
     $conn = $this->conec();
-    $consultas= $conn->Execute("SELECT users.uid,role.name as perfil,role.rid as idperfil FROM users inner join users_roles on users_roles.uid=users.uid 
+    $consultas= $conn->Execute("SELECT users.mail, users.uid,role.name as perfil,role.rid as idperfil FROM users inner join users_roles on users_roles.uid=users.uid 
     INNER join role on role.rid=users_roles.rid and users.name=".$usuario)-> getRows();
     foreach ($consultas as $key => $arreglo) { 
         $uid = $arreglo["uid"];
         $uperfil = $arreglo["idperfil"];
         $perfil = $arreglo["perfil"];
+        $mail = $arreglo["mail"];
         $perfil =1; 
         $_SESSION['usuario'] = $usuario;
+        $_SESSION['correo'] = $mail;
     	$_SESSION['idusuario'] = $uid;
     	$_SESSION['perfil'] = $perfil;
     	$_SESSION['id_perfil'] = $uperfil;
@@ -155,7 +157,7 @@ $empresacliente
     } else {
 
         $campos = "cargo,edadminima,edadmaxima,edadindiferente,horario,
-        tipocontrato,estado,genero,cantidad,ciudadlaboral,jornadalaboral,tipocargosele,empresaclientet,fechareqcargo,empresacliente";
+        tipocontrato,estado,genero,cantidad,ciudadlaboral,jornadalaboral,tipocargosele,empresaclientet,fechareqcargo,empresacliente,clientesol";
         $valores = "'$cargo','$edadminima','$edadmaxima','$edadindiferente','$horario',
         '$tipocontrato',
         '$strsta',
@@ -166,7 +168,8 @@ $empresacliente
         '$tipocargosele',
         '$empresaclientet',
         '$fechareqcargo',
-        '$empresacliente'";
+        '$empresacliente',
+        '".$_SESSION['usuario']."'";
         $SQL= "INSERT INTO req (".$campos.") values (".$valores.")";
         $conn->Execute($SQL);
         $lastId = $conn->insert_Id();
@@ -358,8 +361,7 @@ public function enviarCorreoReq($ide,$req){
         }
 
       }
-      //var_dump ($consultas);
-      //return $consultas;*/
+      $envio = $this->enviocorreo($_SESSION['correo'], $mensaje);
   }
 
   public function enviocorreo($correo,$mensaje)

@@ -227,8 +227,6 @@
 
                 /*AREA DE ENVIO DE CORREOS*/
                 $enviarcorreo = $objconsulta->enviarCorreoReq($empresaclientet,$lastid);
-
-
                 /***/
 
                 echo "<script>alert('Informacion Guardada Correctamente');
