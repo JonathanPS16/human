@@ -122,7 +122,6 @@
                     $ide=$_GET['id'];
                     $listatemporales=$objconsulta->obteneTemporales();
                     if($ide>0){
-
                         $id=$_GET['id'];
                         $mireq=$objconsulta->obteneRes($id);
                         
@@ -130,7 +129,7 @@
                     include('vistas/reque.php');
                 break;
                 case "listadoReq":
-                    $listadoreq=$objconsulta->obteneRes();
+                    $listadoreq=$objconsulta->obteneRes(0,$_SESSION['usuario']);
                     include('vistas/listadoreq.php');
                 break;
 
@@ -140,7 +139,7 @@
                 break;
 
                 case "milistadoReq":
-                    $listadoreq=$objconsulta->obteneMisRes();
+                    $listadoreq=$objconsulta->obteneMisRes(0,"".$_SESSION['datosempresa']."");
                     include('vistas/listadomisreq.php');
                 break;
 
@@ -228,8 +227,11 @@
                 /*AREA DE ENVIO DE CORREOS*/
                 $enviarcorreo = $objconsulta->enviarCorreoReq($empresaclientet,$lastid);
                 /***/
-
-                echo "<script>alert('Informacion Guardada Correctamente');
+                $gua = "Por favor complete la informacion de su solicitud";
+                if($id>0) {
+                    $gua = "";
+                }
+                echo "<script>alert('Informacion Guardada Correctamente ".$gua."');
                 window.location.href = 'home.php?ctr=requisicion&acc=crearRequisicion&id=".$lastid."';
                 </script>";
                 break;

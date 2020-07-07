@@ -32,6 +32,13 @@ private function _usuarioconectado($usuario,$clave) {
     	$_SESSION['id_perfil'] = $uperfil;
     }
 
+    $consultas= $conn->Execute("SELECT id_empresa from  usuariosempresas where id_usuario=".$_SESSION['idusuario'])-> getRows();
+    $empresa = "";
+    foreach ($consultas as $key => $arreglo) { 
+        $empresa.= $arreglo["id_empresa"].",";
+    }
+
+    $_SESSION['datosempresa'] = $empresa;
 } 
 
 public function conec(){
@@ -275,13 +282,16 @@ $habilidades)
 
 }
 
-public function obteneRes($ide=0){
+public function obteneRes($ide=0,$clientesol=""){
   //echo $ide;
     $conn = $this->conec();
     $dato=array();
     $where="";
     if ($ide != 0) {
-      $where .="and id= ".$ide;
+      $where .=" and id= ".$ide;
+    } 
+    if ($clientesol != "") {
+        $where .=" and clientesol= ".$clientesol;
     } 
     $consultas = "SELECT * FROM req where 1=1 ".$where."";
     //echo $consultas;
@@ -289,7 +299,7 @@ public function obteneRes($ide=0){
     return $consultas;
 }
 
-public function obteneMisRes($ide=0){
+public function obteneMisRes($ide=0,$mis=""){
   //echo $ide;
     $conn = $this->conec();
     $dato=array();
@@ -297,7 +307,11 @@ public function obteneMisRes($ide=0){
     if ($ide != 0) {
       $where .="and id= ".$ide;
     } 
-    $consultas = "SELECT * FROM req";
+    if($mis != "") {
+        $where .="and empresaclientet in(".substr($mis,0,-1).")"; 
+    }
+
+    $consultas = "SELECT * FROM req where 1=1 ".$where;
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
@@ -311,7 +325,7 @@ public function obtenercandidatos($ide=0){
     if ($ide != 0) {
       $where .="and id_requisision= ".$ide;
     } 
-    $consultas = "SELECT * FROM req_candidatos WHERE 1=1 ";
+    $consultas = "SELECT * FROM req_candidatos WHERE 1=1 ".$where;
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
@@ -377,7 +391,7 @@ public function enviarCorreoReq($ide,$req){
     $maildos->Username = "info@formalsi.com"; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
     $maildos->Password = "2019FormalSiMarzo*"; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
     $maildos->Port = 465; // Puerto de conexión al servidor de envio. 
-    $maildos->SetFrom('info@formalsi.com', 'Formalsi');
+    $maildos->SetFrom('info@formalsi.com', 'Humantalentsas');
     $maildos->AddAddress($correo, "Usuario");
     $maildos->Subject = utf8_decode($titulo2); // Este es el titulo del email. 
     $maildos->MsgHTML(utf8_decode($cuerpo2));

@@ -2,22 +2,6 @@
 $title="FORMULARIO REQUISICION";
 if($id>0){
   ?>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  CONDICIONES Y FUNCIONES
-</button>
-
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#responsabilidades">
-  RESPONSABILIDADES
-</button>
-
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formacion">
-  FORMACION Y EXPERIENCIA
-</button>
-
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#habilidades">
-HABILIDADES Y COMPETENCIAS
-</button>
-
     <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -34,7 +18,7 @@ HABILIDADES Y COMPETENCIAS
       <input type="hidden" id="id" name="id" value="<?=$id?>">
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="salariobasico">Salario  Básico 	</label>  
+  <label class="col-md-10 control-label" for="salariobasico">Salario  Básico 	</label>  
   <div class="col-md-8">
   <input id="salariobasico" name="salariobasico" type="text" placeholder="Salario  Básico" class="form-control input-md" value ="<?php echo $mireq[0]['salariobasico']; ?>">
     
@@ -43,7 +27,7 @@ HABILIDADES Y COMPETENCIAS
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="comisiones">Comisiones 	</label>  
+  <label class="col-md-10 control-label" for="comisiones">Comisiones 	</label>  
   <div class="col-md-8">
   <input id="comisiones" name="comisiones" type="text" placeholder="Comisiones" class="form-control input-md" value ="<?php echo $mireq[0]['comisiones']; ?>">
     
@@ -52,7 +36,7 @@ HABILIDADES Y COMPETENCIAS
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="rodamiento">Rodamiento	</label>  
+  <label class="col-md-10 control-label" for="rodamiento">Rodamiento	</label>  
   <div class="col-md-8">
   <input id="rodamiento" name="rodamiento" type="text" placeholder="Rodamiento	" class="form-control input-md" value ="<?php echo $mireq[0]['rodamiento']; ?>">
     
@@ -61,7 +45,7 @@ HABILIDADES Y COMPETENCIAS
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="bonificacion">Bonificacion 	</label>  
+  <label class="col-md-10 control-label" for="bonificacion">Bonificacion 	</label>  
   <div class="col-md-8">
   <input id="bonificacion" name="bonificacion" type="text" placeholder="Bonificacion 	" class="form-control input-md" value ="<?php echo $mireq[0]['bonificacion']; ?>">
     
@@ -70,7 +54,7 @@ HABILIDADES Y COMPETENCIAS
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="otraingreso">Otro 	</label>  
+  <label class="col-md-10 control-label" for="otraingreso">Otro 	</label>  
   <div class="col-md-8">
   <input id="otraingreso" name="otraingreso" type="text" placeholder="Otro 	" class="form-control input-md" value ="<?php echo $mireq[0]['otraingreso']; ?>">
     
@@ -78,7 +62,7 @@ HABILIDADES Y COMPETENCIAS
 </div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="funciones">Funciones</label>  
+  <label class="col-md-10 control-label" for="funciones">Funciones</label>  
   <div class="col-md-8">
   <input id="funciones" name="funciones" type="text" placeholder="Funciones" class="form-control input-md" required="" value ="<?php echo $mireq[0]['funciones']; ?>" >
     
@@ -87,8 +71,8 @@ HABILIDADES Y COMPETENCIAS
 
 <!-- Button -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="singlebutton"></label>
-  <div class="col-md-4">
+  <label class="col-md-10 control-label" for="singlebutton"></label>
+  <div class="col-md-10">
     <button id="singlebutton" name="singlebutton" class="btn btn-primary">Guardar</button>
   </div>
 </div>
@@ -699,119 +683,148 @@ HABILIDADES Y COMPETENCIAS
 <!-- Form Name -->
 <legend><?=$title?></legend>
 
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <div class="form-group">
+        <label class="col-md-10 control-label" for="cargo">Tipo Cargo</label>  
+        <div class="col-md-10">
+        <select id="tipocargosele" name="tipocargosele" class="form-control">
+          <option value="1" <?php if($mireq[0]['tipocargosele']==1) { echo 'selected="selected"'; } ?>>Operativo</option>
+          <option value="2" <?php if($mireq[0]['tipocargosele']==2) { echo 'selected="selected"';} ?>>Adminsitrativos</option>
+          <option value="3" <?php if($mireq[0]['tipocargosele']==3) { echo 'selected="selected"';} ?>>Comercial</option>
+          <option value="4" <?php if($mireq[0]['tipocargosele']==4) { echo 'selected="selected"';} ?>>Jefatura</option>
+          <option value="5" <?php if($mireq[0]['tipocargosele']==5) { echo 'selected="selected"';} ?>>Directivos</option>
 
-<div class="form-group">
-  <label class="col-md-4 control-label" for="cargo">Tipo Cargo</label>  
-  <div class="col-md-4">
-  <select id="tipocargosele" name="tipocargosele" class="form-control">
-    <option value="1" <?php if($mireq[0]['tipocargosele']==1) { echo 'selected="selected"'; } ?>>Operativo</option>
-    <option value="2" <?php if($mireq[0]['tipocargosele']==2) { echo 'selected="selected"';} ?>>Adminsitrativos</option>
-    <option value="3" <?php if($mireq[0]['tipocargosele']==3) { echo 'selected="selected"';} ?>>Comercial</option>
-    <option value="4" <?php if($mireq[0]['tipocargosele']==4) { echo 'selected="selected"';} ?>>Jefatura</option>
-    <option value="5" <?php if($mireq[0]['tipocargosele']==5) { echo 'selected="selected"';} ?>>Directivos</option>
+        </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm">
+    <div class="form-group">
+      <label class="col-md-10 control-label" for="jornadalaboral">Jornada Laboral</label>  
+      <div class="col-md-10">
+      <input id="jornadalaboral" value ="<?php echo $mireq[0]['jornadalaboral']; ?>" name="jornadalaboral" type="text" placeholder="Jornada Laboral" class="form-control input-md" required="">
+      </div>
+    </div>
+    </div>
+    <div class="col-sm">
 
-  </select>
+    <div class="form-group">
+      <label class="col-md-10 control-label" for="cargo">Empresa Temporal</label>  
+      <div class="col-md-10">
+      <select id="empresaclientet" name="empresaclientet" class="form-control">
+      <?php 
+      for($i=0; $i<count($listatemporales);$i++){
+        $id_temporal=$listatemporales[$i]['id_temporal'];
+        $nombretemporal=$listatemporales[$i]['nombretemporal'];
+        $slr = "";
+        if ($mireq[0]['empresaclientet']== $id_temporal){
+          $slr = 'selected="selected"';
+        }
+        echo '<option value="'.$id_temporal.'"  '.$slr.'>'.$nombretemporal.'</option>';
+      }
+      ?>
+      </select>
+      </div>
+    </div>
+
+
+    </div>
+   
   </div>
 </div>
-
-<div class="form-group">
-  <label class="col-md-4 control-label" for="cargo">Empresa Temporal</label>  
-  <div class="col-md-4">
-  <select id="empresaclientet" name="empresaclientet" class="form-control">
-  <?php 
-  for($i=0; $i<count($listatemporales);$i++){
-    $id_temporal=$listatemporales[$i]['id_temporal'];
-    $nombretemporal=$listatemporales[$i]['nombretemporal'];
-    $slr = "";
-    if ($mireq[0]['empresaclientet']== $id_temporal){
-      $slr = 'selected="selected"';
-    }
-    echo '<option value="'.$id_temporal.'"  '.$slr.'>'.$nombretemporal.'</option>';
-  }
-  ?>
-  </select>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+    <div class="form-group">
+      <label class="col-md-10 control-label" for="cargo">Fecha Requerida Cargo </label>  
+      <div class="col-md-10">
+      <input id="fechareqcargo" value ="<?php echo $mireq[0]['fechareqcargo']; ?>" name="fechareqcargo" type="text" placeholder="YYYY-mm-dd" class="form-control input-md" required="">
+        
+      </div>
+    </div>
+    </div>
+    <div class="col-sm">
+    <div class="form-group">
+      <label class="col-md-10 control-label" for="cargo">Nombre Empresa Cliente</label>  
+      <div class="col-md-10">
+      <input id="empresacliente" value ="<?php echo $mireq[0]['empresacliente']; ?>" name="empresacliente" type="text" placeholder="Nombre Empresa Cliente" class="form-control input-md" required="">
+        
+      </div>
+    </div>
+    </div>
+    <div class="col-sm">
+      
+    <div class="form-group">
+      <label class="col-md-10 control-label" for="cargo">Nombre de Cargo</label>  
+      <div class="col-md-10">
+      <input id="cargo" value ="<?php echo $mireq[0]['cargo']; ?>" name="cargo" type="text" placeholder="Nombre de Cargo" class="form-control input-md" required="">
+        
+      </div>
+    </div>
+    </div>
   </div>
 </div>
-
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="cargo">Fecha Requerida Cargo </label>  
-  <div class="col-md-4">
-  <input id="fechareqcargo" value ="<?php echo $mireq[0]['fechareqcargo']; ?>" name="fechareqcargo" type="text" placeholder="YYYY-mm-dd" class="form-control input-md" required="">
-    
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+    <div class="form-group">
+      <label class="col-md-10 control-label" for="edadminima">Edad Mínima </label>  
+      <div class="col-md-10">
+      <input id="edadminima" value ="<?php echo $mireq[0]['edadminima']; ?>" name="edadminima" type="text" placeholder="Edad Mínima " class="form-control input-md" required="">
+        
+      </div>
+    </div>
+    </div>
+    <div class="col-sm">
+    <div class="form-group">
+      <label class="col-md-10 control-label" for="edadmaxima">Edad Máxima </label>  
+      <div class="col-md-10">
+      <input id="edadmaxima" value ="<?php echo $mireq[0]['edadmaxima']; ?>" name="edadmaxima" type="text" placeholder="Edad Máxima " class="form-control input-md" required="">
+        
+      </div>
+    </div>
+    </div>
+    <div class="col-sm">
+    <div class="form-group">
+      <label class="col-md-10 control-label" for="edadindiferente">Edad Indiferente</label>  
+      <div class="col-md-10">
+      <input id="edadindiferente" value ="<?php echo $mireq[0]['edadindiferente']; ?>" name="edadindiferente" type="text" placeholder="Edad Indiferente" class="form-control input-md" required="">
+        
+      </div>
+    </div>
+    </div>
   </div>
 </div>
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="cargo">Nombre Empresa Cliente</label>  
-  <div class="col-md-4">
-  <input id="empresacliente" value ="<?php echo $mireq[0]['empresacliente']; ?>" name="empresacliente" type="text" placeholder="Nombre Empresa Cliente" class="form-control input-md" required="">
-    
-  </div>
-</div>
-
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="cargo">Nombre de Cargo</label>  
-  <div class="col-md-4">
-  <input id="cargo" value ="<?php echo $mireq[0]['cargo']; ?>" name="cargo" type="text" placeholder="Nombre de Cargo" class="form-control input-md" required="">
-    
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="edadminima">Edad Mínima </label>  
-  <div class="col-md-4">
-  <input id="edadminima" value ="<?php echo $mireq[0]['edadminima']; ?>" name="edadminima" type="text" placeholder="Edad Mínima " class="form-control input-md" required="">
-    
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="edadmaxima">Edad Máxima </label>  
-  <div class="col-md-4">
-  <input id="edadmaxima" value ="<?php echo $mireq[0]['edadmaxima']; ?>" name="edadmaxima" type="text" placeholder="Edad Máxima " class="form-control input-md" required="">
-    
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="edadindiferente">Edad Indiferente</label>  
-  <div class="col-md-4">
-  <input id="edadindiferente" value ="<?php echo $mireq[0]['edadindiferente']; ?>" name="edadindiferente" type="text" placeholder="Edad Indiferente" class="form-control input-md" required="">
-    
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="horario ">Horario</label>  
-  <div class="col-md-4">
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+    <div class="form-group">
+  <label class="col-md-10 control-label" for="horario ">Horario</label>  
+  <div class="col-md-10">
   <input id="horario" value ="<?php echo $mireq[0]['horario']; ?>" name="horario" type="text" placeholder="Horario" class="form-control input-md" required="">
     
   </div>
 </div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="tipocontrato">Tipo de Contrato</label>  
-  <div class="col-md-4">
+    </div>
+    <div class="col-sm">
+    <div class="form-group">
+  <label class="col-md-10 control-label" for="tipocontrato">Tipo de Contrato</label>  
+  <div class="col-md-10">
   <input id="tipocontrato" value ="<?php echo $mireq[0]['tipocontrato']; ?>" name="tipocontrato" type="text" placeholder="Tipo de Contrato" class="form-control input-md" required="">
     
   </div>
 </div>
-<?php
+    </div>
+    <div class="col-sm">
+    <?php
 $estados = $mireq[0]['estado']; 
 ?>
 <!-- Multiple Checkboxes -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="checkestados">Estado Civil</label>
-  <div class="col-md-4">
+  <label class="col-md-10 control-label" for="checkestados">Estado Civil</label>
+  <div class="col-md-10">
   <div class="checkbox">
     <label for="checkestados-0">
       <input type="checkbox" name="checkestados[]" id="checkestados-0" value="1" <?php 
@@ -853,15 +866,21 @@ if ($pos === false) {
 	</div>
   </div>
 </div>
-<?php 
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+    <?php 
 $estados = $mireq[0]['genero']; 
 
 ?>
 
 <!-- Multiple Checkboxes -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="checkgenero">Genero</label>
-  <div class="col-md-4">
+  <label class="col-md-10 control-label" for="checkgenero">Genero</label>
+  <div class="col-md-10">
   <div class="checkbox">
     <label for="checkgenero-0">
       <?php 
@@ -910,41 +929,80 @@ if ($pos === false) {
 	</div>
   </div>
 </div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="cantidad">Cantidad</label>  
-  <div class="col-md-4">
+    </div>
+    <div class="col-sm">
+    <div class="form-group">
+  <label class="col-md-10 control-label" for="cantidad">Cantidad</label>  
+  <div class="col-md-10">
   <input id="cantidad" value ="<?php echo $mireq[0]['cantidad']; ?>" name="cantidad" type="text" placeholder="Cantidad" class="form-control input-md" required="">
     
   </div>
 </div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="ciudadlaboral">Ciudad a Laborar</label>  
-  <div class="col-md-4">
+    </div>
+    <div class="col-sm">
+    <div class="form-group">
+  <label class="col-md-10 control-label" for="ciudadlaboral">Ciudad a Laborar</label>  
+  <div class="col-md-10">
   <input id="ciudadlaboral" value ="<?php echo $mireq[0]['ciudadlaboral']; ?>" name="ciudadlaboral" type="text" placeholder="Ciudad a Laborar" class="form-control input-md" required="">
     
   </div>
 </div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="jornadalaboral">Jornada Laboral</label>  
-  <div class="col-md-4">
-  <input id="jornadalaboral" value ="<?php echo $mireq[0]['jornadalaboral']; ?>" name="jornadalaboral" type="text" placeholder="Jornada Laboral" class="form-control input-md" required="">
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
     
+    </div>
+    <div class="col-sm">
+      
+    </div>
+    <div class="col-sm">
+      
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      
+    </div>
+    <div class="col-sm">
+      
+    </div>
+    <div class="col-sm">
+      
+    </div>
   </div>
 </div>
 
 <!-- Button -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="guardaruno"></label>
-  <div class="col-md-4">
+  <label class="col-md-10 control-label" for="guardaruno"></label>
+  <div class="col-md-10">
     <button id="guardaruno" name="guardaruno" class="btn btn-primary">Guardar</button>
   </div>
 </div>
+
+<?php if($id>0){
+  ?>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  CONDICIONES Y FUNCIONES
+</button>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#responsabilidades">
+  RESPONSABILIDADES
+</button>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formacion">
+  FORMACION Y EXPERIENCIA
+</button>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#habilidades">
+HABILIDADES Y COMPETENCIAS
+</button>
+<?php } ?>>
 
 </fieldset>
 </form>
