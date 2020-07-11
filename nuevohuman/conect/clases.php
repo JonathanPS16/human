@@ -22,13 +22,12 @@ private function _usuarioconectado($usuario,$clave) {
     foreach ($consultas as $key => $arreglo) { 
         $uid = $arreglo["uid"];
         $uperfil = $arreglo["idperfil"];
-        $perfil = $arreglo["perfil"];
+       
         $mail = $arreglo["mail"];
         $perfil =1; 
         $_SESSION['usuario'] = $usuario;
         $_SESSION['correo'] = $mail;
     	$_SESSION['idusuario'] = $uid;
-    	$_SESSION['perfil'] = $perfil;
     	$_SESSION['id_perfil'] = $uperfil;
     }
 
@@ -317,15 +316,29 @@ public function obteneMisRes($ide=0,$mis=""){
     return $consultas;
 }
 
-public function obtenercandidatos($ide=0){
+public function obteneMisRescreadas($id){
+    //echo $ide;
+      $conn = $this->conec();
+        $usuario = $_SESSION['usuario'];
+      $consultas = "SELECT * FROM req where clientesol = '{$usuario}' and  id =".$id;
+      //echo $consultas;
+      $consultas= $conn->Execute($consultas)-> getRows();
+      return $consultas;
+  }
+
+public function obtenercandidatos($ide=0,$whereex = ""){
   //echo $ide;
     $conn = $this->conec();
     $dato=array();
     $where="";
     if ($ide != 0) {
-      $where .="and id_requisision= ".$ide;
+      $where .=" and id_requisision= ".$ide;
     } 
-    $consultas = "SELECT * FROM req_candidatos WHERE 1=1 ".$where;
+    if($whereex!="")
+    {
+        $where .=" and ".$whereex;  
+    }
+    $consultas = "SELECT *,(select COUNT(*) from entrevistas where entrevistas.id_can=req_candidatos.id and entrevistas.id_req=req_candidatos.id_requisision) as conteoentre FROM req_candidatos WHERE 1=1 ".$where;
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
@@ -352,19 +365,77 @@ public function actualizaEnvioPrue($usuario)
     $conn->Execute($SQL);
 }
 
+public function guardarArchivoPTecnico($nombre_archivo,$id)
+{
+    $conn = $this->conec();
+   $SQL ="UPDATE req_candidatos SET archivoprueba='$nombre_archivo' WHERE id=".$id;
+    $conn->Execute($SQL);
+}
+
+public function guardarArchivoHv($nombre_archivo,$id)
+{
+    $conn = $this->conec();
+   $SQL ="UPDATE req_candidatos SET hojavida='$nombre_archivo' WHERE id=".$id;
+    $conn->Execute($SQL);
+}
+
+public function enviarcandidatocliente($id)
+{
+    $conn = $this->conec();
+   $SQL ="UPDATE req_candidatos SET estado='E' WHERE id=".$id;
+    $conn->Execute($SQL);
+}
+
+public function altareq($id)
+{
+    $conn = $this->conec();
+    $SQL ="UPDATE req SET status='E' WHERE id=".$id;
+    $conn->Execute($SQL);
+}
+
 public function guardarEntre($sql){
     $conn = $this->conec();
     $SQL =$sql;
     $conn->Execute($SQL);
 }
 
+public function enviarcorreoClienteGen($idreq,$tipomen)
+{
+    $conn = $this->conec();
+
+    $consultas = "SELECT users.mail as correo FROM `req` INNER JOIN users on req.clientesol = users.name and req.id=".$idreq;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $correo = "";
+    for($i= 0; $i<count($consultas); $i++) {
+        $correo  =$consultas[$i]['correo'];
+    }
+    $mesaje ="";
+    switch ($tipomen) {
+        case "NUEVOCANDIDATO":
+            $mesaje = "Se a enviado un candidato para su requision {$idreq} <br><br>
+            Para visualizar de click <a href='https://humantalentsas.com/nuevohuman/home.php?ctr=requisicion&acc=verreqcan&id={$idreq}'><strong>AQUI</strong></a><br><br>
+            Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
+            break;
+        case "NUEVAREQ":
+            $mesaje = "Se creo su Requisicion con el #{$idreq} <br>
+            Para visualizar de click <a href='https://humantalentsas.com/nuevohuman/home.php?ctr=requisicion&acc=verreqcan&id={$idreq}'><strong>AQUI</strong></a><br><br>
+            Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
+            break;
+        case "NUEVOCANDIDATO2":
+            $mesaje =  "i es igual a 2";
+            break;
+    }
+
+    $envio = $this->enviocorreo($correo, $mesaje);
+}
+
 public function enviarCorreoReq($ide,$req){
       $conn = $this->conec();
       $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
       //echo $consultas;
-      $mensaje = "Se a creado  una nueva requisision con el identificador {$req} <br><br>
-      Recuerde que para que el lick sea valedero debe usted tener la sesion iniciada en el sistema <br><br>
-      Para visualizar de click <a href='https://humantalentsas.com/nuevohuman/home.php?ctr=requisicion&acc=listaCandidatos&id={$req}'><strong>AQUI</strong></a>";
+      $mensaje = "Se a creado  una nueva requisision con el identificador {$req} Para su gestion de candidatos<br><br>
+      Para visualizar de click <a href='https://humantalentsas.com/nuevohuman/home.php?ctr=requisicion&acc=listaCandidatos&id={$req}'><strong>AQUI</strong></a><br><br>
+      Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
       $consultas= $conn->Execute($consultas)-> getRows();
       for($i= 0; $i<count($consultas); $i++) {
         $correos = explode(",", $consultas[$i]['correosselecccion']);
@@ -375,7 +446,8 @@ public function enviarCorreoReq($ide,$req){
         }
 
       }
-      $envio = $this->enviocorreo($_SESSION['correo'], $mensaje);
+
+      $this->enviarcorreoClienteGen($req,"NUEVAREQ");
   }
 
   public function enviocorreo($correo,$mensaje)

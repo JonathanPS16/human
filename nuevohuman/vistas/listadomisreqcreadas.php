@@ -1,8 +1,3 @@
-<br>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Agregar Candidato
-</button>
-<br>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -171,7 +166,7 @@ for($i=0; $i<count($listadoreq);$i++){
 </button>';	
 } elseif($archivoprueba!="") {
   $conteoreq++;
-  $boton ='<a href="archivosgenerales/'.$archivoprueba.'" target="_black" class="btn btn-primary">Descargar Prueba Realizada</a>';	
+  $boton ='<a href="archivosgenerales/'.$archivoprueba.'" target="_black" class="btn btn-primary">Ver Prueba Psicotecnica</a>';	
 
 } else {
 	$boton ='<a href="home.php?ctr=requisicion&acc=enviarCorreoPrueba&id='.$idper.'&idreq='.$idreq.'" class="btn btn-primary">Enviar Prueba</a>';	
@@ -330,14 +325,8 @@ for($j=0; $j<5;$j++){
 </div>
 ';
 $botonentre ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal'.$idper.'">
-  Guardar Entrevista
+  Ver Entrevista
 </button>';	
-
-if ($conteoentre>0){
-  $botonentre ='Entrevista Realizada';	
-  $conteoreq++;
-}
-$botnenvi = "Le falta ".(3-$conteoreq)." Paso(s) para Enviar Candidato";
 
 if ($estadopresen=="E"){
   $botnenvi = "Candidato Presentado";

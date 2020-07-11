@@ -128,6 +128,49 @@
                     }
                     include('vistas/reque.php');
                 break;
+                case "guardarPrueba":
+                    $nombre_archivo = date('Ymd').$_FILES['filebutton']['name'];
+                    $tipo_archivo = $_FILES['filebutton']['type'];
+                    $tamano_archivo = $_FILES['filebutton']['size'];
+                    $mensaje = "";    
+                    //compruebo si las características del archivo son las que deseo
+                    if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")) && ($tamano_archivo < 100000))) {
+                        $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                    }else{
+                        if (move_uploaded_file($_FILES['filebutton']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                            $objconsulta->guardarArchivoPTecnico($nombre_archivo,$_POST['id']);
+                            $mensaje =  "El archivo ha sido cargado correctamente.";
+                        }else{
+                            $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                        }
+                    }
+                    echo "<script>alert('".$mensaje."');
+                        window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$_POST['idreq']."';
+                        </script>";
+                    //include('vistas/reque.php');
+                break;
+
+                case "guardarhv":
+                    $nombre_archivo = date('Ymd').$_FILES['filebutton']['name'];
+                    $tipo_archivo = $_FILES['filebutton']['type'];
+                    $tamano_archivo = $_FILES['filebutton']['size'];
+                    $mensaje = "";    
+                    //compruebo si las características del archivo son las que deseo
+                    if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")) && ($tamano_archivo < 100000))) {
+                        $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                    }else{
+                        if (move_uploaded_file($_FILES['filebutton']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                            $objconsulta->guardarArchivoHv($nombre_archivo,$_POST['id']);
+                            $mensaje =  "El archivo ha sido cargado correctamente.";
+                        }else{
+                            $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                        }
+                    }
+                    echo "<script>alert('".$mensaje."');
+                        window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$_POST['idreq']."';
+                        </script>";
+                    //include('vistas/reque.php');
+                break;
                 case "listadoReq":
                     $listadoreq=$objconsulta->obteneRes(0,$_SESSION['usuario']);
                     include('vistas/listadoreq.php');
@@ -161,6 +204,19 @@
                         $telefono,
                         $correo
                     );
+
+                    echo "<script>alert('Informacion Guardada Correctamente');
+                window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$idreq."';
+                </script>";
+                break;
+
+                case "enviarCandidatos":
+                    $idper = $_GET['idper'];
+                    $idreq = $_GET['idreq'];
+                   
+                    $objconsulta->enviarcandidatocliente($idper);
+
+                    $objconsulta->enviarcorreoClienteGen($idreq,"NUEVOCANDIDATO");
 
                     echo "<script>alert('Informacion Guardada Correctamente');
                 window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$idreq."';
@@ -225,7 +281,7 @@
                 );
 
                 /*AREA DE ENVIO DE CORREOS*/
-                $enviarcorreo = $objconsulta->enviarCorreoReq($empresaclientet,$lastid);
+               // $enviarcorreo = $objconsulta->enviarCorreoReq($empresaclientet,$lastid);
                 /***/
                 $gua = "Por favor complete la informacion de su solicitud";
                 if($id>0) {
@@ -235,6 +291,26 @@
                 window.location.href = 'home.php?ctr=requisicion&acc=crearRequisicion&id=".$lastid."';
                 </script>";
                 break;
+
+                case 'altareq':
+                    $lastid=$_GET['id'];
+                    $empresaclientet=$_GET['empresol'];
+                    $objconsulta->altareq($lastid);
+                    $enviarcorreo = $objconsulta->enviarCorreoReq($empresaclientet,$lastid);
+                    echo "<script>alert('Informacion Guardada Correctamente ');
+                window.location.href = 'home.php?ctr=requisicion&acc=verreqcan&id={$lastid}';
+                </script>";
+                break;
+
+                case 'verreqcan':
+                    $lastid=$_GET['id'];
+                    $listadoreq=$objconsulta->obteneMisRescreadas($lastid);
+                    $listadoreq=$objconsulta->obtenercandidatos($lastid,"estado = 'E'");
+                    include('vistas/listadomisreqcreadas.php');
+                break;
+
+                   
+
                 case 'guardarReqCondiciones':
                     $id=$_POST['id'];
                     $salariobasico=$_POST['salariobasico'];

@@ -834,6 +834,7 @@ if ($pos === false) {
   } else {
   $checked1= "checked";
 }
+echo $checked1;
 ?>>
       Soltero
     </label>
@@ -847,6 +848,7 @@ if ($pos === false) {
   } else {
   $checked1= "checked";
 }
+echo $checked1;
 ?>>
       Casado
     </label>
@@ -860,6 +862,7 @@ if ($pos === false) {
   } else {
   $checked1= "checked";
 }
+echo $checked1;
 ?>>
       Indiferente
     </label>
@@ -966,7 +969,43 @@ if ($pos === false) {
 <div class="container">
   <div class="row">
     <div class="col-sm">
-      
+    <button id="guardaruno" name="guardaruno" class="btn btn-primary col-md-20"><?php if($_GET['id']>0) { echo "Actualizar Requisicion"; } else { echo "Guardar Requisicion";} ?></button>
+    </div>
+
+    <?php if($id>0){
+        ?>
+      <div class="col-sm">
+      <a href="home.php?ctr=requisicion&acc=altareq&id=<?php echo $mireq[0]['id'];?>&empresol=<?php echo $mireq[0]['empresaclientet'];?>" class="btn btn-success col-md-20">
+        Solicitar Requisicion
+      </a>
+      </div>
+      <div class="col-sm">
+      <button type="button" class="btn btn-secondary col-md-20" data-toggle="modal" data-target="#exampleModal">
+        CONDICIONES Y FUNCIONES
+      </button>
+      </div>
+      <div class="col-sm">
+      <button type="button" class="btn btn-secondary col-md-20" data-toggle="modal" data-target="#responsabilidades">
+        RESPONSABILIDADES
+      </button>
+      </div>
+      <div class="col-sm">
+      <button type="button" class="btn btn-secondary col-md-20" data-toggle="modal" data-target="#formacion">
+        FORMACION Y EXPERIENCIA
+      </button>
+      </div>
+      <div class="col-sm">
+      <button type="button" class="btn btn-secondary col-md-20" data-toggle="modal" data-target="#habilidades">
+      HABILIDADES Y COMPETENCIAS
+      </button>
+      </div>
+      <?php } ?>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+    
     </div>
     <div class="col-sm">
       
@@ -976,33 +1015,8 @@ if ($pos === false) {
     </div>
   </div>
 </div>
+<br><br><br>
 
-<!-- Button -->
-<div class="form-group">
-  <label class="col-md-10 control-label" for="guardaruno"></label>
-  <div class="col-md-10">
-    <button id="guardaruno" name="guardaruno" class="btn btn-primary">Guardar</button>
-  </div>
-</div>
-
-<?php if($id>0){
-  ?>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  CONDICIONES Y FUNCIONES
-</button>
-
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#responsabilidades">
-  RESPONSABILIDADES
-</button>
-
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formacion">
-  FORMACION Y EXPERIENCIA
-</button>
-
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#habilidades">
-HABILIDADES Y COMPETENCIAS
-</button>
-<?php } ?>>
 
 </fieldset>
 </form>

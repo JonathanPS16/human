@@ -14,7 +14,7 @@ for($i=0; $i<count($listadoreq);$i++){
     echo "<tr>
     		<td>".$id."</td>
     		<td>".$cargo."</td>
-    		<td><a href='home.php?ctr=requisicion&acc=listaCandidatos&id=".$id."'>ver y Gestionar</a></td>
+    		<td><a href='home.php?ctr=requisicion&acc=listaCandidatos&id=".$id."'>Gestionar Solicitud</a></td>
     </tr>";
   }
 
