@@ -1,58 +1,4 @@
-<br>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Agregar Candidato
-</button>
-<br>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Agregar Candidato</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-		<form action="home.php?ctr=requisicion&acc=guardarNuevoCandidato" method="post">
-			<input type="hidden" name="id" id="id" value="<?php echo $_GET['id']; ?>">
-	  <div class="form-group row">
-	    <label class="col-4 col-form-label" for="nombre">Nombre Candidato</label> 
-	    <div class="col-8">
-	      <input id="nombre" name="nombre" placeholder="Nombre Candidato" type="text" class="form-control" required="required">
-	    </div>
-	  </div>
-	  <div class="form-group row">
-	    <label for="cedula" class="col-4 col-form-label">Cedula</label> 
-	    <div class="col-8">
-	      <input id="cedula" name="cedula" placeholder="Cedula" type="text" class="form-control" required="required">
-	    </div>
-	  </div>
-	  <div class="form-group row">
-	    <label for="telefono" class="col-4 col-form-label">Telefono</label> 
-	    <div class="col-8">
-	      <input id="telefono" name="telefono" placeholder="Telefono" type="text" class="form-control" required="required">
-	    </div>
-	  </div>
-	  <div class="form-group row">
-	    <label for="correo" class="col-4 col-form-label">Correo</label> 
-	    <div class="col-8">
-	      <input id="correo" name="correo" placeholder="Correo" type="text" class="form-control" required="required">
-	    </div>
-	  </div> 
-	  <div class="form-group row">
-	    <div class="offset-4 col-8">
-	      <button name="submit" type="submit" class="btn btn-primary">Guardar</button>
-	    </div>
-	  </div>
-</form>
-
-        
-      </div>
-      
-    </div>
-  </div>
-</div>
-<br>
+<h2>Mi Requisicion #<?=$_GET['id']; ?></h2><br>
 <table class="table table-striped">
 	<thead>
 		<tr>
@@ -61,7 +7,7 @@
       <th>Prueba Psicotecnica</th>
       <th>Entrevista</th>
       <th>Hoja de Vida</th>
-			<th>Enviar Candidato</th>
+			<th colspan ="3">Acciones Candidato</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -77,41 +23,36 @@ for($i=0; $i<count($listadoreq);$i++){
     $enviocorreo=$listadoreq[$i]['enviocorreo'];
     $hojavida=$listadoreq[$i]['hojavida']; 
     $conteoentre=$listadoreq[$i]['conteoentre'];
-    $estadopresen=$listadoreq[$i]['estado'];
+    $estadopresen=$listadoreq[$i]['estado']; 
     $fechacitan=$listadoreq[$i]['fechacita'];
-    $motivorechazo=$listadoreq[$i]['motivorechazo'];  
+    $motivorechazo=$listadoreq[$i]['motivorechazo']; 
+     
 
-    if ($hojavida==""){
-      $modalbotonhoja ='<div class="modal fade" id="exampleModalhv'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    if ($estadopresen=="E" && $fechacitan ==""){
+      $modalbotoncita ='<div class="modal fade" id="exampleModalhv'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">CARGA HOJA DE VIDA</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Cita a Entrevista</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" action="home.php?ctr=requisicion&acc=guardarhv" method="post" enctype="multipart/form-data">
-		<fieldset>
-		<!-- File Button --> 
-		<div class="form-group">
-		  <label class="col-md-4 control-label" for="filebutton"></label>
-		  <div class="col-md-4">
-      <input id="id" name="id" type="hidden" value="'.$idper.'">
-      <input id="idreq" name="idreq" type="hidden" value="'.$idreq.'">
-		    <input id="filebutton" name="filebutton" class="input-file" type="file">
-		  </div>
-		</div>
-		<!-- Button -->
-		<div class="form-group">
-		  <label class="col-md-4 control-label" for="guardar"></label>
-		  <div class="col-md-4">
-		    <button id="guardar" name="guardar" class="btn btn-primary">Guardar</button>
-		  </div>
-		</div>
-
-		</fieldset>
+        <form class="form-horizontal" action="home.php?ctr=requisicion&acc=citar" method="post" enctype="multipart/form-data">
+        <div class="form-group row">
+        <label for="fechahora" class="col-4 col-form-label">Fecha y Hora</label> 
+        <div class="col-8">
+          <input id="fechahora" name="fechahora" placeholder="AAAA-MM-DD HH:MM" type="text" class="form-control" required="required">
+        </div>
+      </div> 
+      <div class="form-group row">
+        <div class="offset-4 col-8">
+          <input type="hidden" name="id_req" id="id_req" value="'.$idreq.'">
+          <input type="hidden" name="id_per" id="id_per" value="'.$idper.'">
+          <button name="submit" type="submit" class="btn btn-primary">Gestionar Cita</button>
+        </div>
+      </div>
 		</form>
 
         
@@ -121,44 +62,42 @@ for($i=0; $i<count($listadoreq);$i++){
   </div>
 </div>
 ';
-    $botonhoja ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalhv'.$idper.'">
-  Adjuntar HV
+    $botoncita ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalhv'.$idper.'">
+  Citar
 </button>';	
     } else {
-      $conteoreq++;
-      $botonhoja ='<a href="archivosgenerales/'.$hojavida.'" target="_black" >Descargar</a>';
+      $botoncita ='Fecha Cita<br><strong>'.$fechacitan.'</strong>';
     }
-    if($enviocorreo && $archivoprueba ==''){
-    $modalboton ='<div class="modal fade" id="exampleModal'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    if (($estadopresen=="E" || $estadopresen=="P") && $motivorechazo ==""){
+      $modalbotonrechazo ='<div class="modal fade" id="exampleModalre'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">CARGA DE PRUEBA</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Rechazo Candidato</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" action="home.php?ctr=requisicion&acc=guardarPrueba" method="post" enctype="multipart/form-data">
-		<fieldset>
-		<!-- File Button --> 
-		<div class="form-group">
-		  <label class="col-md-4 control-label" for="filebutton"></label>
-		  <div class="col-md-4">
-      <input id="id" name="id" type="hidden" value="'.$idper.'">
-      <input id="idreq" name="idreq" type="hidden" value="'.$idreq.'">
-		    <input id="filebutton" name="filebutton" class="input-file" type="file">
-		  </div>
-		</div>
-		<!-- Button -->
-		<div class="form-group">
-		  <label class="col-md-4 control-label" for="guardar"></label>
-		  <div class="col-md-4">
-		    <button id="guardar" name="guardar" class="btn btn-primary">Guardar</button>
-		  </div>
-		</div>
-
-		</fieldset>
+        <form class="form-horizontal" action="home.php?ctr=requisicion&acc=rechazo" method="post" enctype="multipart/form-data">
+        <div class="form-group row">
+          <label for="rechazo" class="col-4 col-form-label">Motivo Rechazo</label> 
+          <div class="col-8">
+            <select id="rechazo" name="rechazo" required="required" class="custom-select">
+              <option value="Mal perfilado">Mal perfilado</option>
+              <option value="Informacion Inconsistente">Informacion Inconsistente</option>
+              <option value="Edad Insuficiente">Edad Insuficiente</option>
+            </select>
+          </div>
+        </div> 
+        <div class="form-group row">
+          <div class="offset-4 col-8">
+            <input type="hidden" name="id_req" id="id_req" value="'.$idreq.'">
+            <input type="hidden" name="id_per" id="id_per" value="'.$idper.'">
+            <button name="submit" type="submit" class="btn btn-primary">Rechazar</button>
+          </div>
+        </div>
 		</form>
 
         
@@ -168,20 +107,15 @@ for($i=0; $i<count($listadoreq);$i++){
   </div>
 </div>
 ';
-    $boton ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal'.$idper.'">
-  Adjuntar Prueba
+    $botonrechazo ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalre'.$idper.'">
+  Rechazar
 </button>';	
-} elseif($archivoprueba!="") {
-  $conteoreq++;
-  $boton ='<a href="archivosgenerales/'.$archivoprueba.'" target="_black" >Descargar</a>';	
+    } else {
+      $botonrechazo ='Motivo Rechazo<strong>'.$motivorechazo.'</strong>';
+    }
 
-} else {
-	$boton ='<a href="home.php?ctr=requisicion&acc=enviarCorreoPrueba&id='.$idper.'&idreq='.$idreq.'" class="btn btn-primary">Enviar Prueba</a>';	
-}
-
-
-
-
+      $botonhoja ='<a href="archivosgenerales/'.$hojavida.'" target="_black">Descargar</a>';
+      $boton ='<a href="archivosgenerales/'.$archivoprueba.'" target="_black">Descargar</a>';	
 $cantidad="";
 
 $cantidadestudios="";
@@ -332,37 +266,21 @@ for($j=0; $j<5;$j++){
 </div>
 ';
 $botonentre ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal'.$idper.'">
-  Guardar Entrevista
+  Ver Entrevista
 </button>';	
 
-if ($conteoentre>0){
-  $botonentre ='Entrevista Realizada';	
-  $conteoreq++;
-}
-$botnenvi = "Le falta <strong>".(3-$conteoreq)."</strong> Paso(s) para Enviar Candidato";
- 
-if($fechacitan !="")
-{
-  $botnenvi = "Citado a Entrevista<br><strong>
-  $fechacitan
-  </strong>";
-} else if($motivorechazo!=""){
-  $botnenvi = "Rechazado <br><strong>
-  $motivorechazo
-  </strong>";
 
-} else if ($estadopresen=="E"){
-  $botnenvi = "Candidato Presentado";
-} else if($conteoreq==3){
-  $botnenvi = "<a class='btn btn-success' href='home.php?ctr=requisicion&acc=enviarCandidatos&idper=".$idper."&idreq=".$idreq."'>Enviar Candidato</a>";
-} 
+$botaceptar = "<a class='btn btn-success' href='home.php?ctr=requisicion&acc=aceptarcandidato&idper=".$idper."&idreq=".$idreq."'>Aprobar</a>";
     echo "<tr>
     		<td>".$idper."</td>
-    		<td>".$nombre."</td>
+    		<td>".ucfirst($nombre)."</td>
     		<td>".$boton.$modalboton."</td>
         <td>".$botonentre.$modalbotonentre."</td>
         <td>".$botonhoja.$modalbotonhoja."</td>
-    		<td>".$botnenvi."</td>
+        <td>".$botoncita.$modalbotoncita."</td>
+        <td>".$botonrechazo.$modalbotonrechazo."</td>
+        <td>".$botaceptar."</td>
+        
     </tr>";
   }
 

@@ -305,8 +305,29 @@
                 case 'verreqcan':
                     $lastid=$_GET['id'];
                     $listadoreq=$objconsulta->obteneMisRescreadas($lastid);
-                    $listadoreq=$objconsulta->obtenercandidatos($lastid,"estado = 'E'");
-                    include('vistas/listadomisreqcreadas.php');
+                    $listadoreq=$objconsulta->obtenercandidatos($lastid,"estado in('E','P')");
+                    include('vistas/miscandidatos.php');
+                break;
+
+                case 'citar':
+                    $fechahora=$_POST['fechahora'];
+                    $id_req=$_POST['id_req'];
+                    $id_per=$_POST['id_per'];
+                    $listadoreq=$objconsulta->citarcandidato($id_per,$id_req,$fechahora);
+
+                    echo "<script>alert('Candidato Citado Correctamente ');
+                    window.location.href = 'home.php?ctr=requisicion&acc=verreqcan&id={$id_req}';
+                    </script>";
+                break;
+
+                case 'rechazo':
+                    $rechazo=$_POST['rechazo'];
+                    $id_req=$_POST['id_req'];
+                    $id_per=$_POST['id_per'];
+                    $listadoreq=$objconsulta->rechazarcandidato($id_per,$id_req,$rechazo);
+                    echo "<script>alert('Candidato Rechazado Correctamente');
+                    window.location.href = 'home.php?ctr=requisicion&acc=verreqcan&id={$id_req}';
+                    </script>";
                 break;
 
                    

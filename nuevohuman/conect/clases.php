@@ -429,6 +429,96 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
     $envio = $this->enviocorreo($correo, $mesaje);
 }
 
+
+public function citarcandidato($id_per,$id_req,$fechahora)
+{
+    $conn = $this->conec();
+    $consultas = "SELECT correo  FROM req_candidatos WHERE  id=".$id_per;
+
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $correo = "";
+    for($i= 0; $i<count($consultas); $i++) {
+        $correo  =$consultas[$i]['correo'];
+    }
+
+    $consultas = "SELECT empresaclientet  FROM req WHERE  id=".$id_req;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $ide = "";
+    for($i= 0; $i<count($consultas); $i++) {
+        $ide  =$consultas[$i]['empresaclientet'];
+    }
+    $mensaje = "Buen Dia  <br>
+    Se le informa que a sido citado a entrevista el dia  ".$fechahora." 
+    <br>";
+    $envio = $this->enviocorreo($correo, $mensaje);
+    $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
+      //echo $consultas;
+      $mensaje = "Se a citado a al candidato  con identificador ".$id_per." para el dia ".$fechahora." <br><br>
+      Para visualizar de click <a href='https://humantalentsas.com/nuevohuman/home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a><br><br>
+      Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
+      $consultas= $conn->Execute($consultas)-> getRows();
+      for($i= 0; $i<count($consultas); $i++) {
+        $correos = explode(",", $consultas[$i]['correosselecccion']);
+        for($j=0; $j<count($correos); $j++){
+            $consultascorr = "SELECT mail FROM users WHERE uid= ".$correos[$j];
+            $consultasresp= $conn->Execute($consultascorr)-> getRows();
+            $envio = $this->enviocorreo($consultasresp[0]['mail'], $mensaje);
+        }
+
+      }
+
+    $SQL ="UPDATE req_candidatos SET estado='P', fechacita='$fechahora' WHERE id=".$id_per;
+    $conn->Execute($SQL);
+    
+
+
+}
+
+public function rechazarcandidato($id_per,$id_req,$rechazo)
+{
+    $conn = $this->conec();
+    $consultas = "SELECT correo  FROM req_candidatos WHERE  id=".$id_per;
+
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $correo = "";
+    for($i= 0; $i<count($consultas); $i++) {
+        $correo  =$consultas[$i]['correo'];
+    }
+
+    $consultas = "SELECT empresaclientet  FROM req WHERE  id=".$id_req;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $ide = "";
+    for($i= 0; $i<count($consultas); $i++) {
+        $ide  =$consultas[$i]['empresaclientet'];
+    }
+    $mensaje = "Buen Dia  <br>
+    Agradecemos su participacion el la requisision #".$id_req." Pero en este momento no es el candadidato escogido 
+    <br>";
+    $envio = $this->enviocorreo($correo, $mensaje);
+    $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
+      //echo $consultas;
+      $mensaje = "Se a rechazado candidato  con identificador ".$id_per." por motivo ".$rechazo."<br><br>
+      Para visualizar de click <a href='https://humantalentsas.com/nuevohuman/home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a><br><br>
+      Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
+      $consultas= $conn->Execute($consultas)-> getRows();
+      for($i= 0; $i<count($consultas); $i++) {
+        $correos = explode(",", $consultas[$i]['correosselecccion']);
+        for($j=0; $j<count($correos); $j++){
+            $consultascorr = "SELECT mail FROM users WHERE uid= ".$correos[$j];
+            $consultasresp= $conn->Execute($consultascorr)-> getRows();
+            $envio = $this->enviocorreo($consultasresp[0]['mail'], $mensaje);
+        }
+
+      }
+
+    $SQL ="UPDATE req_candidatos SET estado='R',motivorechazo='$rechazo' WHERE id=".$id_per;
+    $conn->Execute($SQL);
+    
+
+
+}
+
+
 public function enviarCorreoReq($ide,$req){
       $conn = $this->conec();
       $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
