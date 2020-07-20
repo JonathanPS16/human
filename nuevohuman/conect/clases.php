@@ -316,11 +316,21 @@ public function obteneMisRes($ide=0,$mis=""){
     return $consultas;
 }
 
+
 public function obteneMisRescreadas($id){
     //echo $ide;
       $conn = $this->conec();
         $usuario = $_SESSION['usuario'];
       $consultas = "SELECT * FROM req where clientesol = '{$usuario}' and  id =".$id;
+      //echo $consultas;
+      $consultas= $conn->Execute($consultas)-> getRows();
+      return $consultas;
+  }
+
+public function obtenerInformacionreq($id){
+    //echo $ide;
+      $conn = $this->conec();
+      $consultas = "SELECT * FROM reqlist where req_per = '{$id}'";
       //echo $consultas;
       $consultas= $conn->Execute($consultas)-> getRows();
       return $consultas;
@@ -429,6 +439,54 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
     $envio = $this->enviocorreo($correo, $mesaje);
 }
 
+public function actualizarformatos($idper,$idreq,$orden,$documentos,$hv)
+{
+    $this->correopsico($idreq,"APROBADO");
+    $conn = $this->conec();
+    $SQL ="UPDATE req_candidatos SET estado='A', ordeningreso='$orden',docdocumen='$documentos',hvhuman='$hv' WHERE id=".$idper;
+    $conn->Execute($SQL);
+
+
+}
+
+public function correopsico($id_req,$tipomen) {
+    $conn = $this->conec();
+    $consultas = "SELECT empresaclientet  FROM req WHERE  id=".$id_req;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $ide = "";
+    for($i= 0; $i<count($consultas); $i++) {
+        $ide  =$consultas[$i]['empresaclientet'];
+    }
+    $mensaje ="";
+    switch ($tipomen) {
+        case "APROBADO":
+            $mensaje = "Se a APROBADO un candidato para la requision #{$id_req} favor enviar los documentos necesarios<br><br>
+            Para visualizar de click <a href='https://humantalentsas.com/nuevohuman/home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a><br><br>
+            Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
+            break;
+        case "NUEVAREQ":
+            $mensaje = "Se creo su Requisicion con el #{$idreq} <br>
+            Para visualizar de click <a href='https://humantalentsas.com/nuevohuman/home.php?ctr=requisicion&acc=verreqcan&id={$id_req}'><strong>AQUI</strong></a><br><br>
+            Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
+            break;
+        case "NUEVOCANDIDATO2":
+            $mensaje =  "i es igual a 2";
+            break;
+    }
+    $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
+      $consultas= $conn->Execute($consultas)-> getRows();
+      for($i= 0; $i<count($consultas); $i++) {
+        $correos = explode(",", $consultas[$i]['correosselecccion']);
+        for($j=0; $j<count($correos); $j++){
+            $consultascorr = "SELECT mail FROM users WHERE uid= ".$correos[$j];
+            $consultasresp= $conn->Execute($consultascorr)-> getRows();
+            $envio = $this->enviocorreo($consultasresp[0]['mail'], $mensaje);
+        }
+
+      }
+
+}
+
 
 public function citarcandidato($id_per,$id_req,$fechahora)
 {
@@ -471,6 +529,57 @@ public function citarcandidato($id_per,$id_req,$fechahora)
     $conn->Execute($SQL);
     
 
+
+}
+
+
+public function enviardocumentacion($idper,$idreq){
+
+    $conn = $this->conec();
+    $consultas = "SELECT correo,ordeningreso,hvhuman,docdocumen  FROM req_candidatos WHERE  id=".$idper;
+
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $correo = "";
+    $ordeningreso = "archivosgenerales/";
+    $docdocumen = "archivosgenerales/";
+    $hvhuman = "archivosgenerales/";
+    for($i= 0; $i<count($consultas); $i++) {
+        $correo  =$consultas[$i]['correo'];
+        $ordeningreso  .=$consultas[$i]['ordeningreso'];
+        $hvhuman  .=$consultas[$i]['hvhuman'];
+        $docdocumen  .=$consultas[$i]['docdocumen'];
+    }
+
+    $archivoexa = "archivosgenerales/examen".$idper.$idreq.".docx";
+    $archivoaper = "archivosgenerales/apertura".$idper.$idreq.".docx";
+    
+    
+    $titulo2 = "Documentacion de Contratacion";
+    $cuerpo2 = "<p>Señor Usuario <br />
+    Buen dia<br>
+    Se le fue enviada la documentacion la cual debe ser llenada y entregada completa para completar con la contratacion <br /><br><br>
+                  &copy; ".date('Y')." humantalentsas.com - Todos los derechos reservados </p>";
+    $maildos = new PHPMailer();
+    $maildos->IsSMTP();
+    $maildos->SMTPAuth = true;
+    $maildos->SMTPSecure = "ssl"; 
+    $maildos->Host = "smtp.zoho.com"; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
+    $maildos->Username = "info@formalsi.com"; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
+    $maildos->Password = "2019FormalSiMarzo*"; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
+    $maildos->Port = 465; // Puerto de conexión al servidor de envio. 
+    $maildos->SetFrom('info@formalsi.com', 'Humantalentsas');
+    $maildos->AddAddress($correo, "Usuario");
+    $maildos->AddAttachment($ordeningreso,"ordeningreso.docx");
+    $maildos->AddAttachment($hvhuman,"hojavidahuman.docx");
+    $maildos->AddAttachment($docdocumen,"documentacion.docx");
+    $maildos->AddAttachment($archivoexa,"ordenexamenes.docx");
+    $maildos->AddAttachment($archivoaper,"aperturacuenta.docx");
+    $maildos->Subject = utf8_decode($titulo2); // Este es el titulo del email. 
+    $maildos->MsgHTML(utf8_decode($cuerpo2));
+    $maildos->Send();
+
+    $SQL ="UPDATE req_candidatos SET estado='F' WHERE id=".$idper;
+    $conn->Execute($SQL);
 
 }
 

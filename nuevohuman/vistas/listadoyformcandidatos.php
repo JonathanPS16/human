@@ -61,7 +61,7 @@
       <th>Prueba Psicotecnica</th>
       <th>Entrevista</th>
       <th>Hoja de Vida</th>
-			<th>Enviar Candidato</th>
+			<th>Acciones</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -80,6 +80,65 @@ for($i=0; $i<count($listadoreq);$i++){
     $estadopresen=$listadoreq[$i]['estado'];
     $fechacitan=$listadoreq[$i]['fechacita'];
     $motivorechazo=$listadoreq[$i]['motivorechazo'];  
+
+
+    $modalbotonarchivos ='<div class="modal fade" id="exampleModalarchivos'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Documentos Diligenciados</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" action="home.php?ctr=requisicion&acc=jajajajaj" method="post" enctype="multipart/form-data">
+          <fieldset>
+          <!-- File Button --> 
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="hv">Hoja de Vida</label>
+            <div class="col-md-4">
+              <input id="hv" name="hv" class="input-file" type="file">
+            </div>
+          </div>
+
+          <!-- File Button --> 
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="orden">Orden Ingreso</label>
+            <div class="col-md-4">
+              <input id="orden" name="orden" class="input-file" type="file">
+            </div>
+          </div>
+
+          <!-- File Button --> 
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="documentacion">Documentacion</label>
+            <div class="col-md-4">
+              <input id="documentacion" name="documentacion" class="input-file" type="file">
+            </div>
+          </div>
+
+          <!-- Button -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="guardar"></label>
+            <div class="col-md-4">
+              <button id="guardar" name="guardar" class="btn btn-primary">Finalizar</button>
+            </div>
+          </div>
+
+          </fieldset>
+          </form>
+  
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  ';
+      $botonarchivos ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalarchivos'.$idper.'">
+    Adjuntar Documentos
+  </button>';	
 
     if ($hojavida==""){
       $modalbotonhoja ='<div class="modal fade" id="exampleModalhv'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -334,23 +393,27 @@ for($j=0; $j<5;$j++){
 $botonentre ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal'.$idper.'">
   Guardar Entrevista
 </button>';	
-
 if ($conteoentre>0){
   $botonentre ='Entrevista Realizada';	
   $conteoreq++;
 }
 $botnenvi = "Le falta <strong>".(3-$conteoreq)."</strong> Paso(s) para Enviar Candidato";
  
-if($fechacitan !="")
+if($fechacitan !="" && $estadopresen=="P")
 {
   $botnenvi = "Citado a Entrevista<br><strong>
   $fechacitan
   </strong>";
-} else if($motivorechazo!=""){
+} else if($motivorechazo!="" && $estadopresen=="R"){
   $botnenvi = "Rechazado <br><strong>
   $motivorechazo
   </strong>";
 
+} else if($estadopresen=="A") {
+  $botnenvi = "<a class='btn btn-success' href='home.php?ctr=requisicion&acc=enviardocumentacion&idper=".$idper."&idreq=".$idreq."'>Enviar Documentos</a>";
+} else if ($estadopresen=="F")
+{
+  $botnenvi = $modalbotonarchivos.$botonarchivos;
 } else if ($estadopresen=="E"){
   $botnenvi = "Candidato Presentado";
 } else if($conteoreq==3){
