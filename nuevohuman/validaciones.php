@@ -186,6 +186,75 @@
                     include('vistas/listadomisreq.php');
                 break;
 
+
+                
+                case "ordenmedica":
+                    $cadena = "";
+                    foreach ($_POST as $clave => $valor) {
+                        $pos = strpos($clave, "exalaboratorio");
+                        if ($pos === false) {
+                        } else {
+                            if($valor=='S'){
+                                $datagen = explode("exalaboratorio",$clave);
+                                $cadena.=$datagen[1].",";
+                            }
+                        }
+                
+                    }
+                    $laboratorio = $_POST['laboratorio'];
+                    $idper = $_POST['id'];
+                    $idreq = $_POST['idreq'];
+                    
+                    require_once 'vendor/autoload.php';
+                    $archivoexa = "examen".$idper.$idreq.".docx";
+                    $phpWord5 = new \PhpOffice\PhpWord\PhpWord();
+                    $templateProcessor5 = new \PhpOffice\PhpWord\TemplateProcessor('archivosgenerales/'.$archivoexa);
+                    for($i=0;$i<=12;$i++){
+                        $pos = strpos($cadena, $i.",");
+                        if ($pos === false) {
+                            $templateProcessor5->setValue('e'.$i, "");
+                        } else {
+                            $templateProcessor5->setValue('e'.$i, "X");
+                        }
+                    }
+                    for($i=0;$i<=10;$i++){
+                        if($laboratorio==$i){
+                            $templateProcessor5->setValue('l'.$i, "X");
+                        } else {
+                            $templateProcessor5->setValue('l'.$i, "");
+                        }
+                    }
+                    $templateProcessor5->saveAs('archivosgenerales/'.$archivoexa);
+                    $listadoreq=$objconsulta->ajustarlaboratorio($idper,$idreq,$laboratorio,$cadena);
+                    echo "<script>alert('Informacion Guardada Correctamente');
+                    window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$idreq."';
+                    </script>";
+                break;
+
+                case "ajustarorden":
+    
+                    $idper = $_POST['id'];
+                    $idreq = $_POST['idreq'];
+                    $salario = $_POST['salario'];
+                    $tasa = $_POST['tasa'];
+                    $direccion = $_POST['direccion'];
+                    $presentarse = $_POST['presentarse'];
+                    $orden = $_POST['orden'];
+                    require_once 'vendor/autoload.php';
+                    $archivoexa = $orden;
+                    $phpWord5 = new \PhpOffice\PhpWord\PhpWord();
+                    $templateProcessor5 = new \PhpOffice\PhpWord\TemplateProcessor('archivosgenerales/'.$archivoexa);
+                    $templateProcessor5->setValue('tasa', $tasa);
+                    $templateProcessor5->setValue('direcciontrabajo', $direccion);
+                    $templateProcessor5->setValue('nombrepresente', $presentarse);
+                    $templateProcessor5->setValue('salario', "$".number_format($salario,2,",","."));
+                    $templateProcessor5->saveAs('archivosgenerales/'.$archivoexa);
+                    $listadoreq=$objconsulta->ajustarorden($idper,$idreq,$tasa,$salario,$presentarse,$direccion);
+                    echo "<script>alert('Informacion Guardada Correctamente');
+                    window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$idreq."';
+                    </script>";
+                break;
+
                 case "enviardocumentacion":
                     $idper = $_GET["idper"];
                     $idreq = $_GET["idreq"];
@@ -199,6 +268,7 @@
                 case "listaCandidatos":
                     $idreq = $_GET["id"];
                     $listadoreq=$objconsulta->obtenercandidatos($idreq);
+                    $laboratorios=$objconsulta->obtenerLaboratorios();
                     include('vistas/listadoyformcandidatos.php');
                 break;
 
@@ -221,12 +291,12 @@
                     $templateProcessor->setValue('celular', $listadoreq[0]['telefono']);
                     $templateProcessor->setValue('fechaingreso', $listadoreq[0]['fechareqcargo']);
                     $templateProcessor->setValue('cargodesempenar', $listadoreq[0]['cargo']);
-                    $templateProcessor->setValue('salario', "$".number_format($listadoreq[0]['salariobasico'],2,",","."));
-                    $templateProcessor->setValue('tasa', '');
+                    //$templateProcessor->setValue('salario', "$".number_format($listadoreq[0]['salariobasico'],2,",","."));
+                    //$templateProcessor->setValue('tasa', '');
                     $templateProcessor->setValue('date', date('Y-m-d'));
-                    $templateProcessor->setValue('direcciontrabajo', '');
+                    //$templateProcessor->setValue('direcciontrabajo', '');
                     $templateProcessor->setValue('ciudad', $listadoreq[0]['ciudadlaboral']);
-                    $templateProcessor->setValue('nombrepresente', '');
+                    //$templateProcessor->setValue('nombrepresente', '');
                     $templateProcessor->setValue('horario', $listadoreq[0]['jornadalaboral']." ".$listadoreq[0]['horario']);
                     $templateProcessor->saveAs('archivosgenerales/'.$archivo);
                     $archivo = "docdocumen".$idper.date('Ymds').".docx";

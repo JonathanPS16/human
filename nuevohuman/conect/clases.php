@@ -354,6 +354,24 @@ public function obtenercandidatos($ide=0,$whereex = ""){
     return $consultas;
 }
 
+public function obtenerLaboratorios(){
+    //echo $ide;
+      $conn = $this->conec();
+      $dato=array();
+      $where="";
+      if ($ide != 0) {
+        $where .=" and id_requisision= ".$ide;
+      } 
+      if($whereex!="")
+      {
+          $where .=" and ".$whereex;  
+      }
+      $consultas = "SELECT * FROM laboratorios";
+      //echo $consultas;
+      $consultas= $conn->Execute($consultas)-> getRows();
+      return $consultas;
+  }
+
 public function guardarCandidato($idreq,
                         $nombre,
                         $cedula,
@@ -386,6 +404,18 @@ public function guardarArchivoHv($nombre_archivo,$id)
 {
     $conn = $this->conec();
    $SQL ="UPDATE req_candidatos SET hojavida='$nombre_archivo' WHERE id=".$id;
+    $conn->Execute($SQL);
+}
+
+public function ajustarlaboratorio($id,$idreq,$laboratorio,$cadena){
+    $conn = $this->conec();
+    $SQL ="UPDATE req_candidatos SET examenes='$cadena',lugar='$laboratorio' WHERE id=".$id;
+    $conn->Execute($SQL);
+}
+
+public function ajustarorden($id,$idreq,$tasa,$salario,$presentarse,$direccion){
+    $conn = $this->conec();
+    $SQL ="UPDATE req_candidatos SET tasa='$tasa',salariorh='$salario',presentarse='$presentarse',direccion='$direccion' WHERE id=".$id;
     $conn->Execute($SQL);
 }
 

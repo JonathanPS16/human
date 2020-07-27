@@ -45,7 +45,13 @@
 	    </div>
 	  </div>
 </form>
+<?php
+$labo  =""; 
+for($i=0; $i<count($laboratorios);$i++){
+$labo.='<option value="'.$laboratorios[$i]['id'].'">'.$laboratorios[$i]['nombrelaboratorio'].' ('.$laboratorios[$i]['ciudad'].')</option>';
+}
 
+?>
         
       </div>
       
@@ -61,12 +67,14 @@
       <th>Prueba Psicotecnica</th>
       <th>Entrevista</th>
       <th>Hoja de Vida</th>
+      <th>Orden</th>
 			<th>Acciones</th>
 		</tr>
 	</thead>
 	<tbody>
 <?php 
 for($i=0; $i<count($listadoreq);$i++){
+    $jaja = $i+1;
     $conteoreq = 0;
     $idper=$listadoreq[$i]['id'];
     $idreq=$listadoreq[$i]['id_requisision'];
@@ -80,7 +88,141 @@ for($i=0; $i<count($listadoreq);$i++){
     $estadopresen=$listadoreq[$i]['estado'];
     $fechacitan=$listadoreq[$i]['fechacita'];
     $motivorechazo=$listadoreq[$i]['motivorechazo'];  
+    $lugar = $listadoreq[$i]['lugar'];
+    $salariorh =$listadoreq[$i]['salariorh']; 
+    $ordeningreso=$listadoreq[$i]['ordeningreso'];  
 
+
+    $minfor="";
+    $datos = array(
+      "Audiometría",
+    "Espirómetría",
+    "Examen Medico Ocupacional",
+    "Examen Médico con Énfasis Osteomuscular",
+    "Examen Médico con Énfasis en Alturas",
+    "Exámenes para manipulación de Alimentos",
+    "Optometría",
+    "Panel 2 Detección Consumo Drogas",
+    "Prueba Psicosensometrica.",
+    "Serología",
+    "Visiometria"
+    );
+    $laboges = "<option value='N'>NO</option><option value='S'>SI</option>";
+    for($z=0;$z<count($datos);$z++){
+      $zz = $z+1;
+      $minfor.='      
+      <div class="form-group row">
+        <label class="col-4 col-form-label" for="checkbox'.$zz.'">'.$datos[$z].'</label> 
+        <div class="col-8">
+        <select id="exalaboratorio'.$zz.'" name="exalaboratorio'.$zz.'" class="custom-select"  class="custom-select" required="required">
+          '.$laboges.'
+          </select>
+        </div>
+      </div>';
+    //echo $datos[$z];
+    }
+
+    $labola = "<option value='N'>NO</option><option value='S'>SI</option>";
+
+    $modalbotonfinal ='<div class="modal fade" id="exampleModalfinal'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Completar Orden</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" action="home.php?ctr=requisicion&acc=ajustarorden" method="post" enctype="multipart/form-data">
+          <div class="form-group row">
+            <label for="tasa" class="col-4 col-form-label">Tasa</label> 
+            <div class="col-8">
+              <input id="tasa" name="tasa" placeholder="Tasa ARL" type="text" class="form-control" required="required">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="salario" class="col-4 col-form-label">Salario</label> 
+            <div class="col-8">
+              <input id="salario" name="salario" type="text" class="form-control" required="required">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="direccion" class="col-4 col-form-label">Direccion</label> 
+            <div class="col-8">
+              <input id="direccion" name="direccion" placeholder="Direccion" type="text" class="form-control" required="required">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="presentarse" class="col-4 col-form-label">Presentarse a</label> 
+            <div class="col-8">
+              <input id="presentarse" name="presentarse" placeholder="Presentarse a " type="text" class="form-control" required="required">
+            </div>
+          </div> 
+        <div class="form-group row">
+          <div class="offset-4 col-8">
+            <button name="submit" type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </div>
+        <input id="id" name="id" type="hidden" value="'.$idper.'">
+        <input id="idreq" name="idreq" type="hidden" value="'.$idreq.'">
+        <input id="orden" name="orden" type="hidden" value="'.$ordeningreso.'">
+  
+      </form>
+  
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  ';
+      $botonfinal ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalfinal'.$idper.'">
+      Completar Orden
+  </button>';	
+
+
+    $modalbotonexamenes ='<div class="modal fade" id="exampleModalexamenes'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Examenes Medicos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="home.php?ctr=requisicion&acc=ordenmedica" method="post" enctype="multipart/form-data">
+        <div class="form-group row">
+        <label class="col-4 col-form-label" for="laboratorio">Laboratorio</label> 
+        <div class="col-8">
+          <select id="laboratorio" name="laboratorio" class="custom-select" required="required">
+          '.$labo.'
+          </select>
+          
+        </div>
+      </div>
+    '.$minfor.'
+      <div class="form-group row">
+        <div class="offset-4 col-8">
+          <button name="submit" type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+      <input id="id" name="id" type="hidden" value="'.$idper.'">
+      <input id="idreq" name="idreq" type="hidden" value="'.$idreq.'">
+
+		</form>
+
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+';
+    $botonexamenes ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalexamenes'.$idper.'">
+    Examenes Medicos
+</button>';	
 
     $modalbotonarchivos ='<div class="modal fade" id="exampleModalarchivos'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -344,7 +486,7 @@ for($j=0; $j<5;$j++){
 
 }
 
-    $modalbotonentre ='<div class="modal fade" id="exampleModal'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    $modalbotonentre ='<div class="modal fade" id="exampleModalentre'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" style="min-width: 50% !important" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -390,7 +532,7 @@ for($j=0; $j<5;$j++){
   </div>
 </div>
 ';
-$botonentre ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal'.$idper.'">
+$botonentre ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalentre'.$idper.'">
   Guardar Entrevista
 </button>';	
 if ($conteoentre>0){
@@ -409,8 +551,12 @@ if($fechacitan !="" && $estadopresen=="P")
   $motivorechazo
   </strong>";
 
-} else if($estadopresen=="A") {
+} else if($estadopresen=="A" && $lugar!="" && $salariorh!="") {
   $botnenvi = "<a class='btn btn-success' href='home.php?ctr=requisicion&acc=enviardocumentacion&idper=".$idper."&idreq=".$idreq."'>Enviar Documentos</a>";
+} else if($estadopresen=="A" && $lugar==""){
+  $botnenvi = $modalbotonexamenes.$botonexamenes;
+} else if($estadopresen=="A" && $salariorh==""){
+  $botnenvi = $modalbotonfinal.$botonfinal;
 } else if ($estadopresen=="F")
 {
   $botnenvi = $modalbotonarchivos.$botonarchivos;
@@ -418,13 +564,20 @@ if($fechacitan !="" && $estadopresen=="P")
   $botnenvi = "Candidato Presentado";
 } else if($conteoreq==3){
   $botnenvi = "<a class='btn btn-success' href='home.php?ctr=requisicion&acc=enviarCandidatos&idper=".$idper."&idreq=".$idreq."'>Enviar Candidato</a>";
-} 
+}
+$ordenbtn= "En Proceso"; 
+if($ordeningreso!="")
+{
+  $ordenbtn ='<a href="archivosgenerales/'.$ordeningreso.'" target="_black" >Descargar</a>';	
+}
+
     echo "<tr>
-    		<td>".$idper."</td>
+    		<td>".$jaja ."</td>
     		<td>".$nombre."</td>
     		<td>".$boton.$modalboton."</td>
         <td>".$botonentre.$modalbotonentre."</td>
         <td>".$botonhoja.$modalbotonhoja."</td>
+        <td>".$ordenbtn."</td>
     		<td>".$botnenvi."</td>
     </tr>";
   }
