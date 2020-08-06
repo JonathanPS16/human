@@ -137,7 +137,60 @@
                     $jefe = $_POST['jefe'];
                     $fechaevento = $_POST['fechaevento'];
                     $descripcion = $_POST['descripcion'];
-                    $listatemporales=$objconsulta->guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe);
+
+                    $archivouno = "";
+                    $nombre_archivo = date('Ymd').$_FILES['archivo1']['name'];
+                    if($nombre_archivo!="") {
+                        $tipo_archivo = $_FILES['archivo1']['type'];
+                        $tamano_archivo = $_FILES['archivo1']['size'];
+                        $mensaje = "";    
+                        //compruebo si las características del archivo son las que deseo
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf") || strpos($tipo_archivo, "zip") || strpos($tipo_archivo, "rar")) && ($tamano_archivo < 100000))) {
+                            $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                        }else{
+                            if (move_uploaded_file($_FILES['archivo1']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $archivouno =$nombre_archivo;
+                            }else{
+                                $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            }
+                        }
+                    }
+                    $archivodos = "";
+
+                    $nombre_archivo = date('Ymd').$_FILES['archivo2']['name'];
+                    if($nombre_archivo!="") {
+                        $tipo_archivo = $_FILES['archivo2']['type'];
+                        $tamano_archivo = $_FILES['archivo2']['size'];
+                        $mensaje = "";    
+                        //compruebo si las características del archivo son las que deseo
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf") || strpos($tipo_archivo, "zip") || strpos($tipo_archivo, "rar")) && ($tamano_archivo < 100000))) {
+                            $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                        }else{
+                            if (move_uploaded_file($_FILES['archivo2']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $archivodos =$nombre_archivo;
+                            }else{
+                                $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            }
+                        }
+                    }
+                    $archivotres = "";
+                    $nombre_archivo = date('Ymd').$_FILES['archivo3']['name'];
+                    if($nombre_archivo!="") {
+                        $tipo_archivo = $_FILES['archivo3']['type'];
+                        $tamano_archivo = $_FILES['archivo3']['size'];
+                        $mensaje = "";    
+                        //compruebo si las características del archivo son las que deseo
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf") || strpos($tipo_archivo, "zip") || strpos($tipo_archivo, "rar")) && ($tamano_archivo < 100000))) {
+                            $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                        }else{
+                            if (move_uploaded_file($_FILES['archivo3']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $archivotres =$nombre_archivo;
+                            }else{
+                                $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            }
+                        }
+                    }
+                    $listatemporales=$objconsulta->guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres);
                     echo "<script>alert('Proceso Guardado correctamente');
                         window.location.href = 'home.php?ctr=proceso&acc=formproceso';
                         </script>";

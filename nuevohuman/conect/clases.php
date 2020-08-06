@@ -223,18 +223,44 @@ $funciones
 
 
 
-public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe){
+public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres) {
     $dat=date('Y-m-d H:i:s');
     $conn = $this->conec();
+    $insertararchivos1  ="";
+    $val1="";
+    $insertararchivos2  ="";
+    $val2="";
+    $insertararchivos3  ="";
+    $val3="";
 
+    $updtaarchivos1  ="";
+    $updtaarchivos2  ="";
+    $updtaarchivos3  ="";
+    if ($archivouno!=""){
+        $insertararchivos1  ="archivouno,";
+        $val1  ="'".$archivouno."',";
+        $updtaarchivos1  ="archivouno ='".$archivouno."',";
+    }
+
+    if ($archivodos!=""){
+        $insertararchivos2  ="archivodos,";
+        $val2  ="'".$archivodos."',";
+        $updtaarchivos2  ="archivodos ='".$archivodos."',";
+    }
+
+    if ($archivotres!=""){
+        $insertararchivos3  ="archivotres,";
+        $val3  ="'".$archivotres."',";
+        $updtaarchivos3  ="archivores ='".$archivotres."',";
+    }
 
     if($id>0){
-        $SQL ="UPDATE procesos SET nombrefuncionario='$funcionario', cargo ='$cargo',cedula ='$cedula',lugartrabajo ='$lugartrabajo',jefeinmediato='$jefe',coreojefe ='$correojefe',
+        $SQL ="UPDATE procesos SET ".$updtaarchivos1.$updtaarchivos2.$updtaarchivos3."nombrefuncionario='$funcionario', cargo ='$cargo',cedula ='$cedula',lugartrabajo ='$lugartrabajo',jefeinmediato='$jefe',coreojefe ='$correojefe',
          	fechaevento ='$fechaevento',descripcion  ='$descripcion' where id_proceso=$id";
         $conn->Execute($SQL);
 
     } else {
-        $SQL ="INSERT INTO  procesos (nombrefuncionario,cargo,cedula,lugartrabajo,jefeinmediato,coreojefe,fechaevento,descripcion,grabador,fechagrab ) VALUES ('$funcionario','$cargo','$cedula','$lugartrabajo','$jefe','$correojefe',
+        $SQL ="INSERT INTO  procesos (".$insertararchivos1.$insertararchivos2.$insertararchivos3."nombrefuncionario,cargo,cedula,lugartrabajo,jefeinmediato,coreojefe,fechaevento,descripcion,grabador,fechagrab ) VALUES (".$val1.$val2.$val3."'$funcionario','$cargo','$cedula','$lugartrabajo','$jefe','$correojefe',
         '$fechaevento','$descripcion','".$_SESSION['usuario']."','$dat')";
         $conn->Execute($SQL);
     }
