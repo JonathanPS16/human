@@ -553,10 +553,10 @@ if($fechacitan !="" && $estadopresen=="P")
 
 } else if($estadopresen=="A" && $lugar!="" && $salariorh!="") {
   $botnenvi = "<a class='btn btn-success' href='home.php?ctr=requisicion&acc=enviardocumentacion&idper=".$idper."&idreq=".$idreq."'>Enviar Documentos</a>";
-} else if($estadopresen=="A" && $lugar==""){
-  $botnenvi = $modalbotonexamenes.$botonexamenes;
 } else if($estadopresen=="A" && $salariorh==""){
   $botnenvi = $modalbotonfinal.$botonfinal;
+} else if($estadopresen=="A" && $lugar==""){
+  $botnenvi = $modalbotonexamenes.$botonexamenes; 
 } else if ($estadopresen=="F")
 {
   $botnenvi = $modalbotonarchivos.$botonarchivos;

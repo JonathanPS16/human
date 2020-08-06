@@ -112,6 +112,41 @@
                 break; 
             }
         break;
+
+        case "proceso":
+            $acc = $_GET['acc'];
+            switch ($acc) {
+                case "formproceso":
+                    $listatemporales=$objconsulta->obtenerProcesos("","SI");
+                    include('vistas/proceso.php');
+                break;
+                case "formu":
+                    if($_GET['id']>0) {
+                        $listatemporales=$objconsulta->obtenerProcesos($_GET['id'],"SI");
+                    }
+                    include('vistas/formproceso.php');
+                break;
+
+                case "guardarsolicitud":
+                    $id = $_POST['id'];
+                    $funcionario = $_POST['funcionario'];
+                    $correojefe = $_POST['correojefe'];
+                    $cargo = $_POST['cargo'];
+                    $cedula = $_POST['cedula'];
+                    $lugartrabajo = $_POST['lugartrabajo'];
+                    $jefe = $_POST['jefe'];
+                    $fechaevento = $_POST['fechaevento'];
+                    $descripcion = $_POST['descripcion'];
+                    $listatemporales=$objconsulta->guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe);
+                    echo "<script>alert('Proceso Guardado correctamente');
+                        window.location.href = 'home.php?ctr=proceso&acc=formproceso';
+                        </script>";
+                break;
+            }
+
+        break;
+
+
         case "requisicion":
             $acc = $_GET['acc'];
             switch ($acc) {
@@ -217,7 +252,7 @@
                             $templateProcessor5->setValue('e'.$i, "X");
                         }
                     }
-                    for($i=0;$i<=10;$i++){
+                    for($i=0;$i<=30;$i++){
                         if($laboratorio==$i){
                             $templateProcessor5->setValue('l'.$i, "X");
                         } else {

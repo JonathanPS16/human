@@ -98,6 +98,25 @@ public function obtenerCertificadosCedula($numero){
     return $consultas;
 }
 
+public function obtenerProcesos($id="",$propirtario=""){
+    $conn = $this->conec();
+    $dato=array();
+    $where  ="1=1";
+    if($id!=""){
+        $where.=" and id_proceso = {$id}";
+    }
+
+    if($propirtario!=""){
+        $where.=" and grabador  = '{$_SESSION['usuario']}'";
+    }
+
+
+    $consultas = "SELECT * FROM procesos where ".$where;
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
 public function obtenerCertificadosporContrato($contrato,$numero){
     $conn = $this->conec();
     $dato=array();
@@ -197,6 +216,29 @@ $funciones
     otraingreso='$otraingreso' where id=$id";
     $conn->Execute($SQL);
     return $id;
+}
+
+
+
+
+
+
+public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe){
+    $dat=date('Y-m-d H:i:s');
+    $conn = $this->conec();
+
+
+    if($id>0){
+        $SQL ="UPDATE procesos SET nombrefuncionario='$funcionario', cargo ='$cargo',cedula ='$cedula',lugartrabajo ='$lugartrabajo',jefeinmediato='$jefe',coreojefe ='$correojefe',
+         	fechaevento ='$fechaevento',descripcion  ='$descripcion' where id_proceso=$id";
+        $conn->Execute($SQL);
+
+    } else {
+        $SQL ="INSERT INTO  procesos (nombrefuncionario,cargo,cedula,lugartrabajo,jefeinmediato,coreojefe,fechaevento,descripcion,grabador,fechagrab ) VALUES ('$funcionario','$cargo','$cedula','$lugartrabajo','$jefe','$correojefe',
+        '$fechaevento','$descripcion','".$_SESSION['usuario']."','$dat')";
+        $conn->Execute($SQL);
+    }
+
 }
 
 public function guardarRequiResponsa($id,
@@ -599,7 +641,7 @@ public function enviardocumentacion($idper,$idreq){
     $maildos->Port = 465; // Puerto de conexión al servidor de envio. 
     $maildos->SetFrom('info@formalsi.com', 'Humantalentsas');
     $maildos->AddAddress($correo, "Usuario");
-    $maildos->AddAttachment($ordeningreso,"ordeningreso.docx");
+    //$maildos->AddAttachment($ordeningreso,"ordeningreso.docx");
     $maildos->AddAttachment($hvhuman,"hojavidahuman.docx");
     $maildos->AddAttachment($docdocumen,"documentacion.docx");
     $maildos->AddAttachment($archivoexa,"ordenexamenes.docx");
