@@ -120,6 +120,44 @@
                     $listatemporales=$objconsulta->obtenerProcesos("","SI");
                     include('vistas/proceso.php');
                 break;
+
+                case "guardarcitacion":
+
+                    $id =$_POST['id'];
+                    $correo= $_POST['correo'];
+                    $fechacitacion=$_POST['fechacitacion'];
+                    $listatemporales=$objconsulta->enviarcitacionproceso($id,$correo,$fechacitacion);
+                    echo "<script>alert('Empleado Notificado Correctamente');
+                        window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';
+                        </script>";
+                break;
+
+
+                case "guardarconclucion":
+
+                    $id =$_POST['id'];
+                    $entrevista= $_POST['entrevista'];
+                    $listatemporales=$objconsulta->enviarconclucionproceso($id,$entrevista);
+                    echo "<script>alert('Guardado Correctamente');
+                        window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';
+                        </script>";
+                break;
+
+                case "formprocesogest":
+                    $listatemporales=$objconsulta->obtenerProcesosGest();
+                    include('vistas/procesogest.php');
+                break;    
+                case "notificar":
+
+                    $id = $_GET['id'];
+
+                    $listatemporales=$objconsulta->notificarProcesos($id);
+
+                    echo "<script>alert('Proceso Notificado Correctamente');
+                        window.location.href = 'home.php?ctr=proceso&acc=formproceso';
+                        </script>";
+                    
+                break;
                 case "formu":
                     if($_GET['id']>0) {
                         $listatemporales=$objconsulta->obtenerProcesos($_GET['id'],"SI");

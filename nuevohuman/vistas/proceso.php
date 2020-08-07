@@ -38,9 +38,7 @@
 			$archivos .= "<a href ='archivosgenerales/".$archivotres."' target='_black'>Archivo Tres</a><br>";
 		}
 
-		if($archivos==""){
-			$archivos="Sin Adjuntos";
-		}
+		
 		$estadolb = "";
 		  /*
 		$modalbotonhoja ='<div class="modal fade" id="exampleModalhv'.$id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -84,12 +82,26 @@
 		$botonhoja ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalhv'.$id.'">
 	  Adjuntar Hoja de Vida
 	</button>';	*/
-
 		
-		if($estado == "C"){
-			$estadolb = '<a class="btn btn-primary" href = "home.php?ctr=proceso&acc=formu&id='.$id.'">Editar</a>
-			<a class="btn btn-primary" href = "home.php?ctr=proceso&acc=formu&id='.$id.'">Notificar</a><br>';
+	    $estadolb = '<a class="btn btn-primary" href = "home.php?ctr=proceso&acc=formu&id='.$id.'">Editar</a>';
+		if($estado == "C" && $archivos!=""){
+			$estadolb .= ' || <a class="btn btn-primary" href = "home.php?ctr=proceso&acc=notificar&id='.$id.'">Notificar</a><br>';
 		}
+		if ($archivos==""){
+			$archivos="Sin Adjuntos";
+		}
+
+		if($estado =="N"){
+			$estadolb ="En Validacion";
+		}
+
+		if($estado =="E"){
+			$estadolb ="Citado";
+		}
+
+
+
+
 		$correo=$listatemporales[$i]['correo'];
 		echo  '<tr><td>'.$val.'</td>
 		<td>'.$nombrefuncionario.'</td>

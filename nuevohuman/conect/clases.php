@@ -117,6 +117,26 @@ public function obtenerProcesos($id="",$propirtario=""){
     return $consultas;
 }
 
+
+public function obtenerProcesosGest($id="",$propirtario=""){
+    $conn = $this->conec();
+    $dato=array();
+    $where  ="estado in ('N','E')";
+    if($id!=""){
+        $where.=" and id_proceso = {$id}";
+    }
+
+    if($propirtario!=""){
+        $where.=" and grabador  = '{$_SESSION['usuario']}'";
+    }
+
+
+    $consultas = "SELECT * FROM procesos where ".$where;
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
 public function obtenerCertificadosporContrato($contrato,$numero){
     $conn = $this->conec();
     $dato=array();
@@ -583,6 +603,45 @@ public function correopsico($id_req,$tipomen) {
 
       }
 
+}
+
+
+public function notificarProcesos($id){
+    $conn = $this->conec();
+    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    for($i= 0; $i<count($consultas); $i++) {
+      $correos = explode(",", $consultas[$i]['usuarios']);
+      for($j=0; $j<count($correos); $j++){
+          $consultascorr = "SELECT mail FROM users WHERE uid= ".$correos[$j];
+          $consultasresp= $conn->Execute($consultascorr)-> getRows();
+
+          $mensaje  ="Se a creado  un nuevo proceso con identifidor #".$id."";
+
+          $envio = $this->enviocorreo($consultasresp[0]['mail'], $mensaje);
+      }
+
+    }
+
+    $SQL ="UPDATE procesos  SET estado='N'  WHERE id_proceso=".$id;
+    $conn->Execute($SQL);
+    
+} 
+
+public function enviarcitacionproceso($id,$correo,$fechacitacion){
+    $conn = $this->conec();
+    $mensaje = "Se le a citado para revisar una solucitud de proceso diciplinario #".$id." para la fecha  y hora ".$fechacitacion;
+    $envio = $this->enviocorreo($correo, $mensaje);
+    $SQL ="UPDATE procesos  SET estado='E',fechacita='$fechacitacion'  WHERE id_proceso=".$id;
+    $conn->Execute($SQL);
+
+}
+
+
+public function enviarconclucionproceso($id,$entrevista){
+    $conn = $this->conec();
+    $SQL ="UPDATE procesos  SET estado='V',conclucionentre='$entrevista'  WHERE id_proceso=".$id;
+    $conn->Execute($SQL);
 }
 
 
