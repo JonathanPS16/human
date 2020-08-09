@@ -1,16 +1,14 @@
-<a  class="btn btn-primary" href="home.php?ctr=proceso&acc=formu&id=0">Nuevo Proceso</a>
+<a  class="btn btn-primary" href="home.php?ctr=accidentes&acc=formu&id=0">Nuevo Accidente</a>
 <br><br><table class="table table-striped" id="tablagrid">
 	<thead>
 		<tr>
 			<th>ID</th>
 			<th>Nombre de Funcionario</th>
-      <th>Cargo</th>
-      <th>Cedula</th>
-	  <th>Archivos Prueba</th>
-	  <th>Conclusion Entrevista</th>
-	  <th>Conclusion Final</th>
-	  <th>Accion</th>
-      
+			<th>Cargo</th>
+			<th>Lugar Trabajo</th>
+			<th>Archivo</th>
+			<th>Recomendaciones</th>
+			<th>Accion</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -23,26 +21,19 @@
 		$conteoreq = 0;
 		$nombrefuncionario=$listatemporales[$i]['nombrefuncionario'];
 		$cargo=$listatemporales[$i]['cargo'];
-		$id=$listatemporales[$i]['id_proceso'];
-		$cedula=$listatemporales[$i]['cedula'];
+		$id=$listatemporales[$i]['id_accidente'];
+		$lugartrabajo=$listatemporales[$i]['lugartrabajo'];
 		$estado=$listatemporales[$i]['estado'];
-		$archivouno=$listatemporales[$i]['archivouno'];
-		$archivodos=$listatemporales[$i]['archivodos'];
-		$archivotres=$listatemporales[$i]['archivotres'];
-		$conclucions=$listatemporales[$i]['conclucionentre'];
-		$conclucionsfinal=$listatemporales[$i]['conclucionfinal'];
-		$archivofinals=$listatemporales[$i]['archivofinal'];
+		$archivofurat=$listatemporales[$i]['archivofurat'];
+		$diasincapacidad=$listatemporales[$i]['diasincapacidad'];
+		$recomendacionesdoc=$listatemporales[$i]['recomendaciones'];
+		$fecharecom=$listatemporales[$i]['fecharecom'];
 		$archivos = "";
-		if($archivouno!=""){
-			$archivos .= "<a href ='archivosgenerales/".$archivouno."' target='_black'>Archivo Uno</a><br>";
+		if($archivofurat!=""){
+			$archivos .= "<a href ='archivosgenerales/".$archivofurat."' target='_black'>Archivo</a><br>";
 		}
-		if($archivodos!=""){
-			$archivos .= "<a href ='archivosgenerales/".$archivodos."' target='_black'>Archivo Dos</a><br>";
-		}
-		if($archivotres!=""){
-			$archivos .= "<a href ='archivosgenerales/".$archivotres."' target='_black'>Archivo Tres</a><br>";
-		}
-
+		$reco = "";
+		
 		
 		$estadolb = "";
 		  /*
@@ -88,44 +79,46 @@
 	  Adjuntar Hoja de Vida
 	</button>';	*/
 		
-	    $estadolb = '<a class="btn btn-primary" href = "home.php?ctr=proceso&acc=formu&id='.$id.'">Editar</a>';
-		if($estado == "C" && $archivos!=""){
-			$estadolb .= ' || <a class="btn btn-primary" href = "home.php?ctr=proceso&acc=notificar&id='.$id.'">Notificar</a><br>';
+	    $estadolb = '<a class="btn btn-primary" href = "home.php?ctr=accidentes&acc=formu&id='.$id.'">Editar</a>';
+		if($estado == "C"){
+			$recomendaciones="Sin Recomendaciones"; 
+			$reco = "En validacion";
+			$estadolb .= ' || <a class="btn btn-primary" href = "home.php?ctr=accidentes&acc=notificar&id='.$id.'">Notificar</a><br>';
 		}
 		if ($archivos==""){
 			$archivos="Sin Adjuntos";
 			$conclucions="En  Validacion";
-		    $conclucionsfinal="En  Validacion";
+			$conclucionsfinal="En  Validacion";
+			$reco = "En validacion";
 		}
 
 		if($estado =="N"){
 			$estadolb ="En Validacion";
 			$conclucions="En  Validacion";
-		    $conclucionsfinal="En  Validacion";
+			$conclucionsfinal="En  Validacion";
+			$reco = "En validacion";
 		}
 
 		if($estado =="E"){
 			$estadolb ="Citado";
 			$conclucions="En  Validacion";
-		    $conclucionsfinal="En  Validacion";
+			$conclucionsfinal="En  Validacion";
+			$reco = "En validacion";
 		}
 
 		if($estado =="T"){
-			$estadolb = "<br><a href='archivosgenerales/".$archivofinals."' target='_black'>Documento Firmado</a>";
-
+			$reco = "Se otorga <strong>({$diasincapacidad}) </strong>dias de incapacidad<br>Se recomienda: {$recomendacionesdoc}<br>Hasta la Fecha: {$fecharecom}";
+			$estadolb ="Finalizado";
+	
 		}
-
-
-
 
 		$correo=$listatemporales[$i]['correo'];
 		echo  '<tr><td>'.$val.'</td>
 		<td>'.$nombrefuncionario.'</td>
   <td>'.$cargo.'</td>
-  <td>'.$cedula.'</td>
+  <td>'.$lugartrabajo.'</td>
   <td>'.$archivos.'</td>
-  <td>'.$conclucions.'</td>
-  <td>'.$conclucionsfinal.'</td>
+  <td>'.$reco.'</td>
   <td>'.$estadolb.'</td></tr>';
 	}
 	?>

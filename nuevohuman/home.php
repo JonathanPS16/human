@@ -13,10 +13,12 @@ require_once('conect/clases.php');
     <title>Dashboard Template · Bootstrap</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/dashboard/">
-
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
     <!-- Bootstrap core CSS -->
 <link href="https://getbootstrap.com/docs/4.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 
     <!-- Favicons -->
 <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -26,9 +28,8 @@ require_once('conect/clases.php');
 <link rel="mask-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
 <link rel="icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/favicon.ico">
 <meta name="msapplication-config" content="https://getbootstrap.com/docs/4.4/assets/img/favicons/browserconfig.xml">
-<meta name="theme-color" content="#563d7c">
 
-
+<meta name="theme-color" content="#563d7c"/>
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -51,6 +52,7 @@ require_once('conect/clases.php');
   src="https://code.jquery.com/jquery-3.5.0.js"
   integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc="
   crossorigin="anonymous"></script>
+  
   </head>
   <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
@@ -77,14 +79,28 @@ require_once('conect/clases.php');
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"> 
     <?php
       include('validaciones.php');
+      
       ?>
+
     </main>
   </div>
 </div>
+<br>
+<h2>asdsad</h2>
+<br>
+
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
       <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
       <script src="https://getbootstrap.com/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-        <script src="https://getbootstrap.com/docs/4.4/examples/dashboard/dashboard.js"></script></body>
+        <script src="https://getbootstrap.com/docs/4.4/examples/dashboard/dashboard.js"></script>
+        <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+       <script>
+        $( document ).ready(function() {
+          $('#tabla').DataTable();
+        });
+    </script>
+        </body>
 </html>

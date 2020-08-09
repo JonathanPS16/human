@@ -4,9 +4,9 @@
 			<th>ID</th>
 			<th>Nombre de Funcionario</th>
       <th>Cargo</th>
-      <th>Cedula</th>
-	  <th>Archivos Prueba</th>
-	  <th>Conclucion Entrevista</th>
+      <th>Lugar Trabajo</th>
+	  <th>Descripcion Suceso</th>
+	  <th>Archivos</th>
 	  <th>Accion</th>
       
 		</tr>
@@ -21,25 +21,20 @@
 		$conteoreq = 0;
 		$nombrefuncionario=$listatemporales[$i]['nombrefuncionario'];
 		$cargo=$listatemporales[$i]['cargo'];
-		$id=$listatemporales[$i]['id_proceso'];
+		$id=$listatemporales[$i]['id_accidente'];
 		$cedula=$listatemporales[$i]['cedula'];
 		$estado=$listatemporales[$i]['estado'];
-		$archivouno=$listatemporales[$i]['archivouno'];
-		$archivodos=$listatemporales[$i]['archivodos'];
+		$descripcion=$listatemporales[$i]['descripcion'];
+		$lugartrabajo=$listatemporales[$i]['lugartrabajo'];
 		$archivotres=$listatemporales[$i]['archivotres'];
 		$correoempleado=$listatemporales[$i]['correoempleado'];
-		$conclucionentre=$listatemporales[$i]['conclucionentre'];
+		$archivofurat=$listatemporales[$i]['archivofurat'];
+		
 
 		
 		$archivos = "";
-		if($archivouno!=""){
-			$archivos .= "<a href ='archivosgenerales/".$archivouno."' target='_black'>Archivo Uno</a><br>";
-		}
-		if($archivodos!=""){
-			$archivos .= "<a href ='archivosgenerales/".$archivodos."' target='_black'>Archivo Dos</a><br>";
-		}
-		if($archivotres!=""){
-			$archivos .= "<a href ='archivosgenerales/".$archivotres."' target='_black'>Archivo Tres</a><br>";
+		if($archivofurat!=""){
+			$archivos .= "<a href ='archivosgenerales/".$archivofurat."' target='_black'>Archivo</a><br>";
 		}
 
 		
@@ -49,32 +44,32 @@
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Citacion  de Empleado</h5>
+			<h5 class="modal-title" id="exampleModalLabel">Adjuntar Documento</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<form class="form-horizontal" action="home.php?ctr=proceso&acc=guardarcitacion" method="post" enctype="multipart/form-data">
+			<form class="form-horizontal" action="home.php?ctr=accidentes&acc=guardarcitacion" method="post" enctype="multipart/form-data">
 			<input type ="hidden" name="id" id ="id" value="'.$id.'">
-			<input type ="hidden" name="correo" id ="correo" value="'.$correoempleado.'"><div class="form-group row">
-    <label for="fechacitacion" class="col-4 col-form-label">Fecha Citacion</label> 
-    <div class="col-8">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <div class="input-group-text">
-            <i class="fa fa-address-book"></i>
-          </div>
-        </div> 
-        <input id="fechacitacion" name="fechacitacion" placeholder="yyyy-mm-dd hh:mm:ss" type="text" required="required" class="form-control">
-      </div>
-    </div>
-  </div> 
-  <div class="form-group row">
-    <div class="offset-4 col-8">
-      <button name="submit" type="submit" class="btn btn-primary">Citar</button>
-    </div>
-  </div>
+			<div class="custom-file">
+			<input type="file" class="custom-file-input" id="archivo3" name="archivo3" required="required">
+			<label class="custom-file-label" for="archivo3">Documento</label>
+		  </div>
+		  <br>
+		  <br>
+		  <div class="form-group row">
+		  <div class="offset-4 col-8">
+			<button name="submit" type="submit" class="btn btn-primary">Guardar Documento</button>
+		  </div>
+		</div>
+		  <script>
+// Add the following code if you want the name of the file appear on select
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+</script>
 			</form>
 	
 			
@@ -85,7 +80,7 @@
 	</div>
 	';
 		$botonhoja ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalhv'.$id.'">
-	  Citar Empleado
+	  Adjuntar documento
 	</button>';	
 
 	$modalbotonhojados ='<div class="modal fade" id="exampleModalen'.$id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -98,19 +93,31 @@
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<form class="form-horizontal" action="home.php?ctr=proceso&acc=guardarconclucion" method="post" enctype="multipart/form-data">
-			<div class="form-group row">
+			<form class="form-horizontal" action="home.php?ctr=accidentes&acc=guardarconclucion" method="post" enctype="multipart/form-data">
 			<input type ="hidden" name="id" id ="id" value="'.$id.'">
-    <label for="entrevista" class="col-4 col-form-label">Concluciones Entrevista</label> 
-    <div class="col-8">
-      <textarea id="entrevista" name="entrevista" cols="40" rows="5" class="form-control" required="required"></textarea>
-    </div>
-  </div> 
-  <div class="form-group row">
-    <div class="offset-4 col-8">
-      <button name="submit" type="submit" class="btn btn-primary">Guardar Conclucion</button>
-    </div>
-  </div>
+			<div class="form-group row">
+			<label for="diasinca" class="col-4 col-form-label">Dias Incapacidad</label> 
+			<div class="col-8">
+			  <input id="diasinca" name="diasinca" placeholder="Dias Incapacidad" type="text" class="form-control" required="required">
+			</div>
+		  </div>
+		  <div class="form-group row">
+			<label for="obser" class="col-4 col-form-label">Fecha Final Observaciones</label> 
+			<div class="col-8">
+			  <input id="obser" name="obser" placeholder="yyyy-mm-dd" type="text" class="form-control" required="required">
+			</div>
+		  </div>
+		  <div class="form-group row">
+			<label for="observaciones" class="col-4 col-form-label">Observaciones</label> 
+			<div class="col-8">
+			  <textarea id="observaciones" name="observaciones" cols="40" rows="5" required="required" class="form-control"></textarea>
+			</div>
+		  </div> 
+		  <div class="form-group row">
+			<div class="offset-4 col-8">
+			  <button name="submit" type="submit" class="btn btn-primary">Guardar Determinaciones</button>
+			</div>
+		  </div>
 			</form>
 	
 			
@@ -121,7 +128,7 @@
 	</div>
 	';
 		$botonhojados ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalen'.$id.'">
-	  Conclucion Entrevista
+	  Determinaciones
 	</button>';	
 
 
@@ -195,6 +202,7 @@ $(".custom-file-input").on("change", function() {
 		if($estado =="N"){
 			$estadolb = $modalbotonhoja.$botonhoja;
 			$conclucionentre="Esperando Citacion";
+			$archivos ="En Espera";
 		}
 
 		if($estado =="E"){
@@ -212,9 +220,9 @@ $(".custom-file-input").on("change", function() {
 		echo  '<tr><td>'.$val.'</td>
 		<td>'.$nombrefuncionario.'</td>
   <td>'.$cargo.'</td>
-  <td>'.$cedula.'</td>
+  <td>'.$lugartrabajo.'</td>
+  <td>'.$descripcion.'</td>
   <td>'.$archivos.'</td>
-  <td>'.$conclucionentre.'</td>
   <td>'.$estadolb.'</td></tr>';
 	}
 	?>

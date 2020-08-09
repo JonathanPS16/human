@@ -117,11 +117,69 @@ public function obtenerProcesos($id="",$propirtario=""){
     return $consultas;
 }
 
+public function obtenerProcesosAccidentes($id="",$propirtario=""){
+    $conn = $this->conec();
+    $dato=array();
+    $where  ="1=1";
+    if($id!=""){
+        $where.=" and id_accidente = {$id}";
+    }
+
+    if($propirtario!=""){
+        $where.=" and grabador  = '{$_SESSION['usuario']}'";
+    }
+
+
+    $consultas = "SELECT * FROM accidentes where ".$where;
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
 
 public function obtenerProcesosGest($id="",$propirtario=""){
     $conn = $this->conec();
     $dato=array();
     $where  ="estado in ('N','E')";
+    if($id!=""){
+        $where.=" and id_proceso = {$id}";
+    }
+
+    if($propirtario!=""){
+        $where.=" and grabador  = '{$_SESSION['usuario']}'";
+    }
+
+
+    $consultas = "SELECT * FROM procesos where ".$where;
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+
+public function obtenerProcesosGestAcci($id="",$propirtario=""){
+    $conn = $this->conec();
+    $dato=array();
+    $where  ="estado in ('N','E')";
+    if($id!=""){
+        $where.=" and id_accidente = {$id}";
+    }
+
+    if($propirtario!=""){
+        $where.=" and grabador  = '{$_SESSION['usuario']}'";
+    }
+
+
+    $consultas = "SELECT * FROM accidentes where ".$where;
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function obtenerProcesosGestjur($id="",$propirtario=""){
+    $conn = $this->conec();
+    $dato=array();
+    $where  ="estado in ('V')";
     if($id!=""){
         $where.=" and id_proceso = {$id}";
     }
@@ -239,6 +297,22 @@ $funciones
 }
 
 
+
+public function guardarprocesoAccidente($id,$funcionario,$cargo,$lugartrabajo,$jefe,$fechaaccidente,$descripcion){
+    $conn = $this->conec();
+    $dat=date('Y-m-d H:i:s');
+    if($id>0){
+        $SQL ="UPDATE accidentes SET nombrefuncionario='$funcionario', cargo ='$cargo',lugartrabajo ='$lugartrabajo',jefeinmediato='$jefe',
+         	fechaaccidente  ='$fechaaccidente',descripcion  ='$descripcion' where  id_accidente=$id";
+        $conn->Execute($SQL);
+
+    } else {
+        $SQL ="INSERT INTO  accidentes (estado,nombrefuncionario,cargo,lugartrabajo,jefeinmediato,fechaaccidente,descripcion,grabador,fechagrab ) VALUES ('C','$funcionario','$cargo','$lugartrabajo','$jefe',
+        '$fechaaccidente','$descripcion','".$_SESSION['usuario']."','$dat')";
+        $conn->Execute($SQL);
+    }
+
+}
 
 
 
@@ -606,9 +680,30 @@ public function correopsico($id_req,$tipomen) {
 }
 
 
-public function notificarProcesos($id){
+public function notificarProcesosAccidente($id){
     $conn = $this->conec();
-    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
+    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'accientes'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    for($i= 0; $i<count($consultas); $i++) {
+      $correos = explode(",", $consultas[$i]['usuarios']);
+      for($j=0; $j<count($correos); $j++){
+          $consultascorr = "SELECT mail FROM users WHERE uid= ".$correos[$j];
+          $consultasresp= $conn->Execute($consultascorr)-> getRows();
+
+          $mensaje  ="Se a reportado un nuevo accidente con el identifidor #".$id."";
+
+          $envio = $this->enviocorreo($consultasresp[0]['mail'], $mensaje);
+      }
+
+    }
+    $SQL ="UPDATE accidentes  SET estado='N'  WHERE id_accidente=".$id;
+    $conn->Execute($SQL);
+} 
+
+
+public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo){
+    $conn = $this->conec();
+    /*$consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
     $consultas= $conn->Execute($consultas)-> getRows();
     for($i= 0; $i<count($consultas); $i++) {
       $correos = explode(",", $consultas[$i]['usuarios']);
@@ -621,12 +716,15 @@ public function notificarProcesos($id){
           $envio = $this->enviocorreo($consultasresp[0]['mail'], $mensaje);
       }
 
-    }
+    }*/
+    $mensaje ="Se le informa que la decision tomada para el proceso #".$id." es la siguiente <br><br>".$efecto;
+    $envio = $this->enviocorreo($correo, $mensaje);
 
-    $SQL ="UPDATE procesos  SET estado='N'  WHERE id_proceso=".$id;
+
+    $SQL ="UPDATE procesos  SET conclucionfinal = '$efecto',archivofinal='$nombre_archivo', estado='T' WHERE id_proceso=".$id;
     $conn->Execute($SQL);
-    
-} 
+
+}
 
 public function enviarcitacionproceso($id,$correo,$fechacitacion){
     $conn = $this->conec();
@@ -637,10 +735,23 @@ public function enviarcitacionproceso($id,$correo,$fechacitacion){
 
 }
 
+public function enviarcitacionprocesoAcci($id,$nombre_archivo){
+    $conn = $this->conec();
+    $SQL ="UPDATE accidentes  SET estado='E',archivofurat='$nombre_archivo'  WHERE id_accidente=".$id;
+    $conn->Execute($SQL);
+
+}
+
 
 public function enviarconclucionproceso($id,$entrevista){
     $conn = $this->conec();
     $SQL ="UPDATE procesos  SET estado='V',conclucionentre='$entrevista'  WHERE id_proceso=".$id;
+    $conn->Execute($SQL);
+}
+
+public function enviarconclucionprocesoAcci($id,$diasinca,$obser,$observaciones){
+    $conn = $this->conec();
+    $SQL ="UPDATE accidentes  SET estado='T',diasincapacidad='$diasinca',fecharecom='$obser',recomendaciones='$observaciones'  WHERE id_accidente=".$id;
     $conn->Execute($SQL);
 }
 
