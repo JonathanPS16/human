@@ -1,4 +1,10 @@
 <?php 
+
+/*
+usuario correo 
+select users.name,users.mail,users_roles.rid from users inner join users_roles on users_roles.uid=users.uid INNER JOIN role on role.rid=users_roles.rid 
+select role.name,users.name,users.mail,users_roles.rid from users inner join users_roles on users_roles.uid=users.uid INNER JOIN role on role.rid=users_roles.rid 
+*/ 
 session_start();
 define("DIRWEB", "https://".$_SERVER["HTTP_HOST"]."/nuevohuman/");
 require("phpmailer/class.phpmailer.php");
@@ -98,6 +104,15 @@ public function obtenerCertificadosCedula($numero){
     return $consultas;
 }
 
+
+public function selectperfilesusuario(){
+    $conn = $this->conec();
+    $dato=array();
+    $consultas = "SELECT * FROM usuarios";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;   
+}
+
 public function obtenerProcesos($id="",$propirtario=""){
     $conn = $this->conec();
     $dato=array();
@@ -133,6 +148,36 @@ public function obtenerProcesosAccidentes($id="",$propirtario=""){
     $consultas = "SELECT * FROM accidentes where ".$where;
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+
+public function selectperfiles(){
+    $conn = $this->conec();
+    $consultas = "SELECT *,(select GROUP_CONCAT(relmenuper.id_menu) from relmenuper where relmenuper.id_perfil=perfiles.id_perfil ) as selecc FROM `perfiles`";
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function guardarperfiles($insert,$id){
+    $conn = $this->conec();
+
+    $insert = substr($insert, 0, -1);
+    $SQL ="delete from relmenuper WHERE id_perfil=".$id;
+    $conn->Execute($SQL);
+    $consultas = "INSERT INTO relmenuper (id_perfil,id_menu) VALUES $insert";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+
+public function selectmenus(){
+    $conn = $this->conec();
+    $consultas = "SELECT * FROM menus";
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    
     return $consultas;
 }
 

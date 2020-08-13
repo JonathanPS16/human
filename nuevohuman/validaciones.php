@@ -385,6 +385,150 @@
         break;
 
 
+
+
+
+        case "admon":
+            $acc = $_GET['acc'];
+            switch ($acc) {
+                case "adminperfiles":
+                    $listatemporales=$objconsulta->selectperfiles();
+                    $listamenus=$objconsulta->selectmenus();
+                    include('vistas/perfiles.php');
+                break;
+
+                case "asigperfiles":
+                    $listamenus=$objconsulta->selectperfiles();
+                    $listatemporales=$objconsulta->selectperfilesusuario();
+                    include('vistas/adminperfiles.php');
+                break;
+
+                case "guardarpermisos":
+                    $insert ="";
+                    $id = $_POST['id'];
+                    for($i=0;$i<30;$i++){
+                        $info = "radio".$i;
+                        $dato = $_POST["".$info.""];   
+                        if ($dato !="" && $dato == "Si") {
+                            $insert.="($id,$i),";
+                        }
+
+                    }
+                    $listatemporales=$objconsulta->guardarperfiles($insert,$id);
+                    echo "<script>alert('Perfil Configurado Correctamente');
+                                window.location.href = 'home.php?ctr=admon&acc=adminperfiles';
+                                </script>";
+                break;
+
+                case "guardarcitacion":
+
+                    $id =$_POST['id'];
+                    $nombre_archivo = date('Ymd').$_FILES['archivo3']['name'];
+                    if($nombre_archivo!="") {
+                        $tipo_archivo = $_FILES['archivo3']['type'];
+                        $tamano_archivo = $_FILES['archivo3']['size'];
+                        $mensaje = "";    
+                        //compruebo si las características del archivo son las que deseo
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf") || strpos($tipo_archivo, "zip") || strpos($tipo_archivo, "rar")) && ($tamano_archivo < 100000))) {
+                            $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                        }else{
+                            if (move_uploaded_file($_FILES['archivo3']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $archivotres =$nombre_archivo;
+                            }else{
+                                $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            }
+                        }
+                    }
+                    $listatemporales=$objconsulta->enviarcitacionprocesoAcci($id,$nombre_archivo);
+                    echo "<script>alert('Archivo Cargado Correctamente');
+                        window.location.href = 'home.php?ctr=accidentes&acc=formprocesogest';
+                        </script>";
+                break;
+
+
+                case "guardarconclucion":
+
+                    $id =$_POST['id'];
+                    $diasinca= $_POST['diasinca'];
+                    $obser= $_POST['obser'];
+                    $observaciones= $_POST['observaciones'];
+                    $listatemporales=$objconsulta->enviarconclucionprocesoAcci($id,$diasinca,$obser,$observaciones);
+                    echo "<script>alert('Guardado Correctamente');
+                        window.location.href = 'home.php?ctr=accidentes&acc=formprocesogest';
+                        </script>";
+                break;
+
+                case "formprocesogest":
+                    $listatemporales=$objconsulta->obtenerProcesosGestAcci();
+                    include('vistas/procesogestacci.php');
+                break;    
+                case "formacla":
+                    $listatemporales=$objconsulta->obtenerProcesosGestjur();
+                    include('vistas/procesogestacci.php');
+                break;   
+                case "notificar":
+
+                    $id = $_GET['id'];
+
+                    $listatemporales=$objconsulta->notificarProcesosAccidente($id);
+
+                    echo "<script>alert('Accidente Notificado Correctamente');
+                        window.location.href = 'home.php?ctr=accidentes&acc=listaaccidentes';
+                        </script>";
+                    
+                break;
+                case "formu":
+                    if($_GET['id']>0) {
+                        $listatemporales=$objconsulta->obtenerProcesosAccidentes($_GET['id'],"SI");
+                    }
+                    include('vistas/formprocesoaccidente.php');
+                break;
+
+                case "guardarsolicitud":
+                    $id = $_POST['id'];
+                    $funcionario = $_POST['funcionario'];
+                    $cargo = $_POST['cargo'];
+                    $lugartrabajo = $_POST['lugartrabajo'];
+                    $jefe = $_POST['jefe'];
+                    $fechaaccidente = $_POST['fechaaccidente'];
+                    $descripcion = $_POST['descripcion'];
+                    $listatemporales=$objconsulta->guardarprocesoAccidente($id,$funcionario,$cargo,$lugartrabajo,$jefe,$fechaaccidente,$descripcion);
+                    echo "<script>alert('Reporte Guardado correctamente');
+                        window.location.href = 'home.php?ctr=accidentes&acc=listaaccidentes';
+                        </script>";
+                break;
+
+                case "guardarfinalproceso":
+                    $id = $_POST['id'];
+                    $efecto = $_POST['efecto'];
+                    $correo = $_POST['correo'];
+                    $archivotres = "";
+                    $nombre_archivo = date('Ymd').$_FILES['archivofirmado']['name'];
+                    if($nombre_archivo!="") {
+                        $tipo_archivo = $_FILES['archivofirmado']['type'];
+                        $tamano_archivo = $_FILES['archivofirmado']['size'];
+                        $mensaje = "";    
+                        //compruebo si las características del archivo son las que deseo
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf") || strpos($tipo_archivo, "zip") || strpos($tipo_archivo, "rar")) && ($tamano_archivo < 100000))) {
+                            $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                        }else{
+                            if (move_uploaded_file($_FILES['archivofirmado']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $archivotres =$nombre_archivo;
+                            }else{
+                                $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            }
+                        }
+                    }
+                    $objconsulta->guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo);
+                    echo "<script>alert('Proceso Terminado Correctamente');
+                                window.location.href = 'home.php?ctr=proceso&acc=formacla';
+                                </script>";
+                break;
+            }
+
+        break;
+
+
         
 
 
