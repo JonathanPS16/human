@@ -620,6 +620,28 @@ public function ajustarlaboratorio($id,$idreq,$laboratorio,$cadena){
     $conn->Execute($SQL);
 }
 
+public function notificarProcesos($id){
+    $conn = $this->conec();
+    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    for($i= 0; $i<count($consultas); $i++) {
+      $correos = explode(",", $consultas[$i]['usuarios']);
+      for($j=0; $j<count($correos); $j++){
+          $consultascorr = "SELECT mail FROM users WHERE uid= ".$correos[$j];
+          $consultasresp= $conn->Execute($consultascorr)-> getRows();
+
+          $mensaje  ="Se a creado  un nuevo proceso con identifidor #".$id."";
+
+          $envio = $this->enviocorreo($consultasresp[0]['mail'], $mensaje);
+      }
+
+    }
+
+    $SQL ="UPDATE procesos  SET estado='N'  WHERE id_proceso=".$id;
+    $conn->Execute($SQL);
+    
+} 
+
 public function ajustarorden($id,$idreq,$tasa,$salario,$presentarse,$direccion){
     $conn = $this->conec();
     $SQL ="UPDATE req_candidatos SET tasa='$tasa',salariorh='$salario',presentarse='$presentarse',direccion='$direccion' WHERE id=".$id;
