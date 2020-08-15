@@ -2,7 +2,28 @@
 require_once('conect/clases.php');
 if (isset($_SESSION['idusuario'])) {
             header("Location: ".DIRWEB."home.php?ctr=home");
-        }
+}
+
+if(isset($_POST) && $_POST['vali']=='si')
+{
+  if($_POST['documento']!="" && $_POST['clave']==$_POST['clavere'] && $_POST['clave']!=""){
+    $objconsulta= new consultas();
+    $ret=$objconsulta->valdiaryguardar($_POST['documento'],base64_encode($_POST['clave']),$_POST['nombre'],$_POST['correo'],$_POST['perfilinicial']);
+    if($ret) {
+      echo "<script>alert('Usuario Creado Correctamente');";
+      echo 'window.location.replace("https://humantalentsas.com/nuevohuman/");';
+      echo "</script>";
+    } else {
+      echo "<script>alert('Usuario Ya Creado en Sistema');";
+      echo 'window.location.replace("https://humantalentsas.com/nuevohuman/registro.php");';
+      echo "</script>";
+
+    }
+  } else {
+    echo "<script>alert('Complete la Informacion Correctamente');</script>";
+  }
+}
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -64,56 +85,50 @@ if (isset($_SESSION['idusuario'])) {
 <img class="mb-4" src="img/logo_negro.jpg" alt="" width="228" height="72">
 	<br>
 	<h4 class="card-title mt-3 text-center">Creacion de Cuentas</h4><br>
-  <form>
+  <form action="registro.php" method="post">
 	<div class="form-group input-group">
 		<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
 		 </div>
-        <input name="" class="form-control" placeholder="Nombre y Apellido" type="text">
+        <input name="nombre" id="nombre" class="form-control" placeholder="Nombre y Apellido" type="text" required="required">
     </div> <!-- form-group// -->
     <div class="form-group input-group">
     	<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-id-badge"></i> </span>
 		 </div>
-        <input name="" class="form-control" placeholder="Documento" type="email">
+        <input name="documento" id="documento" class="form-control" placeholder="Documento" type="number" required="required">
     </div> <!-- form-group// -->
     <div class="form-group input-group">
     	<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
 		 </div>
-        <input name="" class="form-control" placeholder="Correo Electronico" type="email">
+        <input name="correo" id="correo" class="form-control" placeholder="Correo Electronico" type="email" required="required">
     </div> <!-- form-group// -->
-    <div class="form-group input-group">
-    	<div class="input-group-prepend">
-		    <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
-		</div>
-
-    <input name="" class="form-control" placeholder="Celular" type="text">
-    </div> <!-- form-group// -->
+    <!-- form-group// -->
     <div class="form-group input-group">
     	<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-building"></i> </span>
 		</div>
-		<select class="form-control">
-			<option selected="">Tipo Perfil</option>
-			<option>Designer</option>
-			<option>Manager</option>
-			<option>Accaunting</option>
+		<select class="form-control" id="perfilinicial" name="perfilinicial" required="required">
+			<option selected="">Seleccion Tipo Perfil</option>
+			<option value ="1">Cliente</option>
+			<option value="2">Empresa</option>
 		</select>
 	</div> <!-- form-group end.// -->
     <div class="form-group input-group">
     	<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
 		</div>
-        <input class="form-control" placeholder="Clave" type="password">
+        <input class="form-control" id="clave" name="clave" placeholder="Clave" type="password" required="required">
     </div> <!-- form-group// -->
     <div class="form-group input-group">
     	<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
 		</div>
-        <input class="form-control" placeholder="Repertir Clave" type="password">
+        <input class="form-control"  id="clavere" name="clavere" placeholder="Repertir Clave" type="password" required="required">
     </div> <!-- form-group// -->                                      
     <div class="form-group">
+    <input type="hidden" id="vali" name="vali" value="si">
         <button type="submit" class="btn btn-primary btn-block">Crear Cuenta</button>
     </div> <!-- form-group// -->      
     <p class="text-center">Tienes una Cuenta? <a href="index.php">Ingresar</a> </p>                                                                 

@@ -180,6 +180,26 @@ public function guardarperfiles($insert,$id){
 }
 
 
+public function valdiaryguardar($documento,$clave,$nombre,$correo,$pefil){
+    $conn = $this->conec();
+    $result = $conn->Execute("SELECT * from  usuarios WHERE  correo='{$correo}' OR  usuario = '{$documento}'");
+    $recordCount = $result->recordCount();
+    if($recordCount == 0) {
+
+        $SQL ="INSERT INTO usuarios (usuario,correo,pass,nombre,idrol) VALUES ('{$documento}','{$correo}','{$clave}','{$nombre}',$pefil)";
+        $conn->Execute($SQL);
+        return true;
+
+
+    } else {
+        return false;
+    }
+
+
+    
+}
+
+
 public function selectmenus(){
     $conn = $this->conec();
     $consultas = "SELECT * FROM menus where padre !=0";
@@ -992,10 +1012,10 @@ public function enviarCorreoReq($ide,$req){
       $this->enviarcorreoClienteGen($req,"NUEVAREQ");
   }
 
-  public function enviocorreo($correo,$mensaje)
+  public function enviocorreo($correo,$mensaje,$asunto="Notificacion Gestion Human")
   {
-    $titulo2 = "Creacion de Nueva Requisision";
-    $cuerpo2 = "<p>Señor Usuario <br />".$mensaje."  Para su Seguimiento y/o Gestion <br /><br><br>
+    $titulo2 = $asunto;
+    $cuerpo2 = "<p>Señor Usuario <br />".$mensaje."<br><br>Para su Seguimiento y/o Gestion <br /><br><br>
                   &copy; ".date('Y')." humantalentsas.com - Todos los derechos reservados </p>";
     $maildos = new PHPMailer();
     $maildos->IsSMTP();
