@@ -23,19 +23,25 @@ public function  consultarusuario($usuario,$clave) {
 
 private function _usuarioconectado($usuario,$clave) {
     $conn = $this->conec();
-    $consultas= $conn->Execute("SELECT users.mail, users.uid,role.name as perfil,role.rid as idperfil FROM users inner join users_roles on users_roles.uid=users.uid 
-    INNER join role on role.rid=users_roles.rid and users.name=".$usuario)-> getRows();
+    $clave = base64_encode($clave); 
+    //echo "SELECT * from  usuarios WHERE  usuario='{$usuario}' and  pass = '{$clave}'";
+
+    $result = $conn->Execute("SELECT * from  usuarios WHERE  usuario='{$usuario}' and  pass = '{$clave}'");
+    $recordCount = $result->recordCount();
+    if($recordCount == 0) {
+        return false;
+    }
+    $consultas= $conn->Execute("SELECT * from  usuarios WHERE  usuario='{$usuario}' and  pass = '{$clave}'")-> getRows();
     foreach ($consultas as $key => $arreglo) { 
-        $uid = $arreglo["uid"];
-        $uperfil = $arreglo["idperfil"];
-       
-        $mail = $arreglo["mail"];
-        $perfil =1; 
+        $uid = $arreglo["id_usuario"];
+        $uperfil = $arreglo["idrol"];
+        $mail = $arreglo["correo"];
         $_SESSION['usuario'] = $usuario;
         $_SESSION['correo'] = $mail;
     	$_SESSION['idusuario'] = $uid;
     	$_SESSION['id_perfil'] = $uperfil;
     }
+
 
     $consultas= $conn->Execute("SELECT id_empresa from  usuariosempresas where id_usuario=".$_SESSION['idusuario'])-> getRows();
     $empresa = "";
@@ -75,6 +81,7 @@ public function cerrarsesion() {
 
 
 public function menulateral(){
+    $perfil = $_SESSION['id_perfil'];
     $conn = $this->conec();
     $dato=array();
     $consultas= $conn->Execute("SELECT * from menus where padre=0")-> getRows();
@@ -82,7 +89,8 @@ public function menulateral(){
         $menu        = $arreglo["menu"];
         $id        = $arreglo["id"];
         $arrayunio=array();
-        $consultasdos= $conn->Execute("SELECT * from menus where padre=".$id)-> getRows();
+        $consultasdos= $conn->Execute("select  menus.* from relmenuper inner JOIN menus on menus.id=relmenuper.id_menu and relmenuper.id_perfil=".$perfil." and menus.padre=".$id)-> getRows();
+        //$consultasdos= $conn->Execute("select  * fROM menus where  padre=".$id)-> getRows();
         foreach ($consultasdos as $key => $arreglodos) { 
             $menudos        = $arreglodos["menu"];
             $iddos        = $arreglodos["id"];
@@ -174,7 +182,7 @@ public function guardarperfiles($insert,$id){
 
 public function selectmenus(){
     $conn = $this->conec();
-    $consultas = "SELECT * FROM menus";
+    $consultas = "SELECT * FROM menus where padre !=0";
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     

@@ -39,15 +39,35 @@
     </tbody>
 </table>
 
-<script>
-function cambiar(id,valor){
-	if (valor!=0) {
-		var r = confirm("Seguro que Desea Cambiar eL Perfil del Usuario?");
-		if (r == true) {
-			console.log(id+"+"+valor+" HOLA");
-		} else {
-			return false;
-		} 
-	}
+<script type="text/javascript">
+	function cambiar(id,valor){
+
+
+         
+			if (valor!=0) {
+				var r = confirm("Seguro que Desea Cambiar eL Perfil del Usuario?");
+				if (r == true) {
+
+					/*$.ajax({
+						url: "home.php?ctr=admon&acc=asigperfiles&id=1&per=1",
+						async: false,
+						type: "GET",
+						success: function(data) {
+							alert(data);
+							//notificacion('', 'marcacion realizada', 'information', '2', 'bottomLeft', 3000);
+						},
+						error: function(msg) {
+							alert("ERROR"+msg);
+							//alerta('error de comunicacion', 3);
+						}
+					});*/
+
+
+					console.log(id+"+"+valor+" HOLA");
+				} else {
+					return false;
+				} 
+			}
 }
+
 </script>

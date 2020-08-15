@@ -12,7 +12,7 @@ if (isset($_SESSION['idusuario'])) {
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.6">
-    <title>Signin Template · Bootstrap</title>
+    <title>Ingreso</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/sign-in/">
 
@@ -51,18 +51,23 @@ if (isset($_SESSION['idusuario'])) {
   </head>
   <body class="text-center">
     <form class="form-signin" action="validacion.php" method="post">
-  <img class="mb-4" src="https://getbootstrap.com/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-  <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+  <img class="mb-4" src="img/logo_negro.jpg" alt="" width="228" height="72">
+  <h1 class="h3 mb-3 font-weight-normal">Formulario de Ingreso</h1>
   <label for="inputEmail" class="sr-only">Email address</label>
-  <input type="number" id="inputEmail" name="inputEmail" class="form-control" placeholder="usuario" required autofocus>
+  <input type="number" id="inputEmail" name="inputEmail" class="form-control" placeholder="Usuario" required autofocus>
   <label for="inputPassword" class="sr-only">Password</label>
-  <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
+  <br><input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Clave" required>
   <div class="checkbox mb-3">
-    
+  <p class="text-center">No  Tienes una Cuenta? <a href="registro.php">Registrar</a> </p>
   </div>
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-  <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+  <p class="mt-5 mb-3 text-muted">&copy;<?php echo date('Y'); ?></p>
 </form>
 </body>
 </html>
+<?php 
 
+if(isset($_GET['error']) && $_GET['error']==0){
+  echo "<script>alert('usuario o clave invalida');</script>";
+}
+?>
