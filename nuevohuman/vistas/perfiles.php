@@ -17,8 +17,16 @@
 		$conteoreq = 0;
 		$id = $listatemporales[$i]['id_perfil'];
 		$nombreperfil=$listatemporales[$i]['nombreperfil'];
-		$selecc=$listatemporales[$i]['selecc'];
-		
+		$selecc=$listatemporales[$i]['selecc'].",";
+		$pos = strpos($selecc, ",");
+
+		/*if ($pos === false) {
+			if($selecc==""){
+				$selecc="0,";
+			} else {
+				$selecc= $selecc.",";
+			}
+		}*/
 		$camposmenu = "";
 
 		for($j=0; $j<count($listamenus);$j++) {
@@ -30,11 +38,12 @@
 			$seldes ="";
 			$selseles ="";
 			if ($pos === false) {
-				$seldes ="checked";
+				$seldes ="selected";
 			} else {
-				$selseles ="checked";
+				$selseles ="selected";
 			}
-			$camposmenu.='<div class="form-group row">
+			/*$camposmenu.='
+			<div class="form-group row">
 			<label class="col-4">'.$menu.'</label> 
 			<div class="col-8">
 			  <div class="custom-control custom-radio custom-control-inline">
@@ -46,7 +55,16 @@
 				<label for="radio_1'.$idmen.'" class="custom-control-label">No</label>
 			  </div>
 			</div>
-		  </div> ';
+		  </div> ';*/
+		  $camposmenu.='<div class="form-group row">
+		  <label class="col-4 col-form-label" for="select">'.$menu.'</label> 
+		  <div class="col-8">
+			<select id="radio'.$idmen.'" name="radio'.$idmen.'" class="custom-select" required="required">
+			  <option value="No" '.$seldes.'>No</option>
+			  <option value="Si" '.$selseles.'>Si</option>
+			</select>
+		  </div>
+		</div> ';
 		}
 
 

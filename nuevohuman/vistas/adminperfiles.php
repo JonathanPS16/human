@@ -33,7 +33,7 @@
 		echo  '<tr><td>'.$val.'</td>
 		<td>'.$usuario.'</td>
 		<td>'.$correo.'</td>
-		<td><select onchange="cambiar('.$id_usuario.',this.value)"><option value ="0">Seleccione</option>'.$pefillb.'</select></td></tr>';
+		<td><select onchange="cambiar('.$id_usuario.',this.value)" class="form-control"><option value ="0">Seleccione</option>'.$pefillb.'</select></td></tr>';
 	}
 	?>
     </tbody>
