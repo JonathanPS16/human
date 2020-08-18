@@ -338,6 +338,9 @@ if($id>0){
         </button>
       </div>
       <div class="modal-body">
+      <div class="alert alert-info" role="alert">
+  Recuerde que Debe Escoger las <strong>10</strong> Competencias Mas Importantes Para el Cargo 
+</div>
       
     <form  method="post" action="home.php?ctr=requisicion&acc=guardarReqHabilidades">
       <input type="hidden" id="id" name="id" value="<?=$id?>">
@@ -702,9 +705,9 @@ if($id>0){
     </div>
     <div class="col-sm">
     <div class="form-group">
-      <label class="col-md-10 control-label" for="jornadalaboral">Jornada Laboral</label>  
+      <label class="col-md-10 control-label" for="jornadalaboral">Jornada Laboral y Horario</label>  
       <div class="col-md-10">
-      <input id="jornadalaboral" value ="<?php echo $mireq[0]['jornadalaboral']; ?>" name="jornadalaboral" type="text" placeholder="Jornada Laboral" class="form-control input-md" required="">
+      <input id="jornadalaboral" value ="<?php echo $mireq[0]['jornadalaboral']; ?>" name="jornadalaboral" type="text" placeholder="Jornada Laboral y Horario" class="form-control input-md" required="">
       </div>
     </div>
     </div>
@@ -740,7 +743,7 @@ if($id>0){
     <div class="form-group">
       <label class="col-md-10 control-label" for="cargo">Fecha Requerida Cargo </label>  
       <div class="col-md-10">
-      <input id="fechareqcargo" value ="<?php echo $mireq[0]['fechareqcargo']; ?>" name="fechareqcargo" type="text" placeholder="YYYY-mm-dd" class="form-control input-md" required="">
+      <input id="fechareqcargo" value ="<?php echo $mireq[0]['fechareqcargo']; ?>" name="fechareqcargo" type="date" placeholder="YYYY-mm-dd" class="form-control input-md" required="">
         
       </div>
     </div>
@@ -772,8 +775,19 @@ if($id>0){
     <div class="form-group">
       <label class="col-md-10 control-label" for="edadminima">Edad Mínima </label>  
       <div class="col-md-10">
-      <input id="edadminima" value ="<?php echo $mireq[0]['edadminima']; ?>" name="edadminima" type="text" placeholder="Edad Mínima " class="form-control input-md" required="">
-        
+      <select name="edadminima" id="edadminima" class="form-control">
+        <option value="0">Seleccione</option>
+        <?php 
+        for($ia=18; $ia<85;$ia++) {
+          $selmin = "";
+          if($mireq[0]['edadminima'] == $ia){
+            $selmin = 'selected="selected"';
+          }
+          echo '<option value="'.$ia.'" '.$selmin.'>'.$ia.'</option>';
+
+        }
+        ?>
+      </select>
       </div>
     </div>
     </div>
@@ -781,8 +795,20 @@ if($id>0){
     <div class="form-group">
       <label class="col-md-10 control-label" for="edadmaxima">Edad Máxima </label>  
       <div class="col-md-10">
-      <input id="edadmaxima" value ="<?php echo $mireq[0]['edadmaxima']; ?>" name="edadmaxima" type="text" placeholder="Edad Máxima " class="form-control input-md" required="">
-        
+
+      <select name="edadmaxima" id="edadmaxima" class="form-control">
+        <option value="0">Seleccione</option>
+        <?php 
+        for($im=18; $im<85;$im++) {
+          $selmin = "";
+          if($mireq[0]['edadmaxima'] == $im){
+            $selmin = 'selected="selected"';
+          }
+          echo '<option value="'.$im.'" '.$selmin.'>'.$im.'</option>';
+
+        }
+        ?>
+      </select>
       </div>
     </div>
     </div>
@@ -790,8 +816,11 @@ if($id>0){
     <div class="form-group">
       <label class="col-md-10 control-label" for="edadindiferente">Edad Indiferente</label>  
       <div class="col-md-10">
-      <input id="edadindiferente" value ="<?php echo $mireq[0]['edadindiferente']; ?>" name="edadindiferente" type="text" placeholder="Edad Indiferente" class="form-control input-md" required="">
-        
+      <select name="edadindiferente" id="edadindiferente" class="form-control">
+
+        <option value="N" <?php if($mireq[0]['edadindiferente']=="N") { echo "selected='selected'"; } ?>>No</option>
+        <option value="S" <?php if($mireq[0]['edadindiferente']=="S") { echo "selected='selected'"; } ?>>Si</option>
+      </select>
       </div>
     </div>
     </div>
@@ -801,10 +830,10 @@ if($id>0){
   <div class="row">
     <div class="col-sm">
     <div class="form-group">
-  <label class="col-md-10 control-label" for="horario ">Horario</label>  
+  <label class="col-md-10 control-label" for="horario ">Ciudad Laborar</label>  
   <div class="col-md-10">
-  <input id="horario" value ="<?php echo $mireq[0]['horario']; ?>" name="horario" type="text" placeholder="Horario" class="form-control input-md" required="">
-    
+  <input id="ciudadlaboral" value ="<?php echo $mireq[0]['ciudadlaboral']; ?>" name="ciudadlaboral" type="text" placeholder="Ciudad a Laborar" class="form-control input-md" required="">
+ 
   </div>
 </div>
     </div>
@@ -927,7 +956,7 @@ if ($pos === false) {
     <label for="checkgenero-2">
       <input type="checkbox" name="checkgenero[]" id="checkgenero-2" value="3"
       <?php echo $checked3;?>>
-      Otro
+      Indiferente
     </label>
 	</div>
   </div>
@@ -944,11 +973,6 @@ if ($pos === false) {
     </div>
     <div class="col-sm">
     <div class="form-group">
-  <label class="col-md-10 control-label" for="ciudadlaboral">Ciudad a Laborar</label>  
-  <div class="col-md-10">
-  <input id="ciudadlaboral" value ="<?php echo $mireq[0]['ciudadlaboral']; ?>" name="ciudadlaboral" type="text" placeholder="Ciudad a Laborar" class="form-control input-md" required="">
-    
-  </div>
 </div>
     </div>
   </div>
