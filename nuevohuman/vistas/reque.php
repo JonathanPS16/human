@@ -849,55 +849,21 @@ if($id>0){
     <div class="col-sm">
     <?php
 $estados = $mireq[0]['estado']; 
+
+
 ?>
-<!-- Multiple Checkboxes -->
 <div class="form-group">
-  <label class="col-md-10 control-label" for="checkestados">Estado Civil</label>
-  <div class="col-md-10">
-  <div class="checkbox">
-    <label for="checkestados-0">
-      <input type="checkbox" name="checkestados[]" id="checkestados-0" value="1" <?php 
-$pos = strpos($estados, "1,");
-if ($pos === false) {
-  $checked1="";
-  } else {
-  $checked1= "checked";
-}
-echo $checked1;
-?>>
-      Soltero
-    </label>
-	</div>
-  <div class="checkbox">
-    <label for="checkestados-1">
-      <input type="checkbox" name="checkestados[]" id="checkestados-1" value="2" <?php 
-$pos = strpos($estados, "2,");
-if ($pos === false) {
-  $checked1="";
-  } else {
-  $checked1= "checked";
-}
-echo $checked1;
-?>>
-      Casado
-    </label>
-	</div>
-  <div class="checkbox">
-    <label for="checkestados-2">
-      <input type="checkbox" name="checkestados[]" id="checkestados-2" value="3" <?php 
-$pos = strpos($estados, "3,");
-if ($pos === false) {
-  $checked1="";
-  } else {
-  $checked1= "checked";
-}
-echo $checked1;
-?>>
-      Indiferente
-    </label>
-	</div>
-  </div>
-</div>
+      <label class="col-md-10 control-label" for="estadocivil">Estado Civil</label>  
+      <div class="col-md-10">
+      <select name="estadocivil" id="estadocivil" class="form-control">
+
+        <option value="soltero" <?php if($estados=="soltero") { echo "selected='selected'"; } ?>>Soltero</option>
+        <option value="casado" <?php if($estados=="casado") { echo "selected='selected'"; } ?>>Casado</option>
+        <option value="indiferente" <?php if($estados=="indiferente") { echo "selected='selected'"; } ?>>Indiferente</option>
+      </select>
+      </div>
+    </div>
+
     </div>
   </div>
 </div>
@@ -911,54 +877,15 @@ $estados = $mireq[0]['genero'];
 
 <!-- Multiple Checkboxes -->
 <div class="form-group">
-  <label class="col-md-10 control-label" for="checkgenero">Genero</label>
+<label class="col-md-10 control-label" for="generos">Genero</label>  
   <div class="col-md-10">
-  <div class="checkbox">
-    <label for="checkgenero-0">
-      <?php 
-$pos = strpos($estados, "1,");
-if ($pos === false) {
-  $checked1="";
-  } else {
-  $checked1= "checked";
-}
-?>
-      <input type="checkbox" name="checkgenero[]" id="checkgenero-0" value="1" <?php echo $checked1;?>
 
-      >
-      Masculino
-    </label>
-	</div>
-  <div class="checkbox">
-    <label for="checkgenero-1">
-      <?php 
-$pos = strpos($estados, "2,");
-if ($pos === false) {
-  $checked2="";
-  } else {
-  $checked2= "checked";
-}
-?>
-      <input type="checkbox" name="checkgenero[]" id="checkgenero-1" value="2" <?php echo $checked2;?>
-      >
-      Femenino
-    </label>
-	</div>
-  <?php 
-$pos = strpos($estados, "3,");
-if ($pos === false) {
-  $checked3="";
-  } else {
-  $checked3= "checked";
-}
-?>
-  <div class="checkbox">
-    <label for="checkgenero-2">
-      <input type="checkbox" name="checkgenero[]" id="checkgenero-2" value="3"
-      <?php echo $checked3;?>>
-      Indiferente
-    </label>
-	</div>
+  <select name="generos" id="generos" class="form-control">
+
+        <option value="masculino" <?php if($estados=="masculino") { echo "selected='selected'"; } ?>>Masculino</option>
+        <option value="femenino" <?php if($estados=="femenino") { echo "selected='selected'"; } ?>>Femenino</option>
+        <option value="indiferente" <?php if($estados=="indiferente") { echo "selected='selected'"; } ?>>Indiferente</option>
+      </select>
   </div>
 </div>
     </div>

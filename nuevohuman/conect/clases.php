@@ -571,19 +571,28 @@ public function obtenerInformacionreq($id){
       return $consultas;
   }
 
+  public function listadousuariosper(){
+    //echo $ide;
+      $conn = $this->conec();
+      $consultas = "SELECT * FROM usuarios";
+      //echo $consultas;
+      $consultas= $conn->Execute($consultas)-> getRows();
+      return $consultas;
+  }
+
 public function obtenercandidatos($ide=0,$whereex = ""){
   //echo $ide;
     $conn = $this->conec();
     $dato=array();
     $where="";
     if ($ide != 0) {
-      $where .=" and id_requisision= ".$ide;
+      $where .=" and req_candidatos.id_requisision= ".$ide;
     } 
     if($whereex!="")
     {
         $where .=" and ".$whereex;  
     }
-    $consultas = "SELECT *,(select COUNT(*) from entrevistas where entrevistas.id_can=req_candidatos.id and entrevistas.id_req=req_candidatos.id_requisision) as conteoentre FROM req_candidatos WHERE 1=1 ".$where;
+    $consultas = "SELECT *,(select COUNT(*) from entrevistas where entrevistas.id_can=req_candidatos.id and entrevistas.id_req=req_candidatos.id_requisision) as conteoentre FROM req_candidatos left join entrevistas on entrevistas.id_req=req_candidatos.id_requisision and entrevistas.id_can=req_candidatos.id WHERE 1=1 ".$where;
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
@@ -611,13 +620,22 @@ public function guardarCandidato($idreq,
                         $nombre,
                         $cedula,
                         $telefono,
-                        $correo
+                        $correo,
+                        $direccioncan,
+                        $barriocan,$idcan
                     )
 {
   $conn = $this->conec();
 
-  $SQL ="INSERT INTO req_candidatos (id_requisision,nombre,cedula,telefono,correo) VALUES ($idreq,'$nombre','$cedula','$telefono','$correo')";
+  if($idcan>0){
+    $SQL ="UPDATE  req_candidatos SET nombre = '$nombre',cedula='$cedula',telefono='$telefono',correo='$correo',
+    direccioncan='$direccioncan',barriocan='$barriocan' WHERE id=".$idcan ;
+    $conn->Execute($SQL);
+
+  } else {
+  $SQL ="INSERT INTO req_candidatos (id_requisision,nombre,cedula,telefono,correo,direccioncan,barriocan) VALUES ($idreq,'$nombre','$cedula','$telefono','$correo','$direccioncan','$barriocan')";
        $conn->Execute($SQL);
+  }
 
 }
 
@@ -690,8 +708,10 @@ public function altareq($id)
     $conn->Execute($SQL);
 }
 
-public function guardarEntre($sql){
+public function guardarEntre($sql,$idreq,$idcan){
     $conn = $this->conec();
+    $sqlcaliTe = "delete from entrevistas where id_req={$idreq} and id_can={$idcan}";
+    $conn->Execute($sqlcaliTe);
     $SQL =$sql;
     $conn->Execute($SQL);
 }
@@ -700,7 +720,7 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
 {
     $conn = $this->conec();
 
-    $consultas = "SELECT users.mail as correo FROM `req` INNER JOIN users on req.clientesol = users.name and req.id=".$idreq;
+    $consultas = "SELECT usuarios.correo as correo FROM `req` INNER JOIN usuarios on req.clientesol = usuarios.usuario and req.id=".$idreq;
     $consultas= $conn->Execute($consultas)-> getRows();
     $correo = "";
     for($i= 0; $i<count($consultas); $i++) {
@@ -723,7 +743,7 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
             break;
     }
 
-    $envio = $this->enviocorreo($correo, $mesaje);
+    $envio = $this->enviocorreo($correo, $mesaje, "Creacion de Nueva Solicitud");
 }
 
 public function actualizarformatos($idper,$idreq,$orden,$documentos,$hv)
@@ -1002,9 +1022,9 @@ public function enviarCorreoReq($ide,$req){
       for($i= 0; $i<count($consultas); $i++) {
         $correos = explode(",", $consultas[$i]['correosselecccion']);
         for($j=0; $j<count($correos); $j++){
-            $consultascorr = "SELECT mail FROM users WHERE uid= ".$correos[$j];
+            $consultascorr = "SELECT usuario FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
-            $envio = $this->enviocorreo($consultasresp[0]['mail'], $mensaje);
+            $envio = $this->enviocorreo($consultasresp[0]['mail'], $mensaje, "Nueva Solictud Generada");
         }
 
       }

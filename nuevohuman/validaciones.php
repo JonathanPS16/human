@@ -205,7 +205,7 @@
                         $tamano_archivo = $_FILES['archivo2']['size'];
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
-                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf") || strpos($tipo_archivo, "zip") || strpos($tipo_archivo, "rar")) && ($tamano_archivo < 100000))) {
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
                             $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
                         }else{
                             if (move_uploaded_file($_FILES['archivo2']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
@@ -222,7 +222,7 @@
                         $tamano_archivo = $_FILES['archivo3']['size'];
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
-                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf") || strpos($tipo_archivo, "zip") || strpos($tipo_archivo, "rar")) && ($tamano_archivo < 100000))) {
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
                             $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
                         }else{
                             if (move_uploaded_file($_FILES['archivo3']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
@@ -249,7 +249,7 @@
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
-                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf") || strpos($tipo_archivo, "zip") || strpos($tipo_archivo, "rar")) && ($tamano_archivo < 100000))) {
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
                             $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
                         }else{
                             if (move_uploaded_file($_FILES['archivofirmado']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
@@ -276,6 +276,10 @@
                     include('vistas/procesoaccidentes.php');
                 break;
 
+                case "guardarnotificacion":
+                    print_r($_POST);
+                break;
+
                 case "guardarcitacion":
 
                     $id =$_POST['id'];
@@ -285,7 +289,7 @@
                         $tamano_archivo = $_FILES['archivo3']['size'];
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
-                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf") || strpos($tipo_archivo, "zip") || strpos($tipo_archivo, "rar")) && ($tamano_archivo < 100000))) {
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
                             $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
                         }else{
                             if (move_uploaded_file($_FILES['archivo3']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
@@ -365,7 +369,7 @@
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
-                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf") || strpos($tipo_archivo, "zip") || strpos($tipo_archivo, "rar")) && ($tamano_archivo < 100000))) {
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
                             $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
                         }else{
                             if (move_uploaded_file($_FILES['archivofirmado']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
@@ -395,6 +399,11 @@
                     $listatemporales=$objconsulta->selectperfiles();
                     $listamenus=$objconsulta->selectmenus();
                     include('vistas/perfiles.php');
+                break;
+
+                case "notificaciones":
+                    $listatemporales=$objconsulta->listadousuariosper();
+                    include('vistas/perfilesnoti.php');
                 break;
 
                 case "asigperfiles":
@@ -429,7 +438,7 @@
                         $tamano_archivo = $_FILES['archivo3']['size'];
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
-                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf") || strpos($tipo_archivo, "zip") || strpos($tipo_archivo, "rar")) && ($tamano_archivo < 100000))) {
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
                             $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
                         }else{
                             if (move_uploaded_file($_FILES['archivo3']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
@@ -509,7 +518,7 @@
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
-                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf") || strpos($tipo_archivo, "zip") || strpos($tipo_archivo, "rar")) && ($tamano_archivo < 100000))) {
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
                             $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
                         }else{
                             if (move_uploaded_file($_FILES['archivofirmado']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
@@ -554,7 +563,7 @@
                     $tamano_archivo = $_FILES['filebutton']['size'];
                     $mensaje = "";    
                     //compruebo si las características del archivo son las que deseo
-                    if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")) && ($tamano_archivo < 100000))) {
+                    if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
                         $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
                     }else{
                         if (move_uploaded_file($_FILES['filebutton']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
@@ -576,7 +585,7 @@
                     $tamano_archivo = $_FILES['filebutton']['size'];
                     $mensaje = "";    
                     //compruebo si las características del archivo son las que deseo
-                    if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")) && ($tamano_archivo < 100000))) {
+                    if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
                         $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
                     }else{
                         if (move_uploaded_file($_FILES['filebutton']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
@@ -809,15 +818,21 @@
 
                 case "guardarNuevoCandidato":
                     $idreq = $_POST['id'];
+                    $idcand = $_POST['idcand'];
                     $nombre = $_POST['nombre'];
                     $cedula = $_POST['cedula'];
                     $telefono = $_POST['telefono'];
                     $correo = $_POST['correo'];
+                    $direccioncan = $_POST['direccioncan'];
+                    $barriocan = $_POST['barriocan'];
                     $guardarcan = $objconsulta->guardarCandidato($idreq,
                         $nombre,
                         $cedula,
                         $telefono,
-                        $correo
+                        $correo,
+                        $direccioncan,
+                        $barriocan,
+                        $idcand
                     );
 
                     echo "<script>alert('Informacion Guardada Correctamente');
@@ -859,20 +874,9 @@
                    $horario=$_POST['horario'];
                    $tipocontrato=$_POST['tipocontrato'];
                    $checkestados=$_POST['checkestados'];
-                   $strsta= "";
-                   if(count($checkestados)>0){
-                   foreach($checkestados as $estado){
-                        $strsta.=$estado.",";
-                    }
-                    }
-
-                    $checkgenero=$_POST['checkgenero'];
-                   $strstagene= "";
-                   if(count($checkgenero)>0){
-                   foreach($checkgenero as $genero){
-                        $strstagene.=$genero.",";
-                    }
-                }
+                   $strsta= $_POST['estadocivil'];
+                   $checkgenero=$_POST['checkgenero'];
+                   $strstagene= $_POST['generos'];
                     $cantidad=$_POST['cantidad'];
                     $ciudadlaboral=$_POST['ciudadlaboral'];
                     $jornadalaboral= $_POST['jornadalaboral'];
@@ -1051,8 +1055,8 @@
                             $datos[]=array($campo=>$valor);
                         }
                     }
-                    $campossql = "id_req,id_can";
-                    $camposvalue = "{$_POST['idreq']},{$_POST['idcan']}";
+                    $campossql = "id_req,id_can,observacionesfami,conceptofinal";
+                    $camposvalue = "{$_POST['idreq']},{$_POST['idcan']},'{$_POST['observacionesfami']}','{$_POST['conceptofinal']}'";
                     foreach ($datos as $clave => $valor) {
                         foreach ($valor as $llavegene => $valorgene) {
                             $campossql.=",{$llavegene}";
@@ -1062,7 +1066,7 @@
                     }
                     $sql = "INSERT INTO entrevistas (".$campossql.") VALUES (".$camposvalue.")";
                     //echo $sql;
-                    $objconsulta->guardarEntre($sql);
+                    $objconsulta->guardarEntre($sql,$_POST['idreq'],$_POST['idcan']);
                     echo "<script>alert('Informacion Guardada Correctamente');
                 window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$_POST['idreq']."';
                 </script>";
