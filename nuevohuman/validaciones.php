@@ -126,7 +126,9 @@
                     $id =$_POST['id'];
                     $correo= $_POST['correo'];
                     $fechacitacion=$_POST['fechacitacion'];
-                    $listatemporales=$objconsulta->enviarcitacionproceso($id,$correo,$fechacitacion);
+                    $fechacitacion=$_POST['fechacitacion'];
+                    $tipo=$_POST['tipo'];
+                    $listatemporales=$objconsulta->enviarcitacionproceso($id,$correo,$fechacitacion,$tipo);
                     echo "<script>alert('Empleado Notificado Correctamente');
                         window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';
                         </script>";
@@ -137,7 +139,25 @@
 
                     $id =$_POST['id'];
                     $entrevista= $_POST['entrevista'];
-                    $listatemporales=$objconsulta->enviarconclucionproceso($id,$entrevista);
+                    $archivodos ="";
+                    $nombre_archivo = date('YmdHms').$_FILES['archivofirmado']['name'];
+                    if($nombre_archivo!="") {
+                        $tipo_archivo = $_FILES['archivofirmado']['type'];
+                        $tamano_archivo = $_FILES['archivofirmado']['size'];
+                        $mensaje = "";    
+                        //compruebo si las características del archivo son las que deseo
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+                            $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                        }else{
+                            if (move_uploaded_file($_FILES['archivofirmado']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $archivodos =$nombre_archivo;
+                            }else{
+                                $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            }
+                        }
+                    }
+
+                    $listatemporales=$objconsulta->enviarconclucionproceso($id,$entrevista,$archivodos);
                     echo "<script>alert('Guardado Correctamente');
                         window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';
                         </script>";
@@ -179,9 +199,12 @@
                     $jefe = $_POST['jefe'];
                     $fechaevento = $_POST['fechaevento'];
                     $descripcion = $_POST['descripcion'];
+                    $horario = $_POST['horario'];
+                    $centrocostos = $_POST['centrocostos'];
+                    $empresausuaria = $_POST['empresausuaria'];
 
                     $archivouno = "";
-                    $nombre_archivo = date('Ymd').$_FILES['archivo1']['name'];
+                    $nombre_archivo = date('YmdHms').$_FILES['archivo1']['name'];
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo1']['type'];
                         $tamano_archivo = $_FILES['archivo1']['size'];
@@ -197,9 +220,10 @@
                             }
                         }
                     }
+                    echo $mensaje;
                     $archivodos = "";
 
-                    $nombre_archivo = date('Ymd').$_FILES['archivo2']['name'];
+                    $nombre_archivo = date('YmdHms').$_FILES['archivo2']['name'];
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo2']['type'];
                         $tamano_archivo = $_FILES['archivo2']['size'];
@@ -216,7 +240,7 @@
                         }
                     }
                     $archivotres = "";
-                    $nombre_archivo = date('Ymd').$_FILES['archivo3']['name'];
+                    $nombre_archivo = date('YmdHms').$_FILES['archivo3']['name'];
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo3']['type'];
                         $tamano_archivo = $_FILES['archivo3']['size'];
@@ -232,7 +256,7 @@
                             }
                         }
                     }
-                    $listatemporales=$objconsulta->guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres);
+                    $listatemporales=$objconsulta->guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria);
                     echo "<script>alert('Proceso Guardado correctamente');
                         window.location.href = 'home.php?ctr=proceso&acc=formproceso';
                         </script>";

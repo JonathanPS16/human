@@ -89,7 +89,7 @@ public function menulateral(){
         $menu        = $arreglo["menu"];
         $id        = $arreglo["id"];
         $arrayunio=array();
-        $consultasdos= $conn->Execute("select  menus.* from relmenuper inner JOIN menus on menus.id=relmenuper.id_menu and relmenuper.id_perfil=".$perfil." and menus.padre=".$id)-> getRows();
+        $consultasdos= $conn->Execute("select  menus.* from relmenuper inner JOIN menus on menus.id=relmenuper.id_menu and relmenuper.id_perfil=".$perfil." and menus.padre=".$id." ORDER BY menus.ordenamiento ASC")-> getRows();
         //$consultasdos= $conn->Execute("select  * fROM menus where  padre=".$id)-> getRows();
         foreach ($consultasdos as $key => $arreglodos) { 
             $menudos        = $arreglodos["menu"];
@@ -390,7 +390,7 @@ public function guardarprocesoAccidente($id,$funcionario,$cargo,$lugartrabajo,$j
 
 
 
-public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres) {
+public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria) {
     $dat=date('Y-m-d H:i:s');
     $conn = $this->conec();
     $insertararchivos1  ="";
@@ -423,12 +423,12 @@ public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$je
 
     if($id>0){
         $SQL ="UPDATE procesos SET ".$updtaarchivos1.$updtaarchivos2.$updtaarchivos3."nombrefuncionario='$funcionario', cargo ='$cargo',cedula ='$cedula',lugartrabajo ='$lugartrabajo',jefeinmediato='$jefe',coreojefe ='$correojefe',
-         	fechaevento ='$fechaevento',descripcion  ='$descripcion' where id_proceso=$id";
+         	fechaevento ='$fechaevento',descripcion  ='$descripcion',horario='$horario',centrocostos='$centrocostos',empresausuaria='$empresausuaria' where id_proceso=$id";
         $conn->Execute($SQL);
 
     } else {
-        $SQL ="INSERT INTO  procesos (".$insertararchivos1.$insertararchivos2.$insertararchivos3."nombrefuncionario,cargo,cedula,lugartrabajo,jefeinmediato,coreojefe,fechaevento,descripcion,grabador,fechagrab ) VALUES (".$val1.$val2.$val3."'$funcionario','$cargo','$cedula','$lugartrabajo','$jefe','$correojefe',
-        '$fechaevento','$descripcion','".$_SESSION['usuario']."','$dat')";
+        $SQL ="INSERT INTO  procesos (".$insertararchivos1.$insertararchivos2.$insertararchivos3."nombrefuncionario,cargo,cedula,lugartrabajo,jefeinmediato,coreojefe,fechaevento,descripcion,grabador,fechagrab,horario,centrocostos,empresausuaria ) VALUES (".$val1.$val2.$val3."'$funcionario','$cargo','$cedula','$lugartrabajo','$jefe','$correojefe',
+        '$fechaevento','$descripcion','".$_SESSION['usuario']."','$dat','$horario','$centrocostos','$empresausuaria')";
         $conn->Execute($SQL);
     }
 
@@ -841,11 +841,11 @@ public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo){
 
 }
 
-public function enviarcitacionproceso($id,$correo,$fechacitacion){
+public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo){
     $conn = $this->conec();
     $mensaje = "Se le a citado para revisar una solucitud de proceso diciplinario #".$id." para la fecha  y hora ".$fechacitacion;
     $envio = $this->enviocorreo($correo, $mensaje);
-    $SQL ="UPDATE procesos  SET estado='E',fechacita='$fechacitacion'  WHERE id_proceso=".$id;
+    $SQL ="UPDATE procesos  SET estado='E',fechacita='$fechacitacion',tipoproceso ='$tipo'  WHERE id_proceso=".$id;
     $conn->Execute($SQL);
 
 }
@@ -858,9 +858,9 @@ public function enviarcitacionprocesoAcci($id,$nombre_archivo){
 }
 
 
-public function enviarconclucionproceso($id,$entrevista){
+public function enviarconclucionproceso($id,$entrevista,$archivodos){
     $conn = $this->conec();
-    $SQL ="UPDATE procesos  SET estado='V',conclucionentre='$entrevista'  WHERE id_proceso=".$id;
+    $SQL ="UPDATE procesos  SET estado='V',conclucionentre='$entrevista',archivoconclusionproceso='$archivodos'  WHERE id_proceso=".$id;
     $conn->Execute($SQL);
 }
 

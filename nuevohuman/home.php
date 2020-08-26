@@ -45,6 +45,62 @@ require_once('conect/clases.php');
           font-size: 3.5rem;
         }
       }
+
+      .bg-dark {
+      background-color: #0069d9 !important;
+      font-weight: bold;
+        
+      }
+
+      .btn {
+          text-transform: capitalize !important;
+      }
+
+      .btn.btn-secondary {
+        color: #fff;
+        background-color: #0069d9;
+        border-color: #0062cc;
+        text-transform: capitalize !important;
+
+      }
+
+      .btn.btn-success {
+        color: #fff;
+        background-color: #0069d9;
+        border-color: #0062cc;
+        text-transform: capitalize !important;
+        
+      }
+      .btn btn-primary {
+        color: #fff;
+        background-color: #0069d9;
+        border-color: #0062cc;
+        text-transform: capitalize !important;
+        
+      }
+      h2 {
+        color: #0069d9;
+        font-weight: bold;
+        text-transform: capitalize !important;
+      }
+
+      h5 {
+        color: #0069d9;
+        font-weight: bold;
+      }
+
+      legend {
+        color: #0069d9;
+        font-weight: bold;
+      }
+
+      span {
+        color: #0069d9;
+        font-weight: bold;
+      }
+
+
+     
     </style>
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/4.4/examples/dashboard/dashboard.css" rel="stylesheet">

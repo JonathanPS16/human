@@ -90,6 +90,8 @@
 		
 	    $estadolb = '<a class="btn btn-primary" href = "home.php?ctr=proceso&acc=formu&id='.$id.'">Editar</a>';
 		if($estado == "C" && $archivos!=""){
+			$conclucions="Sin Especificar";
+		    $conclucionsfinal="Sin Especificar";
 			$estadolb .= ' || <a class="btn btn-primary" href = "home.php?ctr=proceso&acc=notificar&id='.$id.'">Notificar</a><br>';
 		}
 		if ($archivos==""){

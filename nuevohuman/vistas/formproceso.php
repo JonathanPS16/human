@@ -25,6 +25,29 @@ if($listatemporales[0]['id_proceso']==""){
       <input id="cedula" name="cedula" type="text" value ="<?php echo $listatemporales[0]['cedula']; ?>" required="required" class="form-control" placeholder="Cedula">
     </div>
   </div>
+
+  <div class="form-group row">
+    <label for="cedula" class="col-4 col-form-label">Horario Trabajo</label> 
+    <div class="col-8">
+      <input id="horario" name="horario" type="text" value ="<?php echo $listatemporales[0]['horario']; ?>" required="required" class="form-control" placeholder="Horario Laboral">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="cedula" class="col-4 col-form-label">Centro de Costos</label> 
+    <div class="col-8">
+      <input id="centrocostos" name="centrocostos" type="text" value ="<?php echo $listatemporales[0]['centrocostos']; ?>" required="required" class="form-control" placeholder="Centro Costos">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="cedula" class="col-4 col-form-label">Empresa Usuaria</label> 
+    <div class="col-8">
+      <input id="empresausuaria" name="empresausuaria" type="text" value ="<?php echo $listatemporales[0]['empresausuaria']; ?>" required="required" class="form-control" placeholder="Empresa Usuaria">
+    </div>
+  </div>
+
+
   <div class="form-group row">
     <label for="lugartrabajo" class="col-4 col-form-label">Lugar Trabajo</label> 
     <div class="col-8">
