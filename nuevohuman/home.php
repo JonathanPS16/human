@@ -27,6 +27,7 @@ require_once('conect/clases.php');
 <link rel="manifest" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/manifest.json">
 <link rel="mask-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
 <link rel="icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/favicon.ico">
+<script src="js/js.js"></script>
 <meta name="msapplication-config" content="https://getbootstrap.com/docs/4.4/assets/img/favicons/browserconfig.xml">
 
 <meta name="theme-color" content="#563d7c"/>
@@ -151,10 +152,6 @@ require_once('conect/clases.php');
       <script src="https://getbootstrap.com/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
         <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-       <script>
-        $( document ).ready(function() {
-          $('#tabla').DataTable();
-        });
-    </script>
+        
         </body>
 </html>

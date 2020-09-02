@@ -1,11 +1,16 @@
+<h5>Requisiciones Solicitadas</h5>
 <table class="table table-striped">
 	<thead>
 		<tr>
 			<th>ID</th>
 			<th>Cargo</th>
 			<th>Horario</th>
-			<th>Tipo Contrato</th>
-			<th>Caracteristicas Generales</th>
+			<th>Fecha Solicitud</th>
+			<th>Empresa Usuaria</th>
+			<th>Fecha Requerida</th>
+			<th>Cantidad</th>
+			<th>Salario</th>
+			<th>Ciudad</th>
 			<th>Ver</th>
 		</tr>
 	</thead>
@@ -19,16 +24,21 @@ for($i=0; $i<count($listadoreq);$i++){
 	$edadminima=$listadoreq[$i]['edadminima'];
 	$edadmaxima=$listadoreq[$i]['edadmaxima'];
 	$ciudadlaboral=$listadoreq[$i]['ciudadlaboral'];
-	$salariobasico=$listadoreq[$i]['salariobasico'];;
+	$salariobasico=$listadoreq[$i]['salariobasico'];
+	$fechacreacion=$listadoreq[$i]['fechacreacion'];
+	$empresacliente=$listadoreq[$i]['empresacliente'];
+	$fechareqcargo=$listadoreq[$i]['fechareqcargo'];
+	$cantidad=$listadoreq[$i]['cantidad'];
     echo "<tr>
     		<td>".$id."</td>
 			<td>".$cargo."</td>
 			<td>".$horario."</td>
-			<td>".$tipocontrato."</td>
-			<td>Edad Minima: <strong>".$edadminima ."</strong>
-			<br>Edad Maxima: <strong>".$edadmaxima."</strong>
-			<br>Ciudad Laborar: <strong>".$ciudadlaboral."</strong>
-			<br>Salario Basico:<strong>$".$salariobasico."</strong></td>
+			<td>".$fechacreacion."</td>
+			<td>".$empresacliente."</td>
+			<td>".$fechareqcargo."</td>
+			<td>".$cantidad."</td>
+			<td>".$salariobasico."</td>
+			<td>".$ciudadlaboral."</td>
     		<td><a href='home.php?ctr=requisicion&acc=listaCandidatos&id=".$id."'>Gestionar Solicitud</a></td>
     </tr>";
   }

@@ -13,7 +13,7 @@ if($id>0){
         </button>
       </div>
       <div class="modal-body">
-        
+        <p id="miga"><i class="fa fa-angle-double-right"></i> <strong>Paso 1 de 4</strong><p>
       <form class="form-horizontal" method="post" action="home.php?ctr=requisicion&acc=guardarReqCondiciones">
       <input type="hidden" id="id" name="id" value="<?=$id?>">
 <!-- Text input-->
@@ -64,8 +64,7 @@ if($id>0){
 <div class="form-group">
   <label class="col-md-10 control-label" for="funciones">Funciones</label>  
   <div class="col-md-8">
-  <input id="funciones" name="funciones" type="text" placeholder="Funciones" class="form-control input-md" required="" value ="<?php echo $mireq[0]['funciones']; ?>" >
-    
+  <textarea id="funciones" name="funciones" cols="40" rows="5" class="form-control"><?php echo $mireq[0]['funciones']; ?></textarea>
   </div>
 </div>
 
@@ -99,7 +98,7 @@ if($id>0){
         </button>
       </div>
       <div class="modal-body">
-        
+      <p id="miga"><i class="fa fa-angle-double-right"></i> <strong>Paso 2 de 4</strong><p>
       <form method="post" action="home.php?ctr=requisicion&acc=guardarReqRespo">
       <input type="hidden" id="id" name="id" value="<?=$id?>">
   <div class="form-group row">
@@ -239,6 +238,7 @@ if($id>0){
         </button>
       </div>
       <div class="modal-body">
+      <p id="miga"><i class="fa fa-angle-double-right"></i> <strong>Paso 3 de 4</strong><p>
       <div class="col-8">
     <h6>Formación Académica</h6>
     </div>
@@ -338,6 +338,7 @@ if($id>0){
         </button>
       </div>
       <div class="modal-body">
+      <p id="miga"><i class="fa fa-angle-double-right"></i> <strong>Paso 4 de 4</strong><p>
       <div class="alert alert-info" role="alert">
   Recuerde que Debe Escoger las <strong>10</strong> Competencias Mas Importantes Para el Cargo 
 </div>
@@ -750,9 +751,9 @@ if($id>0){
     </div>
     <div class="col-sm">
     <div class="form-group">
-      <label class="col-md-10 control-label" for="cargo">Nombre Empresa Cliente</label>  
+      <label class="col-md-10 control-label" for="cargo">Nombre Empresa Usuaria</label>  
       <div class="col-md-10">
-      <input id="empresacliente" value ="<?php echo $mireq[0]['empresacliente']; ?>" name="empresacliente" type="text" placeholder="Nombre Empresa Cliente" class="form-control input-md" required="">
+      <input id="empresacliente" value ="<?php echo $mireq[0]['empresacliente']; ?>" name="empresacliente" type="text" placeholder="Nombre Empresa Usuaria" class="form-control input-md" required="">
         
       </div>
     </div>
@@ -771,6 +772,17 @@ if($id>0){
 </div>
 <div class="container">
   <div class="row">
+  <div class="col-sm">
+      <div class="form-group">
+        <label class="col-md-10 control-label" for="edadindiferente">Edad Indiferente</label>  
+        <div class="col-md-10">
+          <select name="edadindiferente" id="edadindiferente" class="form-control">
+            <option value="N" <?php if($mireq[0]['edadindiferente']=="N") { echo "selected='selected'"; } ?>>No</option>
+            <option value="S" <?php if($mireq[0]['edadindiferente']=="S") { echo "selected='selected'"; } ?>>Si</option>
+          </select>
+        </div>
+      </div>
+    </div>
     <div class="col-sm">
     <div class="form-group">
       <label class="col-md-10 control-label" for="edadminima">Edad Mínima </label>  
@@ -812,18 +824,7 @@ if($id>0){
       </div>
     </div>
     </div>
-    <div class="col-sm">
-    <div class="form-group">
-      <label class="col-md-10 control-label" for="edadindiferente">Edad Indiferente</label>  
-      <div class="col-md-10">
-      <select name="edadindiferente" id="edadindiferente" class="form-control">
-
-        <option value="N" <?php if($mireq[0]['edadindiferente']=="N") { echo "selected='selected'"; } ?>>No</option>
-        <option value="S" <?php if($mireq[0]['edadindiferente']=="S") { echo "selected='selected'"; } ?>>Si</option>
-      </select>
-      </div>
-    </div>
-    </div>
+    
   </div>
 </div>
 <div class="container">
@@ -841,7 +842,7 @@ if($id>0){
     <div class="form-group">
   <label class="col-md-10 control-label" for="tipocontrato">Tipo de Contrato</label>  
   <div class="col-md-10">
-  <input id="tipocontrato" value ="<?php echo $mireq[0]['tipocontrato']; ?>" name="tipocontrato" type="text" placeholder="Tipo de Contrato" class="form-control input-md" required="">
+  <input id="tipocontrato" value ="Obra o Labor" name="tipocontrato" type="text" placeholder="Tipo de Contrato" class="form-control input-md" required="" readonly="readonly">
     
   </div>
 </div>
@@ -917,6 +918,7 @@ $estados = $mireq[0]['genero'];
     </div>
   </div>
 </div>
+
 <div class="container">
   <div class="row">
     <div class="col-sm">
@@ -925,30 +927,32 @@ $estados = $mireq[0]['genero'];
 
     <?php if($id>0){
         ?>
+     
       <div class="col-sm">
-      <a href="home.php?ctr=requisicion&acc=altareq&id=<?php echo $mireq[0]['id'];?>&empresol=<?php echo $mireq[0]['empresaclientet'];?>" class="btn btn-success col-md-20">
-        Solicitar Requisicion
+      <button type="button" class="btn btn-secondary col-md-20" data-toggle="modal" data-target="#exampleModal" id="paso1">
+        Condiciones y Funciones
+      </button>
+      </div>
+      <div class="col-sm" <?php if($_SESSION['paso']>=2){ echo ""; } else { echo "style='display: none;'"; }  ?>>
+      <button type="button" class="btn btn-secondary col-md-20" data-toggle="modal" data-target="#responsabilidades" id="paso2">
+        Responsabilidades
+      </button>
+      </div>
+      <div class="col-sm" <?php if($_SESSION['paso']>=3){ echo ""; } else { echo "style='display: none;'"; }  ?>>
+      <button type="button" class="btn btn-secondary col-md-20" data-toggle="modal" data-target="#formacion" id="paso3"> 
+        Formacion y Experiencia
+      </button>
+      </div>
+      <div class="col-sm" <?php if($_SESSION['paso']>=4){ echo ""; } else { echo "style='display: none;'"; }  ?>>
+      <button type="button" class="btn btn-secondary col-md-20" data-toggle="modal" data-target="#habilidades" id="paso4">
+      Habildiades y Competencias
+      </button>
+      </div>
+
+      <div class="col-sm" <?php if($_SESSION['paso']==5){ echo ""; } else { echo "style='display: none;'"; }  ?>>
+      <a href="home.php?ctr=requisicion&acc=altareq&id=<?php echo $mireq[0]['id'];?>&empresol=<?php echo $mireq[0]['empresaclientet'];?>" class="btn btn-success col-md-20" id="final">
+        Terminar Requisicion
       </a>
-      </div>
-      <div class="col-sm">
-      <button type="button" class="btn btn-secondary col-md-20" data-toggle="modal" data-target="#exampleModal">
-        CONDICIONES Y FUNCIONES
-      </button>
-      </div>
-      <div class="col-sm">
-      <button type="button" class="btn btn-secondary col-md-20" data-toggle="modal" data-target="#responsabilidades">
-        RESPONSABILIDADES
-      </button>
-      </div>
-      <div class="col-sm">
-      <button type="button" class="btn btn-secondary col-md-20" data-toggle="modal" data-target="#formacion">
-        FORMACION Y EXPERIENCIA
-      </button>
-      </div>
-      <div class="col-sm">
-      <button type="button" class="btn btn-secondary col-md-20" data-toggle="modal" data-target="#habilidades">
-      HABILIDADES Y COMPETENCIAS
-      </button>
       </div>
       <?php } ?>
   </div>
@@ -972,4 +976,23 @@ $estados = $mireq[0]['genero'];
 </fieldset>
 </form>
 
+<script>
+$( "#edadindiferente" ).change(function() {
+  if($( "#edadindiferente" ).val()=="S") {
+    $("select[name='edadminima']").find("option[value='0']").attr("selected",true);
+    $("select[name='edadmaxima']").find("option[value='0']").attr("selected",true);
+    $('#edadminima').prop('disabled', true);
+    $('#edadmaxima').prop('disabled', true);
+  } else {
+    $('#edadminima').prop('disabled', false);
+    $('#edadmaxima').prop('disabled', false);
+  }
+});
 
+$( "#final" ).click(function() {
+  return confirm("Esta Seguro de Terminar la Requision?");
+});
+
+
+
+</script>

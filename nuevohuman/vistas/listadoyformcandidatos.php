@@ -52,6 +52,12 @@
 	      <input id="barriocan" name="barriocan" placeholder="Barrio Vivienda" type="text" class="form-control" required="required">
 	    </div>
 	  </div> 
+    <div class="form-group row">
+	    <label for="correo" class="col-4 col-form-label">Ciudad</label> 
+	    <div class="col-8">
+	      <input id="ciudad" name="ciudad" placeholder="Ciudad Vivienda" type="text" class="form-control" required="required">
+	    </div>
+	  </div> 
 	  <div class="form-group row">
 	    <div class="offset-4 col-8">
 	      <button name="submit" type="submit" class="btn btn-primary">Guardar</button>
@@ -111,6 +117,7 @@ for($i=0; $i<count($listadoreq);$i++){
     $observacionesfami=$listadoreq[$i]['observacionesfami']; 
     $direccioncan=$listadoreq[$i]['direccioncan']; 
     $barriocan=$listadoreq[$i]['barriocan']; 
+    $ciudadcan=$listadoreq[$i]['ciudad']; 
 
     
 
@@ -167,6 +174,12 @@ for($i=0; $i<count($listadoreq);$i++){
           <input id="barriocan" name="barriocan" placeholder="Barrio Vivienda" type="text" class="form-control" required="required" value ="'.$barriocan.'">
         </div>
       </div> 
+      <div class="form-group row">
+	    <label for="correo" class="col-4 col-form-label">Ciudad</label> 
+	    <div class="col-8">
+	      <input id="ciudad" name="ciudad" placeholder="Ciudad Vivienda" type="text" class="form-control" required="required" value ="'.$ciudadcan.'">
+	    </div>
+	  </div> 
       <div class="form-group row">
         <div class="offset-4 col-8">
           <button name="submit" type="submit" class="btn btn-primary">Guardar</button>
@@ -425,7 +438,7 @@ for($i=0; $i<count($listadoreq);$i++){
       $conteoreq++;
       $botonhoja ='<a href="archivosgenerales/'.$hojavida.'" target="_black" >Descargar</a>';
     }
-    if($enviocorreo && $archivoprueba ==''){
+    if($archivoprueba ==''){
     $modalboton ='<div class="modal fade" id="exampleModal'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -472,9 +485,7 @@ for($i=0; $i<count($listadoreq);$i++){
   $conteoreq++;
   $boton ='<a href="archivosgenerales/'.$archivoprueba.'" target="_black" >Descargar</a>';	
 
-} else {
-	$boton ='<a href="home.php?ctr=requisicion&acc=enviarCorreoPrueba&id='.$idper.'&idreq='.$idreq.'" class="btn btn-primary">Enviar Prueba</a>';	
-}
+} 
 
 
 

@@ -1,1 +1,3 @@
-$('#tablagrid').DataTable();
+function hola(id){
+    $('#paso'+id).click();
+}

@@ -622,18 +622,20 @@ public function guardarCandidato($idreq,
                         $telefono,
                         $correo,
                         $direccioncan,
-                        $barriocan,$idcan
+                        $barriocan,
+                        $ciudad,
+                        $idcan
                     )
 {
   $conn = $this->conec();
 
   if($idcan>0){
     $SQL ="UPDATE  req_candidatos SET nombre = '$nombre',cedula='$cedula',telefono='$telefono',correo='$correo',
-    direccioncan='$direccioncan',barriocan='$barriocan' WHERE id=".$idcan ;
+    direccioncan='$direccioncan',barriocan='$barriocan',ciudad='$ciudad' WHERE id=".$idcan ;
     $conn->Execute($SQL);
 
   } else {
-  $SQL ="INSERT INTO req_candidatos (id_requisision,nombre,cedula,telefono,correo,direccioncan,barriocan) VALUES ($idreq,'$nombre','$cedula','$telefono','$correo','$direccioncan','$barriocan')";
+  $SQL ="INSERT INTO req_candidatos (id_requisision,nombre,cedula,telefono,correo,direccioncan,barriocan,ciudad) VALUES ($idreq,'$nombre','$cedula','$telefono','$correo','$direccioncan','$barriocan','$ciudad')";
        $conn->Execute($SQL);
   }
 
@@ -1022,11 +1024,10 @@ public function enviarCorreoReq($ide,$req){
       for($i= 0; $i<count($consultas); $i++) {
         $correos = explode(",", $consultas[$i]['correosselecccion']);
         for($j=0; $j<count($correos); $j++){
-            $consultascorr = "SELECT usuario FROM usuarios WHERE id_usuario= ".$correos[$j];
+            $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
-            $envio = $this->enviocorreo($consultasresp[0]['mail'], $mensaje, "Nueva Solictud Generada");
+            $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje, "Nueva Solictud Generada");
         }
-
       }
 
       $this->enviarcorreoClienteGen($req,"NUEVAREQ");

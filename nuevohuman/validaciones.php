@@ -849,6 +849,7 @@
                     $correo = $_POST['correo'];
                     $direccioncan = $_POST['direccioncan'];
                     $barriocan = $_POST['barriocan'];
+                    $ciudad = $_POST['ciudad'];
                     $guardarcan = $objconsulta->guardarCandidato($idreq,
                         $nombre,
                         $cedula,
@@ -856,6 +857,7 @@
                         $correo,
                         $direccioncan,
                         $barriocan,
+                        $ciudad,
                         $idcand
                     );
 
@@ -938,7 +940,7 @@
                 case 'altareq':
                     $lastid=$_GET['id'];
                     $empresaclientet=$_GET['empresol'];
-                    $objconsulta->altareq($lastid);
+                    //$objconsulta->altareq($lastid);
                     $enviarcorreo = $objconsulta->enviarCorreoReq($empresaclientet,$lastid);
                     echo "<script>alert('Informacion Guardada Correctamente ');
                 window.location.href = 'home.php?ctr=requisicion&acc=verreqcan&id={$lastid}';
@@ -991,6 +993,7 @@
                     $otraingreso,
                     $funciones
                 );
+                $_SESSION["paso"]=2;
                 echo "<script>alert('Informacion Guardada Correctamente');
                 window.location.href = 'home.php?ctr=requisicion&acc=crearRequisicion&id=".$lastid."';
                 </script>";
@@ -1018,6 +1021,7 @@
                     $confidencial,
                     $valores,
                     $otrosresponsabilidades);
+                    $_SESSION["paso"]=3;
 
                     echo "<script>alert('Informacion Guardada Correctamente');
                 window.location.href = 'home.php?ctr=requisicion&acc=crearRequisicion&id=".$lastid."';
@@ -1047,6 +1051,7 @@
                         $observacionesexp,
                         $experienciahomolo
                      );
+                     $_SESSION["paso"]=4;
                     echo "<script>alert('Informacion Guardada Correctamente');
                 window.location.href = 'home.php?ctr=requisicion&acc=crearRequisicion&id=".$lastid."';
                 </script>";
@@ -1150,6 +1155,7 @@
                 $tolerancia,
                 $equipo,
                 $habilidades);
+                $_SESSION["paso"]=5;
                 echo "<script>alert('Informacion Guardada Correctamente');
                 window.location.href = 'home.php?ctr=requisicion&acc=crearRequisicion&id=".$lastid."';
                 </script>";
