@@ -1,10 +1,4 @@
 <?php 
-
-/*
-usuario correo 
-select users.name,users.mail,users_roles.rid from users inner join users_roles on users_roles.uid=users.uid INNER JOIN role on role.rid=users_roles.rid 
-select role.name,users.name,users.mail,users_roles.rid from users inner join users_roles on users_roles.uid=users.uid INNER JOIN role on role.rid=users_roles.rid 
-*/ 
 session_start();
 define("DIRWEB", "https://".$_SERVER["HTTP_HOST"]."/nuevohuman/");
 require("phpmailer/class.phpmailer.php");

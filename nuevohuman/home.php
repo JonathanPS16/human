@@ -1,5 +1,11 @@
 <?php 
 session_start();
+if (!isset($_SESSION['idusuario'])) {
+?>
+<META HTTP-EQUIV="REFRESH" CONTENT="0;URL=index.php"> 
+<?php 
+die();
+} 
 require_once('conect/clases.php');
 ?>
 <!doctype html>

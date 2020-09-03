@@ -17,10 +17,12 @@
             include('principal.php');
             break;
         case "cerrarsesion":
-            $objconsulta->cerrarsesion();
-            ?>
+            session_destroy();
+    ?>
             <meta http-equiv="refresh" content="0; url=<?php echo DIRWEB;?>">
             <?php
+    die();
+            
             break;
         case "getionusuarios":
             echo "i es un pastel";
@@ -1084,8 +1086,8 @@
                             $datos[]=array($campo=>$valor);
                         }
                     }
-                    $campossql = "id_req,id_can,observacionesfami,conceptofinal";
-                    $camposvalue = "{$_POST['idreq']},{$_POST['idcan']},'{$_POST['observacionesfami']}','{$_POST['conceptofinal']}'";
+                    $campossql = "id_req,id_can,observacionesfami,conceptofinal,observacioneslabo,observacionesestu";
+                    $camposvalue = "{$_POST['idreq']},{$_POST['idcan']},'{$_POST['observacionesfami']}','{$_POST['conceptofinal']}','{$_POST['observacioneslabo']}','{$_POST['observacionesestu']}'";
                     foreach ($datos as $clave => $valor) {
                         foreach ($valor as $llavegene => $valorgene) {
                             $campossql.=",{$llavegene}";
@@ -1094,7 +1096,6 @@
                         
                     }
                     $sql = "INSERT INTO entrevistas (".$campossql.") VALUES (".$camposvalue.")";
-                    //echo $sql;
                     $objconsulta->guardarEntre($sql,$_POST['idreq'],$_POST['idcan']);
                     echo "<script>alert('Informacion Guardada Correctamente');
                 window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$_POST['idreq']."';
