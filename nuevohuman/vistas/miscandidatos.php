@@ -26,6 +26,11 @@ for($i=0; $i<count($listadoreq);$i++){
     $estadopresen=$listadoreq[$i]['estado']; 
     $fechacitan=$listadoreq[$i]['fechacita'];
     $motivorechazo=$listadoreq[$i]['motivorechazo']; 
+
+    $motivorechazo=$listadoreq[$i]['motivorechazo']; 
+    $conclusionentrevistagen=$listadoreq[$i]['conclusionentrevistagen']; 
+
+    
      
 
     if ($estadopresen=="E" && $fechacitan ==""){
@@ -44,6 +49,13 @@ for($i=0; $i<count($listadoreq);$i++){
         <label for="fechahora" class="col-4 col-form-label">Fecha y Hora</label> 
         <div class="col-8">
           <input id="fechahora" name="fechahora" placeholder="AAAA-MM-DD HH:MM" type="text" class="form-control" required="required">
+        </div>
+      </div> 
+
+      <div class="form-group row">
+        <label for="lugarentre" class="col-4 col-form-label">Fecha y Hora</label> 
+        <div class="col-8">
+          <input id="lugarentre" name="lugarentre" placeholder="Lugar o Link de Entrevista" type="text" class="form-control" required="required">
         </div>
       </div> 
       <div class="form-group row">
@@ -66,7 +78,49 @@ for($i=0; $i<count($listadoreq);$i++){
   Citar
 </button>';	
     } else {
-      $botoncita ='Fecha Cita<br><strong>'.$fechacitan.'</strong>';
+
+      $modalbotoncitaconclu ='<div class="modal fade" id="exampleModalcitaconclu'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Conclusion Entrevista</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal" action="home.php?ctr=requisicion&acc=conclusionentrevistac" method="post" enctype="multipart/form-data">
+            <div class="form-group row">
+    <label for="concuentre" class="col-4 col-form-label">Conclucion Entrevista</label> 
+    <div class="col-8">
+      <textarea id="concuentre" name="concuentre" cols="40" rows="5" class="form-control" required="required"></textarea>
+    </div>
+  </div>
+          <div class="form-group row">
+            <div class="offset-4 col-8">
+              <input type="hidden" name="id_req" id="id_req" value="'.$idreq.'">
+              <input type="hidden" name="id_per" id="id_per" value="'.$idper.'">
+              <button name="submit" type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+          </div>
+        </form>
+    
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    ';
+        $botoncitaconclu ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalcitaconclu'.$idper.'"> Conclusion Cita
+        '.$fechacitan.'</button>';
+      $botoncita =$modalbotoncitaconclu.$botoncitaconclu.'
+      
+    ';
+      if($conclusionentrevistagen!="" || $conclusionentrevistagen != NULL){
+        $botoncita = $conclusionentrevistagen;
+      }
+
     }
 
     if (($estadopresen=="E" || $estadopresen=="P") && $motivorechazo ==""){

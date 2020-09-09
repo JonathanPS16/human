@@ -1,3 +1,4 @@
+<h4>Requision # <?=$_GET['id'];?></h4>
 <br>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   Agregar Candidato
@@ -247,15 +248,27 @@ for($i=0; $i<count($listadoreq);$i++){
         <div class="modal-body">
           <form class="form-horizontal" action="home.php?ctr=requisicion&acc=ajustarorden" method="post" enctype="multipart/form-data">
           <div class="form-group row">
-            <label for="tasa" class="col-4 col-form-label">Tasa</label> 
-            <div class="col-8">
-              <input id="tasa" name="tasa" placeholder="Tasa ARL" type="text" class="form-control" required="required">
-            </div>
-          </div>
-          <div class="form-group row">
             <label for="salario" class="col-4 col-form-label">Salario</label> 
             <div class="col-8">
               <input id="salario" name="salario" type="text" class="form-control" required="required">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="tasa" class="col-4 col-form-label">Tasa</label> 
+            <div class="col-8">
+              <select id="tasa" name="tasa" required="required" class="custom-select">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+          </div> 
+          <div class="form-group row">
+            <label for="fechainicio" class="col-4 col-form-label">Fecha Inicio</label> 
+            <div class="col-8">
+              <input id="fechainicio" name="fechainicio" placeholder="fechainicio" type="date" class="form-control" required="required">
             </div>
           </div>
           <div class="form-group row">
@@ -629,8 +642,9 @@ for($j=0; $j<5;$j++){
         </button>
       </div>
       <div class="modal-body">
-     
-
+      <img src="img/logo_negro.jpg" style="display: block;
+      margin: auto;width: 35%;">
+<br>
         <form class="form-horizontal" action="home.php?ctr=requisicion&acc=guardarentrevista" method="post" enctype="multipart/form-data">
 		<fieldset>
 		<div id ="listadoparientes">
@@ -723,6 +737,7 @@ if($fechacitan !="" && $estadopresen=="P")
   $botnenvi = $modalbotonarchivos.$botonarchivos;
 } else if ($estadopresen=="E"){
   $botnenvi = "Candidato Presentado";
+  $botonedit ="";
 } else if($conteoreq==3){
   $botnenvi = "<a class='btn btn-success' href='home.php?ctr=requisicion&acc=enviarCandidatos&idper=".$idper."&idreq=".$idreq."'>Enviar Candidato</a>";
 }

@@ -278,13 +278,24 @@ public function obtenerVolantes($anios,$mes,$periodo,$numero){
     return $consultas;
 }
 
-public function obteneTemporales(){
+public function obteneTemporales($dato){
     $conn = $this->conec();
-    $dato=array();
-    $consultas = "SELECT * FROM empresasterporales";
+    $consultas = "SELECT * FROM empresasterporales where nombretemporal like '%$dato%'";
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
+
+public function obteneTemporalesUsarias($dato){
+    $conn = $this->conec();
+    $consultas = "SELECT empresasusuarias.* FROM empresasterporales 
+    inner join empresasusuarias on empresasusuarias.ideempresatemporal=empresasterporales.id_temporal 
+    WHERE nombretemporal  like '%$dato%'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+
+
 
 public function obtenerIngresosRete($documento,$anio){
     $conn = $this->conec();
@@ -321,7 +332,7 @@ $empresacliente
        $SQL ="UPDATE req SET fechamodificacion='$dat',cargo='$cargo',edadminima='$edadminima',edadmaxima='$edadmaxima',
        edadindiferente='$edadindiferente',horario='$horario',tipocontrato='$tipocontrato',
        estado='$strsta',genero='$strstagene',cantidad='$cantidad',ciudadlaboral='$ciudadlaboral',
-       jornadalaboral='$jornadalaboral' where id=$id";
+       jornadalaboral='$jornadalaboral',empresacliente='$empresacliente' where id=$id";
        $conn->Execute($SQL);
        return $id;
     } else {
@@ -521,7 +532,7 @@ public function obteneRes($ide=0,$clientesol=""){
     if ($clientesol != "") {
         $where .=" and clientesol= ".$clientesol;
     } 
-    $consultas = "SELECT * FROM req where 1=1 ".$where."";
+    $consultas = "SELECT * FROM req where 1=1 ".$where." ORDER BY 1 ASC";
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
@@ -539,7 +550,7 @@ public function obteneMisRes($ide=0,$mis=""){
         $where .="and empresaclientet in(".substr($mis,0,-1).")"; 
     }
 
-    $consultas = "SELECT * FROM req where 1=1 ".$where;
+    $consultas = "SELECT * FROM req where 1=1 ".$where." ORDER BY 1 ASC";
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
@@ -684,9 +695,9 @@ public function notificarProcesos($id){
     
 } 
 
-public function ajustarorden($id,$idreq,$tasa,$salario,$presentarse,$direccion){
+public function ajustarorden($id,$idreq,$tasa,$salario,$presentarse,$direccion,$fechainicio){
     $conn = $this->conec();
-    $SQL ="UPDATE req_candidatos SET tasa='$tasa',salariorh='$salario',presentarse='$presentarse',direccion='$direccion' WHERE id=".$id;
+    $SQL ="UPDATE req_candidatos SET tasa='$tasa',salariorh='$salario',presentarse='$presentarse',direccion='$direccion',fechainiciot ='$fechainicio' WHERE id=".$id;
     $conn->Execute($SQL);
 }
 
@@ -867,7 +878,7 @@ public function enviarconclucionprocesoAcci($id,$diasinca,$obser,$observaciones)
 }
 
 
-public function citarcandidato($id_per,$id_req,$fechahora)
+public function citarcandidato($id_per,$id_req,$fechahora,$lugar)
 {
     $conn = $this->conec();
     $consultas = "SELECT correo  FROM req_candidatos WHERE  id=".$id_per;
@@ -884,31 +895,35 @@ public function citarcandidato($id_per,$id_req,$fechahora)
     for($i= 0; $i<count($consultas); $i++) {
         $ide  =$consultas[$i]['empresaclientet'];
     }
-    $mensaje = "Buen Dia  <br>
-    Se le informa que a sido citado a entrevista el dia  ".$fechahora." 
-    <br>";
+    $mensaje = "Buen Dia<br>Se le informa que a sido citado a entrevista el dia  ".$fechahora." en ".$lugar."<br>";
     $envio = $this->enviocorreo($correo, $mensaje);
     $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
       //echo $consultas;
-      $mensaje = "Se a citado a al candidato  con identificador ".$id_per." para el dia ".$fechahora." <br><br>
+      $mensaje = "Se a citadoal candidato con identificador ".$id_per." para el dia ".$fechahora." en ".$lugar."<br><br>
       Para visualizar de click <a href='https://humantalentsas.com/nuevohuman/home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a><br><br>
       Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
       $consultas= $conn->Execute($consultas)-> getRows();
       for($i= 0; $i<count($consultas); $i++) {
         $correos = explode(",", $consultas[$i]['correosselecccion']);
         for($j=0; $j<count($correos); $j++){
-            $consultascorr = "SELECT mail FROM users WHERE uid= ".$correos[$j];
+            $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
-            $envio = $this->enviocorreo($consultasresp[0]['mail'], $mensaje);
+            $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
         }
 
       }
-
-    $SQL ="UPDATE req_candidatos SET estado='P', fechacita='$fechahora' WHERE id=".$id_per;
+    $SQL ="UPDATE req_candidatos SET estado='P', fechacita='$fechahora',lugarcita ='$lugar' WHERE id=".$id_per;
     $conn->Execute($SQL);
     
 
 
+}
+
+public function conclucioncitacitacionc($id_per,$id_req,$conclu)
+{
+    $conn = $this->conec();
+    $SQL ="UPDATE req_candidatos SET  conclusionentrevistagen='$conclu' WHERE id=".$id_per;
+    $conn->Execute($SQL);
 }
 
 

@@ -753,8 +753,21 @@ if($id>0){
     <div class="form-group">
       <label class="col-md-10 control-label" for="cargo">Nombre Empresa Usuaria</label>  
       <div class="col-md-10">
-      <input id="empresacliente" value ="<?php echo $mireq[0]['empresacliente']; ?>" name="empresacliente" type="text" placeholder="Nombre Empresa Usuaria" class="form-control input-md" required="">
-        
+
+      <select id="empresacliente" name="empresacliente" class="form-control" required="required">
+      <option value="0">Seleccione</option>
+      <?php 
+      for($i=0; $i<count($listatemporalesusuarias);$i++){
+        $id_temporal=$listatemporalesusuarias[$i]['id_empresausuaria'];
+        $nombretemporal=$listatemporalesusuarias[$i]['nombreempresausu'];
+        $slr = "";
+        if ($mireq[0]['empresacliente']== $id_temporal){
+          $slr = 'selected="selected"';
+        }
+        echo '<option value="'.$id_temporal.'"  '.$slr.'>'.$nombretemporal.'</option>';
+      }
+      ?>
+      </select>
       </div>
     </div>
     </div>

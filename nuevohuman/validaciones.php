@@ -438,6 +438,31 @@
                     include('vistas/adminperfiles.php');
                 break;
 
+                case "creacionusuarios":
+                    /*$listamenus=$objconsulta->selectperfiles();
+                    $listatemporales=$objconsulta->selectperfilesusuario();*/
+                    include('vistas/registro.php');
+                break;
+
+                case "guardarUsuario":
+                    if($_POST['documento']!="" && $_POST['clave']==$_POST['clavere'] && $_POST['clave']!=""){
+                        $ret=$objconsulta->valdiaryguardar($_POST['documento'],base64_encode($_POST['clave']),$_POST['nombre'],$_POST['correo'],$_POST['perfilinicial']);
+                        if($ret) {
+                          echo "<script>alert('Usuario Creado Correctamente');";
+                          echo "window.location.href = 'home.php?ctr=admon&acc=creacionusuarios';";
+                          echo "</script>";
+                        } else {
+                          echo "<script>alert('Usuario Ya Creado en Sistema');";
+                          echo "window.location.href = 'home.php?ctr=admon&acc=creacionusuarios';";
+                          echo "</script>";
+                    
+                        }
+                      } else {
+                        echo "<script>alert('Complete la Informacion Correctamente');";
+                        echo "window.location.href = 'home.php?ctr=admon&acc=creacionusuarios';";
+                        echo "</script>";
+                      }
+                break;
                 case "guardarpermisos":
                     $insert ="";
                     $id = $_POST['id'];
@@ -575,7 +600,9 @@
                     $id = 0;
                     $mireq=array();
                     $ide=$_GET['id'];
-                    $listatemporales=$objconsulta->obteneTemporales();
+                    $datoempre = "Human";
+                    $listatemporales=$objconsulta->obteneTemporales($datoempre);
+                    $listatemporalesusuarias=$objconsulta->obteneTemporalesUsarias($datoempre);
                     if($ide>0){
                         $id=$_GET['id'];
                         $mireq=$objconsulta->obteneRes($id);
@@ -694,6 +721,7 @@
                     $tasa = $_POST['tasa'];
                     $direccion = $_POST['direccion'];
                     $presentarse = $_POST['presentarse'];
+                    $fechainicio = $_POST['fechainicio'];
                     $orden = $_POST['orden'];
                     require_once 'vendor/autoload.php';
                     $archivoexa = $orden;
@@ -704,7 +732,7 @@
                     $templateProcessor5->setValue('nombrepresente', $presentarse);
                     $templateProcessor5->setValue('salario', "$".number_format($salario,2,",","."));
                     $templateProcessor5->saveAs('archivosgenerales/'.$archivoexa);
-                    $listadoreq=$objconsulta->ajustarorden($idper,$idreq,$tasa,$salario,$presentarse,$direccion);
+                    $listadoreq=$objconsulta->ajustarorden($idper,$idreq,$tasa,$salario,$presentarse,$direccion,$fechainicio);
                     echo "<script>alert('Informacion Guardada Correctamente');
                     window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$idreq."';
                     </script>";
@@ -731,6 +759,9 @@
                     $idper = $_GET["idper"];
                     $idreq = $_GET["idreq"];
                     $listadoreq=$objconsulta->obtenerInformacionreq($idper);
+                    if ($listadoreq[0]['salariobasico'] == "") {
+                        $listadoreq[0]['salariobasico'] = 0;
+                    }
                     $archivo = "orden".$idper.date('YMDS').".docx";
                     $orden = $archivo;
                     require_once 'vendor/autoload.php';
@@ -908,7 +939,6 @@
                     $cantidad=$_POST['cantidad'];
                     $ciudadlaboral=$_POST['ciudadlaboral'];
                     $jornadalaboral= $_POST['jornadalaboral'];
-
                     $lastid = $objconsulta->guardarRequi($id,
                     $cargo,
                     $edadminima,
@@ -960,9 +990,21 @@
                     $fechahora=$_POST['fechahora'];
                     $id_req=$_POST['id_req'];
                     $id_per=$_POST['id_per'];
-                    $listadoreq=$objconsulta->citarcandidato($id_per,$id_req,$fechahora);
+                    $lugarentre=$_POST['lugarentre'];
+                    $listadoreq=$objconsulta->citarcandidato($id_per,$id_req,$fechahora,$lugarentre);
 
                     echo "<script>alert('Candidato Citado Correctamente ');
+                    window.location.href = 'home.php?ctr=requisicion&acc=verreqcan&id={$id_req}';
+                    </script>";
+                break;
+
+                case 'conclusionentrevistac':
+                    $concuentre=$_POST['concuentre'];
+                    $id_req=$_POST['id_req'];
+                    $id_per=$_POST['id_per'];
+                    $listadoreq=$objconsulta->conclucioncitacitacionc($id_per,$id_req,$concuentre);
+
+                    echo "<script>alert('Guardado Correctamente');
                     window.location.href = 'home.php?ctr=requisicion&acc=verreqcan&id={$id_req}';
                     </script>";
                 break;
