@@ -4,7 +4,7 @@ if($id>0){
   ?>
     <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">CONDICIONES SALARIALES Y FUNCIONES</h5>
@@ -329,7 +329,7 @@ if($id>0){
 
 
 <div class="modal fade" id="habilidades" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">HABILIDADES Y COMPETENCIAS</h5>
@@ -343,11 +343,11 @@ if($id>0){
   Recuerde que Debe Escoger las <strong>10</strong> Competencias Mas Importantes Para el Cargo 
 </div>
       
-    <form  method="post" action="home.php?ctr=requisicion&acc=guardarReqHabilidades">
+    <form  method="post" action="home.php?ctr=requisicion&acc=guardarReqHabilidades" id="formulariogeneralhabildiades" onsubmit="return toSubmit();">
       <input type="hidden" id="id" name="id" value="<?=$id?>">
       <div class="form-group row">
-    <label class="col-4">Adaptabilidad a Normas y Ambiente de Trabajo</label> 
-    <div class="col-8">
+    <label class="col-3">Adaptabilidad a Normas y Ambiente de Trabajo</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['adaptabilidad'] =="SI") { ?> checked <?php } ?> name="adaptabilidad" id="adaptabilidad_0" type="radio" class="custom-control-input" value="SI" required="required"> 
         <label for="adaptabilidad_0" class="custom-control-label">SI</label>
@@ -357,10 +357,8 @@ if($id>0){
         <label for="adaptabilidad_1" class="custom-control-label">NO</label>
       </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-4">Administración del Tiempo</label> 
-    <div class="col-8">
+    <label class="col-3">Administración del Tiempo</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['administracion'] =="SI") { ?> checked <?php } ?> name="administracion" id="administracion_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="administracion_0" class="custom-control-label">SI</label>
@@ -372,8 +370,8 @@ if($id>0){
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-4">Análisis y Solución De Problemas</label> 
-    <div class="col-8">
+    <label class="col-3">Análisis y Solución De Problemas</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['analisis'] =="SI") { ?> checked <?php } ?> name="analisis" id="analisis_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="analisis_0" class="custom-control-label">SI</label>
@@ -383,10 +381,9 @@ if($id>0){
         <label for="analisis_1" class="custom-control-label">NO</label>
       </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-4">Capacidad De Gestión</label> 
-    <div class="col-8">
+  
+    <label class="col-3">Capacidad De Gestión</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['gestion'] =="SI") { ?> checked <?php } ?> name="gestion" id="gestion_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="gestion_0" class="custom-control-label">SI</label>
@@ -398,8 +395,8 @@ if($id>0){
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-4">Capacidad De Negociación</label> 
-    <div class="col-8">
+    <label class="col-3">Capacidad De Negociación</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['negociacion'] =="SI") { ?> checked <?php } ?> name="negociacion" id="negociacion_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="negociacion_0" class="custom-control-label">SI</label>
@@ -409,10 +406,9 @@ if($id>0){
         <label for="negociacion_1" class="custom-control-label">NO</label>
       </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-4">Orientación al Cumplimiento Normas Y Procesos</label> 
-    <div class="col-8">
+
+    <label class="col-3">Orientación al Cumplimiento Normas Y Procesos</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['normas'] =="SI") { ?> checked <?php } ?> name="normas" id="normas_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="normas_0" class="custom-control-label">SI</label>
@@ -424,8 +420,8 @@ if($id>0){
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-4">Disposición Hacia El Aprendizaje</label> 
-    <div class="col-8">
+    <label class="col-3">Disposición Hacia El Aprendizaje</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['aprendizaje'] =="SI") { ?> checked <?php } ?> name="aprendizaje" id="aprendizaje_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="aprendizaje_0" class="custom-control-label">SI</label>
@@ -435,10 +431,9 @@ if($id>0){
         <label for="aprendizaje_1" class="custom-control-label">NO</label>
       </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-4">Flexibilidad</label> 
-    <div class="col-8">
+  
+    <label class="col-3">Flexibilidad</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['flexibilidad'] =="SI") { ?> checked <?php } ?> name="flexibilidad" id="flexibilidad_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="flexibilidad_0" class="custom-control-label">SI</label>
@@ -450,8 +445,8 @@ if($id>0){
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-4">Identificación Y Control Del Riesgo</label> 
-    <div class="col-8">
+    <label class="col-3">Identificación Y Control Del Riesgo</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['riesgo'] =="SI") { ?> checked <?php } ?> name="riesgo" id="riesgo_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="riesgo_0" class="custom-control-label">SI</label>
@@ -461,10 +456,9 @@ if($id>0){
         <label for="riesgo_1" class="custom-control-label">NO</label>
       </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-4">Innovación Y Creatividad</label> 
-    <div class="col-8">
+  
+    <label class="col-3">Innovación Y Creatividad</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['innovacion'] =="SI") { ?> checked <?php } ?> name="innovacion" id="innovacion_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="innovacion_0" class="custom-control-label">SI</label>
@@ -476,8 +470,8 @@ if($id>0){
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-4">Seguridad, Salud Ocupacional Y Medio Ambiente</label> 
-    <div class="col-8">
+    <label class="col-3">Seguridad, Salud Ocupacional Y Medio Ambiente</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['ambiente'] =="SI") { ?> checked <?php } ?> name="ambiente" id="ambiente_0" type="radio" class="custom-control-input" value="SI" required="required"> 
         <label for="ambiente_0" class="custom-control-label">SI</label>
@@ -487,10 +481,9 @@ if($id>0){
         <label for="ambiente_1" class="custom-control-label">NO</label>
       </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-4">Observación Y Atención Al Detalle</label> 
-    <div class="col-8">
+ 
+    <label class="col-3">Observación Y Atención Al Detalle</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['observacion'] =="SI") { ?> checked <?php } ?> name="observacion" id="observacion_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="observacion_0" class="custom-control-label">SI</label>
@@ -502,8 +495,8 @@ if($id>0){
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-4">Orientación A Los Resultados</label> 
-    <div class="col-8">
+    <label class="col-3">Orientación A Los Resultados</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['resultados'] =="SI") { ?> checked <?php } ?> name="resultados" id="resultados_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="resultados_0" class="custom-control-label">SI</label>
@@ -513,10 +506,9 @@ if($id>0){
         <label for="resultados_1" class="custom-control-label">NO</label>
       </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-4">Orientación Al Cliente Interno Y Externo</label> 
-    <div class="col-8">
+ 
+    <label class="col-3">Orientación Al Cliente Interno Y Externo</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['cliente'] =="SI") { ?> checked <?php } ?> name="cliente" id="cliente_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="cliente_0" class="custom-control-label">SI</label>
@@ -528,8 +520,8 @@ if($id>0){
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-4">Comunicación</label> 
-    <div class="col-8">
+    <label class="col-3">Comunicación</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['comunicacion'] =="SI") { ?> checked <?php } ?> name="comunicacion" id="comunicacion_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="comunicacion_0" class="custom-control-label">SI</label>
@@ -539,10 +531,9 @@ if($id>0){
         <label for="comunicacion_1" class="custom-control-label">NO</label>
       </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-4">Orientación Tecnológica</label> 
-    <div class="col-8">
+
+    <label class="col-3">Orientación Tecnológica</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['tecnologica'] =="SI") { ?> checked <?php } ?> name="tecnologica" id="tecnologica_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="tecnologica_0" class="custom-control-label">SI</label>
@@ -554,8 +545,8 @@ if($id>0){
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-4">Planeación</label> 
-    <div class="col-8">
+    <label class="col-3">Planeación</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['planeacion'] =="SI") { ?> checked <?php } ?> name="planeacion" id="planeacion_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="planeacion_0" class="custom-control-label">SI</label>
@@ -565,10 +556,9 @@ if($id>0){
         <label for="planeacion_1" class="custom-control-label">NO</label>
       </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-4">Relaciones Interpersonales</label> 
-    <div class="col-8">
+
+    <label class="col-3">Relaciones Interpersonales</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['relaciones'] =="SI") { ?> checked <?php } ?> name="relaciones" id="relaciones_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="relaciones_0" class="custom-control-label">SI</label>
@@ -580,8 +570,8 @@ if($id>0){
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-4">Liderazgo</label> 
-    <div class="col-8">
+    <label class="col-3">Liderazgo</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['liderazgo'] =="SI") { ?> checked <?php } ?> name="liderazgo" id="liderazgo_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="liderazgo_0" class="custom-control-label">SI</label>
@@ -591,10 +581,9 @@ if($id>0){
         <label for="liderazgo_1" class="custom-control-label">NO</label>
       </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-4">Sensibilidad Organizacional</label> 
-    <div class="col-8">
+
+    <label class="col-3">Sensibilidad Organizacional</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['sensibilidad'] =="SI") { ?> checked <?php } ?> name="sensibilidad" id="sensibilidad_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="sensibilidad_0" class="custom-control-label">SI</label>
@@ -606,8 +595,8 @@ if($id>0){
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-4">Solución Y Manejo De Conflictos</label> 
-    <div class="col-8">
+    <label class="col-3">Solución Y Manejo De Conflictos</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['conflictos'] =="SI") { ?> checked <?php } ?> name="conflictos" id="conflictos_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="conflictos_0" class="custom-control-label">SI</label>
@@ -617,10 +606,9 @@ if($id>0){
         <label for="conflictos_1" class="custom-control-label">NO</label>
       </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-4">Tolerancia Al Trabajo Bajo Presión</label> 
-    <div class="col-8">
+  
+    <label class="col-3">Tolerancia Al Trabajo Bajo Presión</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['tolerancia'] =="SI") { ?> checked <?php } ?> name="tolerancia" id="tolerancia_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="tolerancia_0" class="custom-control-label">SI</label>
@@ -632,8 +620,8 @@ if($id>0){
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-4">Trabajo En Equipo</label> 
-    <div class="col-8">
+    <label class="col-3">Trabajo En Equipo</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['equipo'] =="SI") { ?> checked <?php } ?>  name="equipo" id="equipo_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="equipo_0" class="custom-control-label">SI</label>
@@ -643,10 +631,8 @@ if($id>0){
         <label for="equipo_1" class="custom-control-label">NO</label>
       </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-4">Otros habilidades y competencias</label> 
-    <div class="col-8">
+    <label class="col-3">Otros habilidades y competencias</label> 
+    <div class="col-3">
       <div class="custom-control custom-radio custom-control-inline">
         <input <?php if($mireq[0]['habilidades'] =="SI") { ?> checked <?php } ?> name="habilidades" id="habilidades_0" type="radio" required="required" class="custom-control-input" value="SI"> 
         <label for="habilidades_0" class="custom-control-label">SI</label>
@@ -663,7 +649,26 @@ if($id>0){
     </div>
   </div>
 </form>
+<script>
+function  toSubmit (){
+  var minsel = 0;
+  $('#formulariogeneralhabildiades input:radio').each(function() {
+     if($(this).is(':checked')) {
+       //alert("seleccionado");
+       if($(this).val()=='SI'){
+        minsel++
+       }
+     } 
+});
+if(minsel!=10){
+  alert("Recuerde que son 10 Competencias Mas Importantes Para el Cargo");
+  return false;
+} else {
+  return true;
+}
 
+}
+</script>
     
         
       </div>

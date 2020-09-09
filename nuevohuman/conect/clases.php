@@ -1040,6 +1040,8 @@ public function enviarCorreoReq($ide,$req){
       }
 
       $this->enviarcorreoClienteGen($req,"NUEVAREQ");
+
+      $this->altareq($req);
   }
 
   public function enviocorreo($correo,$mensaje,$asunto="Notificacion Gestion Human")
