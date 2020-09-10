@@ -4,7 +4,6 @@
 		<tr>
 			<th>ID</th>
 			<th>Cargo</th>
-			<th>Horario</th>
 			<th>Fecha Solicitud</th>
 			<th>Empresa Usuaria</th>
 			<th>Fecha Requerida</th>
@@ -32,7 +31,6 @@ for($i=0; $i<count($listadoreq);$i++){
     echo "<tr>
     		<td>".$id."</td>
 			<td>".$cargo."</td>
-			<td>".$horario."</td>
 			<td>".$fechacreacion."</td>
 			<td>".$empresacliente."</td>
 			<td>".$fechareqcargo."</td>
