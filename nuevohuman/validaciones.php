@@ -734,7 +734,7 @@
                     $templateProcessor5->saveAs('archivosgenerales/'.$archivoexa);
                     $listadoreq=$objconsulta->ajustarorden($idper,$idreq,$tasa,$salario,$presentarse,$direccion,$fechainicio);
                     echo "<script>alert('Informacion Guardada Correctamente');
-                    window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$idreq."';
+                    window.location.href = 'home.php?ctr=requisicion&acc=verreqcan&id=".$idreq."';
                     </script>";
                 break;
 
@@ -982,7 +982,7 @@
                 case 'verreqcan':
                     $lastid=$_GET['id'];
                     $listadoreq=$objconsulta->obteneMisRescreadas($lastid);
-                    $listadoreq=$objconsulta->obtenercandidatos($lastid,"estado in('E','P')");
+                    $listadoreq=$objconsulta->obtenercandidatos($lastid,"estado in('E','P','A','R')");
                     include('vistas/miscandidatos.php');
                 break;
 

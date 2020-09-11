@@ -1,6 +1,12 @@
 <?php 
 session_start();
 define("DIRWEB", "https://".$_SERVER["HTTP_HOST"]."/nuevohuman/");
+define("Host", "smtp.zoho.com");
+define("Username", "info@formalsi.com");
+define("Password", "2019FormalSiMarzo*");
+define("Port", 465);
+define("correocor", "info@formalsi.com");
+define("mensajecorr", "Humantalentsas");
 require("phpmailer/class.phpmailer.php");
 class consultas {
 public function  consultarusuario($usuario,$clave) {
@@ -680,12 +686,12 @@ public function notificarProcesos($id){
     for($i= 0; $i<count($consultas); $i++) {
       $correos = explode(",", $consultas[$i]['usuarios']);
       for($j=0; $j<count($correos); $j++){
-          $consultascorr = "SELECT mail FROM users WHERE uid= ".$correos[$j];
+          $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
           $consultasresp= $conn->Execute($consultascorr)-> getRows();
 
           $mensaje  ="Se a creado  un nuevo proceso con identifidor #".$id."";
 
-          $envio = $this->enviocorreo($consultasresp[0]['mail'], $mensaje);
+          $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
       }
 
     }
@@ -697,7 +703,7 @@ public function notificarProcesos($id){
 
 public function ajustarorden($id,$idreq,$tasa,$salario,$presentarse,$direccion,$fechainicio){
     $conn = $this->conec();
-    $SQL ="UPDATE req_candidatos SET tasa='$tasa',salariorh='$salario',presentarse='$presentarse',direccion='$direccion',fechainiciot ='$fechainicio' WHERE id=".$id;
+    $SQL ="UPDATE req_candidatos SET estado = 'EM', tasa='$tasa',salariorh='$salario',presentarse='$presentarse',direccion='$direccion',fechainiciot ='$fechainicio' WHERE id=".$id;
     $conn->Execute($SQL);
 }
 
@@ -792,9 +798,9 @@ public function correopsico($id_req,$tipomen) {
       for($i= 0; $i<count($consultas); $i++) {
         $correos = explode(",", $consultas[$i]['correosselecccion']);
         for($j=0; $j<count($correos); $j++){
-            $consultascorr = "SELECT mail FROM users WHERE uid= ".$correos[$j];
+            $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
-            $envio = $this->enviocorreo($consultasresp[0]['mail'], $mensaje);
+            $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
         }
 
       }
@@ -809,12 +815,12 @@ public function notificarProcesosAccidente($id){
     for($i= 0; $i<count($consultas); $i++) {
       $correos = explode(",", $consultas[$i]['usuarios']);
       for($j=0; $j<count($correos); $j++){
-          $consultascorr = "SELECT mail FROM users WHERE uid= ".$correos[$j];
+          $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
           $consultasresp= $conn->Execute($consultascorr)-> getRows();
 
           $mensaje  ="Se a reportado un nuevo accidente con el identifidor #".$id."";
 
-          $envio = $this->enviocorreo($consultasresp[0]['mail'], $mensaje);
+          $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
       }
 
     }
@@ -957,11 +963,16 @@ public function enviardocumentacion($idper,$idreq){
     $maildos->IsSMTP();
     $maildos->SMTPAuth = true;
     $maildos->SMTPSecure = "ssl"; 
-    $maildos->Host = "smtp.zoho.com"; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
+    $maildos->Host = Host; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
+    $maildos->Username = Username; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
+    $maildos->Password = Password; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
+    $maildos->Port = Port; // Puerto de conexión al servidor de envio. 
+    $maildos->SetFrom(correocor, mensajecorr);
+    /*$maildos->Host = "smtp.zoho.com"; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
     $maildos->Username = "info@formalsi.com"; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
     $maildos->Password = "2019FormalSiMarzo*"; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
     $maildos->Port = 465; // Puerto de conexión al servidor de envio. 
-    $maildos->SetFrom('info@formalsi.com', 'Humantalentsas');
+    $maildos->SetFrom('info@formalsi.com', 'Humantalentsas');*/
     $maildos->AddAddress($correo, "Usuario");
     //$maildos->AddAttachment($ordeningreso,"ordeningreso.docx");
     $maildos->AddAttachment($hvhuman,"hojavidahuman.docx");
@@ -1007,9 +1018,9 @@ public function rechazarcandidato($id_per,$id_req,$rechazo)
       for($i= 0; $i<count($consultas); $i++) {
         $correos = explode(",", $consultas[$i]['correosselecccion']);
         for($j=0; $j<count($correos); $j++){
-            $consultascorr = "SELECT mail FROM users WHERE uid= ".$correos[$j];
+            $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
-            $envio = $this->enviocorreo($consultasresp[0]['mail'], $mensaje);
+            $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
         }
 
       }
@@ -1053,11 +1064,16 @@ public function enviarCorreoReq($ide,$req){
     $maildos->IsSMTP();
     $maildos->SMTPAuth = true;
     $maildos->SMTPSecure = "ssl"; 
-    $maildos->Host = "smtp.zoho.com"; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
+    $maildos->Host = Host; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
+    $maildos->Username = Username; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
+    $maildos->Password = Password; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
+    $maildos->Port = Port; // Puerto de conexión al servidor de envio. 
+    $maildos->SetFrom(correocor, mensajecorr);
+    /*$maildos->Host = "smtp.zoho.com"; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
     $maildos->Username = "info@formalsi.com"; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
     $maildos->Password = "2019FormalSiMarzo*"; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
     $maildos->Port = 465; // Puerto de conexión al servidor de envio. 
-    $maildos->SetFrom('info@formalsi.com', 'Humantalentsas');
+    $maildos->SetFrom('info@formalsi.com', 'Humantalentsas');*/
     $maildos->AddAddress($correo, "Usuario");
     $maildos->Subject = utf8_decode($titulo2); // Este es el titulo del email. 
     $maildos->MsgHTML(utf8_decode($cuerpo2));

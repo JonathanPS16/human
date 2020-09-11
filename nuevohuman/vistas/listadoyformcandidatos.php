@@ -304,7 +304,7 @@ for($i=0; $i<count($listadoreq);$i++){
       $botonfinal ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalfinal'.$idper.'">
       Completar Orden
   </button>';	
-
+  $botonfinal = "En Espera Complemento de Orden";
 
     $modalbotonexamenes ='<div class="modal fade" id="exampleModalexamenes'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -726,11 +726,11 @@ if($fechacitan !="" && $estadopresen=="P")
   $motivorechazo
   </strong>";
 
-} else if($estadopresen=="A" && $lugar!="" && $salariorh!="") {
+} else if($estadopresen=="EM" && $lugar!="" && $salariorh!="") {
   $botnenvi = "<a class='btn btn-success' href='home.php?ctr=requisicion&acc=enviardocumentacion&idper=".$idper."&idreq=".$idreq."'>Enviar Documentos</a>";
 } else if($estadopresen=="A" && $salariorh==""){
   $botnenvi = $modalbotonfinal.$botonfinal;
-} else if($estadopresen=="A" && $lugar==""){
+} else if($estadopresen=="EM"){
   $botnenvi = $modalbotonexamenes.$botonexamenes; 
 } else if ($estadopresen=="F")
 {
