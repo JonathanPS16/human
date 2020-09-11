@@ -85,6 +85,7 @@ $labo.='<option value="'.$laboratorios[$i]['id'].'">'.$laboratorios[$i]['nombrel
 			<th>ID</th>
 			<th>Nombre Candidato</th>
       <th>Prueba Psicotecnica</th>
+      <th>Adjunto Extra</th>
       <th>Entrevista</th>
       <th>Hoja de Vida</th>
       <th>Orden</th>
@@ -121,6 +122,7 @@ for($i=0; $i<count($listadoreq);$i++){
     $direccioncan=$listadoreq[$i]['direccioncan']; 
     $barriocan=$listadoreq[$i]['barriocan']; 
     $ciudadcan=$listadoreq[$i]['ciudad']; 
+    $archivootro=$listadoreq[$i]['archivootro']; 
 
     
 
@@ -498,7 +500,8 @@ for($i=0; $i<count($listadoreq);$i++){
 </button>';	
 } elseif($archivoprueba!="") {
   $conteoreq++;
-  $boton ='<a href="archivosgenerales/'.$archivoprueba.'" target="_black" >Descargar</a>';	
+  $boton ='<a href="archivosgenerales/'.$archivoprueba.'" target="_black" >Descargar</a>';
+  	
 
 } 
 
@@ -746,11 +749,56 @@ if($ordeningreso!="")
 {
   $ordenbtn ='<a href="archivosgenerales/'.$ordeningreso.'" target="_black" >Descargar</a>';	
 }
+$modalbotonextra ='<div class="modal fade" id="exampleModalextra'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Adjunto Extra</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="home.php?ctr=requisicion&acc=guardarotro" method="post" enctype="multipart/form-data">
+		<fieldset>
+		<!-- File Button --> 
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="filebutton"></label>
+		  <div class="col-md-4">
+      <input id="id" name="id" type="hidden" value="'.$idper.'">
+      <input id="idreq" name="idreq" type="hidden" value="'.$idreq.'">
+		    <input id="filebutton" name="filebutton" class="input-file" type="file">
+		  </div>
+		</div>
+		<!-- Button -->
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="guardar"></label>
+		  <div class="col-md-4">
+		    <button id="guardar" name="guardar" class="btn btn-primary">Guardar</button>
+		  </div>
+		</div>
 
+		</fieldset>
+		</form>
+
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+';
+    $botonextra ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalextra'.$idper.'">
+  Adjunto Extra
+</button>';	
+if($archivootro!=""){
+  $botonextra ='<a href="archivosgenerales/'.$archivootro.'" target="_black" >Descargar</a>';
+}
     echo "<tr>
     		<td>".$jaja ."</td>
     		<td>".$nombre."</td>
-    		<td>".$boton.$modalboton."</td>
+        <td>".$boton.$modalboton."</td>
+        <td>".$botonextra.$modalbotonextra."</td>
         <td>".$botonentre.$modalbotonentre."</td>
         <td>".$botonhoja.$modalbotonhoja."</td>
         <td>".$ordenbtn."</td>

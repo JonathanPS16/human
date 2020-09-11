@@ -632,6 +632,27 @@
                     //include('vistas/reque.php');
                 break;
 
+                case "guardarotro":
+                    $nombre_archivo = "f".date('Ymd').$_FILES['filebutton']['name'];
+                    $tipo_archivo = $_FILES['filebutton']['type'];
+                    $tamano_archivo = $_FILES['filebutton']['size'];
+                    $mensaje = "";    
+                    //compruebo si las características del archivo son las que deseo
+                    if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+                        $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                    }else{
+                        if (move_uploaded_file($_FILES['filebutton']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                            $objconsulta->guardarArchivootro($nombre_archivo,$_POST['id']);
+                            $mensaje =  "El archivo ha sido cargado correctamente.";
+                        }else{
+                            $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                        }
+                    }
+                    echo "<script>alert('".$mensaje."');
+                        window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$_POST['idreq']."';
+                        </script>";
+                break;
+
                 case "guardarhv":
                     $nombre_archivo = date('Ymd').$_FILES['filebutton']['name'];
                     $tipo_archivo = $_FILES['filebutton']['type'];

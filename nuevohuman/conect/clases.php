@@ -666,6 +666,13 @@ public function guardarArchivoPTecnico($nombre_archivo,$id)
     $conn->Execute($SQL);
 }
 
+public function guardarArchivootro($nombre_archivo,$id)
+{
+    $conn = $this->conec();
+   $SQL ="UPDATE req_candidatos SET archivootro='$nombre_archivo' WHERE id=".$id;
+    $conn->Execute($SQL);
+}
+
 public function guardarArchivoHv($nombre_archivo,$id)
 {
     $conn = $this->conec();
