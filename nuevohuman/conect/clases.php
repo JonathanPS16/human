@@ -538,8 +538,7 @@ public function obteneRes($ide=0,$clientesol=""){
     if ($clientesol != "") {
         $where .=" and clientesol= ".$clientesol;
     } 
-    $consultas = "SELECT * FROM req where 1=1 ".$where." ORDER BY 1 ASC";
-    //echo $consultas;
+    $consultas = "SELECT *,(select count(*) from req_candidatos where id_requisision = req.id and estado ='F') as cantidadapro FROM req where 1=1 ".$where." ORDER BY 1 ASC";
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
@@ -556,7 +555,7 @@ public function obteneMisRes($ide=0,$mis=""){
         $where .="and empresaclientet in(".substr($mis,0,-1).")"; 
     }
 
-    $consultas = "SELECT * FROM req where 1=1 ".$where." ORDER BY 1 ASC";
+    $consultas = "SELECT *,(select count(*) from req_candidatos where id_requisision = req.id and estado ='F') as cantidadapro FROM req where 1=1 ".$where." ORDER BY 1 ASC";
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;

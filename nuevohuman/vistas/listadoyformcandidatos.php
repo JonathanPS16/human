@@ -737,7 +737,10 @@ if($fechacitan !="" && $estadopresen=="P")
   $botnenvi = $modalbotonexamenes.$botonexamenes; 
 } else if ($estadopresen=="F")
 {
-  $botnenvi = $modalbotonarchivos.$botonarchivos;
+
+  //$botnenvi = $modalbotonarchivos.$botonarchivos;
+  $botnenvi = "Proceso Terminado";
+  $botonedit ="";
 } else if ($estadopresen=="E"){
   $botnenvi = "Candidato Presentado";
   $botonedit ="";

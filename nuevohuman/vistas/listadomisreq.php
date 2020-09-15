@@ -10,6 +10,7 @@
 			<th>Cantidad</th>
 			<th>Salario</th>
 			<th>Ciudad</th>
+			<th>Estado</th>
 			<th>Ver</th>
 		</tr>
 	</thead>
@@ -28,6 +29,11 @@ for($i=0; $i<count($listadoreq);$i++){
 	$empresacliente=$listadoreq[$i]['empresacliente'];
 	$fechareqcargo=$listadoreq[$i]['fechareqcargo'];
 	$cantidad=$listadoreq[$i]['cantidad'];
+	$cantidadapro =$listadoreq[$i]['cantidadapro'];
+	$estadogene = "Finalizado";
+	if($cantidadapro!=$cantidad){
+		$estadogene = "Abierto <br>($cantidadapro) Aprobados";
+	}
     echo "<tr>
     		<td>".$id."</td>
 			<td>".$cargo."</td>
@@ -37,6 +43,7 @@ for($i=0; $i<count($listadoreq);$i++){
 			<td>".$cantidad."</td>
 			<td>".$salariobasico."</td>
 			<td>".$ciudadlaboral."</td>
+			<td>".$estadogene."</td>
     		<td><a href='home.php?ctr=requisicion&acc=listaCandidatos&id=".$id."'>Gestionar Solicitud</a></td>
     </tr>";
   }

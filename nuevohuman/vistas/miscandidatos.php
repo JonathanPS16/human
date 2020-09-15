@@ -5,9 +5,10 @@
 			<th>ID</th>
 			<th>Nombre Candidato</th>
       <th>Prueba Psicotecnica</th>
+      <th>Adjunto Extra</th>
       <th>Entrevista</th>
       <th>Hoja de Vida</th>
-      <th>Citacion</th>
+      <th>Informacion Citacion</th>
 			<th colspan ="3">Acciones Candidato</th>
 		</tr>
 	</thead>
@@ -38,6 +39,10 @@ for($i=0; $i<count($listadoreq);$i++){
     $direccioncan=$listadoreq[$i]['direccioncan']; 
     $barriocan=$listadoreq[$i]['barriocan']; 
     $ciudadcan=$listadoreq[$i]['ciudad']; 
+    $archivootro=$listadoreq[$i]['archivootro'];
+    $conclusionentrevistagen=$listadoreq[$i]['conclusionentrevistagen'];
+
+    
 
     
      
@@ -55,9 +60,16 @@ for($i=0; $i<count($listadoreq);$i++){
       <div class="modal-body">
         <form class="form-horizontal" action="home.php?ctr=requisicion&acc=citar" method="post" enctype="multipart/form-data">
         <div class="form-group row">
-        <label for="fechahora" class="col-4 col-form-label">Fecha y Hora</label> 
+        <label for="fechahora" class="col-4 col-form-label">Fecha</label> 
         <div class="col-8">
-          <input id="fechahora" name="fechahora" placeholder="AAAA-MM-DD HH:MM" type="text" class="form-control" required="required">
+          <input id="fechahora" name="fechahora" placeholder="AAAA-MM-DD HH:MM" type="date" class="form-control" required="required">
+        </div>
+      </div> 
+
+      <div class="form-group row">
+        <label for="hora" class="col-4 col-form-label">Hora</label> 
+        <div class="col-8">
+          <input id="hora" name="hora" placeholder="HH:mm" type="text" class="form-control" required="required">
         </div>
       </div> 
 
@@ -87,6 +99,8 @@ for($i=0; $i<count($listadoreq);$i++){
     $botoncita ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalhv'.$idper.'">
   Citar
 </button>';	
+    } elseif($conclusionentrevistagen!="") {
+      $botoncita = $conclusionentrevistagen;
     } else {
 
       $modalbotoncitaconclu ='<div class="modal fade" id="exampleModalcitaconclu'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -127,9 +141,7 @@ for($i=0; $i<count($listadoreq);$i++){
       $botoncita =$modalbotoncitaconclu.$botoncitaconclu.'
       
     ';
-      if($conclusionentrevistagen!="" || $conclusionentrevistagen != NULL){
-        $botoncita = $conclusionentrevistagen;
-      }
+      
 
     }
     $botaceptar = "<a class='btn btn-success' href='home.php?ctr=requisicion&acc=aceptarcandidato&idper=".$idper."&idreq=".$idreq."'>Aprobar</a>";
@@ -460,12 +472,15 @@ $botonentre ='<button type="button" class="btn btn-primary" data-toggle="modal" 
   Ver Entrevista
 </button>';	
 
-
+if($archivootro!=""){
+  $botonextra ='<a href="archivosgenerales/'.$archivootro.'" target="_black" >Descargar</a>';
+}
 
     echo "<tr>
     		<td>".$idper."</td>
     		<td>".ucfirst($nombre)."</td>
-    		<td>".$boton.$modalboton."</td>
+        <td>".$boton.$modalboton."</td>
+        <td>".$botonextra.$modalbotonextra."</td>
         <td>".$botonentre.$modalbotonentre."</td>
         <td>".$botonhoja.$modalbotonhoja."</td>
         <td>".$botoncita.$modalbotoncita."</td>

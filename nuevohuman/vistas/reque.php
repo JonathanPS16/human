@@ -353,7 +353,7 @@ if($id>0){
         <label for="adaptabilidad_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['adaptabilidad'] =="NO") { ?> checked <?php } ?> name="adaptabilidad" id="adaptabilidad_1" type="radio" class="custom-control-input" value="NO" required="required"> 
+        <input <?php if($mireq[0]['adaptabilidad'] =="NO" || $mireq[0]['adaptabilidad']=="") { ?> checked <?php } ?> name="adaptabilidad" id="adaptabilidad_1" type="radio" class="custom-control-input" value="NO" required="required"> 
         <label for="adaptabilidad_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -364,7 +364,7 @@ if($id>0){
         <label for="administracion_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['administracion'] =="NO") { ?> checked <?php } ?> name="administracion" id="administracion_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['administracion'] =="NO" || $mireq[0]['administracion'] =="") { ?> checked <?php } ?> name="administracion" id="administracion_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="administracion_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -377,7 +377,7 @@ if($id>0){
         <label for="analisis_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['analisis'] =="NO") { ?> checked <?php } ?> name="analisis" id="analisis_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['analisis'] =="NO" || $mireq[0]['analisis'] =="") { ?> checked <?php } ?> name="analisis" id="analisis_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="analisis_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -389,7 +389,7 @@ if($id>0){
         <label for="gestion_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['gestion'] =="NO") { ?> checked <?php } ?> name="gestion" id="gestion_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['gestion'] =="NO" || $mireq[0]['gestion'] =="") { ?> checked <?php } ?> name="gestion" id="gestion_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="gestion_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -402,7 +402,7 @@ if($id>0){
         <label for="negociacion_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['negociacion'] =="NO") { ?> checked <?php } ?> name="negociacion" id="negociacion_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['negociacion'] =="NO" || $mireq[0]['negociacion'] =="") { ?> checked <?php } ?> name="negociacion" id="negociacion_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="negociacion_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -414,7 +414,7 @@ if($id>0){
         <label for="normas_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['normas'] =="NO") { ?> checked <?php } ?> name="normas" id="normas_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['normas'] =="NO" || $mireq[0]['normas'] =="") { ?> checked <?php } ?> name="normas" id="normas_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="normas_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -427,7 +427,7 @@ if($id>0){
         <label for="aprendizaje_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['aprendizaje'] =="NO") { ?> checked <?php } ?> name="aprendizaje" id="aprendizaje_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['aprendizaje'] =="NO" || $mireq[0]['aprendizaje'] =="") { ?> checked <?php } ?> name="aprendizaje" id="aprendizaje_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="aprendizaje_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -439,7 +439,7 @@ if($id>0){
         <label for="flexibilidad_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['flexibilidad'] =="NO") { ?> checked <?php } ?> name="flexibilidad" id="flexibilidad_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['flexibilidad'] =="NO" || $mireq[0]['flexibilidad'] =="") { ?> checked <?php } ?> name="flexibilidad" id="flexibilidad_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="flexibilidad_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -452,7 +452,7 @@ if($id>0){
         <label for="riesgo_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['riesgo'] =="NO") { ?> checked <?php } ?> name="riesgo" id="riesgo_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['riesgo'] =="NO" || $mireq[0]['riesgo'] =="") { ?> checked <?php } ?> name="riesgo" id="riesgo_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="riesgo_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -464,7 +464,7 @@ if($id>0){
         <label for="innovacion_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['innovacion'] =="NO") { ?> checked <?php } ?> name="innovacion" id="innovacion_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['innovacion'] =="NO" || $mireq[0]['innovacion'] =="") { ?> checked <?php } ?> name="innovacion" id="innovacion_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="innovacion_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -477,7 +477,7 @@ if($id>0){
         <label for="ambiente_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['ambiente'] =="NO") { ?> checked <?php } ?> name="ambiente" id="ambiente_1" type="radio" class="custom-control-input" value="NO" required="required"> 
+        <input <?php if($mireq[0]['ambiente'] =="NO" || $mireq[0]['ambiente'] =="") { ?> checked <?php } ?> name="ambiente" id="ambiente_1" type="radio" class="custom-control-input" value="NO" required="required"> 
         <label for="ambiente_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -489,7 +489,7 @@ if($id>0){
         <label for="observacion_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['observacion'] =="NO") { ?> checked <?php } ?> name="observacion" id="observacion_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['observacion'] =="NO" || $mireq[0]['observacion'] =="") { ?> checked <?php } ?> name="observacion" id="observacion_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="observacion_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -502,7 +502,7 @@ if($id>0){
         <label for="resultados_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['resultados'] =="NO") { ?> checked <?php } ?> name="resultados" id="resultados_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['resultados'] =="NO" || $mireq[0]['resultados'] =="") { ?> checked <?php } ?> name="resultados" id="resultados_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="resultados_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -514,7 +514,7 @@ if($id>0){
         <label for="cliente_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['cliente'] =="NO") { ?> checked <?php } ?> name="cliente" id="cliente_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['cliente'] =="NO" || $mireq[0]['cliente'] =="") { ?> checked <?php } ?> name="cliente" id="cliente_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="cliente_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -527,7 +527,7 @@ if($id>0){
         <label for="comunicacion_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['comunicacion'] =="NO") { ?> checked <?php } ?> name="comunicacion" id="comunicacion_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['comunicacion'] =="NO" || $mireq[0]['comunicacion'] =="") { ?> checked <?php } ?> name="comunicacion" id="comunicacion_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="comunicacion_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -539,7 +539,7 @@ if($id>0){
         <label for="tecnologica_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['tecnologica'] =="NO") { ?> checked <?php } ?> name="tecnologica" id="tecnologica_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['tecnologica'] =="NO" || $mireq[0]['tecnologica'] =="") { ?> checked <?php } ?> name="tecnologica" id="tecnologica_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="tecnologica_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -552,7 +552,7 @@ if($id>0){
         <label for="planeacion_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['planeacion'] =="NO") { ?> checked <?php } ?> name="planeacion" id="planeacion_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['planeacion'] =="NO" || $mireq[0]['planeacion'] =="") { ?> checked <?php } ?> name="planeacion" id="planeacion_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="planeacion_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -564,7 +564,7 @@ if($id>0){
         <label for="relaciones_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['relaciones'] =="NO") { ?> checked <?php } ?> name="relaciones" id="relaciones_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['relaciones'] =="NO" || $mireq[0]['relaciones'] =="") { ?> checked <?php } ?> name="relaciones" id="relaciones_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="relaciones_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -577,7 +577,7 @@ if($id>0){
         <label for="liderazgo_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['liderazgo'] =="NO") { ?> checked <?php } ?> name="liderazgo" id="liderazgo_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['liderazgo'] =="NO" || $mireq[0]['liderazgo'] =="") { ?> checked <?php } ?> name="liderazgo" id="liderazgo_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="liderazgo_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -589,7 +589,7 @@ if($id>0){
         <label for="sensibilidad_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['sensibilidad'] =="NO") { ?> checked <?php } ?> name="sensibilidad" id="sensibilidad_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['sensibilidad'] =="NO" || $mireq[0]['sensibilidad'] =="") { ?> checked <?php } ?> name="sensibilidad" id="sensibilidad_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="sensibilidad_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -602,7 +602,7 @@ if($id>0){
         <label for="conflictos_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['conflictos'] =="NO") { ?> checked <?php } ?> name="conflictos" id="conflictos_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['conflictos'] =="NO" || $mireq[0]['conflictos'] =="") { ?> checked <?php } ?> name="conflictos" id="conflictos_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="conflictos_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -614,7 +614,7 @@ if($id>0){
         <label for="tolerancia_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['tolerancia'] =="NO") { ?> checked <?php } ?> name="tolerancia" id="tolerancia_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['tolerancia'] =="NO" || $mireq[0]['tolerancia'] =="") { ?> checked <?php } ?> name="tolerancia" id="tolerancia_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="tolerancia_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -627,7 +627,7 @@ if($id>0){
         <label for="equipo_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['equipo'] =="NO") { ?> checked <?php } ?> name="equipo" id="equipo_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['equipo'] =="NO" || $mireq[0]['equipo'] =="") { ?> checked <?php } ?> name="equipo" id="equipo_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="equipo_1" class="custom-control-label">NO</label>
       </div>
     </div>
@@ -638,7 +638,7 @@ if($id>0){
         <label for="habilidades_0" class="custom-control-label">SI</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input <?php if($mireq[0]['habilidades'] =="NO") { ?> checked <?php } ?> name="habilidades" id="habilidades_1" type="radio" required="required" class="custom-control-input" value="NO"> 
+        <input <?php if($mireq[0]['habilidades'] =="NO" || $mireq[0]['habilidades'] =="") { ?> checked <?php } ?> name="habilidades" id="habilidades_1" type="radio" required="required" class="custom-control-input" value="NO"> 
         <label for="habilidades_1" class="custom-control-label">NO</label>
       </div>
     </div>

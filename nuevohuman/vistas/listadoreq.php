@@ -9,6 +9,7 @@
 			<th>Cantidad</th>
 			<th>Salario</th>
 			<th>Ciudad</th>
+			<th>Estado</th>
 			<th>Ver</th>
 		</tr>
 	</thead>
@@ -30,6 +31,11 @@ for($i=0; $i<count($listadoreq);$i++){
 	$empresacliente=$listadoreq[$i]['empresacliente'];
 	$fechareqcargo=$listadoreq[$i]['fechareqcargo'];
 	$cantidad=$listadoreq[$i]['cantidad'];
+	$estadogene = "Finalizado";
+	$cantidadapro =$listadoreq[$i]['cantidadapro'];
+	if($cantidadapro!=$cantidad){
+		$estadogene = "Abierto <br>($cantidadapro) Aprobados";
+	}
 	$accion  = "<a class='btn btn-secondary' href='home.php?ctr=requisicion&acc=crearRequisicion&id=".$id."'>Completar Solicitud</a>";
 	if ($status == 'E'){
 		$accion  = "<a class='btn btn-primary' href='home.php?ctr=requisicion&acc=verreqcan&id=".$id."'>Ver Estado Solicitud</a>";
@@ -43,6 +49,7 @@ for($i=0; $i<count($listadoreq);$i++){
 			<td>".$cantidad."</td>
 			<td>".$salariobasico."</td>
 			<td>".$ciudadlaboral."</td>
+			<td>".$estadogene."</td>
     		<td>".$accion."</td>
     </tr>";
   }
