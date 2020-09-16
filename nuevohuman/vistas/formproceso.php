@@ -1,10 +1,10 @@
 <?php 
-
 if($listatemporales[0]['id_proceso']==""){
   $listatemporales[0]['id_proceso'] = 0;
 }
 ?>
-
+<br>
+<h5>Registro de Proceso</h5><br>
 <form action="home.php?ctr=proceso&acc=guardarsolicitud" method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" id="id" value="<?php echo $listatemporales[0]['id_proceso']; ?>">
   <div class="form-group row">
@@ -25,7 +25,12 @@ if($listatemporales[0]['id_proceso']==""){
       <input id="cedula" name="cedula" type="text" value ="<?php echo $listatemporales[0]['cedula']; ?>" required="required" class="form-control" placeholder="Cedula">
     </div>
   </div>
-
+<div class="form-group row">
+    <label for="correoempleado" class="col-4 col-form-label">Correo</label> 
+    <div class="col-8">
+      <input id="correoempleado" name="correoempleado" type="text" class="form-control" required="required" value ="<?php echo $listatemporales[0]['correoempleado']; ?>" placeholder="Correo Empleado">
+    </div>
+  </div>
   <div class="form-group row">
     <label for="cedula" class="col-4 col-form-label">Horario Trabajo</label> 
     <div class="col-8">
@@ -69,7 +74,7 @@ if($listatemporales[0]['id_proceso']==""){
   <div class="form-group row">
     <label for="fechaevento" class="col-4 col-form-label">Fecha Evento</label> 
     <div class="col-8">
-      <input id="fechaevento" name="fechaevento" type="text" class="form-control" required="required" value ="<?php echo $listatemporales[0]['fechaevento']; ?>" placeholder="yyyy-mm-dd">
+      <input id="fechaevento" name="fechaevento" type="date" class="form-control" required="required" value ="<?php echo $listatemporales[0]['fechaevento']; ?>" placeholder="yyyy-mm-dd">
     </div>
   </div>
   <div class="form-group row">

@@ -32,6 +32,12 @@
 		$conclucions=$listatemporales[$i]['conclucionentre'];
 		$conclucionsfinal=$listatemporales[$i]['conclucionfinal'];
 		$archivofinals=$listatemporales[$i]['archivofinal'];
+		$archivoconclusionproceso=$listatemporales[$i]['archivoconclusionproceso'];
+		$archivoacaraempleado=$listatemporales[$i]['archivoacaraempleado'];
+		$aclaracionempleado=$listatemporales[$i]['aclaracionempleado'];
+		if($aclaracionempleado!=""){
+			$conclucions=$aclaracionempleado;
+		}
 		$archivos = "";
 		if($archivouno!=""){
 			$archivos .= "<a href ='archivosgenerales/".$archivouno."' target='_black'>Archivo Uno</a><br>";
@@ -41,6 +47,14 @@
 		}
 		if($archivotres!=""){
 			$archivos .= "<a href ='archivosgenerales/".$archivotres."' target='_black'>Archivo Tres</a><br>";
+		}
+
+		if($archivoconclusionproceso!=""){
+			$archivos .= "<a href ='archivosgenerales/".$archivoconclusionproceso."' target='_black'>Adjunto Proceso</a><br>";
+		}
+
+		if($archivoacaraempleado!=""){
+			$archivos .= "<a href ='archivosgenerales/".$archivoacaraempleado."' target='_black'>Adjunto Empleado</a><br>";
 		}
 
 		
@@ -96,20 +110,20 @@
 		}
 		if ($archivos==""){
 			$archivos="Sin Adjuntos";
-			$conclucions="En  Validacion";
-		    $conclucionsfinal="En  Validacion";
+			$conclucions="En Proceson";
+		    $conclucionsfinal="En Proceso";
 		}
 
 		if($estado =="N"){
-			$estadolb ="En Validacion";
-			$conclucions="En  Validacion";
-		    $conclucionsfinal="En  Validacion";
+			$estadolb ="En Proceso ";
+			$conclucions="En Proceso";
+		    $conclucionsfinal="En Proceso";
 		}
 
 		if($estado =="E"){
 			$estadolb ="Citado";
-			$conclucions="En  Validacion";
-		    $conclucionsfinal="En  Validacion";
+			$conclucions="En Proceso";
+		    $conclucionsfinal="En Proceso";
 		}
 
 		if($estado =="T"){

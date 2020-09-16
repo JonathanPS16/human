@@ -29,8 +29,16 @@
 		$archivotres=$listatemporales[$i]['archivotres'];
 		$correoempleado=$listatemporales[$i]['correoempleado'];
 		$conclucionentre=$listatemporales[$i]['conclucionentre'];
+		$aclaracionempleado=$listatemporales[$i]['aclaracionempleado'];
+		
+		
 		$tipoproceso=$listatemporales[$i]['tipoproceso'];
 		$archivoconclusionproceso=$listatemporales[$i]['archivoconclusionproceso'];
+		$archivoacaraempleado=$listatemporales[$i]['archivoacaraempleado'];
+
+		if($aclaracionempleado!=""){
+			$conclucionentre=$aclaracionempleado;
+		}
 		$inforproceso = ($tipoproceso =="solicitud") ? "Solicitud Aclaracion" : "Entrevista";
 
 		
@@ -47,7 +55,11 @@
 		}
 
 		if($archivoconclusionproceso!=""){
-			$archivos .= "<a href ='archivosgenerales/".$$archivoconclusionproceso."' target='_black'>Adjunto Proceso</a><br>";
+			$archivos .= "<a href ='archivosgenerales/".$archivoconclusionproceso."' target='_black'>Adjunto Proceso</a><br>";
+		}
+
+		if($archivoacaraempleado!=""){
+			$archivos .= "<a href ='archivosgenerales/".$archivoacaraempleado."' target='_black'>Adjunto Empleado</a><br>";
 		}
 
 		
@@ -95,9 +107,7 @@
 	  </div>
 	</div>
 	';
-		$botonhoja ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalhv'.$id.'">
-	  Citar Empleado
-	</button>';	
+		
 
 
 
@@ -111,29 +121,33 @@
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<form class="form-horizontal" action="home.php?ctr=proceso&acc=guardarcitacion" method="post" enctype="multipart/form-data">
+			<form class="form-horizontal" action="home.php?ctr=proceso&acc=guardarexplicacionempleado" method="post" enctype="multipart/form-data">
 			<input type ="hidden" name="id" id ="id" value="'.$id.'">
 			<input type ="hidden" name="tipo" id ="tipo" value="solicitud">
-			<input type ="hidden" name="correo" id ="correo" value="'.$correoempleado.'"><div class="form-group row">
-    <label for="fechacitacion" class="col-4 col-form-label">Fecha Citacion</label> 
+			<input type ="hidden" name="correo" id ="correo" value="'.$correoempleado.'">
+			<div class="form-group row">
+    <label for="fecha" class="col-4 col-form-label">Fecha Limite</label> 
     <div class="col-8">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <div class="input-group-text">
-            <i class="fa fa-address-book"></i>
-          </div>
-        </div> 
-        <input id="fechacitacion" name="fechacitacion" placeholder="yyyy-mm-dd hh:mm:ss" type="text" required="required" class="form-control">
-      </div>
+      <input id="fecha" name="fecha" type="date" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="razonllamado" class="col-4 col-form-label">Razón Llamado</label> 
+    <div class="col-8">
+      <textarea id="razonllamado" name="razonllamado" cols="40" rows="5" class="form-control" required="required"></textarea>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="archivo" class="col-4 col-form-label">Archivo Adjunto</label> 
+    <div class="col-8">
+      <input id="archivo" name="archivo" type="file" class="form-control" >
     </div>
   </div> 
   <div class="form-group row">
     <div class="offset-4 col-8">
-      <button name="submit" type="submit" class="btn btn-primary">Citar</button>
+      <button name="submit" type="submit" class="btn btn-primary">Enviar Solicitud</button>
     </div>
   </div>
-			</form>
-	
 			
 		  </div>
 		  
@@ -141,8 +155,11 @@
 	  </div>
 	</div>
 	';
-		$botonhoja .=' || <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalrespuesta'.$id.'">
+		$botonhoja ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalrespuesta'.$id.'">
 	  Solicitar Explicacion
+	</button>';	
+	$botonhoja .=' || <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalhv'.$id.'">
+	  Citar Empleado
 	</button>';	
 
 	$modalbotonhojados ='<div class="modal fade" id="exampleModalen'.$id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -180,6 +197,8 @@
 		$botonhojados ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalen'.$id.'">
 	  Respuesta Empleado
 	</button>';
+
+	$botonhojados="Esperando Respuesta";
 	
 	$modalbotonhojadose ='<div class="modal fade" id="exampleModalen'.$id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">

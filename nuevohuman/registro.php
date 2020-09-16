@@ -1,27 +1,30 @@
 <?php
 require_once('conect/clases.php');
-if (isset($_SESSION['idusuario'])) {
-            header("Location: ".DIRWEB."home.php?ctr=home");
-}
 
 if(isset($_POST) && $_POST['vali']=='si')
 {
-  if($_POST['documento']!="" && $_POST['clave']==$_POST['clavere'] && $_POST['clave']!=""){
-    $objconsulta= new consultas();
-    $ret=$objconsulta->valdiaryguardar($_POST['documento'],base64_encode($_POST['clave']),$_POST['nombre'],$_POST['correo'],$_POST['perfilinicial']);
-    if($ret) {
-      echo "<script>alert('Usuario Creado Correctamente');";
-      echo 'window.location.replace("https://humantalentsas.com/nuevohuman/");';
-      echo "</script>";
-    } else {
-      echo "<script>alert('Usuario Ya Creado en Sistema');";
-      echo 'window.location.replace("https://humantalentsas.com/nuevohuman/registro.php");';
-      echo "</script>";
-
+  $objconsulta= new consultas();
+  $archivo=""; 
+  $nombre_archivo = date('YmdHms').$_FILES['archivo']['name'];
+  if($nombre_archivo!="") {
+    $tipo_archivo = $_FILES['archivo']['type'];
+    $tamano_archivo = $_FILES['archivo']['size'];
+    $mensaje = "";    
+    //compruebo si las características del archivo son las que deseo
+    if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+        $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+    }else{
+        if (move_uploaded_file($_FILES['archivo']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+            $archivo =$nombre_archivo;
+        }else{
+            $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+        }
     }
-  } else {
-    echo "<script>alert('Complete la Informacion Correctamente');</script>";
-  }
+}
+  $ret=$objconsulta->guardarrespuestaempleado($_POST['id'],$_POST['aclaracion'],$archivo);
+  echo "<script>
+  alert('Respuesta enviada correctamente');
+  window.close();</script>";
 }
 
 ?>
@@ -33,7 +36,7 @@ if(isset($_POST) && $_POST['vali']=='si')
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.6">
-    <title>Registro</title>
+    <title>Aclaracion</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/sign-in/">
 
@@ -84,54 +87,25 @@ if(isset($_POST) && $_POST['vali']=='si')
 <article class="card-body mx-auto" style="max-width: 400px;">
 <img class="mb-4" src="img/logo_negro.jpg" alt="" width="228" height="72">
 	<br>
-	<h4 class="card-title mt-3 text-center">Creacion de Cuentas</h4><br>
-  <form action="registro.php" method="post">
-	<div class="form-group input-group">
-		<div class="input-group-prepend">
-		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-		 </div>
-        <input name="nombre" id="nombre" class="form-control" placeholder="Nombre y Apellido" type="text" required="required">
-    </div> <!-- form-group// -->
-    <div class="form-group input-group">
-    	<div class="input-group-prepend">
-		    <span class="input-group-text"> <i class="fa fa-id-badge"></i> </span>
-		 </div>
-        <input name="documento" id="documento" class="form-control" placeholder="Documento" type="number" required="required">
-    </div> <!-- form-group// -->
-    <div class="form-group input-group">
-    	<div class="input-group-prepend">
-		    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
-		 </div>
-        <input name="correo" id="correo" class="form-control" placeholder="Correo Electronico" type="email" required="required">
-    </div> <!-- form-group// -->
-    <!-- form-group// -->
-    <div class="form-group input-group">
-    	<div class="input-group-prepend">
-		    <span class="input-group-text"> <i class="fa fa-building"></i> </span>
-		</div>
-		<select class="form-control" id="perfilinicial" name="perfilinicial" required="required">
-			<option selected="">Seleccion Tipo Perfil</option>
-			<option value ="1">Cliente</option>
-			<option value="2">Empresa</option>
-		</select>
-	</div> <!-- form-group end.// -->
-    <div class="form-group input-group">
-    	<div class="input-group-prepend">
-		    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-		</div>
-        <input class="form-control" id="clave" name="clave" placeholder="Clave" type="password" required="required">
-    </div> <!-- form-group// -->
-    <div class="form-group input-group">
-    	<div class="input-group-prepend">
-		    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-		</div>
-        <input class="form-control"  id="clavere" name="clavere" placeholder="Repertir Clave" type="password" required="required">
-    </div> <!-- form-group// -->                                      
-    <div class="form-group">
-    <input type="hidden" id="vali" name="vali" value="si">
-        <button type="submit" class="btn btn-primary btn-block">Crear Cuenta</button>
-    </div> <!-- form-group// -->      
-    <p class="text-center">Tienes una Cuenta? <a href="index.php">Ingresar</a> </p>                                                                 
+	<h4 class="card-title mt-3 text-center">Aclaracion Proceso Disciplinario</h4><br>
+  <form action="registro.php" method="post" enctype="multipart/form-data">
+    <div class="form-group row">
+    <label for="aclaracion" class="col-4 col-form-label">Aclaracion</label> 
+    <div class="col-8">
+      <textarea id="aclaracion" name="aclaracion" cols="40" rows="5" class="form-control" required="required"></textarea>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="archivo" class="col-4 col-form-label">Archivo Adjunto</label> 
+    <div class="col-8">
+      <input id="archivo" name="archivo" type="file" class="form-control" required="required">
+    </div>
+  </div> 
+  <input type="hidden" name="id" id="id" value="<?php echo $_GET['id']; ?>">
+  <input type="hidden" name="vali" value="si" id="vali">
+  <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block">Enviar Aclaracion</button>
+    </div>                                                              
 </form>
 </article>
 </div> <!-- card.// -->

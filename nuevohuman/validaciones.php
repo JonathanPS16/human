@@ -136,6 +136,34 @@
                         </script>";
                 break;
 
+                case "guardarexplicacionempleado":
+                    $id =$_POST['id'];
+                    $correo= $_POST['correo'];
+                    $fechacitacion=$_POST['fecha'];
+                    $razonllamado=$_POST['razonllamado'];
+                    $tipo=$_POST['tipo'];
+                    $nombre_archivo = date('YmdHms').$_FILES['archivo']['name'];
+                    $archivo="";
+                    if($nombre_archivo!="") {
+                        $tipo_archivo = $_FILES['archivo']['type'];
+                        $tamano_archivo = $_FILES['archivo']['size'];
+                        $mensaje = "";    
+                        //compruebo si las características del archivo son las que deseo
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+                            $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                        }else{
+                            if (move_uploaded_file($_FILES['archivo']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $archivo =$nombre_archivo;
+                            }else{
+                                $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            }
+                        }
+                    }
+                    $listatemporales=$objconsulta->enviarsolicitudexplicacion($id,$correo,$fechacitacion,$tipo,$razonllamado,$archivo);
+                    echo "<script>alert('Empleado Notificado Correctamente');
+                        window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';
+                        </script>";
+                break;
 
                 case "guardarconclucion":
 
@@ -195,6 +223,7 @@
                     $id = $_POST['id'];
                     $funcionario = $_POST['funcionario'];
                     $correojefe = $_POST['correojefe'];
+                    $correojefe = $_POST['correojefe'];
                     $cargo = $_POST['cargo'];
                     $cedula = $_POST['cedula'];
                     $lugartrabajo = $_POST['lugartrabajo'];
@@ -204,6 +233,7 @@
                     $horario = $_POST['horario'];
                     $centrocostos = $_POST['centrocostos'];
                     $empresausuaria = $_POST['empresausuaria'];
+                    $correoempleado = $_POST['correoempleado'];
 
                     $archivouno = "";
                     $nombre_archivo = date('YmdHms').$_FILES['archivo1']['name'];
@@ -212,7 +242,7 @@
                         $tamano_archivo = $_FILES['archivo1']['size'];
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
-                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf") || strpos($tipo_archivo, "zip") || strpos($tipo_archivo, "rar")) && ($tamano_archivo < 100000))) {
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
                             $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
                         }else{
                             if (move_uploaded_file($_FILES['archivo1']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
@@ -222,7 +252,6 @@
                             }
                         }
                     }
-                    echo $mensaje;
                     $archivodos = "";
 
                     $nombre_archivo = date('YmdHms').$_FILES['archivo2']['name'];
@@ -258,8 +287,11 @@
                             }
                         }
                     }
-                    $listatemporales=$objconsulta->guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria);
-                    echo "<script>alert('Proceso Guardado correctamente');
+                    $objconsulta->guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado);
+                    $listatemporales = $objconsulta->ultimoproceso();
+                    $idcreacion = $listatemporales[0]['id_proceso'];
+                    $listatemporales=$objconsulta->notificarProcesos($idcreacion,$correojefe);
+                    echo "<script>alert('Proceso Notificado Correctamente');
                         window.location.href = 'home.php?ctr=proceso&acc=formproceso';
                         </script>";
                 break;

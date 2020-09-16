@@ -401,7 +401,7 @@ public function guardarprocesoAccidente($id,$funcionario,$cargo,$lugartrabajo,$j
 
 
 
-public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria) {
+public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado) {
     $dat=date('Y-m-d H:i:s');
     $conn = $this->conec();
     $insertararchivos1  ="";
@@ -434,15 +434,21 @@ public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$je
 
     if($id>0){
         $SQL ="UPDATE procesos SET ".$updtaarchivos1.$updtaarchivos2.$updtaarchivos3."nombrefuncionario='$funcionario', cargo ='$cargo',cedula ='$cedula',lugartrabajo ='$lugartrabajo',jefeinmediato='$jefe',coreojefe ='$correojefe',
-         	fechaevento ='$fechaevento',descripcion  ='$descripcion',horario='$horario',centrocostos='$centrocostos',empresausuaria='$empresausuaria' where id_proceso=$id";
+         	fechaevento ='$fechaevento',descripcion  ='$descripcion',horario='$horario',centrocostos='$centrocostos',empresausuaria='$empresausuaria',correoempleado='$correoempleado' where id_proceso=$id";
         $conn->Execute($SQL);
 
     } else {
-        $SQL ="INSERT INTO  procesos (".$insertararchivos1.$insertararchivos2.$insertararchivos3."nombrefuncionario,cargo,cedula,lugartrabajo,jefeinmediato,coreojefe,fechaevento,descripcion,grabador,fechagrab,horario,centrocostos,empresausuaria ) VALUES (".$val1.$val2.$val3."'$funcionario','$cargo','$cedula','$lugartrabajo','$jefe','$correojefe',
-        '$fechaevento','$descripcion','".$_SESSION['usuario']."','$dat','$horario','$centrocostos','$empresausuaria')";
+        $SQL ="INSERT INTO  procesos (".$insertararchivos1.$insertararchivos2.$insertararchivos3."nombrefuncionario,cargo,cedula,lugartrabajo,jefeinmediato,coreojefe,fechaevento,descripcion,grabador,fechagrab,horario,centrocostos,empresausuaria,correoempleado ) VALUES (".$val1.$val2.$val3."'$funcionario','$cargo','$cedula','$lugartrabajo','$jefe','$correojefe',
+        '$fechaevento','$descripcion','".$_SESSION['usuario']."','$dat','$horario','$centrocostos','$empresausuaria','$correoempleado')";
         $conn->Execute($SQL);
+        
     }
 
+}
+public function ultimoproceso(){
+    $conn = $this->conec();
+    $consultas = "SELECT id_proceso FROM procesos ORDER BY id_proceso DESC LIMIT 1";
+    return $consultas= $conn->Execute($consultas)-> getRows();
 }
 
 public function guardarRequiResponsa($id,
@@ -685,7 +691,7 @@ public function ajustarlaboratorio($id,$idreq,$laboratorio,$cadena){
     $conn->Execute($SQL);
 }
 
-public function notificarProcesos($id){
+public function notificarProcesos($id,$correojefe){
     $conn = $this->conec();
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
     $consultas= $conn->Execute($consultas)-> getRows();
@@ -701,6 +707,7 @@ public function notificarProcesos($id){
       }
 
     }
+    $envio = $this->enviocorreo($correojefe, $mensaje);
 
     $SQL ="UPDATE procesos  SET estado='N'  WHERE id_proceso=".$id;
     $conn->Execute($SQL);
@@ -868,6 +875,22 @@ public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo){
     $conn->Execute($SQL);
 
 }
+
+public function enviarsolicitudexplicacion($id,$correo,$fechacitacion,$tipo,$razonllamado,$archivo){
+    $conn = $this->conec();
+    $mensaje = "Se a reportado un proceso diciplinaro y el empleados solicita explicaciones de la falta $razonllamado <br>para diligenciar explicacion debe ir al siguiente <a href='https://humantalentsas.com/nuevohuman/registro.php?id=$id' target='_black'>link</a> fecha limite $fechacitacion";
+    $envio = $this->enviocorreo($correo, $mensaje);
+    $SQL ="UPDATE procesos  SET estado='E',fechacita='$fechacitacion',tipoproceso ='$tipo',razon='$razonllamado',archivo='$archivo'  WHERE id_proceso=".$id;
+    $conn->Execute($SQL);
+}
+
+public function guardarrespuestaempleado($id,$aclaracion,$archivo){
+    $conn = $this->conec();
+    $SQL ="UPDATE procesos  SET  estado='V',aclaracionempleado='$aclaracion',archivoacaraempleado ='$archivo' WHERE id_proceso=".$id;
+    $conn->Execute($SQL);
+}
+
+
 
 public function enviarcitacionprocesoAcci($id,$nombre_archivo){
     $conn = $this->conec();
