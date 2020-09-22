@@ -8,6 +8,7 @@
 			<th>Lugar Trabajo</th>
 			<th>Archivo</th>
 			<th>Recomendaciones</th>
+			<th>Recomendaciones Medicas</th>
 			<th>Accion</th>
 		</tr>
 	</thead>
@@ -27,6 +28,7 @@
 		$archivofurat=$listatemporales[$i]['archivofurat'];
 		$diasincapacidad=$listatemporales[$i]['diasincapacidad'];
 		$recomendacionesdoc=$listatemporales[$i]['recomendaciones'];
+		$recomendacionesmedicas =$listatemporales[$i]['recomendacionesmedicas'];
 		$fecharecom=$listatemporales[$i]['fecharecom'];
 		$archivos = "";
 		if($archivofurat!=""){
@@ -82,28 +84,32 @@
 	    $estadolb = '<a class="btn btn-primary" href = "home.php?ctr=accidentes&acc=formu&id='.$id.'">Editar</a>';
 		if($estado == "C"){
 			$recomendaciones="Sin Recomendaciones"; 
-			$reco = "En validacion";
+			$reco = "En Proceso";
 			$estadolb .= ' || <a class="btn btn-primary" href = "home.php?ctr=accidentes&acc=notificar&id='.$id.'">Notificar</a><br>';
+			$recomendacionesmedicas= "En Proceso";
 		}
 		if ($archivos==""){
 			$archivos="Sin Adjuntos";
-			$conclucions="En  Validacion";
-			$conclucionsfinal="En  Validacion";
-			$reco = "En validacion";
+			$conclucions="En Proceso";
+			$conclucionsfinal="En Proceso";
+			$reco = "En Proceso";
+			$recomendacionesmedicas= "En Proceso";
 		}
 
 		if($estado =="N"){
-			$estadolb ="En Validacion";
-			$conclucions="En  Validacion";
-			$conclucionsfinal="En  Validacion";
-			$reco = "En validacion";
+			$estadolb ="En Proceso";
+			$conclucions="En Proceso";
+			$conclucionsfinal="En Proceso";
+			$reco = "En Proceso";
+			$recomendacionesmedicas= "En Proceso";
 		}
 
 		if($estado =="E"){
-			$estadolb ="Citado";
-			$conclucions="En  Validacion";
-			$conclucionsfinal="En  Validacion";
-			$reco = "En validacion";
+			$estadolb ="En Proceso";
+			$conclucions="En Proceso";
+			$conclucionsfinal="En Proceso";
+			$reco = "En Proceso";
+			$recomendacionesmedicas= "En Proceso";
 		}
 
 		if($estado =="T"){
@@ -119,6 +125,7 @@
   <td>'.$lugartrabajo.'</td>
   <td>'.$archivos.'</td>
   <td>'.$reco.'</td>
+  <td>'.$recomendacionesmedicas.'</td>
   <td>'.$estadolb.'</td></tr>';
 	}
 	?>

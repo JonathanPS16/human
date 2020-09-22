@@ -87,7 +87,7 @@ $(".custom-file-input").on("change", function() {
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Conclucion Entrevista</h5>
+			<h5 class="modal-title" id="exampleModalLabel">Determinaciones</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
@@ -104,13 +104,19 @@ $(".custom-file-input").on("change", function() {
 		  <div class="form-group row">
 			<label for="obser" class="col-4 col-form-label">Fecha Final Observaciones</label> 
 			<div class="col-8">
-			  <input id="obser" name="obser" placeholder="yyyy-mm-dd" type="text" class="form-control" required="required">
+			  <input id="obser" name="obser" placeholder="yyyy-mm-dd" type="date" class="form-control" required="required">
 			</div>
 		  </div>
 		  <div class="form-group row">
 			<label for="observaciones" class="col-4 col-form-label">Observaciones</label> 
 			<div class="col-8">
 			  <textarea id="observaciones" name="observaciones" cols="40" rows="5" required="required" class="form-control"></textarea>
+			</div>
+		  </div>
+		  <div class="form-group row">
+			<label for="observacionesmedicas" class="col-4 col-form-label">Recomendaciones Medicas</label> 
+			<div class="col-8">
+			  <textarea id="observacionesmedicas" name="observacionesmedicas" cols="40" rows="5" required="required" class="form-control"></textarea>
 			</div>
 		  </div> 
 		  <div class="form-group row">

@@ -382,7 +382,8 @@ $funciones
 
 
 
-public function guardarprocesoAccidente($id,$funcionario,$cargo,$lugartrabajo,$jefe,$fechaaccidente,$descripcion){
+public function guardarprocesoAccidente($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado){
+    /* 
     $conn = $this->conec();
     $dat=date('Y-m-d H:i:s');
     if($id>0){
@@ -394,6 +395,48 @@ public function guardarprocesoAccidente($id,$funcionario,$cargo,$lugartrabajo,$j
         $SQL ="INSERT INTO  accidentes (estado,nombrefuncionario,cargo,lugartrabajo,jefeinmediato,fechaaccidente,descripcion,grabador,fechagrab ) VALUES ('C','$funcionario','$cargo','$lugartrabajo','$jefe',
         '$fechaaccidente','$descripcion','".$_SESSION['usuario']."','$dat')";
         $conn->Execute($SQL);
+    }*/
+
+    $dat=date('Y-m-d H:i:s');
+    $conn = $this->conec();
+    $insertararchivos1  ="";
+    $val1="";
+    $insertararchivos2  ="";
+    $val2="";
+    $insertararchivos3  ="";
+    $val3="";
+
+    $updtaarchivos1  ="";
+    $updtaarchivos2  ="";
+    $updtaarchivos3  ="";
+    if ($archivouno!=""){
+        $insertararchivos1  ="archivouno,";
+        $val1  ="'".$archivouno."',";
+        $updtaarchivos1  ="archivouno ='".$archivouno."',";
+    }
+
+    if ($archivodos!=""){
+        $insertararchivos2  ="archivodos,";
+        $val2  ="'".$archivodos."',";
+        $updtaarchivos2  ="archivodos ='".$archivodos."',";
+    }
+
+    if ($archivotres!=""){
+        $insertararchivos3  ="archivotres,";
+        $val3  ="'".$archivotres."',";
+        $updtaarchivos3  ="archivores ='".$archivotres."',";
+    }
+
+    if($id>0){
+        $SQL ="UPDATE accidentes SET ".$updtaarchivos1.$updtaarchivos2.$updtaarchivos3."nombrefuncionario='$funcionario', cargo ='$cargo',cedula ='$cedula',lugartrabajo ='$lugartrabajo',jefeinmediato='$jefe',coreojefe ='$correojefe',
+         	fechaevento ='$fechaevento',descripcion  ='$descripcion',horario='$horario',centrocostos='$centrocostos',empresausuaria='$empresausuaria',correoempleado='$correoempleado' where id_proceso=$id";
+        $conn->Execute($SQL);
+
+    } else {
+        $SQL ="INSERT INTO  accidentes (".$insertararchivos1.$insertararchivos2.$insertararchivos3."nombrefuncionario,cargo,cedula,lugartrabajo,jefeinmediato,coreojefe,fechaaccidente,descripcion,grabador,fechagrab,horario,centrocostos,empresausuaria,correoempleado,estado) VALUES (".$val1.$val2.$val3."'$funcionario','$cargo','$cedula','$lugartrabajo','$jefe','$correojefe',
+        '$fechaevento','$descripcion','".$_SESSION['usuario']."','$dat','$horario','$centrocostos','$empresausuaria','$correoempleado','C')";
+        $conn->Execute($SQL);
+        
     }
 
 }
@@ -448,6 +491,12 @@ public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$je
 public function ultimoproceso(){
     $conn = $this->conec();
     $consultas = "SELECT id_proceso FROM procesos ORDER BY id_proceso DESC LIMIT 1";
+    return $consultas= $conn->Execute($consultas)-> getRows();
+}
+
+public function ultimoprocesoaccidente(){
+    $conn = $this->conec();
+    $consultas = "SELECT id_accidente FROM accidentes ORDER BY id_accidente DESC LIMIT 1";
     return $consultas= $conn->Execute($consultas)-> getRows();
 }
 
@@ -842,6 +891,29 @@ public function notificarProcesosAccidente($id){
 } 
 
 
+public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro){
+    $conn = $this->conec();
+    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'retiro'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    for($i= 0; $i<count($consultas); $i++) {
+      $correos = explode(",", $consultas[$i]['usuarios']);
+      for($j=0; $j<count($correos); $j++){
+          $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
+          $consultasresp= $conn->Execute($consultascorr)-> getRows();
+
+          $mensaje  ="Se a informado de un retiro de un empleado";
+
+          $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+      }
+
+    }
+    $SQL ="UPDATE accidentes  SET estado='N'  WHERE id_accidente=".$id;
+    $conn->Execute($SQL);
+} 
+
+
+
+
 public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo){
     $conn = $this->conec();
     /*$consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
@@ -906,9 +978,9 @@ public function enviarconclucionproceso($id,$entrevista,$archivodos){
     $conn->Execute($SQL);
 }
 
-public function enviarconclucionprocesoAcci($id,$diasinca,$obser,$observaciones){
+public function enviarconclucionprocesoAcci($id,$diasinca,$obser,$observaciones,$medicas){
     $conn = $this->conec();
-    $SQL ="UPDATE accidentes  SET estado='T',diasincapacidad='$diasinca',fecharecom='$obser',recomendaciones='$observaciones'  WHERE id_accidente=".$id;
+    $SQL ="UPDATE accidentes  SET estado='T',diasincapacidad='$diasinca',fecharecom='$obser',recomendaciones='$observaciones',recomendacionesmedicas='$medicas'  WHERE id_accidente=".$id;
     $conn->Execute($SQL);
 }
 

@@ -4,8 +4,8 @@ if($listatemporales[0]['id_accidente']==""){
   $listatemporales[0]['id_accidente'] = 0;
 }
 ?>
-<h5>Registro de Accidentes</h5><br>
-<form action="home.php?ctr=accidentes&acc=guardarsolicitud" method="post" enctype="multipart/form-data">
+<h5>Formulario de Retiro</h5><br>
+<form action="home.php?ctr=retiro&acc=guardarsolicitud" method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" id="id" value="<?php echo $listatemporales[0]['id_accidente']; ?>">
   <div class="form-group row">
     <label for="funcionario" class="col-4 col-form-label">Nombre Funcionario</label> 
@@ -71,36 +71,36 @@ if($listatemporales[0]['id_accidente']==""){
       <input id="correojefe" name="correojefe" type="text" class="form-control" required="required" value ="<?php echo $listatemporales[0]['coreojefe']; ?>" placeholder="Correo Jefe Inmediato">
     </div>
   </div>
+
   <div class="form-group row">
-    <label for="fechaevento" class="col-4 col-form-label">Fecha Accidente</label> 
+    <label for="retiro" class="col-4 col-form-label">Motivo Retiro</label> 
     <div class="col-8">
-      <input id="fechaevento" name="fechaevento" type="date" class="form-control" required="required" value ="<?php echo $listatemporales[0]['fechaevento']; ?>" placeholder="yyyy-mm-dd">
+      <select id="retiro" name="retiro" class="custom-select" required="required">
+        <option value="terminacion">Terminacion Contrato</option>
+        <option value="renuncia">Renuncia voluntaria</option>
+      </select>
     </div>
   </div>
   <div class="form-group row">
-    <label for="descripcion" class="col-4 col-form-label">Descripcion suseso</label> 
+    <label for="fecharetiro" class="col-4 col-form-label">Fecha  de Retiro</label> 
     <div class="col-8">
-      <textarea id="descripcion" name="descripcion" cols="40" rows="5" class="form-control" required="required"><?php echo $listatemporales[0]['descripcion']; ?></textarea>
+      <input id="fecharetiro" name="fecharetiro" placeholder="yyy-mm-dd" type="text" required="required" class="form-control">
     </div>
   </div> 
 
   <div class="custom-file">
     <input type="file" class="custom-file-input" id="archivo1" name="archivo1">
-    <label class="custom-file-label" for="archivo1"> Primer Archivo </label>
+    <label class="custom-file-label" for="archivo1"> Renuncia </label>
   </div>
 
   <div class="custom-file">
     <input type="file" class="custom-file-input" id="archivo2" name="archivo2">
-    <label class="custom-file-label" for="archivo2">Segundo Archivo</label>
+    <label class="custom-file-label" for="archivo2">Paz y Salvo</label>
   </div>
 
-  <div class="custom-file">
-    <input type="file" class="custom-file-input" id="archivo3" name="archivo3">
-    <label class="custom-file-label" for="archivo3">Tercer Archivo</label>
-  </div>
   <div class="form-group row">
     <div class="offset-4 col-8">
-      <button name="submit" type="submit" class="btn btn-primary">Guardar Accidente</button>
+      <button name="submit" type="submit" class="btn btn-primary">Guardar Retiro</button>
     </div>
   </div>
 </form>
