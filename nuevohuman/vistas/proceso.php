@@ -6,6 +6,8 @@
 			<th>Nombre de Funcionario</th>
       <th>Cargo</th>
       <th>Cedula</th>
+	  <th>Fecha Evento</th>
+	  <th>Fecha Grabacion</th>
 	  <th>Archivos Prueba</th>
 	  <th>Conclusion Entrevista</th>
 	  <th>Conclusion Final</th>
@@ -26,6 +28,8 @@
 		$id=$listatemporales[$i]['id_proceso'];
 		$cedula=$listatemporales[$i]['cedula'];
 		$estado=$listatemporales[$i]['estado'];
+		$fechaevento=$listatemporales[$i]['fechaevento'];
+		$fechagrab=$listatemporales[$i]['fechagrab'];
 		$archivouno=$listatemporales[$i]['archivouno'];
 		$archivodos=$listatemporales[$i]['archivodos'];
 		$archivotres=$listatemporales[$i]['archivotres'];
@@ -139,6 +143,8 @@
 		<td>'.$nombrefuncionario.'</td>
   <td>'.$cargo.'</td>
   <td>'.$cedula.'</td>
+  <td>'.$fechaevento.'</td>
+  <td>'.$fechagrab.'</td>
   <td>'.$archivos.'</td>
   <td>'.$conclucions.'</td>
   <td>'.$conclucionsfinal.'</td>

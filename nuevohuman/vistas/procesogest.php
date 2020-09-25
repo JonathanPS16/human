@@ -80,7 +80,8 @@
 			<form class="form-horizontal" action="home.php?ctr=proceso&acc=guardarcitacion" method="post" enctype="multipart/form-data">
 			<input type ="hidden" name="id" id ="id" value="'.$id.'">
 			<input type ="hidden" name="tipo" id ="tipo" value="cita">
-			<input type ="hidden" name="correo" id ="correo" value="'.$correoempleado.'"><div class="form-group row">
+			<input type ="hidden" name="correo" id ="correo" value="'.$correoempleado.'">
+			<div class="form-group row">
     <label for="fechacitacion" class="col-4 col-form-label">Fecha Citacion</label> 
     <div class="col-8">
       <div class="input-group">
@@ -93,6 +94,19 @@
       </div>
     </div>
   </div> 
+  
+  <div class="form-group row">
+    <label for="justificacion" class="col-4 col-form-label">Justificacion</label> 
+    <div class="col-8">
+      <textarea id="justificacion" name="justificacion" cols="40" rows="5" required="required" class="form-control"></textarea>
+    </div>
+  </div> 
+  <div class="form-group row">
+    <label for="archivo1" class="col-4 col-form-label">Archivo</label> 
+    <div class="col-8">
+      <input id="archivo1" name="archivo1" type="file" class="form-control" required="required">
+    </div>
+  </div>
   <div class="form-group row">
     <div class="offset-4 col-8">
       <button name="submit" type="submit" class="btn btn-primary">Citar</button>

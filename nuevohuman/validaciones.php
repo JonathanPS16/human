@@ -128,9 +128,25 @@
                     $id =$_POST['id'];
                     $correo= $_POST['correo'];
                     $fechacitacion=$_POST['fechacitacion'];
-                    $fechacitacion=$_POST['fechacitacion'];
+                    $justificacion=$_POST['justificacion'];
                     $tipo=$_POST['tipo'];
-                    $listatemporales=$objconsulta->enviarcitacionproceso($id,$correo,$fechacitacion,$tipo);
+                    $archivo="";
+                    if($nombre_archivo!="") {
+                        $tipo_archivo = $_FILES['archivo1']['type'];
+                        $tamano_archivo = $_FILES['archivo1']['size'];
+                        $mensaje = "";    
+                        //compruebo si las características del archivo son las que deseo
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+                            $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                        }else{
+                            if (move_uploaded_file($_FILES['archivo1']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $archivo =$nombre_archivo;
+                            }else{
+                                $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            }
+                        }
+                    }
+                    $listatemporales=$objconsulta->enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justificacion,$archivo);
                     echo "<script>alert('Empleado Notificado Correctamente');
                         window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';
                         </script>";
@@ -328,6 +344,43 @@
         case "retiro":
             $acc = $_GET['acc'];
             switch ($acc) {
+
+                case "guardarenviar":
+                    $archivouno = "";
+                    $nombre_archivo = date('YmdHms').$_FILES['filebutton']['name'];
+                    if($nombre_archivo!="") {
+                        $tipo_archivo = $_FILES['filebutton']['type'];
+                        $tamano_archivo = $_FILES['filebutton']['size'];
+                        $mensaje = "";    
+                        //compruebo si las características del archivo son las que deseo
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+                            $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                        }else{
+                            if (move_uploaded_file($_FILES['filebutton']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $archivouno =$nombre_archivo;
+                            }else{
+                                $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            }
+                        }
+                    }
+                    $correo = $_POST['correo'];
+                    $id = $_POST['id'];
+
+                    $listatemporales=$objconsulta->guardarfinretiro($id,$correo,$archivouno);
+                    echo "<script>alert('Retiro Cargado Correctamente');
+                        window.location.href = 'home.php?ctr=retiro&acc=listaretiros';
+                        </script>";
+                    
+                break;
+                case "listaretiros":
+                    $listatemporales = $objconsulta->obtenerretiros(" AND estado = 'C'");
+                    include('vistas/listadorenuncias.php');
+                break;
+                case "listadoret":
+                    $listatemporales = $objconsulta->obtenerretiros(" AND estado = 'T'");
+                    include('vistas/listadorenuncias.php');
+                break;
+                
                 case "formretiro":
                     $listatemporales=$objconsulta->obtenerProcesosAccidentes("","SI");
                     include('vistas/formretiro.php');
@@ -370,9 +423,9 @@
                     }
 
 
-                    $listatemporales=$objconsulta->guardarretiro($archivouno,$archivodos,$_POST['retiro'],$_POST['fecharetiro']);
+                    $listatemporales=$objconsulta->guardarretiro($archivouno,$archivodos,$_POST['retiro'],$_POST['fecharetiro'],$_POST['funcionario'],$_POST['cedula'],$_POST['observaciones']);
                     echo "<script>alert('Retiro Cargado Correctamente');
-                        window.location.href = 'home.php?ctr=accidentes&acc=listaretiros';
+                        window.location.href = 'home.php?ctr=retiro&acc=listaretiros';
                         </script>";
                 break;
              }
@@ -419,10 +472,13 @@
 
                     $id =$_POST['id'];
                     $diasinca= $_POST['diasinca'];
+                    $obserini= $_POST['obserini'];
                     $obser= $_POST['obser'];
                     $observaciones= $_POST['observaciones'];
                     $observacionesmedicas= $_POST['observacionesmedicas'];
-                    $listatemporales=$objconsulta->enviarconclucionprocesoAcci($id,$diasinca,$obser,$observaciones,$observacionesmedicas);
+                    $fechainireco= $_POST['fechainireco'];
+                    $fechafinalreco= $_POST['fechafinalreco'];
+                    $listatemporales=$objconsulta->enviarconclucionprocesoAcci($id,$diasinca,$obserini,$obser,$observaciones,$observacionesmedicas,$fechainireco,$fechafinalreco);
                     echo "<script>alert('Guardado Correctamente');
                         window.location.href = 'home.php?ctr=accidentes&acc=formprocesogest';
                         </script>";

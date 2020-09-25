@@ -121,6 +121,16 @@ public function selectperfilesusuario(){
     return $consultas;   
 }
 
+public function obtenerretiros($estado=""){
+    $conn = $this->conec();
+    $dato=array();
+
+    $consultas = "SELECT * FROM renuncias where 1=1 ".$estado;
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas; 
+}
+
 public function obtenerProcesos($id="",$propirtario=""){
     $conn = $this->conec();
     $dato=array();
@@ -891,7 +901,7 @@ public function notificarProcesosAccidente($id){
 } 
 
 
-public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro){
+public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$funcionario,$cedula,$observaciones){
     $conn = $this->conec();
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'retiro'";
     $consultas= $conn->Execute($consultas)-> getRows();
@@ -907,7 +917,7 @@ public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro){
       }
 
     }
-    $SQL ="UPDATE accidentes  SET estado='N'  WHERE id_accidente=".$id;
+    $SQL ="INSERT INTO renuncias (renuncia,paz,motivo,fecharetiro,nombre,cedula,observaciones) values('$archivouno','$archivodos','$retiro','$fecharetiro','$funcionario','$cedula','$observaciones')";
     $conn->Execute($SQL);
 } 
 
@@ -939,11 +949,22 @@ public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo){
 
 }
 
-public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo){
+public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justificacion,$archivo){
     $conn = $this->conec();
-    $mensaje = "Se le a citado para revisar una solucitud de proceso diciplinario #".$id." para la fecha  y hora ".$fechacitacion;
-    $envio = $this->enviocorreo($correo, $mensaje);
-    $SQL ="UPDATE procesos  SET estado='E',fechacita='$fechacitacion',tipoproceso ='$tipo'  WHERE id_proceso=".$id;
+    $titulo="Citacion Proceso"; 
+    $mensaje = "Se le a citado para revisar una solucitud de proceso diciplinario #".$id." para la fecha  y hora ".$fechacitacion. "Por motivo<br>".$justificacion;
+    $envio = $this->enviarcorreoadjuntos($correo,$archivo,$mensaje,$titulo);
+    $SQL ="UPDATE procesos  SET estado='E',fechacita='$fechacitacion',tipoproceso ='$tipo',justificacion='$justificacion',archivoenviado='$archivo'  WHERE id_proceso=".$id;
+    $conn->Execute($SQL);
+
+}
+
+public function guardarfinretiro($id,$correo,$archivo){
+    $conn = $this->conec();
+    $titulo="Documento Retiro"; 
+    $mensaje = "Se le a enviado el documento de retiro para su informacion";
+    $envio = $this->enviarcorreoadjuntos($correo,$archivo,$mensaje,$titulo);
+    $SQL ="UPDATE renuncias  SET estado='T',correo='$correo',archivo ='$archivo' WHERE id_renuncia=".$id;
     $conn->Execute($SQL);
 
 }
@@ -978,9 +999,9 @@ public function enviarconclucionproceso($id,$entrevista,$archivodos){
     $conn->Execute($SQL);
 }
 
-public function enviarconclucionprocesoAcci($id,$diasinca,$obser,$observaciones,$medicas){
+public function enviarconclucionprocesoAcci($id,$diasinca,$obserini,$obser,$observaciones,$observacionesmedicas,$fechainireco,$fechafinalreco){
     $conn = $this->conec();
-    $SQL ="UPDATE accidentes  SET estado='T',diasincapacidad='$diasinca',fecharecom='$obser',recomendaciones='$observaciones',recomendacionesmedicas='$medicas'  WHERE id_accidente=".$id;
+    $SQL ="UPDATE accidentes  SET estado='T',diasincapacidad='$diasinca',fechainicioreco='$obserini',fecharecom='$obser',recomendaciones='$observaciones',recomendacionesmedicas='$observacionesmedicas',fechainimedicas='$fechainireco',fechafinmedicas='$fechafinalreco'  WHERE id_accidente=".$id;
     $conn->Execute($SQL);
 }
 
@@ -1087,6 +1108,24 @@ public function enviardocumentacion($idper,$idreq){
     $SQL ="UPDATE req_candidatos SET estado='F' WHERE id=".$idper;
     $conn->Execute($SQL);
 
+}
+
+public function enviarcorreoadjuntos($correo,$documento,$mensaje,$titulo){
+    $maildos = new PHPMailer();
+    $maildos->IsSMTP();
+    $maildos->SMTPAuth = true;
+    $maildos->SMTPSecure = "ssl"; 
+    $maildos->Host = Host; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
+    $maildos->Username = Username; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
+    $maildos->Password = Password; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
+    $maildos->Port = Port; // Puerto de conexión al servidor de envio. 
+    $maildos->SetFrom(correocor, mensajecorr);
+    $maildos->AddAddress($correo, "Usuario");
+    $archivoexa = "archivosgenerales/".$documento;
+    $maildos->AddAttachment($archivoexa,$documento);
+    $maildos->Subject = utf8_decode($titulo); // Este es el titulo del email. 
+    $maildos->MsgHTML(utf8_decode($mensaje));
+    $maildos->Send();
 }
 
 public function rechazarcandidato($id_per,$id_req,$rechazo)

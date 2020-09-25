@@ -1,10 +1,12 @@
-<a  class="btn btn-primary" href="home.php?ctr=accidentes&acc=formu&id=0">Nuevo Accidente</a>
-<br><br><table class="table table-striped" id="tablagrid">
+<h5>Resportes Accidentes</h5><br>
+<table class="table table-striped" id="tablagrid">
 	<thead>
 		<tr>
 			<th>ID</th>
 			<th>Nombre de Funcionario</th>
 			<th>Cargo</th>
+			<th>Fecha Accidente</th>
+			<th>Fecha Grabacion</th>
 			<th>Lugar Trabajo</th>
 			<th>Archivo</th>
 			<th>Recomendaciones</th>
@@ -26,16 +28,28 @@
 		$lugartrabajo=$listatemporales[$i]['lugartrabajo'];
 		$estado=$listatemporales[$i]['estado'];
 		$archivofurat=$listatemporales[$i]['archivofurat'];
+		$fechaaccidente=$listatemporales[$i]['fechaaccidente'];
+		$fechagrab=$listatemporales[$i]['fechagrab'];
+
+		
+
+		
 		$diasincapacidad=$listatemporales[$i]['diasincapacidad'];
 		$recomendacionesdoc=$listatemporales[$i]['recomendaciones'];
 		$recomendacionesmedicas =$listatemporales[$i]['recomendacionesmedicas'];
+		
 		$fecharecom=$listatemporales[$i]['fecharecom'];
+		$inicioinca=$listatemporales[$i]['fechainicioreco'];
+		$fechainimedicas=$listatemporales[$i]['fechainimedicas'];
+		$fechafinmedicas=$listatemporales[$i]['fechafinmedicas'];
 		$archivos = "";
 		if($archivofurat!=""){
 			$archivos .= "<a href ='archivosgenerales/".$archivofurat."' target='_black'>Archivo</a><br>";
 		}
 		$reco = "";
-		
+		if($fechainimedicas!="" && $fechafinmedicas !=""){
+			$recomendacionesmedicas.="<br>Desde ".$fechainimedicas." Hasta ".$fechafinmedicas;
+		}
 		
 		$estadolb = "";
 		  /*
@@ -113,7 +127,7 @@
 		}
 
 		if($estado =="T"){
-			$reco = "Se otorga <strong>({$diasincapacidad}) </strong>dias de incapacidad<br>Se recomienda: {$recomendacionesdoc}<br>Hasta la Fecha: {$fecharecom}";
+			$reco = "Se otorga <strong>({$diasincapacidad}) </strong>dias de incapacidad<br>Se recomienda: {$recomendacionesdoc}<br>Desde $inicioinca Hasta {$fecharecom}";
 			$estadolb ="Finalizado";
 	
 		}
@@ -122,6 +136,8 @@
 		echo  '<tr><td>'.$val.'</td>
 		<td>'.$nombrefuncionario.'</td>
   <td>'.$cargo.'</td>
+  <td>'.$fechaaccidente.'</td>
+  <td>'.$fechagrab.'</td>
   <td>'.$lugartrabajo.'</td>
   <td>'.$archivos.'</td>
   <td>'.$reco.'</td>

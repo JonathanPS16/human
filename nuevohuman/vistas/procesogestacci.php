@@ -95,14 +95,22 @@ $(".custom-file-input").on("change", function() {
 		  <div class="modal-body">
 			<form class="form-horizontal" action="home.php?ctr=accidentes&acc=guardarconclucion" method="post" enctype="multipart/form-data">
 			<input type ="hidden" name="id" id ="id" value="'.$id.'">
-			<div class="form-group row">
+			<fieldset class="scheduler-border">
+				<legend class="scheduler-border">Incapacidad </legend>
+				<div class="form-group row">
 			<label for="diasinca" class="col-4 col-form-label">Dias Incapacidad</label> 
 			<div class="col-8">
 			  <input id="diasinca" name="diasinca" placeholder="Dias Incapacidad" type="text" class="form-control" required="required">
 			</div>
 		  </div>
 		  <div class="form-group row">
-			<label for="obser" class="col-4 col-form-label">Fecha Final Observaciones</label> 
+			<label for="obserini" class="col-4 col-form-label">Fecha Inicio </label> 
+			<div class="col-8">
+			  <input id="obserini" name="obserini" placeholder="yyyy-mm-dd" type="date" class="form-control" required="required">
+			</div>
+		  </div>
+		  <div class="form-group row">
+			<label for="obser" class="col-4 col-form-label">Fecha Final</label> 
 			<div class="col-8">
 			  <input id="obser" name="obser" placeholder="yyyy-mm-dd" type="date" class="form-control" required="required">
 			</div>
@@ -113,12 +121,32 @@ $(".custom-file-input").on("change", function() {
 			  <textarea id="observaciones" name="observaciones" cols="40" rows="5" required="required" class="form-control"></textarea>
 			</div>
 		  </div>
-		  <div class="form-group row">
+			</fieldset>
+
+			<fieldset class="scheduler-border">
+				<legend class="scheduler-border">Recomendaciones Medicas</legend>
+
+				<div class="form-group row">
 			<label for="observacionesmedicas" class="col-4 col-form-label">Recomendaciones Medicas</label> 
 			<div class="col-8">
 			  <textarea id="observacionesmedicas" name="observacionesmedicas" cols="40" rows="5" required="required" class="form-control"></textarea>
 			</div>
+		  </div>
+		  <div class="form-group row">
+			<label for="obser" class="col-4 col-form-label">Fecha Inicial</label> 
+			<div class="col-8">
+			  <input id="fechainireco" name="fechainireco" placeholder="yyyy-mm-dd" type="date" class="form-control" required="required">
+			</div>
+		  </div>
+		  <div class="form-group row">
+			<label for="obser" class="col-4 col-form-label">Fecha Final</label> 
+			<div class="col-8">
+			  <input id="fechafinalreco" name="fechafinalreco" placeholder="yyyy-mm-dd" type="date" class="form-control" required="required">
+			</div>
 		  </div> 
+			</fieldset>
+			
+		  
 		  <div class="form-group row">
 			<div class="offset-4 col-8">
 			  <button name="submit" type="submit" class="btn btn-primary">Guardar Determinaciones</button>
@@ -234,3 +262,21 @@ $(".custom-file-input").on("change", function() {
 	?>
     </tbody>
 </table>
+<style>
+fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
+}
+
+    legend.scheduler-border {
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width:auto;
+        padding:0 10px;
+        border-bottom:none;
+    }
+</style>

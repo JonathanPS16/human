@@ -25,12 +25,6 @@ if($listatemporales[0]['id_accidente']==""){
       <input id="cedula" name="cedula" type="text" value ="<?php echo $listatemporales[0]['cedula']; ?>" required="required" class="form-control" placeholder="Cedula">
     </div>
   </div>
-<div class="form-group row">
-    <label for="correoempleado" class="col-4 col-form-label">Correo</label> 
-    <div class="col-8">
-      <input id="correoempleado" name="correoempleado" type="text" class="form-control" required="required" value ="<?php echo $listatemporales[0]['correoempleado']; ?>" placeholder="Correo Empleado">
-    </div>
-  </div>
   <div class="form-group row">
     <label for="cedula" class="col-4 col-form-label">Horario Trabajo</label> 
     <div class="col-8">
