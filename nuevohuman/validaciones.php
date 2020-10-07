@@ -377,7 +377,8 @@
                     include('vistas/listadorenuncias.php');
                 break;
                 case "listadoret":
-                    $listatemporales = $objconsulta->obtenerretiros(" AND estado = 'T'");
+                    $mios = "S";
+                    $listatemporales = $objconsulta->obtenerretiros(" AND estado in ('T','C')");
                     include('vistas/listadorenuncias.php');
                 break;
                 
@@ -425,10 +426,83 @@
 
                     $listatemporales=$objconsulta->guardarretiro($archivouno,$archivodos,$_POST['retiro'],$_POST['fecharetiro'],$_POST['funcionario'],$_POST['cedula'],$_POST['observaciones']);
                     echo "<script>alert('Retiro Cargado Correctamente');
-                        window.location.href = 'home.php?ctr=retiro&acc=listaretiros';
+                        window.location.href = 'home.php?ctr=retiro&acc=listadoret';
                         </script>";
                 break;
              }
+        break;
+
+        case "incapacidad":
+            $acc = $_GET['acc'];
+            switch ($acc) {
+                case "cargararchivo":
+                    //$listatemporales=$objconsulta->obtenerProcesosAccidentes("","SI");
+                    include('vistas/archivoincapacidad.php');
+                break;
+                case "cargarincapacidades":
+                    require_once 'PHPExcel/Classes/PHPExcel.php';
+                    $archivouno = "";
+                    $nombre_archivo = date('YmdHms').$_FILES['archivo']['name'];
+                    $tipo_archivo = $_FILES['archivo']['type'];
+                    $tamano_archivo = $_FILES['archivo']['size'];
+                    $mensaje = "";    
+                    //compruebo si las características del archivo son las que deseo
+                    if (!(strpos($nombre_archivo, "xlsx"))) {
+                        $mensaje = "Sola se permite archivo xlsx";
+                    }else{
+                        if (move_uploaded_file($_FILES['archivo']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                            $archivouno =$nombre_archivo;
+                            
+                        }else{
+                            $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            echo "<script>alert('{$mensaje}');
+                        window.location.href = 'home.php?ctr=incapacidad&acc=cargararchivo';
+                        </script>";
+                        }
+                    }
+                    
+                    echo $mensaje ;
+                    echo "<br>";
+                    $archivo = "archivosgenerales/".$archivouno;
+                    $inputFileType = PHPExcel_IOFactory::identify($archivo);
+                    $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+                    $objPHPExcel = $objReader->load($archivo);
+                    $sheet = $objPHPExcel->getSheet(0); 
+                    $highestRow = $sheet->getHighestRow(); 
+                    $highestColumn = $sheet->getHighestColumn();
+                    $num = 0;
+                    for ($row = 2; $row <= $highestRow; $row++){ $num++;
+                        $codigo  =$sheet->getCell("A".$row)->getValue();
+                        $nombre  =$sheet->getCell("B".$row)->getValue();
+                        $fechaini  =$sheet->getCell("C".$row)->getValue();
+                        $fechafinal  =$sheet->getCell("D".$row)->getValue();
+                        $cantidaddias  =$sheet->getCell("E".$row)->getValue();
+                        $mes  =$sheet->getCell("F".$row)->getValue();
+                        $anio  =$sheet->getCell("G".$row)->getValue();
+                        $periodo  =$sheet->getCell("H".$row)->getValue();
+                        $cedula  =$sheet->getCell("I".$row)->getValue();
+                        $nombreper  =$sheet->getCell("J".$row)->getValue();
+                        $diaslaborados  =$sheet->getCell("K".$row)->getValue();
+                        $codigoconcepto  =$sheet->getCell("L".$row)->getValue();
+                        $concepto  =$sheet->getCell("M".$row)->getValue();
+                        $eps  =$sheet->getCell("N".$row)->getValue();
+                        $valorliqui  =$sheet->getCell("O".$row)->getValue();
+                        $observaciones  =$sheet->getCell("P".$row)->getValue();
+                        $tipoau  =$sheet->getCell("Q".$row)->getValue();
+                        $nombre  =$sheet->getCell("R".$row)->getValue();
+                        echo $nombreper;
+                    }
+
+                break;
+                case "formcentro":
+                    //$listatemporales=$objconsulta->obtenerProcesosAccidentes("","SI");
+                    include('vistas/archivoempresausuaria.php');
+                break;
+                case "cargarcentros":
+                    //$listatemporales=$objconsulta->obtenerProcesosAccidentes("","SI");
+                    include('vistas/archivoempresausuaria.php');
+                break;
+            }
         break;
         case "accidentes":
             $acc = $_GET['acc'];
@@ -578,9 +652,24 @@
                     $listamenus=$objconsulta->selectmenus();
                     include('vistas/perfiles.php');
                 break;
+                case "guardarnotificaciones":
+                    $proceso = implode(",", $_POST['disciplinario']);
+                    $accidentes = implode(",", $_POST['accidentes']);
+                    $retiros = implode(",", $_POST['retiro']);
+
+                    $listamenus=$objconsulta->guardanotificausu($proceso,$accidentes,$retiros);
+                    echo "<script>alert('Proceso Terminado Correctamente');
+                                window.location.href = 'home.php?ctr=admon&acc=notificaciones';
+                                </script>";
+
+
+                break;
 
                 case "notificaciones":
                     $listatemporales=$objconsulta->listadousuariosper();
+                    $proceso=$objconsulta->obtenernoti('diciplinario');
+                    $accidentes=$objconsulta->obtenernoti('accientes');
+                    $retiro=$objconsulta->obtenernoti('retiro');
                     include('vistas/perfilesnoti.php');
                 break;
 
@@ -618,7 +707,7 @@
                 case "guardarpermisos":
                     $insert ="";
                     $id = $_POST['id'];
-                    for($i=0;$i<30;$i++){
+                    for($i=0;$i<100;$i++){
                         $info = "radio".$i;
                         $dato = $_POST["".$info.""];   
                         if ($dato !="" && $dato == "Si") {

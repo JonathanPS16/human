@@ -37,12 +37,12 @@
   </div> 
 
   <div class="custom-file">
-    <input type="file" class="custom-file-input" id="archivo1" name="archivo1">
+    <input type="file" class="custom-file-input" id="archivo1" name="archivo1" required="required">
     <label class="custom-file-label" for="archivo1"> Renuncia </label>
   </div>
 
   <div class="custom-file">
-    <input type="file" class="custom-file-input" id="archivo2" name="archivo2">
+    <input type="file" class="custom-file-input" id="archivo2" name="archivo2" required="required">
     <label class="custom-file-label" for="archivo2">Paz y Salvo</label>
   </div>
 

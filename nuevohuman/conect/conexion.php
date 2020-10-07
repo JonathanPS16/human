@@ -4,7 +4,7 @@ error_reporting(0);
 //error_reporting(E_ERROR | E_PARSE);
 //ini_set("display_errors", 1); 
 //$empresa = $_SESSION["empresa"];
-define("DIRWEB", "https://".$_SERVER["HTTP_HOST"]."/nuevohuman/");
+define("DIRWEB", "https://".$_SERVER["HTTP_HOST"]."/human/");
 include('adodb/adodb.inc.php');    
 /**********************************************************************************************************************************
 ***********************************************************************************************************************************

@@ -83,6 +83,10 @@ if($estado=='T'){
 	$modalbotonextra ="";
 	$botonextra ="Enviado a:<br>".$correo.'<br><a href="archivosgenerales/'.$archivo.'" target="_black" >Archivo</a>';
 }
+if($mios=="S" && $estado=='C'){
+	$modalbotonextra ="";
+	$botonextra ="En Proceso";
+}
     echo "<tr>
     		<td>".$id."</td>
 			<td>".$motivo."</td>

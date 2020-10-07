@@ -1,6 +1,6 @@
 <?php 
 session_start();
-define("DIRWEB", "https://".$_SERVER["HTTP_HOST"]."/nuevohuman/");
+define("DIRWEB", "https://".$_SERVER["HTTP_HOST"]."/human/");
 define("Host", "smtp.zoho.com");
 define("Username", "info@formalsi.com");
 define("Password", "2019FormalSiMarzo*");
@@ -185,6 +185,8 @@ public function guardarperfiles($insert,$id){
     $SQL ="delete from relmenuper WHERE id_perfil=".$id;
     $conn->Execute($SQL);
     $consultas = "INSERT INTO relmenuper (id_perfil,id_menu) VALUES $insert";
+    //echo $consultas;
+    //die();
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
@@ -655,6 +657,17 @@ public function obtenerInformacionreq($id){
       return $consultas;
   }
 
+  public function obtenernoti($tipo){
+    //echo $ide;
+      $conn = $this->conec();
+      $consultas = "SELECT * FROM notificaciones where grupo = '{$tipo}'";
+      //echo $consultas;
+      $consultas= $conn->Execute($consultas)-> getRows();
+      return $consultas;
+  }
+
+  
+
 public function obtenercandidatos($ide=0,$whereex = ""){
   //echo $ide;
     $conn = $this->conec();
@@ -800,6 +813,23 @@ public function guardarEntre($sql,$idreq,$idcan){
     $SQL =$sql;
     $conn->Execute($SQL);
 }
+public function guardanotificausu($proceso,$accidentes,$retiro){
+    $conn = $this->conec();
+    $sqlcaliTe = "update notificaciones set  usuarios='$proceso' where grupo = 'diciplinario'";
+    $conn->Execute($sqlcaliTe);
+    $SQL =$sql;
+    $conn->Execute($SQL);
+    $conn = $this->conec();
+    $sqlcaliTe = "update notificaciones set  usuarios='$accidentes' where grupo = 'accientes'";
+    $conn->Execute($sqlcaliTe);
+    $SQL =$sql;
+    $conn->Execute($SQL);
+    $conn = $this->conec();
+    $sqlcaliTe = "update notificaciones set  usuarios='$retiro' where grupo = 'retiro'";
+    $conn->Execute($sqlcaliTe);
+    $SQL =$sql;
+    $conn->Execute($SQL);
+}
 
 public function enviarcorreoClienteGen($idreq,$tipomen)
 {
@@ -815,12 +845,12 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
     switch ($tipomen) {
         case "NUEVOCANDIDATO":
             $mesaje = "Se a enviado un candidato para su requision {$idreq} <br><br>
-            Para visualizar de click <a href='https://humantalentsas.com/nuevohuman/home.php?ctr=requisicion&acc=verreqcan&id={$idreq}'><strong>AQUI</strong></a><br><br>
+            Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=verreqcan&id={$idreq}'><strong>AQUI</strong></a><br><br>
             Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
             break;
         case "NUEVAREQ":
             $mesaje = "Se creo su Requisicion con el #{$idreq} <br>
-            Para visualizar de click <a href='https://humantalentsas.com/nuevohuman/home.php?ctr=requisicion&acc=verreqcan&id={$idreq}'><strong>AQUI</strong></a><br><br>
+            Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=verreqcan&id={$idreq}'><strong>AQUI</strong></a><br><br>
             Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
             break;
         case "NUEVOCANDIDATO2":
@@ -853,12 +883,12 @@ public function correopsico($id_req,$tipomen) {
     switch ($tipomen) {
         case "APROBADO":
             $mensaje = "Se a APROBADO un candidato para la requision #{$id_req} favor enviar los documentos necesarios<br><br>
-            Para visualizar de click <a href='https://humantalentsas.com/nuevohuman/home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a><br><br>
+            Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a><br><br>
             Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
             break;
         case "NUEVAREQ":
             $mensaje = "Se creo su Requisicion con el #{$idreq} <br>
-            Para visualizar de click <a href='https://humantalentsas.com/nuevohuman/home.php?ctr=requisicion&acc=verreqcan&id={$id_req}'><strong>AQUI</strong></a><br><br>
+            Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=verreqcan&id={$id_req}'><strong>AQUI</strong></a><br><br>
             Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
             break;
         case "NUEVOCANDIDATO2":
@@ -971,7 +1001,7 @@ public function guardarfinretiro($id,$correo,$archivo){
 
 public function enviarsolicitudexplicacion($id,$correo,$fechacitacion,$tipo,$razonllamado,$archivo){
     $conn = $this->conec();
-    $mensaje = "Se a reportado un proceso diciplinaro y el empleados solicita explicaciones de la falta $razonllamado <br>para diligenciar explicacion debe ir al siguiente <a href='https://humantalentsas.com/nuevohuman/registro.php?id=$id' target='_black'>link</a> fecha limite $fechacitacion";
+    $mensaje = "Se a reportado un proceso diciplinaro y el empleados solicita explicaciones de la falta $razonllamado <br>para diligenciar explicacion debe ir al siguiente <a href='".DIRWEB."registro.php?id=$id' target='_black'>link</a> fecha limite $fechacitacion";
     $envio = $this->enviocorreo($correo, $mensaje);
     $SQL ="UPDATE procesos  SET estado='E',fechacita='$fechacitacion',tipoproceso ='$tipo',razon='$razonllamado',archivo='$archivo'  WHERE id_proceso=".$id;
     $conn->Execute($SQL);
@@ -1028,7 +1058,7 @@ public function citarcandidato($id_per,$id_req,$fechahora,$lugar)
     $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
       //echo $consultas;
       $mensaje = "Se a citadoal candidato con identificador ".$id_per." para el dia ".$fechahora." en ".$lugar."<br><br>
-      Para visualizar de click <a href='https://humantalentsas.com/nuevohuman/home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a><br><br>
+      Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a><br><br>
       Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
       $consultas= $conn->Execute($consultas)-> getRows();
       for($i= 0; $i<count($consultas); $i++) {
@@ -1152,7 +1182,7 @@ public function rechazarcandidato($id_per,$id_req,$rechazo)
     $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
       //echo $consultas;
       $mensaje = "Se a rechazado candidato  con identificador ".$id_per." por motivo ".$rechazo."<br><br>
-      Para visualizar de click <a href='https://humantalentsas.com/nuevohuman/home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a><br><br>
+      Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a><br><br>
       Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
       $consultas= $conn->Execute($consultas)-> getRows();
       for($i= 0; $i<count($consultas); $i++) {
@@ -1178,7 +1208,7 @@ public function enviarCorreoReq($ide,$req){
       $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
       //echo $consultas;
       $mensaje = "Se a creado  una nueva requisision con el identificador {$req} Para su gestion de candidatos<br><br>
-      Para visualizar de click <a href='https://humantalentsas.com/nuevohuman/home.php?ctr=requisicion&acc=listaCandidatos&id={$req}'><strong>AQUI</strong></a><br><br>
+      Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$req}'><strong>AQUI</strong></a><br><br>
       Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
       $consultas= $conn->Execute($consultas)-> getRows();
       for($i= 0; $i<count($consultas); $i++) {
