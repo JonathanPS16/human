@@ -460,9 +460,7 @@
                         </script>";
                         }
                     }
-                    
-                    echo $mensaje ;
-                    echo "<br>";
+                    $compania = $_POST['compania'];
                     $archivo = "archivosgenerales/".$archivouno;
                     $inputFileType = PHPExcel_IOFactory::identify($archivo);
                     $objReader = PHPExcel_IOFactory::createReader($inputFileType);
@@ -471,29 +469,111 @@
                     $highestRow = $sheet->getHighestRow(); 
                     $highestColumn = $sheet->getHighestColumn();
                     $num = 0;
+                    $sql = "INSERT INTO incapacidadescargue (compania,codigo,nombre,fechaini,fechafinal,cantidaddias,mes,anio,periodo,cedula,nombreper,diaslaborados,codigoconcepto,concepto,responsable,valorliqui,observaciones,tipoau,nombregene,estado) 
+                    VALUES ";
                     for ($row = 2; $row <= $highestRow; $row++){ $num++;
-                        $codigo  =$sheet->getCell("A".$row)->getValue();
-                        $nombre  =$sheet->getCell("B".$row)->getValue();
-                        $fechaini  =$sheet->getCell("C".$row)->getValue();
-                        $fechafinal  =$sheet->getCell("D".$row)->getValue();
-                        $cantidaddias  =$sheet->getCell("E".$row)->getValue();
-                        $mes  =$sheet->getCell("F".$row)->getValue();
-                        $anio  =$sheet->getCell("G".$row)->getValue();
-                        $periodo  =$sheet->getCell("H".$row)->getValue();
-                        $cedula  =$sheet->getCell("I".$row)->getValue();
-                        $nombreper  =$sheet->getCell("J".$row)->getValue();
-                        $diaslaborados  =$sheet->getCell("K".$row)->getValue();
-                        $codigoconcepto  =$sheet->getCell("L".$row)->getValue();
-                        $concepto  =$sheet->getCell("M".$row)->getValue();
-                        $eps  =$sheet->getCell("N".$row)->getValue();
-                        $valorliqui  =$sheet->getCell("O".$row)->getValue();
-                        $observaciones  =$sheet->getCell("P".$row)->getValue();
-                        $tipoau  =$sheet->getCell("Q".$row)->getValue();
-                        $nombre  =$sheet->getCell("R".$row)->getValue();
-                        echo $nombreper;
+                        $codigo  = $sheet->getCell("A".$row)->getValue();
+                        $nombre  = $sheet->getCell("B".$row)->getValue();
+                        $fechaini  = $sheet->getCell("C".$row)->getValue();
+                        $fechafinal  = $sheet->getCell("D".$row)->getValue();
+                        $cantidaddias  = $sheet->getCell("E".$row)->getValue();
+                        $mes  = $sheet->getCell("F".$row)->getValue();
+                        $anio  = $sheet->getCell("G".$row)->getValue();
+                        $periodo  = $sheet->getCell("H".$row)->getValue();
+                        $cedula  = $sheet->getCell("I".$row)->getValue();
+                        $nombreper  = $sheet->getCell("J".$row)->getValue();
+                        $diaslaborados  = $sheet->getCell("K".$row)->getValue();
+                        $codigoconcepto  = $sheet->getCell("L".$row)->getValue();
+                        $concepto  = $sheet->getCell("M".$row)->getValue();
+                        $eps  = $sheet->getCell("N".$row)->getValue();
+                        $valorliqui  = $sheet->getCell("O".$row)->getValue();
+                        $observaciones  = $sheet->getCell("P".$row)->getValue();
+                        $tipoau  = $sheet->getCell("Q".$row)->getValue();
+                        $nombregene  = $sheet->getCell("R".$row)->getValue();
+                        $responsable = $esp;
+                        $sql.="('$compania','$codigo','$nombre','$fechaini','$fechafinal','$cantidaddias','$mes','$anio','$periodo','$cedula','$nombreper','$diaslaborados','$codigoconcepto','$concepto','$eps','$valorliqui','$observaciones','$tipoau','$nombregene','C'),";
+                        
+                        //$listatemporales=$objconsulta->guardarcarguearchivos($compania,$codigo,$nombre,$fechaini,$fechafinal,$cantidaddias,$mes,$anio,$periodo,$cedula,$nombreper,$diaslaborados,$codigoconcepto,$concepto,$responsable,$valorliqui,$observaciones,$tipoau,$nombregene);
+                        //$sql.=$listatemporales;
                     }
+                    $sql = substr($sql, 0, -1);
+                    $listatemporales=$objconsulta->guardarcarguearchivos($sql);
+                        echo "<script>alert('Registros Cargados Correctamente');
+                        window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
+                        </script>";
+                break;
+                case "trasncripcion":
+                    $listatemporales=$objconsulta->obtenercargasinca();
+                    include('vistas/incapacidadesgeneral.php');
+                break;
+                case "guardartranscrip":
+                    $archivouno="";
+                    $nombre_archivo = date('YmdHms').$_FILES['archivoincapacidad']['name'];
+                    if($nombre_archivo!="") {
+                        $tipo_archivo = $_FILES['archivoincapacidad']['type'];
+                        $tamano_archivo = $_FILES['archivoincapacidad']['size'];
+                        $mensaje = "";    
+                        //compruebo si las características del archivo son las que deseo
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+                            $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                        }else{
+                            if (move_uploaded_file($_FILES['archivoincapacidad']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $archivouno =$nombre_archivo;
+                            }else{
+                                $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            }
+                        }
+                    }
+                    $archivodos="";
+                    $nombre_archivo = date('YmdHms').$_FILES['archivotranscri']['name'];
+                    if($nombre_archivo!="") {
+                        $tipo_archivo = $_FILES['archivotranscri']['type'];
+                        $tamano_archivo = $_FILES['archivotranscri']['size'];
+                        $mensaje = "";    
+                        //compruebo si las características del archivo son las que deseo
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+                            $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                        }else{
+                            if (move_uploaded_file($_FILES['archivotranscri']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $archivodos =$nombre_archivo;
+                            }else{
+                                $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            }
+                        }
+                    }
+                    $listatemporales=$objconsulta->guardartrancripcion($_POST['id'],$_POST['noincapacidad'],$_POST['fechaincio'],$_POST['diagnostico'],$_POST['fechatrans'],$_POST['fechafinal'],$_POST['nodias'],$_POST['notranscip'],$archivouno,$archivodos);
+
+                    echo "<script>alert('Registros Actualizado Correctamente');
+                        window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
+                        </script>";
 
                 break;
+                case "guardarproceeps":
+                    $fecha ="".$_POST['fecha']."";
+                    $observaciones="".$_POST['observaciones']."";
+                    $listatemporales=$objconsulta->guardardecisioneps($_POST['id'],$_POST['fechapagoeps'],$_POST['valorreco'],$fecha,$observaciones,$_POST['estado']);
+                    echo "<script>alert('Registros Actualizado Correctamente');
+                        window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
+                        </script>";
+                break;
+                case "guardarprocebanco":
+                    $fecha ="".$_POST['fecha']."";
+                    $observaciones="".$_POST['observaciones']."";
+                    $listatemporales=$objconsulta->guardardatabanco($_POST['id'],$_POST['fechabanco'],$_POST['valoringresobanco'],$_POST['noreciboadci']);
+                    echo "<script>alert('Registros Actualizado Correctamente');
+                        window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
+                        </script>";
+                break;
+
+                case "guardarcreit":
+                    $listatemporales=$objconsulta->guardarcreditinca($_POST['id'],$_POST['notacredito'],$_POST['fechanotadci'],$_POST['valornotaadci'],$_POST['imagen'],$_POST['otrasobserva'],$_POST['digivsfisi']);
+                    echo "<script>alert('Registros Actualizado Correctamente');
+                        window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
+                        </script>";
+                break;
+
+                
+
                 case "formcentro":
                     //$listatemporales=$objconsulta->obtenerProcesosAccidentes("","SI");
                     include('vistas/archivoempresausuaria.php');

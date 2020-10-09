@@ -178,16 +178,61 @@ public function selectperfiles(){
     return $consultas;
 }
 
+
+
+public function obtenercargasinca(){
+    $conn = $this->conec();
+    $consultas = "SELECT * FROM `incapacidadescargue` where estado !='O'";
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function guardartrancripcion($id,$noincapacidad,$fechaincio,$diagnostico,$fechatrans,$fechafinal,$nodias,$notranscip,$archivouno,$archivodos){
+    $conn = $this->conec();
+    $consultas = "UPDATE incapacidadescargue set estado = 'T' ,noincapacidad='$noincapacidad',fechaincio='$fechaincio',diagnostico='$diagnostico',fechatrans='$fechatrans',fechafinaltra='$fechafinal',nodias='$nodias',notranscip='$notranscip',archivouno='$archivouno',archivodos='$archivodos' where id_registro=$id";
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+public function guardarcreditinca($id,$notacredito,$fechanotadci,$valornotaadci,$imagen,$otrasobserva,$digivsfisi){
+    $conn = $this->conec();
+    $consultas = "UPDATE incapacidadescargue set estado = 'O' ,notacredito='$notacredito',fechanotadci='$fechanotadci',valornotaadci='$valornotaadci',imagen='$imagen',otrasobserva='$otrasobserva',digivsfisi='$digivsfisi' where id_registro=$id";
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function guardardecisioneps($id,$fechapagoeps,$valorreco,$fechaeps,$observacioneseps,$estadoeps){
+    $conn = $this->conec();
+    $consultas = "UPDATE incapacidadescargue set estado = 'B' ,estadoeps='$estadoeps', fechapagoeps='$fechapagoeps',valorreco='$valorreco',fechaeps='$fechaeps',observacioneseps='$observacioneseps' where id_registro=$id";
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function guardardatabanco($id,$fechabanco,$valoringresobanco,$noreciboadci){
+    $conn = $this->conec();
+    $consultas = "UPDATE incapacidadescargue set estado = 'F' ,fechabanco='$fechabanco', valoringresobanco='$valoringresobanco',noreciboadci='$noreciboadci' where id_registro=$id";
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+
 public function guardarperfiles($insert,$id){
     $conn = $this->conec();
-
     $insert = substr($insert, 0, -1);
     $SQL ="delete from relmenuper WHERE id_perfil=".$id;
     $conn->Execute($SQL);
     $consultas = "INSERT INTO relmenuper (id_perfil,id_menu) VALUES $insert";
-    //echo $consultas;
-    //die();
     $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function guardarcarguearchivos ($sql){
+    $conn = $this->conec();
+    $consultas= $conn->Execute($sql)-> getRows();
     return $consultas;
 }
 
