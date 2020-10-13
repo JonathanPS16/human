@@ -179,6 +179,15 @@ public function selectperfiles(){
 }
 
 
+public function listadocentros($empresa){
+    $conn = $this->conec();
+    $consultas = "select * from centrocostos where empresa='$empresa'";
+    echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+
 
 public function obtenercargasinca(){
     $conn = $this->conec();
@@ -236,6 +245,22 @@ public function guardarcarguearchivos ($sql){
     return $consultas;
 }
 
+public function listaresumengeneral(){
+    $conn = $this->conec();
+    $consultas= $conn->Execute("SELECT * FROM incapacidadescargue inner JOIN centrocostos on centrocostos.empresa=incapacidadescargue.compania and incapacidadescargue.codigo=centrocostos.centrocosto INNER join codigoinca on codigoinca.id=incapacidadescargue.codigoconcepto")-> getRows();
+    echo $consultas;
+    return $consultas;
+}
+
+
+ 
+
+
+public function codigosinca (){
+    $conn = $this->conec();
+    $consultas= $conn->Execute("select * from codigoinca")-> getRows();
+    return $consultas;
+}
 
 public function valdiaryguardar($documento,$clave,$nombre,$correo,$pefil){
     $conn = $this->conec();

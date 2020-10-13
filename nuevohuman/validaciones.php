@@ -461,6 +461,21 @@
                         }
                     }
                     $compania = $_POST['compania'];
+                    $datocentros = array();
+                    $datosincapaval =array();
+                    $listadocentros=$objconsulta->listadocentros(trim($compania));
+                    $listadocodinca=$objconsulta->codigosinca();
+                    
+                    for($ia=0; $ia<count($listadocentros);$ia++){
+                        $centrocostovali = $listadocentros[$ia]['centrocosto'];
+                        array_push($datocentros,$centrocostovali);
+                    }
+
+                    for($ia=0; $ia<count($listadocodinca);$ia++){
+                        $id = $listadocodinca[$ia]['id'];
+                        array_push($datosincapaval,$id);
+                    }
+                    
                     $archivo = "archivosgenerales/".$archivouno;
                     $inputFileType = PHPExcel_IOFactory::identify($archivo);
                     $objReader = PHPExcel_IOFactory::createReader($inputFileType);
@@ -471,9 +486,15 @@
                     $num = 0;
                     $sql = "INSERT INTO incapacidadescargue (compania,codigo,nombre,fechaini,fechafinal,cantidaddias,mes,anio,periodo,cedula,nombreper,diaslaborados,codigoconcepto,concepto,responsable,valorliqui,observaciones,tipoau,nombregene,estado) 
                     VALUES ";
+                    $errorcentro = "";
+                    $errorcodigo = "";
+                    $creado=0;
                     for ($row = 2; $row <= $highestRow; $row++){ $num++;
+                        
                         $codigo  = $sheet->getCell("A".$row)->getValue();
-                        $nombre  = $sheet->getCell("B".$row)->getValue();
+                        $codigo = str_replace(" ","",$codigo);
+                        $codigo = trim(substr($codigo, 0, -2));
+                        $nombre  = trim($sheet->getCell("B".$row)->getValue());
                         $fechaini  = $sheet->getCell("C".$row)->getValue();
                         $fechafinal  = $sheet->getCell("D".$row)->getValue();
                         $cantidaddias  = $sheet->getCell("E".$row)->getValue();
@@ -484,6 +505,7 @@
                         $nombreper  = $sheet->getCell("J".$row)->getValue();
                         $diaslaborados  = $sheet->getCell("K".$row)->getValue();
                         $codigoconcepto  = $sheet->getCell("L".$row)->getValue();
+                        $codigoconcepto = trim(str_replace(" ","",$codigoconcepto));
                         $concepto  = $sheet->getCell("M".$row)->getValue();
                         $eps  = $sheet->getCell("N".$row)->getValue();
                         $valorliqui  = $sheet->getCell("O".$row)->getValue();
@@ -491,20 +513,37 @@
                         $tipoau  = $sheet->getCell("Q".$row)->getValue();
                         $nombregene  = $sheet->getCell("R".$row)->getValue();
                         $responsable = $esp;
-                        $sql.="('$compania','$codigo','$nombre','$fechaini','$fechafinal','$cantidaddias','$mes','$anio','$periodo','$cedula','$nombreper','$diaslaborados','$codigoconcepto','$concepto','$eps','$valorliqui','$observaciones','$tipoau','$nombregene','C'),";
-                        
-                        //$listatemporales=$objconsulta->guardarcarguearchivos($compania,$codigo,$nombre,$fechaini,$fechafinal,$cantidaddias,$mes,$anio,$periodo,$cedula,$nombreper,$diaslaborados,$codigoconcepto,$concepto,$responsable,$valorliqui,$observaciones,$tipoau,$nombregene);
-                        //$sql.=$listatemporales;
+
+                        if(!in_array($codigo,$datocentros)){
+                            $errorcentro.="$num";
+                        } else if(!in_array($codigoconcepto,$datosincapaval)){
+                            $errorcodigo.="$num";
+                        }else {
+                            $sql.="('$compania','$codigo','$nombre','$fechaini','$fechafinal','$cantidaddias','$mes','$anio','$periodo','$cedula','$nombreper','$diaslaborados','$codigoconcepto','$concepto','$eps','$valorliqui','$observaciones','$tipoau','$nombregene','C'),";
+                            $creado++;
+                        }
                     }
                     $sql = substr($sql, 0, -1);
-                    $listatemporales=$objconsulta->guardarcarguearchivos($sql);
+                    if ($creado>0) {
+                      $listatemporales=$objconsulta->guardarcarguearchivos($sql);
                         echo "<script>alert('Registros Cargados Correctamente');
                         window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
                         </script>";
+                    } else {
+                        echo "<script>alert('Ningun Registro Encontrado');
+                        window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
+                        </script>";
+                    }
+                    
                 break;
                 case "trasncripcion":
                     $listatemporales=$objconsulta->obtenercargasinca();
                     include('vistas/incapacidadesgeneral.php');
+                break;
+
+                case "filtro":
+                    $listatemporales=$objconsulta->listaresumengeneral();
+                    include('vistas/incapacidadesfiltro.php');
                 break;
                 case "guardartranscrip":
                     $archivouno="";
