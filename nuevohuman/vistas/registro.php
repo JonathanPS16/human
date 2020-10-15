@@ -26,8 +26,7 @@
 		</div>
 		<select class="form-control" id="perfilinicial" name="perfilinicial" required="required">
 			<option selected="">Seleccion Tipo Perfil</option>
-			<option value="1">Cliente</option>
-			<option value="2">Empresa</option>
+			<option value="1" selected="">Administrador</option><option value="2">Usuario Interno 1</option><option value="3">Usuario Interno 2</option><option value="4">Usuario Interno 3</option><option value="5">Usuario Interno 4</option><option value="6">Usuario Interno 5</option><option value="7">Empresa Usuario</option><option value="8">Empleado</option><option value="9">Empleador</option><option value="10">Proveedor</option>
 		</select>
 	</div> <!-- form-group end.// -->
     <div class="form-group input-group">

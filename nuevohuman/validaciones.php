@@ -449,6 +449,10 @@
                     //compruebo si las características del archivo son las que deseo
                     if (!(strpos($nombre_archivo, "xlsx"))) {
                         $mensaje = "Sola se permite archivo xlsx";
+                        $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            echo "<script>alert('{$mensaje}');
+                        window.location.href = 'home.php?ctr=incapacidad&acc=cargararchivo';
+                        </script>";
                     }else{
                         if (move_uploaded_file($_FILES['archivo']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
                             $archivouno =$nombre_archivo;
@@ -771,12 +775,63 @@
                     $listamenus=$objconsulta->selectmenus();
                     include('vistas/perfiles.php');
                 break;
+
+                
+                case "cambiarclave":
+                    $pass = $_POST['pass'];
+                    $passverifi = $_POST['passverifi'];
+                    if($pass!=$passverifi){
+                        echo "<script>alert('Claves No Coinciden');
+                        window.location.href = 'home.php?ctr=admon&acc=cambioclave';
+                        </script>";  
+                    } else {
+                        $listamenus=$objconsulta->cambiarclavept($passverifi,$_SESSION['idusuario']);
+                        echo "<script>alert('Clave Cambiada Correctamente');
+                                    window.location.href = 'home.php?ctr=admon&acc=cambioclave';
+                                    </script>";
+                    }
+                    
+                break;
+
+                case "cambioclave":
+                    include('vistas/cambioclave.php');
+                break;
+
+                case "restaurarclave":
+                    $perf = $_GET['perf'];
+                    $usu = $_GET['usu'];
+                    $listamenus=$objconsulta->restaurarclave($usu,$perf);
+                    echo "<script>alert('Clave Restaurada Correctamente');
+                                window.location.href = 'home.php?ctr=admon&acc=asigperfiles';
+                                </script>";
+                break;
+
+                case "cambiarperfilusu":
+                    $perf = $_GET['perf'];
+                    $usu = $_GET['usu'];
+                    $listamenus=$objconsulta->cambiarperfilgene($usu,$perf);
+                    echo "<script>alert('Perfil Cambiado Correctamente');
+                                window.location.href = 'home.php?ctr=admon&acc=asigperfiles';
+                                </script>";
+                break;
+
+                case "eliminarusu":
+                    $usu = $_GET['usu'];
+                    $listamenus=$objconsulta->eliminarusu($usu);
+                    echo "<script>alert('Usuario Eliminado Correctamente');
+                                window.location.href = 'home.php?ctr=admon&acc=asigperfiles';
+                                </script>";
+                break;
+
+
+                
                 case "guardarnotificaciones":
                     $proceso = implode(",", $_POST['disciplinario']);
                     $accidentes = implode(",", $_POST['accidentes']);
                     $retiros = implode(",", $_POST['retiro']);
+                    $seleccion = implode(",", $_POST['seleccion']);
 
-                    $listamenus=$objconsulta->guardanotificausu($proceso,$accidentes,$retiros);
+                    $listamenus=$objconsulta->guardanotificausu($proceso,$accidentes,$retiros,$seleccion);
                     echo "<script>alert('Proceso Terminado Correctamente');
                                 window.location.href = 'home.php?ctr=admon&acc=notificaciones';
                                 </script>";

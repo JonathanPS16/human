@@ -883,7 +883,41 @@ public function guardarEntre($sql,$idreq,$idcan){
     $SQL =$sql;
     $conn->Execute($SQL);
 }
-public function guardanotificausu($proceso,$accidentes,$retiro){
+
+public function cambiarperfilgene($usu,$perf){
+    $conn = $this->conec();
+    $sqlcaliTe = "UPDATE usuarios set idrol=$perf where id_usuario={$usu}";
+    $conn->Execute($sqlcaliTe);
+    $SQL =$sql;
+    $conn->Execute($SQL);
+}
+
+public function cambiarclavept($perf,$usu){
+    $perf =base64_encode($perf);
+    $conn = $this->conec();
+    $sqlcaliTe = "UPDATE usuarios set pass='{$perf}' where id_usuario={$usu}";
+    $conn->Execute($sqlcaliTe);
+    $SQL =$sql;
+    $conn->Execute($SQL);
+}
+
+public function restaurarclave($usu,$perf){
+    $perf =base64_encode($perf);
+    $conn = $this->conec();
+    $sqlcaliTe = "UPDATE usuarios set pass='{$perf}' where id_usuario={$usu}";
+    $conn->Execute($sqlcaliTe);
+    $SQL =$sql;
+    $conn->Execute($SQL);
+}
+
+public function eliminarusu($usu){
+    $conn = $this->conec();
+    $sqlcaliTe = "DELETE FROM  usuarios  where id_usuario={$usu}";
+    $conn->Execute($sqlcaliTe);
+    $SQL =$sql;
+    $conn->Execute($SQL);
+}
+public function guardanotificausu($proceso,$accidentes,$retiro,$seleccion){
     $conn = $this->conec();
     $sqlcaliTe = "update notificaciones set  usuarios='$proceso' where grupo = 'diciplinario'";
     $conn->Execute($sqlcaliTe);
@@ -896,6 +930,11 @@ public function guardanotificausu($proceso,$accidentes,$retiro){
     $conn->Execute($SQL);
     $conn = $this->conec();
     $sqlcaliTe = "update notificaciones set  usuarios='$retiro' where grupo = 'retiro'";
+    $conn->Execute($sqlcaliTe);
+    $SQL =$sql;
+    $conn->Execute($SQL);
+    $conn = $this->conec();
+    $sqlcaliTe = "update empresasterporales set  correosselecccion='$seleccion'";
     $conn->Execute($sqlcaliTe);
     $SQL =$sql;
     $conn->Execute($SQL);

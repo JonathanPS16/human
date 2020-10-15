@@ -49,6 +49,28 @@ $datosret =  explode(",",$retiro[0]['usuarios']);
 			</select>
 			</th>
 			</tr>
+
+			<tr>
+			<th>Proceso Selecccion</th>
+			<th><select class="js-example-basic-multiple" name="seleccion[]" multiple="multiple">
+			<?php
+			for($i=0; $i<count($listatemporales);$i++){
+
+			$val ++;
+			$conteoreq = 0;
+			$id = $listatemporales[$i]['id_usuario'];
+			$usuario=$listatemporales[$i]['usuario'];
+			$correo=$listatemporales[$i]['correo'];
+			$selected  ="";
+			if (in_array($id, $datosacc)) {
+				$selected = "selected";
+			}
+			echo '<option value ="'.$id.'" '.$selected.'>'.$correo.'</option>';
+			
+			}?>
+			</select>
+			</th>
+			</tr>
 			
 		<tr>
 			<th>Proceso Retiro</th>

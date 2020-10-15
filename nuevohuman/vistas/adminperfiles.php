@@ -1,10 +1,13 @@
-<a  class="btn btn-primary" href="home.php?ctr=accidentes&acc=formu&id=0">Nuevo Accidente</a>
-<br><br><table class="table table-striped" id="tablagrid">
+<h5>Cambio de Perfiles</h5>
+<table class="table table-striped" id="tablagrid">
 	<thead>
 		<tr>
 			<th>ID</th>
 			<th>Usuario</th>
 			<th>Correo</th>
+			<th>Perfil</th>
+			<th>Restaurar Clave</th>
+			<th>Eliminar</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -33,41 +36,49 @@
 		echo  '<tr><td>'.$val.'</td>
 		<td>'.$usuario.'</td>
 		<td>'.$correo.'</td>
-		<td><select onchange="cambiar('.$id_usuario.',this.value)" class="form-control"><option value ="0">Seleccione</option>'.$pefillb.'</select></td></tr>';
+		<td><select onchange="cambiar('.$id_usuario.',this.value)" class="form-control"><option value ="0">Seleccione</option>'.$pefillb.'</select></td>
+		<td><button onclick="restaurar('.$id_usuario.','.$usuario.')" class="btn btn-primary col-md-20">Restaurar Clave</button></td>
+		<td><button onclick="eliminar('.$id_usuario.')" class="btn btn-primary col-md-20">Eliminar</button></td></tr>';
 	}
 	?>
     </tbody>
 </table>
 
-<script type="text/javascript">
+<script>
 	function cambiar(id,valor){
-
-
-         
+		
 			if (valor!=0) {
-				var r = confirm("Seguro que Desea Cambiar eL Perfil del Usuario?");
+				var r = confirm("Seguro que Desea Cambiar el Perfil del Usuario?");
 				if (r == true) {
-
-					/*$.ajax({
-						url: "home.php?ctr=admon&acc=asigperfiles&id=1&per=1",
-						async: false,
-						type: "GET",
-						success: function(data) {
-							alert(data);
-							//notificacion('', 'marcacion realizada', 'information', '2', 'bottomLeft', 3000);
-						},
-						error: function(msg) {
-							alert("ERROR"+msg);
-							//alerta('error de comunicacion', 3);
-						}
-					});*/
-
-
-					console.log(id+"+"+valor+" HOLA");
+					location.href ="home.php?ctr=admon&acc=cambiarperfilusu&usu="+id+"&perf="+valor;
 				} else {
 					return false;
 				} 
 			}
+}
+
+function restaurar(id,valor){
+		
+		if (valor!=0) {
+			var r = confirm("Seguro que Desea Restaurar la Clave del Usuario?");
+			if (r == true) {
+				location.href ="home.php?ctr=admon&acc=restaurarclave&usu="+id+"&perf="+valor;
+			} else {
+				return false;
+			} 
+		}
+}
+
+function eliminar(id){
+		
+		if (valor!=0) {
+			var r = confirm("Seguro que Desea Eliminar el Usuario?");
+			if (r == true) {
+				location.href ="home.php?ctr=admon&acc=eliminarusu&usu="+id;
+			} else {
+				return false;
+			} 
+		}
 }
 
 </script>
