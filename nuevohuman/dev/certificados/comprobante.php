@@ -137,7 +137,7 @@ while ($fila = $resultado->fetch_assoc()) {
  </body>
 </html>
 <?php 
-require_once("dompdf/dompdf_config.inc.php");
+require_once("dev/certificados/dompdf/dompdf_config.inc.php");
 /* $f;
 $l;
 if(headers_sent($f,$l))

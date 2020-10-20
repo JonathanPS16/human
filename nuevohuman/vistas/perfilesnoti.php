@@ -3,6 +3,9 @@
 $datosdisc =  explode(",",$proceso[0]['usuarios']);
 $datosacc =  explode(",",$accidentes[0]['usuarios']);
 $datosret =  explode(",",$retiro[0]['usuarios']);
+$datossele =  explode(",",$procesoreq[0]['correosselecccion']);
+
+
 ?>
 <h5>Notificaciones de Procesos</h5>
 <form class="form-horizontal" action="home.php?ctr=admon&acc=guardarnotificaciones" method="post" enctype="multipart/form-data">
@@ -62,7 +65,7 @@ $datosret =  explode(",",$retiro[0]['usuarios']);
 			$usuario=$listatemporales[$i]['usuario'];
 			$correo=$listatemporales[$i]['correo'];
 			$selected  ="";
-			if (in_array($id, $datosacc)) {
+			if (in_array($id, $datossele)) {
 				$selected = "selected";
 			}
 			echo '<option value ="'.$id.'" '.$selected.'>'.$correo.'</option>';

@@ -1,0 +1,56 @@
+StartFontMetrics 4.1
+Notice Converted by PHP-font-lib
+Comment https://github.com/PhenX/php-font-lib
+EncodingScheme FontSpecific
+Copyright Copyright (C) 2012 by original authors @ fontello.com
+FontName fontello
+FontSubfamily Medium
+UniqueID FontForge 2.0 : fontello : 10-5-2013
+FullName fontello
+Version Version 001.000 
+PostScriptName fontello
+Weight Bold
+ItalicAngle 0
+IsFixedPitch false
+UnderlineThickness 50
+UnderlinePosition -125
+FontHeightOffset 90
+Ascender 867
+Descender -167
+FontBBox 15 -167 1390 867
+StartCharMetrics 36
+U 35 ; WX 1039 ; N numbersign ; G 3
+U 36 ; WX 1004 ; N dollar ; G 4
+U 43 ; WX 1214 ; N plus ; G 5
+U 47 ; WX 1339 ; N slash ; G 6
+U 48 ; WX 1292 ; N zero ; G 7
+U 49 ; WX 804 ; N one ; G 8
+U 58 ; WX 864 ; N colon ; G 9
+U 59 ; WX 1152 ; N semicolon ; G 10
+U 61 ; WX 1030 ; N equal ; G 11
+U 62 ; WX 1235 ; N greater ; G 12
+U 64 ; WX 794 ; N at ; G 13
+U 65 ; WX 890 ; N A ; G 14
+U 66 ; WX 1026 ; N B ; G 15
+U 68 ; WX 1030 ; N D ; G 16
+U 69 ; WX 867 ; N E ; G 17
+U 70 ; WX 1082 ; N F ; G 18
+U 76 ; WX 1066 ; N L ; G 19
+U 82 ; WX 1030 ; N R ; G 20
+U 84 ; WX 1260 ; N T ; G 21
+U 85 ; WX 893 ; N U ; G 22
+U 86 ; WX 1176 ; N V ; G 23
+U 88 ; WX 970 ; N X ; G 24
+U 89 ; WX 1405 ; N Y ; G 25
+U 97 ; WX 1130 ; N a ; G 26
+U 98 ; WX 1342 ; N b ; G 27
+U 100 ; WX 1054 ; N d ; G 28
+U 102 ; WX 568 ; N f ; G 29
+U 103 ; WX 969 ; N g ; G 30
+U 108 ; WX 1359 ; N l ; G 31
+U 116 ; WX 646 ; N t ; G 32
+U 119 ; WX 1030 ; N w ; G 33
+U 62235 ; WX 1030 ; N uniF31B ; G 34
+U 62239 ; WX 1029 ; N uniF31F ; G 35
+EndCharMetrics
+EndFontMetrics

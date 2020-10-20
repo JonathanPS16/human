@@ -830,7 +830,6 @@
                     $accidentes = implode(",", $_POST['accidentes']);
                     $retiros = implode(",", $_POST['retiro']);
                     $seleccion = implode(",", $_POST['seleccion']);
-
                     $listamenus=$objconsulta->guardanotificausu($proceso,$accidentes,$retiros,$seleccion);
                     echo "<script>alert('Proceso Terminado Correctamente');
                                 window.location.href = 'home.php?ctr=admon&acc=notificaciones';
@@ -844,6 +843,7 @@
                     $proceso=$objconsulta->obtenernoti('diciplinario');
                     $accidentes=$objconsulta->obtenernoti('accientes');
                     $retiro=$objconsulta->obtenernoti('retiro');
+                    $procesoreq=$objconsulta->obtenernoti('retiro',"SI");
                     include('vistas/perfilesnoti.php');
                 break;
 
@@ -1104,7 +1104,83 @@
                     include('vistas/listadomisreq.php');
                 break;
 
+                case "test":
+                    /*
+                    require_once 'vendor/autoload.php';
+                    $archivoexa = "apertura1114.docx";
+                    
+                    $phpWord5 = new \PhpOffice\PhpWord\PhpWord();
+                    $templateProcessor5 = new \PhpOffice\PhpWord\TemplateProcessor('archivosgenerales/'.$archivoexa);
+                    $templateProcessor5 = new \PhpOffice\PhpWord\TemplateProcessor('archivosgenerales/'.$archivoexa);
+                    for($i=0;$i<=12;$i++){
+                        $pos = strpos($cadena, $i.",");
+                        if ($pos === false) {
+                            $templateProcessor5->setValue('e'.$i, "");
+                        } else {
+                            $templateProcessor5->setValue('e'.$i, "X");
+                        }
+                    }
+                    for($i=0;$i<=30;$i++){
+                        if($laboratorio==$i){
+                            $templateProcessor5->setValue('l'.$i, "X");
+                        } else {
+                            $templateProcessor5->setValue('l'.$i, "");
+                        }
+                    }
+                    $templateProcessor5->saveAs('archivosgenerales/'.$archivoexa);
 
+                   /* \PhpOffice\PhpWord\Settings::setPdfRendererPath('tcpdf_min');
+\PhpOffice\PhpWord\Settings::setPdfRendererName('TCPDF');
+$xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($templateProcessor5 , 'PDF');
+$xmlWriter->save('omar.pdf');*/
+
+/*
+    $phpWord = new \PhpOffice\PhpWord\PhpWord();
+	\PhpOffice\PhpWord\Settings::setPdfRendererPath('dompdf/dompdf');
+    \PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF');
+    $rendererName =\PhpOffice\PhpWord\Settings::PDF_RENDERER_DOMPDF;
+    $rendererLibraryPath = realpath('dompdf/dompdf');
+    \PhpOffice\PhpWord\Settings::setPdfRenderer($rendererName, $rendererLibraryPath);
+	
+	$document = $phpWord->loadTemplate('archivosgenerales/'.$archivoexa);
+	$document->saveAs('archivosgenerales/'.$archivoexa);
+	$phpWord = \PhpOffice\PhpWord\IOFactory::load('archivosgenerales/'.$archivoexa);
+    $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord,'PDF');
+    $newPdf = "HOLAPDF";
+	$xmlWriter->save($newPdf);  // Save to PDF
+	//unlink($temDoc);
+                    /*$var = 'archivosgenerales/'.$archivoexa;
+                    $content = shell_exec($var);
+                    echo $content;
+                    echo "<a href='{$var}'>Archivo</a>";*/
+
+                
+                require_once 'conversorwordpdf/vendor/autoload.php';
+                //require_once 'vendor/autoload.php';
+
+
+
+                    $objReader= \PhpOffice\PhpWord\IOFactory::createReader('Word2007');
+                    $contents=$objReader->load("conversorwordpdf/examenes.docx");
+
+                    $rendername= \PhpOffice\PhpWord\Settings::PDF_RENDERER_TCPDF;
+
+                    $renderLibrary="conversorwordpdf/tcpdf";
+                    $renderLibraryPath=''.$renderLibrary;
+                    if(!\PhpOffice\PhpWord\Settings::setPdfRenderer($rendername,$renderLibrary)){
+                        die("Provide Render Library And Path");
+                    }
+                    $renderLibraryPath=''.$renderLibrary;
+                    $objWriter= \PhpOffice\PhpWord\IOFactory::createWriter($contents,'PDF');
+                    $objWriter->save("conversorwordpdf/testaaaaa.pdf");
+
+
+                    ?>
+                    <a href="conversorwordpdf/testaaaaa.pdf">testaaaaa.pdf</a>
+<?php
+                 
+                
+                break;
                 
                 case "ordenmedica":
                     $cadena = "";

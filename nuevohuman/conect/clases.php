@@ -2,10 +2,10 @@
 session_start();
 define("DIRWEB", "https://".$_SERVER["HTTP_HOST"]."/human/");
 define("Host", "smtp.zoho.com");
-define("Username", "info@formalsi.com");
-define("Password", "2019FormalSiMarzo*");
+define("Username", "info@humantalentsas.com.co");
+define("Password", "HumanInfo2020*Zoho");
 define("Port", 465);
-define("correocor", "info@formalsi.com");
+define("correocor", "info@humantalentsas.com.co");
 define("mensajecorr", "Humantalentsas");
 require("phpmailer/class.phpmailer.php");
 class consultas {
@@ -727,10 +727,15 @@ public function obtenerInformacionreq($id){
       return $consultas;
   }
 
-  public function obtenernoti($tipo){
+  public function obtenernoti($tipo,$empre=""){
     //echo $ide;
       $conn = $this->conec();
-      $consultas = "SELECT * FROM notificaciones where grupo = '{$tipo}'";
+      if ($empre=="SI"){
+        $consultas = "SELECT * FROM empresasterporales limit 1";
+      } else {
+        $consultas = "SELECT * FROM notificaciones where grupo = '{$tipo}'";
+      }
+      
       //echo $consultas;
       $consultas= $conn->Execute($consultas)-> getRows();
       return $consultas;
