@@ -72,7 +72,7 @@ if($listatemporales[0]['id_accidente']==""){
     </div>
   </div>
   <div class="form-group row">
-    <label for="descripcion" class="col-4 col-form-label">Descripcion suseso</label> 
+    <label for="descripcion" class="col-4 col-form-label">Descripcion suceso</label> 
     <div class="col-8">
       <textarea id="descripcion" name="descripcion" cols="40" rows="5" class="form-control" required="required"><?php echo $listatemporales[0]['descripcion']; ?></textarea>
     </div>

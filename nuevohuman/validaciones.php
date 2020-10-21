@@ -500,7 +500,11 @@
                         $codigo = trim(substr($codigo, 0, -2));
                         $nombre  = trim($sheet->getCell("B".$row)->getValue());
                         $fechaini  = $sheet->getCell("C".$row)->getValue();
+                        $fechaini = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fechaini));
+                        $fechaini = date("d/m/Y",strtotime($fechaini."+ 1 days")); 
                         $fechafinal  = $sheet->getCell("D".$row)->getValue();
+                        $fechafinal = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fechafinal));
+                        $fechafinal = date("d/m/Y",strtotime($fechafinal."+ 1 days")); 
                         $cantidaddias  = $sheet->getCell("E".$row)->getValue();
                         $mes  = $sheet->getCell("F".$row)->getValue();
                         $anio  = $sheet->getCell("G".$row)->getValue();
@@ -854,8 +858,8 @@
                 break;
 
                 case "creacionusuarios":
-                    /*$listamenus=$objconsulta->selectperfiles();
-                    $listatemporales=$objconsulta->selectperfilesusuario();*/
+                    $listamenus=$objconsulta->selectperfiles();
+                    /*$listatemporales=$objconsulta->selectperfilesusuario();*/
                     include('vistas/registro.php');
                 break;
 
@@ -1253,6 +1257,89 @@ $xmlWriter->save('omar.pdf');*/
                 case "enviardocumentacion":
                     $idper = $_GET["idper"];
                     $idreq = $_GET["idreq"];
+                    $listadearchivos=$objconsulta->archivosatrasformar($idper,$idreq);
+                    require_once 'conversorwordpdf/vendor/autoload.php';
+                    $nombrearchivo = $listadearchivos['ordeningreso'];
+                    $nombre = str_replace(".docx","",$nombrearchivo);
+                    //echo $nombre;
+                    $archivoouput = $nombre.".pdf";
+                    $objReader= \PhpOffice\PhpWord\IOFactory::createReader('Word2007');
+                    $contents=$objReader->load("archivosgenerales/".$nombrearchivo);
+                    $rendername= \PhpOffice\PhpWord\Settings::PDF_RENDERER_TCPDF;
+                    $renderLibrary="conversorwordpdf/tcpdf";
+                    $renderLibraryPath=''.$renderLibrary;
+                    if(!\PhpOffice\PhpWord\Settings::setPdfRenderer($rendername,$renderLibrary)){
+                        die("Provide Render Library And Path");
+                    }
+                    $renderLibraryPath=''.$renderLibrary;
+                    $objWriter= \PhpOffice\PhpWord\IOFactory::createWriter($contents,'PDF');
+                    $objWriter->save("archivosgenerales/".$archivoouput);
+                    
+                    $nombrearchivo = $listadearchivos['docdocumen'];
+                    $nombre = str_replace(".docx","",$nombrearchivo);
+                    //echo $nombre;
+                    $archivoouput = $nombre.".pdf";
+                    $objReader= \PhpOffice\PhpWord\IOFactory::createReader('Word2007');
+                    $contents=$objReader->load("archivosgenerales/".$nombrearchivo);
+                    $rendername= \PhpOffice\PhpWord\Settings::PDF_RENDERER_TCPDF;
+                    $renderLibrary="conversorwordpdf/tcpdf";
+                    $renderLibraryPath=''.$renderLibrary;
+                    if(!\PhpOffice\PhpWord\Settings::setPdfRenderer($rendername,$renderLibrary)){
+                        die("Provide Render Library And Path");
+                    }
+                    $renderLibraryPath=''.$renderLibrary;
+                    $objWriter= \PhpOffice\PhpWord\IOFactory::createWriter($contents,'PDF');
+                    $objWriter->save("archivosgenerales/".$archivoouput);
+                   
+                    $nombrearchivo = $listadearchivos['hvhuman'];
+                    $nombre = str_replace(".docx","",$nombrearchivo);
+                    //echo $nombre;
+                    $archivoouput = $nombre.".pdf";
+                    $objReader= \PhpOffice\PhpWord\IOFactory::createReader('Word2007');
+                    $contents=$objReader->load("archivosgenerales/".$nombrearchivo);
+                    $rendername= \PhpOffice\PhpWord\Settings::PDF_RENDERER_TCPDF;
+                    $renderLibrary="conversorwordpdf/tcpdf";
+                    $renderLibraryPath=''.$renderLibrary;
+                    if(!\PhpOffice\PhpWord\Settings::setPdfRenderer($rendername,$renderLibrary)){
+                        die("Provide Render Library And Path");
+                    }
+                    $renderLibraryPath=''.$renderLibrary;
+                    $objWriter= \PhpOffice\PhpWord\IOFactory::createWriter($contents,'PDF');
+                    $objWriter->save("archivosgenerales/".$archivoouput);
+
+
+                    $nombrearchivo = $listadearchivos['examen'];
+                    $nombre = str_replace(".docx","",$nombrearchivo);
+                    //echo $nombre;
+                    $archivoouput = $nombre.".pdf";
+                    $objReader= \PhpOffice\PhpWord\IOFactory::createReader('Word2007');
+                    $contents=$objReader->load("archivosgenerales/".$nombrearchivo);
+                    $rendername= \PhpOffice\PhpWord\Settings::PDF_RENDERER_TCPDF;
+                    $renderLibrary="conversorwordpdf/tcpdf";
+                    $renderLibraryPath=''.$renderLibrary;
+                    if(!\PhpOffice\PhpWord\Settings::setPdfRenderer($rendername,$renderLibrary)){
+                        die("Provide Render Library And Path");
+                    }
+                    $renderLibraryPath=''.$renderLibrary;
+                    $objWriter= \PhpOffice\PhpWord\IOFactory::createWriter($contents,'PDF');
+                    $objWriter->save("archivosgenerales/".$archivoouput);
+
+                    $nombrearchivo = $listadearchivos['apertura'];
+                    $nombre = str_replace(".docx","",$nombrearchivo);
+                    //echo $nombre;
+                    $archivoouput = $nombre.".pdf";
+                    $objReader= \PhpOffice\PhpWord\IOFactory::createReader('Word2007');
+                    $contents=$objReader->load("archivosgenerales/".$nombrearchivo);
+                    $rendername= \PhpOffice\PhpWord\Settings::PDF_RENDERER_TCPDF;
+                    $renderLibrary="conversorwordpdf/tcpdf";
+                    $renderLibraryPath=''.$renderLibrary;
+                    if(!\PhpOffice\PhpWord\Settings::setPdfRenderer($rendername,$renderLibrary)){
+                        die("Provide Render Library And Path");
+                    }
+                    $renderLibraryPath=''.$renderLibrary;
+                    $objWriter= \PhpOffice\PhpWord\IOFactory::createWriter($contents,'PDF');
+                    $objWriter->save("archivosgenerales/".$archivoouput);
+                
                     $listadoreq=$objconsulta->enviardocumentacion($idper,$idreq);
                     echo "<script>alert('Informacion Guardada Correctamente');
                 window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$idreq."';
@@ -1262,6 +1349,8 @@ $xmlWriter->save('omar.pdf');*/
 
                 case "listaCandidatos":
                     $idreq = $_GET["id"];
+                    $tituloaaa ="";
+                    $tituloaaa=$objconsulta->obtenerreqinfo($idreq);
                     $listadoreq=$objconsulta->obtenercandidatos($idreq);
                     $laboratorios=$objconsulta->obtenerLaboratorios();
                     include('vistas/listadoyformcandidatos.php');

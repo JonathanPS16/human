@@ -182,7 +182,7 @@ public function selectperfiles(){
 public function listadocentros($empresa){
     $conn = $this->conec();
     $consultas = "select * from centrocostos where empresa='$empresa'";
-    echo $consultas;
+    //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
@@ -860,7 +860,18 @@ public function notificarProcesos($id,$correojefe){
     $conn->Execute($SQL);
     
 } 
+public function obtenerreqinfo($id){
+    $conn = $this->conec();
+    $consultas = "select * from req  WHERE id= ".$id;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $datos = array();
+    for($i= 0; $i<count($consultas); $i++) {
+      $nombreca = $consultas[$i]['cargo'];
+      return $nombreca;
+    }
 
+
+}
 public function ajustarorden($id,$idreq,$tasa,$salario,$presentarse,$direccion,$fechainicio){
     $conn = $this->conec();
     $SQL ="UPDATE req_candidatos SET estado = 'EM', tasa='$tasa',salariorh='$salario',presentarse='$presentarse',direccion='$direccion',fechainiciot ='$fechainicio' WHERE id=".$id;
@@ -1198,6 +1209,29 @@ public function conclucioncitacitacionc($id_per,$id_req,$conclu)
     $conn->Execute($SQL);
 }
 
+public function archivosatrasformar($idper,$idreq){
+
+    $conn = $this->conec();
+    $consultas = "SELECT correo,ordeningreso,hvhuman,docdocumen  FROM req_candidatos WHERE  id=".$idper;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $correo = "";
+    $ordeningreso = "";
+    $docdocumen = "";
+    $hvhuman = "";
+    for($i= 0; $i<count($consultas); $i++) {
+        $correo  =$consultas[$i]['correo'];
+        $ordeningreso  =$consultas[$i]['ordeningreso'];
+        $hvhuman  = $consultas[$i]['hvhuman'];
+        $docdocumen  = $consultas[$i]['docdocumen'];
+    }
+    return array(
+        "ordeningreso"=>$ordeningreso,
+        "docdocumen"=>$docdocumen,
+        "hvhuman"=>$hvhuman,
+        "examen"=>"examen".$idper.$idreq.".docx",
+        "apertura"=>"apertura".$idper.$idreq.".docx"
+    );
+}
 
 public function enviardocumentacion($idper,$idreq){
 
@@ -1211,19 +1245,26 @@ public function enviardocumentacion($idper,$idreq){
     $hvhuman = "archivosgenerales/";
     for($i= 0; $i<count($consultas); $i++) {
         $correo  =$consultas[$i]['correo'];
-        $ordeningreso  .=$consultas[$i]['ordeningreso'];
-        $hvhuman  .=$consultas[$i]['hvhuman'];
-        $docdocumen  .=$consultas[$i]['docdocumen'];
+        $ordeningreso  .=str_replace(".docx", ".pdf",$consultas[$i]['ordeningreso']);
+        $hvhuman  .=str_replace(".docx", ".pdf",$consultas[$i]['hvhuman']);
+        $docdocumen  .=str_replace(".docx", ".pdf",$consultas[$i]['docdocumen']);
     }
-
-    $archivoexa = "archivosgenerales/examen".$idper.$idreq.".docx";
-    $archivoaper = "archivosgenerales/apertura".$idper.$idreq.".docx";
+    $archivoexa = "archivosgenerales/examen".$idper.$idreq.".pdf";
+    $archivoaper = "archivosgenerales/apertura".$idper.$idreq.".pdf";
     
     
     $titulo2 = "Documentacion de Contratacion";
-    $cuerpo2 = "<p>Señor Usuario <br />
-    Buen dia<br>
-    Se le fue enviada la documentacion la cual debe ser llenada y entregada completa para completar con la contratacion <br /><br><br>
+    $cuerpo2 = "Señor Usuario
+<br><br>
+    Usted ha sido seleccionado, vamos a iniciar el proceso de contratación. 
+    <br><br>
+    Le fueron enviados unos archivos los cuales debe imprimir y diligenciar, según sea el caso.<br> 
+    Debe dirigirse al laboratorio para toma de exámenes y al banco para realizar apertura de cuenta y presentarse con toda la documentación requerida en la temporal, para la firma de contrato.
+    <br><br>
+    Cordialmente,
+    <br><br>
+    Área de Contratación.
+     <br /><br><br>
                   &copy; ".date('Y')." humantalentsas.com - Todos los derechos reservados </p>";
     $maildos = new PHPMailer();
     $maildos->IsSMTP();
@@ -1241,10 +1282,10 @@ public function enviardocumentacion($idper,$idreq){
     $maildos->SetFrom('info@formalsi.com', 'Humantalentsas');*/
     $maildos->AddAddress($correo, "Usuario");
     //$maildos->AddAttachment($ordeningreso,"ordeningreso.docx");
-    $maildos->AddAttachment($hvhuman,"hojavidahuman.docx");
-    $maildos->AddAttachment($docdocumen,"documentacion.docx");
-    $maildos->AddAttachment($archivoexa,"ordenexamenes.docx");
-    $maildos->AddAttachment($archivoaper,"aperturacuenta.docx");
+    $maildos->AddAttachment($hvhuman,"hojavidahuman.pdf");
+    $maildos->AddAttachment($docdocumen,"documentacion.pdf");
+    $maildos->AddAttachment($archivoexa,"ordenexamenes.pdf");
+    $maildos->AddAttachment($archivoaper,"aperturacuenta.pdf");
     $maildos->Subject = utf8_decode($titulo2); // Este es el titulo del email. 
     $maildos->MsgHTML(utf8_decode($cuerpo2));
     $maildos->Send();

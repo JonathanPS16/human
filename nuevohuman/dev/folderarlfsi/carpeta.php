@@ -88,12 +88,12 @@
                 }//finaliza While
                              
                 closedir($dir);//Se cierra el archivo
-                if($encontrar==0){ echo '<div class="error-colaboradores">No Existe infomraci&oacute;n relacioanda al número de documento </div>'.'<br/><br/>';
+                if($encontrar==0){ echo '<div class="error-colaboradores">No Existe informaci&oacute;n relacionada al número de documento </div>'.'<br/><br/>';
                     ; }
                 
             }
         }else{//Finaliza el If de la linea 12, si no es un directorio valido, muestra el siguiente mensaje
-            echo '<div class="error-colaboradores">No Existe infomraci&oacute;n relacioanda al número de documento y el periodo seleccionado</div>'.'<br/><br/>';
+            echo '<div class="error-colaboradores">No Existe informaci&oacute;n relacionada al número de documento y el periodo seleccionado</div>'.'<br/><br/>';
         }
     }//Fin de la Función
     

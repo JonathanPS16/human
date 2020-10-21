@@ -59,7 +59,7 @@
                 }//finaliza While
                              
                 closedir($dir);//Se cierra el archivo
-                if($encontrar==0){ echo '<div class="error-colaboradores">No Existe infomraci&oacute;n relacioanda al número de documento </div>'.'<br/><br/>';
+                if($encontrar==0){ echo '<div class="error-colaboradores">No Existe informaci&oacute;n relacionada al número de documento </div>'.'<br/><br/>';
                     ; }
                 
             }

@@ -1,4 +1,4 @@
-<h4>Requision # <?=$_GET['id'];?></h4>
+<h5>Solicitud #<?=$_GET['id']." ".$tituloaaa;?></h5>
 <br>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   Agregar Candidato

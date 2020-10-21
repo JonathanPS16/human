@@ -58,7 +58,7 @@
   <td>'.$nombreper.'</td>
   <td>'.$concepto.'</td>
   <td>'.$responsable.'</td>
-  <td>'.$valorliqui.'</td>
+  <td>$'.number_format($valorliqui, 2, '.', ',').'</td>
   </tr>';
 	}
 	?>

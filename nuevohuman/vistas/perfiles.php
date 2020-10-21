@@ -1,5 +1,5 @@
-<a  class="btn btn-primary" href="home.php?ctr=accidentes&acc=formu&id=0">Nuevo Accidente</a>
-<br><br><table class="table table-striped" id="tablagrid">
+<h5>Administracion  de Perfiles</h5>
+<br><table class="table table-striped" id="tablagrid">
 	<thead>
 		<tr>
 			<th>ID</th>
@@ -19,43 +19,23 @@
 		$nombreperfil=$listatemporales[$i]['nombreperfil'];
 		$selecc=$listatemporales[$i]['selecc'].",";
 		$pos = strpos($selecc, ",");
-
-		/*if ($pos === false) {
-			if($selecc==""){
-				$selecc="0,";
-			} else {
-				$selecc= $selecc.",";
-			}
-		}*/
 		$camposmenu = "";
 
 		for($j=0; $j<count($listamenus);$j++) {
 			$idmen = $listamenus[$j]['id'];
+			
 			$menu = $listamenus[$j]['menu'];
-
+			
 			$pos = strpos($selecc, "$idmen,");
-
+			$datomenu = explode(",",$selecc);
+			//var_dump($datomenu);
 			$seldes ="";
 			$selseles ="";
-			if ($pos === false) {
-				$seldes ="selected";
-			} else {
+			if(in_array($idmen,$datomenu)){
 				$selseles ="selected";
+			} else {
+				$seldes ="selected";
 			}
-			/*$camposmenu.='
-			<div class="form-group row">
-			<label class="col-4">'.$menu.'</label> 
-			<div class="col-8">
-			  <div class="custom-control custom-radio custom-control-inline">
-				<input name="radio'.$idmen.'" id="radio_0'.$idmen.'" type="radio" class="custom-control-input" value="Si" '.$selseles.'> 
-				<label for="radio_0'.$idmen.'" class="custom-control-label">Si</label>
-			  </div>
-			  <div class="custom-control custom-radio custom-control-inline">
-				<input name="radio'.$idmen.'" id="radio_1'.$idmen.'" type="radio" class="custom-control-input" value="No" '.$seldes.'> 
-				<label for="radio_1'.$idmen.'" class="custom-control-label">No</label>
-			  </div>
-			</div>
-		  </div> ';*/
 		  $camposmenu.='<div class="form-group row">
 		  <label class="col-4 col-form-label" for="select">'.$menu.'</label> 
 		  <div class="col-8">

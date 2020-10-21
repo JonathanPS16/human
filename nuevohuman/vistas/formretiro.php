@@ -20,6 +20,7 @@
       <select id="retiro" name="retiro" class="custom-select" required="required">
         <option value="terminacion">Terminacion Contrato</option>
         <option value="renuncia">Renuncia voluntaria</option>
+        <option value="otro">Otro Motivo</option>
       </select>
     </div>
   </div>
@@ -37,7 +38,7 @@
   </div> 
 
   <div class="custom-file">
-    <input type="file" class="custom-file-input" id="archivo1" name="archivo1" required="required">
+    <input type="file" class="custom-file-input" id="archivo1" name="archivo1">
     <label class="custom-file-label" for="archivo1"> Renuncia </label>
   </div>
 
