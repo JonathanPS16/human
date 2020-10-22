@@ -188,11 +188,35 @@ public function listadocentros($empresa){
 }
 
 
+public function listadohorasextra(){
+    $conn = $this->conec();
+    $consultas = "select * from listpermisos";
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function listadohorasextrafinal(){
+    $conn = $this->conec();
+    $consultas = "select * from listhorasextra";
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+
 
 public function obtenercargasinca(){
     $conn = $this->conec();
     $consultas = "SELECT * FROM `incapacidadescargue` where estado !='O'";
     //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function listadoincap(){
+    $conn = $this->conec();
+    $consultas = "SELECT * FROM incap";
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
@@ -204,6 +228,35 @@ public function guardartrancripcion($id,$noincapacidad,$fechaincio,$diagnostico,
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
+
+
+public function guardarpermisosalida($fecha,$codigo,$nombre,$seccion,$desde,$hasta,$motivo,$remunerado){
+
+$conn = $this->conec();
+    $consultas = "INSERT INTO listpermisos (fecha,codigo,nombre,seccion,desde,hasta,motivo,remunerado)  values ('$fecha','$codigo','$nombre','$seccion','$desde','$hasta','$motivo','$remunerado')";
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function guardarincap($archivo,$fecha,$cedula,$nombre,$noincapacidad,$fechainicio,$fechafinal,$diasincapacidad,$diagnostico)
+{
+    $conn = $this->conec();
+    $consultas = "INSERT INTO incap (archivo,fecha,cedula,nombre,noincapacidad,fechainicio,fechafinal,diasincapacidad,diagnostico )  values ('$archivo','$fecha','$cedula','$nombre','$noincapacidad','$fechainicio','$fechafinal','$diasincapacidad','$diagnostico')";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function guardarhorasextra($fecha,$codigo,$nombre,$seccion,$desde,$hasta,$horas){
+
+    $conn = $this->conec();
+        $consultas = "INSERT INTO listhorasextra (fecha,codigo,nombre,seccion,desde,hasta,horas)  values ('$fecha','$codigo','$nombre','$seccion','$desde','$hasta','$horas')";
+        //echo $consultas;
+        $consultas= $conn->Execute($consultas)-> getRows();
+        return $consultas;
+    }
+
+
 public function guardarcreditinca($id,$notacredito,$fechanotadci,$valornotaadci,$imagen,$otrasobserva,$digivsfisi){
     $conn = $this->conec();
     $consultas = "UPDATE incapacidadescargue set estado = 'O' ,notacredito='$notacredito',fechanotadci='$fechanotadci',valornotaadci='$valornotaadci',imagen='$imagen',otrasobserva='$otrasobserva',digivsfisi='$digivsfisi' where id_registro=$id";
@@ -248,7 +301,7 @@ public function guardarcarguearchivos ($sql){
 public function listaresumengeneral(){
     $conn = $this->conec();
     $consultas= $conn->Execute("SELECT * FROM incapacidadescargue inner JOIN centrocostos on centrocostos.empresa=incapacidadescargue.compania and incapacidadescargue.codigo=centrocostos.centrocosto INNER join codigoinca on codigoinca.id=incapacidadescargue.codigoconcepto")-> getRows();
-    echo $consultas;
+    //echo $consultas;
     return $consultas;
 }
 

@@ -432,6 +432,70 @@
              }
         break;
 
+
+
+        case "novedades":
+            $acc = $_GET['acc'];
+            switch ($acc) {
+                case "guardarincap":
+                    $archivo = "";
+                    $nombre_archivo = date('YmdHms').$_FILES['archivo']['name'];
+                    if($nombre_archivo!="") {
+                        $tipo_archivo = $_FILES['archivo']['type'];
+                        $tamano_archivo = $_FILES['archivo']['size'];
+                        $mensaje = "";    
+                        //compruebo si las características del archivo son las que deseo
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+                            $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                        }else{
+                            if (move_uploaded_file($_FILES['archivo']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $archivo =$nombre_archivo;
+                            }else{
+                                $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            }
+                        }
+                    }
+                    
+                    $listatemporales=$objconsulta->guardarincap($archivo,$_POST['fecha'],$_POST['cedula'],$_POST['nombre'],$_POST['noincapacidad'],$_POST['fechainicio'],$_POST['fechafinal'],$_POST['diasincapacidad'],$_POST['diagnostico']);
+                    echo "<script>alert('Incapacidad Cargada Correctamente');
+                        window.location.href = 'home.php?ctr=novedades&acc=incapacidades';
+                        </script>";
+                break;
+                
+                case "guardarformsalida":
+
+                    $objconsulta->guardarpermisosalida($_POST['fecha'],$_POST['codigo'],$_POST['nombre'],$_POST['seccion'],$_POST['desde'],$_POST['hasta'],$_POST['motivo'],$_POST['remunerado']);
+                    echo "<script>alert('Permiso Cargado Correctamente');
+                        window.location.href = 'home.php?ctr=novedades&acc=formsalida';
+                        </script>";
+                break;
+                case "formsalida":
+                    $listatemporales = $objconsulta->listadohorasextra();
+                    include('vistas/vistahorasextra.php');
+                break;
+
+                case "guardarformhoraextra":
+
+                    $objconsulta->guardarhorasextra($_POST['fecha'],$_POST['codigo'],$_POST['nombre'],$_POST['seccion'],$_POST['desde'],$_POST['hasta'],$_POST['horas']);
+                    echo "<script>alert('Horas Extra Cargadas Correctamente');
+                        window.location.href = 'home.php?ctr=novedades&acc=horasextra';
+                        </script>";
+                break;
+                case "horasextra":
+                    $listatemporales = $objconsulta->listadohorasextrafinal();
+                    include('vistas/vistahorasextrafinal.php');
+                break;
+
+                case "incapacidades":
+                    $listatemporales = $objconsulta->listadoincap();
+                    include('vistas/vistaincap.php');
+                break;
+             }
+        break;
+
+
+
+
         case "incapacidad":
             $acc = $_GET['acc'];
             switch ($acc) {
