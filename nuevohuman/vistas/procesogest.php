@@ -102,6 +102,28 @@
     </div>
   </div> 
   <div class="form-group row">
+    <label for="horacita" class="col-4 col-form-label">Hora Citacion</label> 
+    <div class="col-8">
+      <input id="horacita" name="horacita" placeholder="HH:mm" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="sedelugar" class="col-4 col-form-label">Lugar / Sede</label> 
+    <div class="col-8">
+      <input id="sedelugar" name="sedelugar" placeholder="Lugar / Sede" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="modalidadcita" class="col-4 col-form-label">Modalidad Citacion</label> 
+    <div class="col-8">
+      <select id="modalidadcita" name="modalidadcita" class="custom-select" required="required">
+        <option value="Cuestionario">Cuestionario</option>
+        <option value="Videollamada">Videollamada</option>
+      </select>
+    </div>
+  </div> 
+
+  <div class="form-group row">
     <label for="archivo1" class="col-4 col-form-label">Archivo</label> 
     <div class="col-8">
       <input id="archivo1" name="archivo1" type="file" class="form-control" required="required">

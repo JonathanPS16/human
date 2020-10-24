@@ -14,6 +14,7 @@
 			<th>Concepto</th>
 			<th>Responsable</th>
 			<th>Valor</th>
+			<th>Estado</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -35,6 +36,7 @@
 		$cedula=$listatemporales[$i]['cedula'];
 		$nombreper=$listatemporales[$i]['nombreper'];
 		$concepto=$listatemporales[$i]['concepto'];
+		$estado=$listatemporales[$i]['estado'];
 
 		$excluye=$listatemporales[$i]['excluye'];
 		$responsable = $listatemporales[$i]['responsable'];
@@ -44,7 +46,22 @@
 		$valorliqui = $listatemporales[$i]['valorliqui'];
 		$observaciones = $listatemporales[$i]['observaciones'];
 		$valorliqui = $listatemporales[$i]['valorliqui'];
-		
+		$estadolblmu="";
+		if($estado == "C") {
+			$estadolblmu="Cargado";
+		}
+		if($estado == "T") {
+			$estadolblmu="Transcrita";
+		}
+		if($estado == "B") {
+			$estadolblmu="Proceso Decision";
+		}
+		if($estado == "F") {
+			$estadolblmu="Ingreso a Banco";
+		}
+		if($estado == "O") {
+			$estadolblmu="Proceso Terminado";
+		}
 
 		echo  '<tr>
 		<td>'.$empresa.'</td>
@@ -59,6 +76,7 @@
   <td>'.$concepto.'</td>
   <td>'.$responsable.'</td>
   <td>$'.number_format($valorliqui, 2, '.', ',').'</td>
+  <td>'.$estadolblmu.'</td>
   </tr>';
 	}
 	?>
@@ -67,6 +85,13 @@
 <script>
  $(document).ready( function () {
     $('#example').DataTable();
-	$('#myTable').DataTable();
+	$('#myTable').DataTable(
+		{
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    }
+	);
 } );
 </script>

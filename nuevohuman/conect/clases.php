@@ -221,9 +221,9 @@ public function listadoincap(){
     return $consultas;
 }
 
-public function guardartrancripcion($id,$noincapacidad,$fechaincio,$diagnostico,$fechatrans,$fechafinal,$nodias,$notranscip,$archivouno,$archivodos){
+public function guardartrancripcion($id,$noincapacidad,$fechaincio,$diagnostico,$fechatrans,$fechafinal,$nodias,$notranscip,$archivouno,$archivodos,$prorroga,$diasacum){
     $conn = $this->conec();
-    $consultas = "UPDATE incapacidadescargue set estado = 'T' ,noincapacidad='$noincapacidad',fechaincio='$fechaincio',diagnostico='$diagnostico',fechatrans='$fechatrans',fechafinaltra='$fechafinal',nodias='$nodias',notranscip='$notranscip',archivouno='$archivouno',archivodos='$archivodos' where id_registro=$id";
+    $consultas = "UPDATE incapacidadescargue set estado = 'T' ,noincapacidad='$noincapacidad',fechaincio='$fechaincio',diagnostico='$diagnostico',fechatrans='$fechatrans',fechafinaltra='$fechafinal',nodias='$nodias',notranscip='$notranscip',archivouno='$archivouno',archivodos='$archivodos',prorroga='$prorroga',diasacum='$diasacum' where id_registro=$id";
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
@@ -579,7 +579,7 @@ public function guardarprocesoAccidente($id,$funcionario,$cargo,$cedula,$lugartr
 
 
 
-public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado) {
+public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado,$testigo,$cargotestigo,$telefonotestigo,$telefonojefei) {
     $dat=date('Y-m-d H:i:s');
     $conn = $this->conec();
     $insertararchivos1  ="";
@@ -611,13 +611,13 @@ public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$je
     }
 
     if($id>0){
-        $SQL ="UPDATE procesos SET ".$updtaarchivos1.$updtaarchivos2.$updtaarchivos3."nombrefuncionario='$funcionario', cargo ='$cargo',cedula ='$cedula',lugartrabajo ='$lugartrabajo',jefeinmediato='$jefe',coreojefe ='$correojefe',
-         	fechaevento ='$fechaevento',descripcion  ='$descripcion',horario='$horario',centrocostos='$centrocostos',empresausuaria='$empresausuaria',correoempleado='$correoempleado' where id_proceso=$id";
+        $SQL ="UPDATE procesos SET ".$updtaarchivos1.$updtaarchivos2.$updtaarchivos3."nombrefuncionario='$funcionario', cargo ='$cargo',cedula ='$cedula',lugartrabajo ='$lugartrabajo',jefeinmediato='$jefe',coreojefe ='$correojefe',telefonojefei='$telefonojefei',
+         	fechaevento ='$fechaevento',descripcion  ='$descripcion',horario='$horario',centrocostos='$centrocostos',empresausuaria='$empresausuaria',correoempleado='$correoempleado',testigo= '$testigo',cargotestigo='$cargotestigo',telefonotestigo='$telefonotestigo' where id_proceso=$id";
         $conn->Execute($SQL);
 
     } else {
-        $SQL ="INSERT INTO  procesos (".$insertararchivos1.$insertararchivos2.$insertararchivos3."nombrefuncionario,cargo,cedula,lugartrabajo,jefeinmediato,coreojefe,fechaevento,descripcion,grabador,fechagrab,horario,centrocostos,empresausuaria,correoempleado ) VALUES (".$val1.$val2.$val3."'$funcionario','$cargo','$cedula','$lugartrabajo','$jefe','$correojefe',
-        '$fechaevento','$descripcion','".$_SESSION['usuario']."','$dat','$horario','$centrocostos','$empresausuaria','$correoempleado')";
+        $SQL ="INSERT INTO  procesos (".$insertararchivos1.$insertararchivos2.$insertararchivos3."nombrefuncionario,cargo,cedula,lugartrabajo,jefeinmediato,coreojefe,fechaevento,descripcion,grabador,fechagrab,horario,centrocostos,empresausuaria,correoempleado,testigo,cargotestigo,telefonotestigo,telefonojefei) VALUES (".$val1.$val2.$val3."'$funcionario','$cargo','$cedula','$lugartrabajo','$jefe','$correojefe',
+        '$fechaevento','$descripcion','".$_SESSION['usuario']."','$dat','$horario','$centrocostos','$empresausuaria','$correoempleado','$testigo','$cargotestigo','$telefonotestigo','$telefonojefei')";
         $conn->Execute($SQL);
         
     }
@@ -1157,12 +1157,13 @@ public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo){
 
 }
 
-public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justificacion,$archivo){
+public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justificacion,$archivo,$horacita,$sedelugar,$modalidadcita){
     $conn = $this->conec();
     $titulo="Citacion Proceso"; 
-    $mensaje = "Se le a citado para revisar una solucitud de proceso diciplinario #".$id." para la fecha  y hora ".$fechacitacion. "Por motivo<br>".$justificacion;
+    $mensaje = "Se le a citado para revisar una solucitud de proceso diciplinario #".$id." para la fecha y hora ".$fechacitacion."a las ".$horacita."Por motivo<br>".$justificacion."<br>Lugar  $sedelugar con modalidad de $modalidadcita";
     $envio = $this->enviarcorreoadjuntos($correo,$archivo,$mensaje,$titulo);
-    $SQL ="UPDATE procesos  SET estado='E',fechacita='$fechacitacion',tipoproceso ='$tipo',justificacion='$justificacion',archivoenviado='$archivo'  WHERE id_proceso=".$id;
+    $fechahora = $fechacitacion. " ".$horacita;
+    $SQL ="UPDATE procesos  SET estado='E',fechacita='$fechahora',tipoproceso ='$tipo',justificacion='$justificacion',archivoenviado='$archivo',sedelugar='$sedelugar',modalidadcita='$modalidadcita'  WHERE id_proceso=".$id;
     $conn->Execute($SQL);
 
 }

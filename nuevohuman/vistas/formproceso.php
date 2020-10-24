@@ -60,6 +60,24 @@ if($listatemporales[0]['id_proceso']==""){
     </div>
   </div>
   <div class="form-group row">
+    <label for="testigo" class="col-4 col-form-label">Nombre Testigo</label> 
+    <div class="col-8">
+      <input id="testigo" name="testigo" type="text" required="required" value ="<?php echo $listatemporales[0]['testigo']; ?>" class="form-control" placeholder="Nombre Testigo">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="cargotestigo" class="col-4 col-form-label">Cargo Testigo</label> 
+    <div class="col-8">
+      <input id="cargotestigo" name="cargotestigo" type="text" required="required" value ="<?php echo $listatemporales[0]['cargotestigo']; ?>" class="form-control" placeholder="Cargo Testigo">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="telefonotestigo" class="col-4 col-form-label">Telefono Testigo</label> 
+    <div class="col-8">
+      <input id="telefonotestigo" name="telefonotestigo" type="text" required="required" value ="<?php echo $listatemporales[0]['telefonotestigo']; ?>" class="form-control" placeholder="Telefono Testigo">
+    </div>
+  </div>
+  <div class="form-group row">
     <label for="jefe" class="col-4 col-form-label">Jefe Inmediato</label> 
     <div class="col-8">
       <input id="jefe" name="jefe" type="text" required="required" value ="<?php echo $listatemporales[0]['jefeinmediato']; ?>" class="form-control" placeholder="Jefe Inmediato">
@@ -69,6 +87,13 @@ if($listatemporales[0]['id_proceso']==""){
     <label for="correojefe" class="col-4 col-form-label">Correo Jefe Inmediato</label> 
     <div class="col-8">
       <input id="correojefe" name="correojefe" type="text" class="form-control" required="required" value ="<?php echo $listatemporales[0]['coreojefe']; ?>" placeholder="Correo Jefe Inmediato">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="telefonojefei" class="col-4 col-form-label">Telefono Jefe Inmediato</label> 
+    <div class="col-8">
+      <input id="telefonojefei" name="telefonojefei" type="text" class="form-control" required="required" value ="<?php echo $listatemporales[0]['telefonojefei']; ?>" placeholder="Telefono Jefe Inmediato">
     </div>
   </div>
   <div class="form-group row">

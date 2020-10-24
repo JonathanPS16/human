@@ -129,6 +129,9 @@
                     $correo= $_POST['correo'];
                     $fechacitacion=$_POST['fechacitacion'];
                     $justificacion=$_POST['justificacion'];
+                    $horacita=$_POST['horacita'];
+                    $sedelugar=$_POST['sedelugar'];
+                    $modalidadcita=$_POST['modalidadcita'];
                     $tipo=$_POST['tipo'];
                     $archivo="";
                     if($nombre_archivo!="") {
@@ -146,7 +149,7 @@
                             }
                         }
                     }
-                    $listatemporales=$objconsulta->enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justificacion,$archivo);
+                    $listatemporales=$objconsulta->enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justificacion,$archivo,$horacita,$sedelugar,$modalidadcita);
                     echo "<script>alert('Empleado Notificado Correctamente');
                         window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';
                         </script>";
@@ -250,6 +253,13 @@
                     $centrocostos = $_POST['centrocostos'];
                     $empresausuaria = $_POST['empresausuaria'];
                     $correoempleado = $_POST['correoempleado'];
+                    $testigo = $_POST['testigo'];
+                    $cargotestigo = $_POST['cargotestigo'];
+                    $telefonotestigo = $_POST['telefonotestigo'];
+                    $telefonojefei = $_POST['telefonojefei'];
+
+
+                    
 
                     $archivouno = "";
                     $nombre_archivo = date('YmdHms').$_FILES['archivo1']['name'];
@@ -303,7 +313,7 @@
                             }
                         }
                     }
-                    $objconsulta->guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado);
+                    $objconsulta->guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado,$testigo,$cargotestigo,$telefonotestigo,$telefonojefei);
                     $listatemporales = $objconsulta->ultimoproceso();
                     $idcreacion = $listatemporales[0]['id_proceso'];
                     $listatemporales=$objconsulta->notificarProcesos($idcreacion,$correojefe);
@@ -652,7 +662,7 @@
                             }
                         }
                     }
-                    $listatemporales=$objconsulta->guardartrancripcion($_POST['id'],$_POST['noincapacidad'],$_POST['fechaincio'],$_POST['diagnostico'],$_POST['fechatrans'],$_POST['fechafinal'],$_POST['nodias'],$_POST['notranscip'],$archivouno,$archivodos);
+                    $listatemporales=$objconsulta->guardartrancripcion($_POST['id'],$_POST['noincapacidad'],$_POST['fechaincio'],$_POST['diagnostico'],$_POST['fechatrans'],$_POST['fechafinal'],$_POST['nodias'],$_POST['notranscip'],$archivouno,$archivodos,$_POST['prorroga'],$_POST['diasacum']);
 
                     echo "<script>alert('Registros Actualizado Correctamente');
                         window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';

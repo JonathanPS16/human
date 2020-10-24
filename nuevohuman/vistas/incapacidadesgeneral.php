@@ -102,6 +102,18 @@
 		  </div>
 		</div>
 		<div class="form-group row">
+		  <label for="prorroga" class="col-4 col-form-label">Prorroga</label> 
+		  <div class="col-8">
+			<input id="prorroga" name="prorroga" placeholder="Prorroga" type="text" class="form-control" required="required">
+		  </div>
+		</div>
+		<div class="form-group row">
+		  <label for="diasacum" class="col-4 col-form-label">Dias Acumulados</label> 
+		  <div class="col-8">
+			<input id="diasacum" name="diasacum" placeholder="Dias Acumulados" type="text" class="form-control" required="required">
+		  </div>
+		</div>
+		<div class="form-group row">
 		  <label for="archivoincapacidad" class="col-4 col-form-label">Archivo Incapacidad</label> 
 		  <div class="col-8">
 			<input id="archivoincapacidad" name="archivoincapacidad" type="file" class="form-control" required="required">
