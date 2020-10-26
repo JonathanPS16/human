@@ -474,7 +474,7 @@
                 
                 case "guardarformsalida":
 
-                    $objconsulta->guardarpermisosalida($_POST['fecha'],$_POST['codigo'],$_POST['nombre'],$_POST['seccion'],$_POST['desde'],$_POST['hasta'],$_POST['motivo'],$_POST['remunerado']);
+                    $objconsulta->guardarpermisosalida($_POST['fecha'],$_POST['codigo'],$_POST['nombre'],$_POST['seccion'],$_POST['desde'],$_POST['hasta'],$_POST['motivo'],$_POST['remunerado'],$_POST['cedula'],$_POST['quincena']);
                     echo "<script>alert('Permiso Cargado Correctamente');
                         window.location.href = 'home.php?ctr=novedades&acc=formsalida';
                         </script>";

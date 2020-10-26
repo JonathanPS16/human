@@ -20,7 +20,13 @@
   <div class="form-group row">
     <label for="codigo" class="col-4 col-form-label">Codigo</label> 
     <div class="col-8">
-      <input id="codigo" name="codigo" placeholder="Codigo" type="text" class="form-control" required="required">
+      <input id="codigo" name="codigo" placeholder="Codigo" type="text" class="form-control" required="required" minlength="4" maxlength="4">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="cedula" class="col-4 col-form-label">Cedula</label> 
+    <div class="col-8">
+      <input id="cedula" name="cedula" placeholder="cedula" type="text" class="form-control" required="required">
     </div>
   </div>
   <div class="form-group row">
@@ -29,7 +35,7 @@
       <input id="nombre" name="nombre" placeholder="Nombre" type="text" class="form-control" required="required">
     </div>
   </div>
-  <div class="form-group row">
+  <div class="form-group row" style="display:none">
     <label for="seccion" class="col-4 col-form-label">Seccion/Departamento</label> 
     <div class="col-8">
       <input id="seccion" name="seccion" placeholder="Seccion/Departamento" type="text" class="form-control" required="required">
@@ -58,6 +64,40 @@
     <div class="col-8">
       <select id="remunerado" name="remunerado" class="custom-select" required="required">
         <option value="SI">SI</option>
+        <option value="NO">NO</option>
+      </select>
+    </div>
+  </div> 
+
+  <div class="form-group row">
+    <label for="quincena" class="col-4 col-form-label">Quincena</label> 
+    <div class="col-8">
+      <select id="quincena" name="quincena" class="custom-select" required="required">
+        <option value="1ra Enero">1ra Enero</option>
+        <option value="2da Enero">2da Enero</option>
+        <option value="1ra Febrero">1ra Febrero</option>
+        <option value="2da Febrero">2da Febrero</option>
+        <option value="1ra Marzo">1ra Marzo</option>
+        <option value="2da Marzo">2da Marzo</option>
+        <option value="1ra Abril">1ra Abril</option>
+        <option value="2da Abril">2da Abril</option>
+        <option value="1ra Mayo">1ra Mayo</option>
+        <option value="2da Mayo">2da Mayo</option>
+        <option value="1ra Junio">1ra Junio</option>
+        <option value="2da Junio">2da Junio</option>
+        <option value="1ra Julio">1ra Julio</option>
+        <option value="2da Julio">2da Julio</option>
+        <option value="1ra Agosto">1ra Agosto</option>
+        <option value="2da Agosto">2da Agosto</option>
+        <option value="1ra Septiembre">1ra Septiembre</option>
+        <option value="2da Septiembre">2da Septiembre</option>
+        <option value="1ra Octubre">1ra Octubre</option>
+        <option value="2da Octubre">2da Octubre</option>
+        <option value="1ra Noviembre">1ra Noviembre</option>
+        <option value="2da Noviembre">2da Noviembre</option>
+        <option value="1ra Diciembre">1ra Diciembre</option>
+        <option value="2da Diciembre">2da Diciembre</option>
+
         <option value="NO">NO</option>
       </select>
     </div>

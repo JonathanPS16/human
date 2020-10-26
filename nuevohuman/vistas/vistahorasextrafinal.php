@@ -20,7 +20,7 @@
   <div class="form-group row">
     <label for="codigo" class="col-4 col-form-label">Codigo</label> 
     <div class="col-8">
-      <input id="codigo" name="codigo" placeholder="Codigo" type="text" class="form-control" required="required">
+      <input id="codigo" name="codigo" placeholder="Codigo" type="text" class="form-control" minlength="4" maxlength="4" required="required">
     </div>
   </div>
   <div class="form-group row">
@@ -32,7 +32,7 @@
   <div class="form-group row">
     <label for="seccion" class="col-4 col-form-label">Seccion/Departamento</label> 
     <div class="col-8">
-      <input id="seccion" name="seccion" placeholder="Seccion/Departamento" type="text" class="form-control" required="required">
+      <input id="seccion" name="seccion" placeholder="Seccion/Departamento" type="text" class="form-control">
     </div>
   </div>
   <div class="form-group row">
@@ -48,7 +48,7 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="motivo" class="col-4 col-form-label">Horas</label> 
+    <label for="motivo" class="col-4 col-form-label">Cantidad de Horas Extras</label> 
     <div class="col-8">
        <input id="horas" name="horas" placeholder="Horas" type="text" class="form-control" required="required">
     </div>

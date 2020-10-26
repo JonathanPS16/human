@@ -230,10 +230,10 @@ public function guardartrancripcion($id,$noincapacidad,$fechaincio,$diagnostico,
 }
 
 
-public function guardarpermisosalida($fecha,$codigo,$nombre,$seccion,$desde,$hasta,$motivo,$remunerado){
+public function guardarpermisosalida($fecha,$codigo,$nombre,$seccion,$desde,$hasta,$motivo,$remunerado,$cedula,$quincena){
 
 $conn = $this->conec();
-    $consultas = "INSERT INTO listpermisos (fecha,codigo,nombre,seccion,desde,hasta,motivo,remunerado)  values ('$fecha','$codigo','$nombre','$seccion','$desde','$hasta','$motivo','$remunerado')";
+    $consultas = "INSERT INTO listpermisos (fecha,codigo,nombre,seccion,desde,hasta,motivo,remunerado,cedula,quincena)  values ('$fecha','$codigo','$nombre','$seccion','$desde','$hasta','$motivo','$remunerado','$cedula','$quincena')";
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
