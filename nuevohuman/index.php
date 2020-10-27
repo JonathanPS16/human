@@ -24,6 +24,8 @@ if (isset($_SESSION['idusuario'])) {
 <link rel="manifest" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/manifest.json">
 <link rel="mask-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
 <link rel="icon" href="https://humantalentsas.com/misc/favicon.ico">
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 <meta name="msapplication-config" content="https://getbootstrap.com/docs/4.4/assets/img/favicons/browserconfig.xml">
 <meta name="theme-color" content="#563d7c">
 
@@ -58,6 +60,7 @@ if (isset($_SESSION['idusuario'])) {
   <div class="checkbox mb-3">
   <p class="text-center">No  Tienes una Cuenta? <a href="registro.php">Registrar</a> </p>
   </div>
+  <div class="g-recaptcha" data-sitekey="6LfFENwZAAAAAI4rMt4FzJF3S406UTp11qmsLf4V"></div>
   <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
   <p class="mt-5 mb-3 text-muted">&copy;<?php echo date('Y'); ?></p>
 </form>
