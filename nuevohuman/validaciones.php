@@ -486,7 +486,7 @@
 
                 case "guardarformhoraextra":
 
-                    $objconsulta->guardarhorasextra($_POST['fecha'],$_POST['codigo'],$_POST['nombre'],$_POST['seccion'],$_POST['desde'],$_POST['hasta'],$_POST['horas']);
+                    $objconsulta->guardarhorasextra($_POST['fecha'],$_POST['codigo'],$_POST['nombre'],$_POST['seccion'],$_POST['desde'],$_POST['hasta'],$_POST['horas'],$_POST['cedula']);
                     echo "<script>alert('Horas Extra Cargadas Correctamente');
                         window.location.href = 'home.php?ctr=novedades&acc=horasextra';
                         </script>";
@@ -800,7 +800,32 @@
                     $centrocostos = $_POST['centrocostos'];
                     $empresausuaria = $_POST['empresausuaria'];
                     $correoempleado = $_POST['correoempleado'];
-                    $listatemporales=$objconsulta->guardarprocesoAccidente($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado);
+
+
+
+                    $direccionempleado = $_POST['direccionempleado'];
+                    $telefononempleado = $_POST['telefononempleado'];
+                    $fechahoraacci = $_POST['fechahoraacci'];
+                    $tiempoprevio = $_POST['tiempoprevio'];
+                    $laborhabitual = $_POST['laborhabitual'];
+                    $laborreal = $_POST['laborreal'];
+                    $tipoaccidente = $_POST['tipoaccidente'];
+                    $muerte = $_POST['muerte'];
+                    $lugaracciente = $_POST['lugaracciente'];
+                    $sitioindicado = $_POST['sitioindicado'];
+                    $otrolugar = $_POST['otrolugar'];
+                    $tipolesion = $_POST['tipolesion'];
+                    $otrotipolesion = $_POST['otrotipolesion'];
+                    $parteafectada = $_POST['parteafectada'];
+                    $agenteaccidente = $_POST['agenteaccidente'];
+                    $mecanismo = $_POST['mecanismo'];
+                    $otromecanismo = $_POST['otromecanismo'];
+                    $personasprese = $_POST['personasprese'];
+                    $presenciantes = $_POST['presenciantes'];
+
+
+
+                    $listatemporales=$objconsulta->guardarprocesoAccidente($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado,$direccionempleado,$telefononempleado,$fechahoraacci,$tiempoprevio,$laborhabitual,$laborreal,$tipoaccidente,$muerte,$lugaracciente,$sitioindicado,$otrolugar,$tipolesion,$otrotipolesion,$parteafectada,$agenteaccidente,$mecanismo,$otromecanismo,$personasprese,$presenciantes);
                     $listatemporales = $objconsulta->ultimoprocesoaccidente();
                     $idcreacion = $listatemporales[0]['id_accidente'];
                     $listatemporales=$objconsulta->notificarProcesosAccidente($idcreacion);

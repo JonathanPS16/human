@@ -239,9 +239,9 @@
 		  </div>
 		</div>
 		<div class="form-group row">
-		  <label for="noreciboadci" class="col-4 col-form-label">No Recibo Pago  ADCI</label> 
+		  <label for="noreciboadci" class="col-4 col-form-label">Recibo Caja ADCI</label> 
 		  <div class="col-8">
-			<input id="noreciboadci" name="noreciboadci" placeholder="No Recibo Pago  ADCI" type="text" required="required" class="form-control">
+			<input id="noreciboadci" name="noreciboadci" placeholder="Recibo Caja ADCI" type="text" required="required" class="form-control">
 		  </div>
 		</div> 
 		<div class="form-group row">

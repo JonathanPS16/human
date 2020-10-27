@@ -61,6 +61,7 @@ if (isset($_SESSION['idusuario'])) {
   <p class="text-center">No  Tienes una Cuenta? <a href="registro.php">Registrar</a> </p>
   </div>
   <div class="g-recaptcha" data-sitekey="6LfFENwZAAAAAI4rMt4FzJF3S406UTp11qmsLf4V"></div>
+  <br>
   <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
   <p class="mt-5 mb-3 text-muted">&copy;<?php echo date('Y'); ?></p>
 </form>

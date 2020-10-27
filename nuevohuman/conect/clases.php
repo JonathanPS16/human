@@ -247,10 +247,10 @@ public function guardarincap($archivo,$fecha,$cedula,$nombre,$noincapacidad,$fec
     return $consultas;
 }
 
-public function guardarhorasextra($fecha,$codigo,$nombre,$seccion,$desde,$hasta,$horas){
+public function guardarhorasextra($fecha,$codigo,$nombre,$seccion,$desde,$hasta,$horas,$cedula){
 
     $conn = $this->conec();
-        $consultas = "INSERT INTO listhorasextra (fecha,codigo,nombre,seccion,desde,hasta,horas)  values ('$fecha','$codigo','$nombre','$seccion','$desde','$hasta','$horas')";
+        $consultas = "INSERT INTO listhorasextra (fecha,codigo,nombre,seccion,desde,hasta,horas,cedula)  values ('$fecha','$codigo','$nombre','$seccion','$desde','$hasta','$horas','$cedula')";
         //echo $consultas;
         $consultas= $conn->Execute($consultas)-> getRows();
         return $consultas;
@@ -517,7 +517,7 @@ $funciones
 
 
 
-public function guardarprocesoAccidente($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado){
+public function guardarprocesoAccidente($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado,$direccionempleado,$telefononempleado,$fechahoraacci,$tiempoprevio,$laborhabitual,$laborreal,$tipoaccidente,$muerte,$lugaracciente,$sitioindicado,$otrolugar,$tipolesion,$otrotipolesion,$parteafectada,$agenteaccidente,$mecanismo,$otromecanismo,$personasprese,$presenciantes){
     /* 
     $conn = $this->conec();
     $dat=date('Y-m-d H:i:s');
@@ -568,8 +568,8 @@ public function guardarprocesoAccidente($id,$funcionario,$cargo,$cedula,$lugartr
         $conn->Execute($SQL);
 
     } else {
-        $SQL ="INSERT INTO  accidentes (".$insertararchivos1.$insertararchivos2.$insertararchivos3."nombrefuncionario,cargo,cedula,lugartrabajo,jefeinmediato,coreojefe,fechaaccidente,descripcion,grabador,fechagrab,horario,centrocostos,empresausuaria,correoempleado,estado) VALUES (".$val1.$val2.$val3."'$funcionario','$cargo','$cedula','$lugartrabajo','$jefe','$correojefe',
-        '$fechaevento','$descripcion','".$_SESSION['usuario']."','$dat','$horario','$centrocostos','$empresausuaria','$correoempleado','C')";
+        $SQL ="INSERT INTO  accidentes (".$insertararchivos1.$insertararchivos2.$insertararchivos3."nombrefuncionario,cargo,cedula,lugartrabajo,jefeinmediato,coreojefe,fechaaccidente,descripcion,grabador,fechagrab,horario,centrocostos,empresausuaria,correoempleado,estado,direccionempleado,telefononempleado,fechahoraacci,tiempoprevio,laborhabitual,laborreal,tipoaccidente,muerte,lugaracciente,sitioindicado,otrolugar,tipolesion,otrotipolesion,parteafectada,agenteaccidente,mecanismo,otromecanismo,personasprese,presenciantes) VALUES (".$val1.$val2.$val3."'$funcionario','$cargo','$cedula','$lugartrabajo','$jefe','$correojefe',
+        '$fechaevento','$descripcion','".$_SESSION['usuario']."','$dat','$horario','$centrocostos','$empresausuaria','$correoempleado','C','$direccionempleado','$telefononempleado','$fechahoraacci','$tiempoprevio','$laborhabitual','$laborreal','$tipoaccidente','$muerte','$lugaracciente','$sitioindicado','$otrolugar','$tipolesion','$otrotipolesion','$parteafectada','$agenteaccidente','$mecanismo','$otromecanismo','$personasprese','$presenciantes')";
         $conn->Execute($SQL);
         
     }
