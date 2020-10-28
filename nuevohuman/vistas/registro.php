@@ -35,6 +35,22 @@
 		?>	
 		</select>
 	</div> <!-- form-group end.// -->
+	<div class="form-group input-group">
+    	<div class="input-group-prepend">
+		    <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+		</div>
+		<select class="form-control" id="centrocostos[]" name="centrocostos[]" required="required" multiple>
+		<?php
+			for($ja=0; $ja<count($listacentros);$ja++) {
+			$id_centro = $listacentros[$ja]['id_centro'];
+			$empresausuaria = $listacentros[$ja]['empresausuaria'];
+			$empresagen = $listacentros[$ja]['empresa'];
+
+			echo '<option value="'.$id_centro.'">'.$empresausuaria.' ('.$empresagen.')</option>';
+		}
+		?>	
+		</select>
+	</div> <!-- form-group end.// -->
     <div class="form-group input-group">
     	<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>

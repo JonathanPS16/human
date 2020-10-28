@@ -48,30 +48,62 @@
                             $mes=$_POST['mes'];
                             $periodo=$_POST['periodo'];
                             $certificados=$objconsulta->obtenerVolantes($anios,$mes,$periodo,$numero);
-                            include('vistas/vistaComprobante.php');
+                            if(count($certificados)==0) {
+                                echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
+                                echo '<a href="home.php?ctr=buscardorCertificados&acc=buscador" class="btn btn-info">Nueva Consulta</a>';
+                            } else {
+                                include('vistas/vistaComprobante.php');
+                            }
+
+                            
                         break;
                         case 2:
                             if(intval($anio)<=2016)
                             {
                                 $certificados=$objconsulta->obtenerIngresosRete($numero,$anio);
-                                include('vistas/generadorir.php');
+                                if(count($certificados)==0) {
+                                    echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
+                                    echo '<a href="home.php?ctr=buscardorCertificados&acc=buscador" class="btn btn-info">Nueva Consulta</a>';
+                                } else {
+                                    include('vistas/generadorir.php');
+                                }
+                                
                                 //header("Location: generadorir.php?anio=$anio&documento=$numero&tipocertificado=$tipocertificado");
                             }
                             else			
                             {
                                 $certificados=$objconsulta->obtenerIngresosReteunosiete($numero);
-                                include('vistas/generadorir2017.php');
+                                if(count($certificados)==0) {
+                                    echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
+                                    echo '<a href="home.php?ctr=buscardorCertificados&acc=buscador" class="btn btn-info">Nueva Consulta</a>';
+                                } else {
+                                    include('vistas/generadorir2017.php');
+                                }
+                                
                                 //header("Location: generadorir2017.php?anio=$anio&documento=$numero&tipocertificado=$tipocertificado");
                             }
                     
                         break;
                         case 3:
                             $certificados=$objconsulta->obtenerCertificadosCedula($numero);
-                            include('vistas/vistaBuscadorContrato.php');
-                    
+                            if(count($certificados)==0) {
+                                echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
+                                echo '<a href="home.php?ctr=buscardorCertificadosacc=buscador" class="btn btn-info">Nueva Consulta</a>';
+                            } else {
+                                include('vistas/vistaBuscadorContrato.php');
+                            }
                         break;
                         case 4:
-                            include('vistas/vistaBuscadorArl.php');
+
+                            $certificados=$objconsulta->obtenerCertificadosCedula($_POST['documento']);
+
+                            if(count($certificados)==0) {
+                                echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
+                                echo '<a href="home.php?ctr=buscardorCertificados&acc=buscador" class="btn btn-info">Nueva Consulta</a>';
+                            } else {
+                                include('vistas/vistaBuscadorArl.php');
+                            }
+                            
                             //header("Location: ../../folderarl/carpeta.php?anyoarl=$anyoarl&mesarl=$mesarl&documento=$numero&colaborador=1");
                         break;
                     }
@@ -97,7 +129,14 @@
                     include('vistas/vistaBuscadorCarpeta.php');        
                 break;
                 case "buscadorFiltro":
-                    include('vistas/vistaBuscadorcarpetaFiltrado.php');
+                    $certificados=$objconsulta->obtenerCertificadosCedula($_POST['documento']);
+                    if(count($certificados)==0) {
+                        echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
+                        echo '<a href="home.php?ctr=buscardorCarpetas&acc=buscador" class="btn btn-info">Nueva Consulta</a>';
+                    } else {
+                        include('vistas/vistaBuscadorcarpetaFiltrado.php');
+                    }
+                    
                             
                 break;
                 case "buscadorArl":
@@ -958,13 +997,15 @@
 
                 case "creacionusuarios":
                     $listamenus=$objconsulta->selectperfiles();
+                    $listacentros=$objconsulta->listacentros();
                     /*$listatemporales=$objconsulta->selectperfilesusuario();*/
                     include('vistas/registro.php');
                 break;
 
                 case "guardarUsuario":
+                    $separado_por_comas = implode(",", $_POST['centrocostos']);
                     if($_POST['documento']!="" && $_POST['clave']==$_POST['clavere'] && $_POST['clave']!=""){
-                        $ret=$objconsulta->valdiaryguardar($_POST['documento'],base64_encode($_POST['clave']),$_POST['nombre'],$_POST['correo'],$_POST['perfilinicial']);
+                        $ret=$objconsulta->valdiaryguardar($_POST['documento'],base64_encode($_POST['clave']),$_POST['nombre'],$_POST['correo'],$_POST['perfilinicial'],$separado_por_comas);
                         if($ret) {
                           echo "<script>alert('Usuario Creado Correctamente');";
                           echo "window.location.href = 'home.php?ctr=admon&acc=creacionusuarios';";

@@ -36,10 +36,13 @@ private function _usuarioconectado($usuario,$clave) {
         $uid = $arreglo["id_usuario"];
         $uperfil = $arreglo["idrol"];
         $mail = $arreglo["correo"];
+        $centrocostos = $arreglo["centrocostos"];
         $_SESSION['usuario'] = $usuario;
         $_SESSION['correo'] = $mail;
     	$_SESSION['idusuario'] = $uid;
-    	$_SESSION['id_perfil'] = $uperfil;
+        $_SESSION['id_perfil'] = $uperfil;
+        $_SESSION['centrocostos'] = $centrocostos;
+        
     }
 
 
@@ -105,9 +108,15 @@ public function menulateral(){
 }
 
 public function obtenerCertificadosCedula($numero){
+
+    $where = "";
+    if(isset($_SESSION['centrocostos']) && $_SESSION['centrocostos']!="" && $_SESSION['id_perfil']!=1){
+       $where.="AND centro_costos in(".$_SESSION['centrocostos'].")";
+    }
     $conn = $this->conec();
     $dato=array();
-    $consultas = "SELECT contrato,nombre_empleado,cedula,fecha_ingreso,fecha_retiro FROM certificados where cedula='$numero'";
+    $consultas = "SELECT contrato,nombre_empleado,cedula,fecha_ingreso,fecha_retiro FROM certificados where cedula='$numero' ".$where;
+    //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
@@ -117,6 +126,14 @@ public function selectperfilesusuario(){
     $conn = $this->conec();
     $dato=array();
     $consultas = "SELECT * FROM usuarios";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;   
+}
+
+public function listacentros(){
+    $conn = $this->conec();
+    $dato=array();
+    $consultas = "SELECT * FROM centrocostos order by empresausuaria";
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;   
 }
@@ -315,13 +332,13 @@ public function codigosinca (){
     return $consultas;
 }
 
-public function valdiaryguardar($documento,$clave,$nombre,$correo,$pefil){
+public function valdiaryguardar($documento,$clave,$nombre,$correo,$pefil,$centrocostos){
     $conn = $this->conec();
     $result = $conn->Execute("SELECT * from  usuarios WHERE  correo='{$correo}' OR  usuario = '{$documento}'");
     $recordCount = $result->recordCount();
     if($recordCount == 0) {
 
-        $SQL ="INSERT INTO usuarios (usuario,correo,pass,nombre,idrol) VALUES ('{$documento}','{$correo}','{$clave}','{$nombre}',$pefil)";
+        $SQL ="INSERT INTO usuarios (usuario,correo,pass,nombre,idrol,centrocostos) VALUES ('{$documento}','{$correo}','{$clave}','{$nombre}',$pefil,'$centrocostos')";
         $conn->Execute($SQL);
         return true;
 
@@ -414,9 +431,34 @@ public function obtenerCertificadosporContrato($contrato,$numero){
 public function obtenerVolantes($anios,$mes,$periodo,$numero){
     $conn = $this->conec();
     $dato=array();
-    $consultas = "SELECT * FROM volantes where anio='$anios' and mes='$mes' and periodo='$periodo' and cedula='$numero' group by concepto";
+    $where ="";
+    if (isset($_SESSION['centrocostos']) && $_SESSION['centrocostos']!="" && $_SESSION['id_perfil']!=1){
+        $where.=" AND certificados.centro_costos in (".$_SESSION['centrocostos'].")";
+    }
+
+
+    $consultas = "SELECT volantes.* FROM volantes 
+    inner join certificados on certificados.cedula=volantes.cedula $where
+    where volantes.anio='$anios' and volantes.mes='$mes' and volantes.periodo='$periodo' and volantes.cedula='$numero'  group by volantes.concepto limit 1";
+    /*echo $consultas;
+    $rs = $conn->execute($consultas);
+    if (!$rs) {
+        return;
+    }
+    else {
+        return $rs->getRows();
+    }*/
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
+/*
+    $result = $conn->Execute($consultas);
+    $result = $result->recordCount();
+    echo $result;*/
+    //echo $consultas;
+    /*$consultas= $conn->Execute($consultas)-> getRows();
+    $result = $conn->Execute('SELECT * FROM act');
+    $result = $result->recordCount();
+    return $consultas;*/
 }
 
 public function obteneTemporales($dato){
@@ -441,7 +483,13 @@ public function obteneTemporalesUsarias($dato){
 public function obtenerIngresosRete($documento,$anio){
     $conn = $this->conec();
     $dato=array();
-    $consultas = "SELECT * FROM ingresos_retenciones where CEDULA='$documento' and ANIO='$anio'";
+
+    $where ="";
+    if (isset($_SESSION['centrocostos']) && $_SESSION['centrocostos']!="" && $_SESSION['id_perfil']!=1){
+        $where.=" AND certificados.centro_costos in (".$_SESSION['centrocostos'].")";
+    }
+    $consultas = "SELECT ingresos_retenciones.* FROM ingresos_retenciones inner JOIN certificados on certificados.cedula=ingresos_retenciones.CEDULA $where  where ingresos_retenciones.CEDULA='$documento' and ingresos_retenciones.ANIO='$anio'";
+    //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
@@ -449,7 +497,12 @@ public function obtenerIngresosRete($documento,$anio){
 public function obtenerIngresosReteunosiete($documento){
     $conn = $this->conec();
     $dato=array();
-    $consultas = "SELECT * FROM ingresos_ret_2017 where CEDULA='$documento'";
+    $where ="";
+    if (isset($_SESSION['centrocostos']) && $_SESSION['centrocostos']!="" && $_SESSION['id_perfil']!=1){
+        $where.=" AND certificados.centro_costos in (".$_SESSION['centrocostos'].")";
+    }
+    $consultas = "SELECT ingresos_ret_2017.* FROM ingresos_ret_2017 inner JOIN certificados on certificados.cedula=ingresos_ret_2017.CEDULA $where where ingresos_ret_2017.CEDULA='$documento'";
+    //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }

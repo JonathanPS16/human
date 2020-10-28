@@ -24,6 +24,10 @@
             $ruta='/home4/byvnilval/public_html/humantalentsas.com/contabilidad/carpetas_empleados/HV_2019/'.$carpeta;
             $rutadoc='/contabilidad/carpetas_empleados/HV_2019/'.$carpeta;
         break;
+        case 2020:
+          $ruta='/home4/byvnilval/public_html/humantalentsas.com/contabilidad/carpetas_empleados/HV_2020/'.$carpeta;
+          $rutadoc='/contabilidad/carpetas_empleados/HV_2020/'.$carpeta;
+      break;
 }
     
    
