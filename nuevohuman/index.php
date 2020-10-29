@@ -72,4 +72,11 @@ if (isset($_SESSION['idusuario'])) {
 if(isset($_GET['error']) && $_GET['error']==0){
   echo "<script>alert('usuario o clave invalida');</script>";
 }
+if(isset($_GET['error']) && $_GET['error']==2){
+  echo "<script>alert('Debe Activar su Usuario en el Link Enviado a su Correo Electronico');</script>";
+}
+
+if(isset($_GET['error']) && $_GET['error']==3){
+  echo "<script>alert('Usuario Activado Correctamente');</script>";
+}
 ?>

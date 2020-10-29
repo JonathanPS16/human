@@ -11,16 +11,62 @@ require("phpmailer/class.phpmailer.php");
 class consultas {
 public function  consultarusuario($usuario,$clave) {
 	$this->_usuarioconectado($usuario,$clave);
-	$valid=false;
+	$valid="NO";
 
 	if (isset($_SESSION['idusuario'])) {
-		$valid= true;
+		$valid="SI";
 
 	} 
 
 	return $valid;
 }
 
+public function consultarempleado($usuario,$clave){
+    $conn = $this->conec();
+    $clave = base64_encode($clave); 
+    $result= $conn->Execute("SELECT * from  certificados WHERE  cedula ='{$usuario}' and correoelectronico!=''");
+    $recordCount = $result->recordCount();
+    
+    if($recordCount == 0) {
+        return "noempleado";
+    } else {
+
+        $consultas = $result-> getRows();
+        $correo = "";
+        foreach ($consultas as $key => $arreglo) { 
+            $correo = $arreglo["correoelectronico"];  
+        }
+        $result= $conn->Execute("SELECT * from  empledos_ingreso WHERE  documento ='{$usuario}'");
+        $recordCount = $result->recordCount();
+        if($recordCount == 0) {
+            $result= $conn->Execute("INSERT INTO empledos_ingreso(documento,correo,clave,estado) values ('$usuario','$correo','$clave','P')");
+            $asunto = "Activacion de Cuenta";
+            $mensaje="Bienvenido al modulo de certificaciones para activar su cuenta por favor ingrese al siguiente <a href='".DIRWEB."validate.php?data=".base64_encode($usuario)."'><strong>link de activacion</strong></a>";
+            $this->enviocorreo($correo,$mensaje,$asunto);
+            return "creado";
+        } else {
+            $consultas= $conn->Execute("SELECT * from  empledos_ingreso WHERE  documento='{$usuario}' and  clave = '{$clave}'")-> getRows();
+            foreach ($consultas as $key => $arreglo) { 
+                $uid = $arreglo["id_ingreso"];
+                $uperfil = 8;
+                $mail = $arreglo["correo"];
+                $_SESSION['usuario'] = $usuario;
+                $_SESSION['correo'] = $mail;
+                $_SESSION['idusuario'] = $uid;
+                $_SESSION['id_perfil'] = $uperfil;
+                return "OK";
+            }
+            return "F";
+        }
+
+    } 
+
+
+    /*foreach ($consultas as $key => $arreglo) { 
+    }*/
+
+
+}
 private function _usuarioconectado($usuario,$clave) {
     $conn = $this->conec();
     $clave = base64_encode($clave); 
@@ -134,6 +180,14 @@ public function listacentros(){
     $conn = $this->conec();
     $dato=array();
     $consultas = "SELECT * FROM centrocostos order by empresausuaria";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;   
+}
+
+public function activarempleado($documento){
+    $conn = $this->conec();
+    $dato=array();
+    $consultas = "UPDATE empledos_ingreso set estado = 'A' where documento = '".$documento."'";
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;   
 }
@@ -1014,10 +1068,22 @@ public function cambiarperfilgene($usu,$perf){
     $conn->Execute($SQL);
 }
 
-public function cambiarclavept($perf,$usu){
+public function cambiarclavept($perf,$usu,$per){
     $perf =base64_encode($perf);
     $conn = $this->conec();
-    $sqlcaliTe = "UPDATE usuarios set pass='{$perf}' where id_usuario={$usu}";
+
+    $tabla = "usuarios";
+    $campo ="pass";
+    $igual = "id_usuario";
+
+    if($per==8){
+        $tabla = "empledos_ingreso";
+        $campo ="clave";
+        $igual = "id_ingreso";
+
+    }
+
+    $sqlcaliTe = "UPDATE $tabla set $campo='{$perf}' where $igual={$usu}";
     $conn->Execute($sqlcaliTe);
     $SQL =$sql;
     $conn->Execute($SQL);

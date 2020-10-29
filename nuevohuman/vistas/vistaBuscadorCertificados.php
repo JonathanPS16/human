@@ -1,3 +1,12 @@
+<?php 
+$valida = "";
+$select = "";
+if($_SESSION['id_perfil']==8)
+{
+    $valida = $_SESSION['usuario'];
+    $select = "readonly";
+}
+?>
 <h1 class="h2"><?php echo $titulo ;?></h1>
 
 <form class="generador" id="form1" name="form1" method="post" action="home.php?ctr=buscardorCertificados&acc=validarGen">
@@ -18,7 +27,7 @@
         <div class="form-group">
         <label class="col-md-4 control-label" for="documento">Documento</label>  
         <div class="col-md-4">
-        <input id="documento" name="documento" type="text" placeholder="Documento" class="form-control input-md" required>
+        <input id="documento" name="documento" type="text" placeholder="Documento" value="<?php echo $valida; ?>" class="form-control input-md" required <?php echo $select ?>>
         <input type="hidden" name="usuarioregistrado" value=<?php echo $usuarioregistrado;?> />
         <input type="hidden" name="rolusuario" value="administrator"> 
         </div>

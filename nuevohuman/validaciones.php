@@ -48,7 +48,14 @@
                             $mes=$_POST['mes'];
                             $periodo=$_POST['periodo'];
                             $certificados=$objconsulta->obtenerVolantes($anios,$mes,$periodo,$numero);
-                            if(count($certificados)==0) {
+                            $valida = false;
+                                if($_SESSION['id_perfil']==8)
+                                {
+                                    if($_SESSION['usuario']==$numero){
+                                        $valida = true;
+                                    }
+                                }
+                            if(count($certificados)==0 || $valida==false) {
                                 echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
                                 echo '<a href="home.php?ctr=buscardorCertificados&acc=buscador" class="btn btn-info">Nueva Consulta</a>';
                             } else {
@@ -60,8 +67,15 @@
                         case 2:
                             if(intval($anio)<=2016)
                             {
+                                $valida = false;
+                                if($_SESSION['id_perfil']==8)
+                                {
+                                    if($_SESSION['usuario']==$numero){
+                                        $valida = true;
+                                    }
+                                }
                                 $certificados=$objconsulta->obtenerIngresosRete($numero,$anio);
-                                if(count($certificados)==0) {
+                                if(count($certificados)==0 || $valida==false) {
                                     echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
                                     echo '<a href="home.php?ctr=buscardorCertificados&acc=buscador" class="btn btn-info">Nueva Consulta</a>';
                                 } else {
@@ -72,8 +86,15 @@
                             }
                             else			
                             {
+                                $valida = false;
+                                if($_SESSION['id_perfil']==8)
+                                {
+                                    if($_SESSION['usuario']==$numero){
+                                        $valida = true;
+                                    }
+                                }
                                 $certificados=$objconsulta->obtenerIngresosReteunosiete($numero);
-                                if(count($certificados)==0) {
+                                if(count($certificados)==0 || $valida==false) {
                                     echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
                                     echo '<a href="home.php?ctr=buscardorCertificados&acc=buscador" class="btn btn-info">Nueva Consulta</a>';
                                 } else {
@@ -85,8 +106,15 @@
                     
                         break;
                         case 3:
+                            $valida = false;
+                            if($_SESSION['id_perfil']==8)
+                            {
+                                if($_SESSION['usuario']==$numero){
+                                    $valida = true;
+                                }
+                            }
                             $certificados=$objconsulta->obtenerCertificadosCedula($numero);
-                            if(count($certificados)==0) {
+                            if(count($certificados)==0 || $valida==false) {
                                 echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
                                 echo '<a href="home.php?ctr=buscardorCertificadosacc=buscador" class="btn btn-info">Nueva Consulta</a>';
                             } else {
@@ -94,10 +122,16 @@
                             }
                         break;
                         case 4:
-
+                            $valida = false;
+                            if($_SESSION['id_perfil']==8)
+                            {
+                                if($_SESSION['usuario']==$numero){
+                                    $valida = true;
+                                }
+                            }
                             $certificados=$objconsulta->obtenerCertificadosCedula($_POST['documento']);
 
-                            if(count($certificados)==0) {
+                            if(count($certificados)==0  || $valida==false) {
                                 echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
                                 echo '<a href="home.php?ctr=buscardorCertificados&acc=buscador" class="btn btn-info">Nueva Consulta</a>';
                             } else {
@@ -129,8 +163,16 @@
                     include('vistas/vistaBuscadorCarpeta.php');        
                 break;
                 case "buscadorFiltro":
+
+                    $valida = false;
+                            if($_SESSION['id_perfil']==8)
+                            {
+                                if($_SESSION['usuario']==$numero){
+                                    $valida = true;
+                                }
+                            }
                     $certificados=$objconsulta->obtenerCertificadosCedula($_POST['documento']);
-                    if(count($certificados)==0) {
+                    if(count($certificados)==0 || $valida==false) {
                         echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
                         echo '<a href="home.php?ctr=buscardorCarpetas&acc=buscador" class="btn btn-info">Nueva Consulta</a>';
                     } else {
@@ -927,7 +969,7 @@
                         window.location.href = 'home.php?ctr=admon&acc=cambioclave';
                         </script>";  
                     } else {
-                        $listamenus=$objconsulta->cambiarclavept($passverifi,$_SESSION['idusuario']);
+                        $listamenus=$objconsulta->cambiarclavept($passverifi,$_SESSION['idusuario'],$_SESSION['id_perfil']);
                         echo "<script>alert('Clave Cambiada Correctamente');
                                     window.location.href = 'home.php?ctr=admon&acc=cambioclave';
                                     </script>";

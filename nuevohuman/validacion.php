@@ -34,14 +34,22 @@ $clave = $_POST['inputPassword'];
 require_once('conect/clases.php');
 
 $objconsulta= new consultas();
-$resultado = $objconsulta->consultarusuario($usuario,$clave);
-	
-if ($resultado){
-	
+
+$resultado = $objconsulta->consultarempleado($usuario,$clave);
+if($resultado == "noempleado") {
+	$resultado = $objconsulta->consultarusuario($usuario,$clave);
+} else if ($resultado=="creado"){
+	header("Location: ".DIRWEB."index.php?error=2");
+} else if ($resultado=="OK"){
 	header("Location: ".DIRWEB."home.php?ctr=home");
 } else {
 	header("Location: ".DIRWEB."index.php?error=0");
-	//echo "NO";
+}
+	
+if ($resultado=="SI") {
+	header("Location: ".DIRWEB."home.php?ctr=home");
+} else if ($resultado=="NO"){
+	header("Location: ".DIRWEB."index.php?error=0");
 }
 
 
