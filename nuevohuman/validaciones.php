@@ -55,6 +55,9 @@
                                         $valida = true;
                                     }
                                 }
+                                if($_SESSION['id_perfil']==1){
+                                    $valida = true;
+                                }
                             if(count($certificados)==0 || $valida==false) {
                                 echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
                                 echo '<a href="home.php?ctr=buscardorCertificados&acc=buscador" class="btn btn-info">Nueva Consulta</a>';
@@ -74,6 +77,9 @@
                                         $valida = true;
                                     }
                                 }
+                                if($_SESSION['id_perfil']==1){
+                                    $valida = true;
+                                }
                                 $certificados=$objconsulta->obtenerIngresosRete($numero,$anio);
                                 if(count($certificados)==0 || $valida==false) {
                                     echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
@@ -92,6 +98,9 @@
                                     if($_SESSION['usuario']==$numero){
                                         $valida = true;
                                     }
+                                }
+                                if($_SESSION['id_perfil']==1){
+                                    $valida = true;
                                 }
                                 $certificados=$objconsulta->obtenerIngresosReteunosiete($numero);
                                 if(count($certificados)==0 || $valida==false) {
@@ -113,10 +122,13 @@
                                     $valida = true;
                                 }
                             }
+                            if($_SESSION['id_perfil']==1){
+                                $valida = true;
+                            }
                             $certificados=$objconsulta->obtenerCertificadosCedula($numero);
                             if(count($certificados)==0 || $valida==false) {
                                 echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
-                                echo '<a href="home.php?ctr=buscardorCertificadosacc=buscador" class="btn btn-info">Nueva Consulta</a>';
+                                echo '<a href="home.php?ctr=buscardorCertificados&acc=buscador" class="btn btn-info">Nueva Consulta</a>';
                             } else {
                                 include('vistas/vistaBuscadorContrato.php');
                             }
@@ -128,6 +140,9 @@
                                 if($_SESSION['usuario']==$numero){
                                     $valida = true;
                                 }
+                            }
+                            if($_SESSION['id_perfil']==1){
+                                $valida = true;
                             }
                             $certificados=$objconsulta->obtenerCertificadosCedula($_POST['documento']);
 
@@ -170,6 +185,9 @@
                                 if($_SESSION['usuario']==$numero){
                                     $valida = true;
                                 }
+                            }
+                            if($_SESSION['id_perfil']==1){
+                                $valida = true;
                             }
                     $certificados=$objconsulta->obtenerCertificadosCedula($_POST['documento']);
                     if(count($certificados)==0 || $valida==false) {
