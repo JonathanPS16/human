@@ -725,6 +725,7 @@ if($fechacitan !="" && $estadopresen=="P")
   $fechacitan
   </strong>";
 } else if($motivorechazo!="" && $estadopresen=="R"){
+  $botonedit ="";
   $botnenvi = "Rechazado <br><strong>
   $motivorechazo
   </strong>";

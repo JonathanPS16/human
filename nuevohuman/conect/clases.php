@@ -1129,7 +1129,8 @@ public function guardanotificausu($proceso,$accidentes,$retiro,$seleccion){
 }
 
 public function enviarcorreoClienteGen($idreq,$tipomen)
-{
+{   
+    $labe = "Creacion de Nueva Solicitud";
     $conn = $this->conec();
 
     $consultas = "SELECT usuarios.correo as correo FROM `req` INNER JOIN usuarios on req.clientesol = usuarios.usuario and req.id=".$idreq;
@@ -1144,18 +1145,73 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
             $mesaje = "Se a enviado un candidato para su requision {$idreq} <br><br>
             Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=verreqcan&id={$idreq}'><strong>AQUI</strong></a><br><br>
             Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
+
+
+            $consultas = "SELECT * FROM req WHERE id= ".$idreq;
+            $consultas = $conn->Execute($consultas)-> getRows();
+            $carfo = "";
+            for($i= 0; $i<count($consultas); $i++) {
+                $carfo = $consultas[0]['cargo'];
+            }
+            $labe ="Registro Candidato";
+            /*
+            $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
+            //echo $consultas;
+            $mensaje = "Se a creado  una nueva requisision con el identificador {$req} Para su gestion de candidatos<br><br>
+            Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$req}'><strong>AQUI</strong></a><br><br>
+            Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";*/
+            $mesaje = "Apreciado Cliente<br><br>
+            Le informamos que para su requerimiento para el cargo ".$carfo.",se ha sido enviado un candidato para su gestion.
+            <br>
+            Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
+            <br>
+            Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=verreqcan&id={$idreq}'>Aqui</a>
+            <br>
+            <br>
+            Cualquier inquietud que tengo al respecto, la atenderemos a traves de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos selección@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+            <br>
+            <bR>
+            Cordialmente,
+            <br><br>
+            Área de Selección<br>
+            Human Talent SAS";
             break;
         case "NUEVAREQ":
-            $mesaje = "Se creo su Requisicion con el #{$idreq} <br>
-            Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=verreqcan&id={$idreq}'><strong>AQUI</strong></a><br><br>
-            Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
+
+            $consultas = "SELECT * FROM req WHERE id= ".$idreq;
+            $consultas = $conn->Execute($consultas)-> getRows();
+            $carfo = "";
+            for($i= 0; $i<count($consultas); $i++) {
+                $carfo = $consultas[0]['cargo'];
+            }
+            /*
+            $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
+            //echo $consultas;
+            $mensaje = "Se a creado  una nueva requisision con el identificador {$req} Para su gestion de candidatos<br><br>
+            Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$req}'><strong>AQUI</strong></a><br><br>
+            Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";*/
+            $mesaje = "Apreciado Cliente<br><br>
+            Le informamos que su requerimiento para el cargo ".$carfo.", ha sido recibido y se le ha generado el consecutivo ".$idreq.".;  estaremos procediendo de manera inmediata a dar tramite a su solicitud.
+            <br>
+            Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
+            <br>
+            Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=verreqcan&id={$idreq}'>Aqui</a>
+            <br>
+            <br>
+            Cualquier inquietud que tengo al respecto, la atenderemos a traves de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos selección@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+            <br>
+            <bR>
+            Cordialmente,
+            <br><br>
+            Área de Selección<br>
+            Human Talent SAS";
             break;
         case "NUEVOCANDIDATO2":
             $mesaje =  "i es igual a 2";
             break;
     }
 
-    $envio = $this->enviocorreo($correo, $mesaje, "Creacion de Nueva Solicitud");
+    $envio = $this->enviocorreo($correo, $mesaje, $labe);
 }
 
 public function actualizarformatos($idper,$idreq,$orden,$documentos,$hv)
@@ -1489,29 +1545,57 @@ public function enviarcorreoadjuntos($correo,$documento,$mensaje,$titulo){
 public function rechazarcandidato($id_per,$id_req,$rechazo)
 {
     $conn = $this->conec();
-    $consultas = "SELECT correo  FROM req_candidatos WHERE  id=".$id_per;
+    $consultas = "SELECT correo,nombre  FROM req_candidatos WHERE  id=".$id_per;
 
     $consultas= $conn->Execute($consultas)-> getRows();
     $correo = "";
+    $nombre = "";
     for($i= 0; $i<count($consultas); $i++) {
         $correo  =$consultas[$i]['correo'];
+        $nombre  =$consultas[$i]['nombre'];
     }
 
-    $consultas = "SELECT empresaclientet  FROM req WHERE  id=".$id_req;
+    $consultas = "SELECT empresaclientet,cargo,clientesol  FROM req WHERE  id=".$id_req;
     $consultas= $conn->Execute($consultas)-> getRows();
     $ide = "";
+    $cargo = "";
+    $clientesol = "";
     for($i= 0; $i<count($consultas); $i++) {
         $ide  =$consultas[$i]['empresaclientet'];
+        $cargo =$consultas[$i]['cargo'];
+        $clientesol =$consultas[$i]['clientesol'];
     }
-    $mensaje = "Buen Dia  <br>
-    Agradecemos su participacion el la requisision #".$id_req." Pero en este momento no es el candadidato escogido 
-    <br>";
-    $envio = $this->enviocorreo($correo, $mensaje);
+
+
+    $consultas = "SELECT nombre  FROM usuarios WHERE  usuario='".$clientesol."'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $nombreem = "";
+    for($i= 0; $i<count($consultas); $i++) {
+        $nombreem  =$consultas[$i]['nombre'];
+    }
+    $mensaje = "Apreciado ".$nombre."
+    <br><br>
+    En relación con el proceso de selección para el cargo ".$cargo.",  queremos agradecerle su participación en este y es nuestro deber informarles que Usted no fue seleccionado para este cargo. 
+    <br>
+    Esperamos contar con su hoja de vida para próximos procesos de selección donde su perfil y experiencia se ajusten a las necesidades del cargo requerido.
+    <br>
+    Cordialmente,
+    <br><br><br>
+    Área de Selección<br><br>
+    Human Talent SAS";
+    $envio = $this->enviocorreo($correo, $mensaje, "Estado Proceso Seleccion");
     $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
       //echo $consultas;
-      $mensaje = "Se a rechazado candidato  con identificador ".$id_per." por motivo ".$rechazo."<br><br>
-      Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a><br><br>
-      Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
+      $mensaje = "Apreciada Área de Selección <br>
+        <br>
+      Le informamos  que la empresa ".$nombreem.", ha rechazado el candidato ".$nombre.", del proceso de selección con consecutivo ".$id_req.",  por el motivo ".$rechazo." <br>
+      Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
+      <br><br>
+      Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a>
+      <br><br>
+      Cordialmente,
+      <br>
+      Human Talent SAS";
       $consultas= $conn->Execute($consultas)-> getRows();
       for($i= 0; $i<count($consultas); $i++) {
         $correos = explode(",", $consultas[$i]['correosselecccion']);
@@ -1533,11 +1617,33 @@ public function rechazarcandidato($id_per,$id_req,$rechazo)
 
 public function enviarCorreoReq($ide,$req){
       $conn = $this->conec();
+      $consultas = "SELECT * FROM req WHERE id= ".$req;
+      $consultas = $conn->Execute($consultas)-> getRows();
+      $carfo = "";
+      for($i= 0; $i<count($consultas); $i++) {
+        $carfo = $consultas[0]['cargo'];
+      }
+      /*
       $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
       //echo $consultas;
       $mensaje = "Se a creado  una nueva requisision con el identificador {$req} Para su gestion de candidatos<br><br>
       Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$req}'><strong>AQUI</strong></a><br><br>
-      Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
+      Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";*/
+      $mensaje = "Apreciado Cliente<br><br>
+      Le informamos que su requerimiento para el cargo ".$carfo.", ha sido recibido y se le ha generado el consecutivo ".$req.".;  estaremos procediendo de manera inmediata a dar tramite a su solicitud.
+      <br>
+      Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
+      <br>
+      Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$req}'>Aqui</a>
+      <br>
+      <br>
+      Cualquier inquietud que tengo al respecto, la atenderemos a traves de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos selección@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+      <br>
+      <bR>
+      Cordialmente,
+      <br><br>
+      Área de Selección<br>
+      Human Talent SAS";
       $consultas= $conn->Execute($consultas)-> getRows();
       for($i= 0; $i<count($consultas); $i++) {
         $correos = explode(",", $consultas[$i]['correosselecccion']);
