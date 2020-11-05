@@ -260,8 +260,10 @@ for($i=0; $i<count($listadoreq);$i++){
     $botonrechazo = $modalbotonfinal.$botonfinal;
 
     } else {
+      $botoncita ="";
       $botonrechazo ='Motivo Rechazo<br><strong>'.$motivorechazo.'</strong>';
       $botaceptar ="";
+      
 
       
     }

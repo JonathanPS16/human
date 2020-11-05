@@ -1393,34 +1393,68 @@ public function enviarconclucionprocesoAcci($id,$diasinca,$obserini,$obser,$obse
 public function citarcandidato($id_per,$id_req,$fechahora,$lugar)
 {
     $conn = $this->conec();
-    $consultas = "SELECT correo  FROM req_candidatos WHERE  id=".$id_per;
+    $consultas = "SELECT correo,nombre  FROM req_candidatos WHERE  id=".$id_per;
 
     $consultas= $conn->Execute($consultas)-> getRows();
     $correo = "";
+    $nombre = "";
     for($i= 0; $i<count($consultas); $i++) {
         $correo  =$consultas[$i]['correo'];
+        $nombre  =$consultas[$i]['nombre'];
     }
 
-    $consultas = "SELECT empresaclientet  FROM req WHERE  id=".$id_req;
+    $consultas = "SELECT empresaclientet,cargo,clientesol  FROM req WHERE  id=".$id_req;
     $consultas= $conn->Execute($consultas)-> getRows();
     $ide = "";
+    $cargo = "";
+    $clientesol = "";
     for($i= 0; $i<count($consultas); $i++) {
         $ide  =$consultas[$i]['empresaclientet'];
+        $cargo  =$consultas[$i]['cargo'];
+        $clientesol  =$consultas[$i]['clientesol'];
     }
-    $mensaje = "Buen Dia<br>Se le informa que a sido citado a entrevista el dia  ".$fechahora." en ".$lugar."<br>";
-    $envio = $this->enviocorreo($correo, $mensaje);
+
+    $consultas = "SELECT nombre  FROM usuarios WHERE  usuario='".$clientesol."'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $nombresol = "";
+    for($i= 0; $i<count($consultas); $i++) {
+        $nombresol  =$consultas[$i]['nombre'];
+    }
+    $mensaje = "
+    Apreciado ".$nombre."
+    <br><br>
+    Le informamos que dentro del proceso de selección para el cargo ".$cargo.",  Usted ha sido citado para el día ".$fechahora.",  en las instalaciones de la  empresa  ".$lugar." , por favor presentar a XXXXX nombre de la persona XXXXXXXX, 
+    <br>
+    Cualquier inquietud que tengo al respecto, con gusto la atenderemos a traves de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos selección@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+    <br><br>
+    Cordialmente,
+    <br><br>
+    Área de Selección<br>
+    Human Talent SAS";
+    $envio = $this->enviocorreo($correo, $mensaje,"Citacion");
     $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
       //echo $consultas;
-      $mensaje = "Se a citadoal candidato con identificador ".$id_per." para el dia ".$fechahora." en ".$lugar."<br><br>
-      Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a><br><br>
-      Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
+      $mensaje = "Apreciado Cliente ".$nombresol."
+        <br><br>
+      Le informamos que dentro del proceso de selección para el cargo ".$cargo.", se ha citado al candidato ".$nombre.",  según el consecutivo ".$id_req.", para el día ".$fechahora.", en lugar ".$lugar.",  según sus indicaciones .
+      <br>
+      Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
+      <br>
+      Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a>
+      <br>
+      Cualquier inquietud que tengo al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos selección@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+      <br><br>
+      Cordialmente,
+      <br><br>
+      Área de Selección<br>
+      Human Talent SAS";
       $consultas= $conn->Execute($consultas)-> getRows();
       for($i= 0; $i<count($consultas); $i++) {
         $correos = explode(",", $consultas[$i]['correosselecccion']);
         for($j=0; $j<count($correos); $j++){
             $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
-            $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+            $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje,"Informacion sobre Citacion");
         }
 
       }

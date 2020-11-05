@@ -1790,7 +1790,7 @@ $xmlWriter->save('omar.pdf');*/
                 case 'citar':
                     $fechahora=$_POST['fechahora'];
                     $hora=$_POST['hora'];
-                    $fechahora = $fechahora." ".$hora;
+                    $fechahora = $fechahora." , a las ".$hora;
                     $id_req=$_POST['id_req'];
                     $id_per=$_POST['id_per'];
                     $lugarentre=$_POST['lugarentre'];
