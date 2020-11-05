@@ -1226,18 +1226,52 @@ public function actualizarformatos($idper,$idreq,$orden,$documentos,$hv)
 
 public function correopsico($id_req,$tipomen) {
     $conn = $this->conec();
-    $consultas = "SELECT empresaclientet  FROM req WHERE  id=".$id_req;
+    $consultas = "SELECT empresaclientet,clientesol,cargo  FROM req WHERE  id=".$id_req;
     $consultas= $conn->Execute($consultas)-> getRows();
+    $clientesol = "";
     $ide = "";
+    $cargo = "";
     for($i= 0; $i<count($consultas); $i++) {
         $ide  =$consultas[$i]['empresaclientet'];
+        $clientesol = $consultas[$i]['clientesol'];
+        $cargo =  $consultas[$i]['cargo'];
+    }
+
+    $consultas = "SELECT nombre,correo  FROM usuarios WHERE  usuario='".$clientesol."'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $nombreclie = "";
+    $correocli = "";
+    for($i= 0; $i<count($consultas); $i++) {
+        $nombreclie  =$consultas[$i]['nombre'];
+        $correocli  =$consultas[$i]['correo'];
     }
     $mensaje ="";
     switch ($tipomen) {
         case "APROBADO":
-            $mensaje = "Se a APROBADO un candidato para la requision #{$id_req} favor enviar los documentos necesarios<br><br>
-            Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a><br><br>
-            Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
+            $mensaje = "Buen Dia
+            <br>
+            Le informamos que el cliente ".$nombreclie." ha aprobado el candidato con el  consecutivo ".$id_req.",  para el cargo ".$cargo."<br><br>; 
+            Cordialmente,<br>Human Talent SAS
+            ";
+
+            $mensajedos = "Apreciado Cliente ".$nombreclie."<br>
+            <br>
+            Le informamos que Usted ha aprobado el candidato con el  consecutivo ".$id_req.",  para el cargo ".$cargo.",.; por lo anterior le agradecemos ingresar a nuestro pagina web, www.humantalentsas.com y diligenciar la información correspondiente a las condiciones de contratación para que el sistema  genere la respectiva Orden de Ingreso del Candidato.
+            <br><br>
+            Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
+            <br>
+            Cualquier inquietud que tengo al respecto, con gusto la atenderemos a traves de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos selección@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+            <br><br>
+            <br>
+            Para Completar Orden puede dar clic <a href='".DIRWEB."home.php?ctr=requisicion&acc=verreqcan&id={$id_req}'>Aqui</a>
+            <br>
+            Cordialmente,
+            <br>
+            Área de Selección
+            <br>Human Talent SAS
+            ";
+            $this->enviocorreo($correocli, $mensajedos, "Aprobacion Candidato");
+
             break;
         case "NUEVAREQ":
             $mensaje = "Se creo su Requisicion con el #{$idreq} <br>

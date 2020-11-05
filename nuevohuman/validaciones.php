@@ -1439,7 +1439,7 @@ $xmlWriter->save('omar.pdf');*/
                     $presentarse = $_POST['presentarse'];
                     $fechainicio = $_POST['fechainicio'];
                     $orden = $_POST['orden'];
-                    require_once 'vendor/autoload.php';
+                    /*require_once 'vendor/autoload.php';
                     $archivoexa = $orden;
                     $phpWord5 = new \PhpOffice\PhpWord\PhpWord();
                     $templateProcessor5 = new \PhpOffice\PhpWord\TemplateProcessor('archivosgenerales/'.$archivoexa);
@@ -1447,7 +1447,7 @@ $xmlWriter->save('omar.pdf');*/
                     $templateProcessor5->setValue('direcciontrabajo', $direccion);
                     $templateProcessor5->setValue('nombrepresente', $presentarse);
                     $templateProcessor5->setValue('salario', "$".number_format($salario,2,",","."));
-                    $templateProcessor5->saveAs('archivosgenerales/'.$archivoexa);
+                    $templateProcessor5->saveAs('archivosgenerales/'.$archivoexa);*/
                     $listadoreq=$objconsulta->ajustarorden($idper,$idreq,$tasa,$salario,$presentarse,$direccion,$fechainicio);
                     echo "<script>alert('Informacion Guardada Correctamente');
                     window.location.href = 'home.php?ctr=requisicion&acc=verreqcan&id=".$idreq."';
@@ -1563,7 +1563,7 @@ $xmlWriter->save('omar.pdf');*/
                     if ($listadoreq[0]['salariobasico'] == "") {
                         $listadoreq[0]['salariobasico'] = 0;
                     }
-                    $archivo = "orden".$idper.date('YMDS').".docx";
+                    /*$archivo = "orden".$idper.date('YMDS').".docx";
                     $orden = $archivo;
                     require_once 'vendor/autoload.php';
                     // Creating the new document...
@@ -1667,7 +1667,19 @@ $xmlWriter->save('omar.pdf');*/
                     $templateProcessor5->setValue('ciudad', $listadoreq[0]['ciudadlaboral']);
                     $templateProcessor5->setValue('nombrepresente', '');
                     $templateProcessor5->setValue('horario', $listadoreq[0]['jornadalaboral']." ".$listadoreq[0]['horario']);
-                    $templateProcessor5->saveAs('archivosgenerales/'.$archivoexa);
+                    $templateProcessor5->saveAs('archivosgenerales/'.$archivoexa);*/
+                    /*require_once 'vendor/autoload.php';
+                    $archivoexa = $orden;
+                    $phpWord5 = new \PhpOffice\PhpWord\PhpWord();
+                    $templateProcessor5 = new \PhpOffice\PhpWord\TemplateProcessor('archivosgenerales/'.$archivoexa);
+                    $templateProcessor5->setValue('tasa', $tasa);
+                    $templateProcessor5->setValue('direcciontrabajo', $direccion);
+                    $templateProcessor5->setValue('nombrepresente', $presentarse);
+                    $templateProcessor5->setValue('salario', "$".number_format($salario,2,",","."));
+                    $templateProcessor5->saveAs('archivosgenerales/'.$archivoexa);*/
+                    $orden ="";
+                    $documentos ="";
+                    $hv ="";
                     $listadoreq=$objconsulta->actualizarformatos($idper,$idreq,$orden,$documentos,$hv);
                     echo "<script>alert('Aprobacion Realizada Correctamente');
                             window.location.href = 'home.php?ctr=requisicion&acc=verreqcan&id=".$idreq."';
