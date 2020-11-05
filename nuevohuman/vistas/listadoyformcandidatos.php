@@ -735,6 +735,7 @@ if($fechacitan !="" && $estadopresen=="P")
 } else if($estadopresen=="A" && $salariorh==""){
   $botnenvi = $modalbotonfinal.$botonfinal;
 } else if($estadopresen=="EM"){
+  $botonedit ="";
   $botnenvi = $modalbotonexamenes.$botonexamenes; 
 } else if ($estadopresen=="F")
 {
