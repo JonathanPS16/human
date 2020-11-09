@@ -882,7 +882,6 @@ public function obtenerInformacionreq($id){
     //echo $ide;
       $conn = $this->conec();
       $consultas = "select req_candidatos.presentarse,req_candidatos.direccion, req_candidatos.tasa, req.fechareqcargo,req_candidatos.salariorh, `req`.`id` AS `id`,`req_candidatos`.`id` AS `req_per`,`empresasterporales`.`nombretemporal` AS `nombretemporal`,`req`.`cargo` AS `cargo`,`req`.`horario` AS `horario`,`req`.`ciudadlaboral` AS `ciudadlaboral`,`req`.`jornadalaboral` AS `jornadalaboral`,`req`.`salariobasico` AS `salariobasico`,`req`.`empresacliente` AS `empresacliente`,`req_candidatos`.`nombre` AS `nombre`,`req_candidatos`.`cedula` AS `cedula`,`req_candidatos`.`telefono` AS `telefono`,`req_candidatos`.`correo` AS `correo`,`req`.`fechareqcargo` AS `fechareqcargo` from ((`empresasterporales` join `req` on((`req`.`empresaclientet` = `empresasterporales`.`id_temporal`))) join `req_candidatos` on((`req_candidatos`.`id_requisision` = `req`.`id`))) where req_candidatos.id = '{$id}'";
-      echo $consultas;
       $consultas= $conn->Execute($consultas)-> getRows();
       return $consultas;
   }
@@ -1001,9 +1000,9 @@ public function guardarArchivoHv($nombre_archivo,$id)
     $conn->Execute($SQL);
 }
 
-public function ajustarlaboratorio($id,$idreq,$laboratorio,$cadena){
+public function ajustarlaboratorio($id,$idreq,$laboratorio,$cadena,$orden,$apertura,$examenesar){
     $conn = $this->conec();
-    $SQL ="UPDATE req_candidatos SET examenes='$cadena',lugar='$laboratorio' WHERE id=".$id;
+    $SQL ="UPDATE req_candidatos SET examenes='$cadena',lugar='$laboratorio',ordeningreso='$orden',apertura='$apertura',examenesar='$examenesar' WHERE id=".$id;
     $conn->Execute($SQL);
 }
 
