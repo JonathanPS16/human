@@ -115,7 +115,7 @@ for($i=0; $i<count($listadoreq);$i++){
           <div class="modal-body">
             <form class="form-horizontal" action="home.php?ctr=requisicion&acc=conclusionentrevistac" method="post" enctype="multipart/form-data">
             <div class="form-group row">
-    <label for="concuentre" class="col-4 col-form-label">Conclucion Entrevista</label> 
+    <label for="concuentre" class="col-4 col-form-label">Conclusion Entrevista</label> 
     <div class="col-8">
       <textarea id="concuentre" name="concuentre" cols="40" rows="5" class="form-control" required="required"></textarea>
     </div>

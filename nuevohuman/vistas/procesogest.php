@@ -249,7 +249,7 @@
 			<form class="form-horizontal" action="home.php?ctr=proceso&acc=guardarconclucion" method="post" enctype="multipart/form-data">
 			<div class="form-group row">
 			<input type ="hidden" name="id" id ="id" value="'.$id.'">
-    <label for="entrevista" class="col-4 col-form-label">Concluciones Entrevista</label> 
+    <label for="entrevista" class="col-4 col-form-label">Conclusiones Entrevista</label> 
     <div class="col-8">
       <textarea id="entrevista" name="entrevista" cols="40" rows="5" class="form-control" required="required"></textarea>
     </div>
@@ -273,7 +273,7 @@
 	</div>
 	';
 		$botonhojadose ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalen'.$id.'">
-	  Conclucion Entrevista
+	  Conclusion Entrevista
 	</button>';
 
 

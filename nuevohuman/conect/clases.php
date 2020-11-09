@@ -1008,6 +1008,15 @@ public function ajustarlaboratorio($id,$idreq,$laboratorio,$cadena,$orden,$apert
 
 public function notificarProcesos($id,$correojefe){
     $conn = $this->conec();
+
+    $consultas = "SELECT * from procesos where id_proceso=".$id;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $nombre  ="";
+    for($i= 0; $i<count($consultas); $i++) {
+        $nombre = $consultas[$i]['nombrefuncionario'];
+    
+    }
+
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
     $consultas= $conn->Execute($consultas)-> getRows();
     for($i= 0; $i<count($consultas); $i++) {
@@ -1016,7 +1025,18 @@ public function notificarProcesos($id,$correojefe){
           $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
           $consultasresp= $conn->Execute($consultascorr)-> getRows();
 
-          $mensaje  ="Se a creado  un nuevo proceso con identifidor #".$id."";
+          $mensaje  ="Apreciado Cliente
+
+          Le informamos que hemos recibido su solicitud para efectuar proceso disciplinario al empleado en misión Nombre ".$nombre.", y se le ha generado el consecutivo ".$id.".;  estaremos procediendo de manera inmediata a dar tramite a su solicitud.<br>
+          
+          Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
+          <br>
+          Cualquier inquietud que tengo al respecto, la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com  , areajuridica@humantalentsas.com.co 
+          <br>
+          Cordialmente,
+          <br><br>
+          Área Jurídica
+          Human Talent SAS";
 
           $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
       }
@@ -1336,7 +1356,18 @@ public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$func
           $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
           $consultasresp= $conn->Execute($consultascorr)-> getRows();
 
-          $mensaje  ="Se a informado de un retiro de un empleado";
+          $mensaje  ="Apreciado Cliente<br><br>
+
+          Le informamos que hemos recibido el reporte de retiro del empleado en misión Nombre ".$funcionario.";  estaremos procediendo de manera inmediata a dar el tramite respectivo.
+          <br>
+          Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
+          <br>
+          Cualquier inquietud que tengo al respecto, la atenderemos a traves de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, nomina@humantalentsas.com, contabilidad@humantalentsas.com  
+          <br>
+          Cordialmente,
+          <br><br>
+          Área Servicio al Cliente 
+          <br>Human Talent SAS";
 
           $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
       }
@@ -1351,21 +1382,24 @@ public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$func
 
 public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo){
     $conn = $this->conec();
-    /*$consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
+    $nombre="";
+    $consultas = "SELECT * from procesos where id_proceso=".$id;
     $consultas= $conn->Execute($consultas)-> getRows();
+    $nombre  ="";
     for($i= 0; $i<count($consultas); $i++) {
-      $correos = explode(",", $consultas[$i]['usuarios']);
-      for($j=0; $j<count($correos); $j++){
-          $consultascorr = "SELECT mail FROM users WHERE uid= ".$correos[$j];
-          $consultasresp= $conn->Execute($consultascorr)-> getRows();
+        $nombre = $consultas[$i]['nombrefuncionario'];
+    
+    }
+    $mensaje ="Apreciado Empleado ".$nombre."<br><br>
 
-          $mensaje  ="Se a creado  un nuevo proceso con identifidor #".$id."";
-
-          $envio = $this->enviocorreo($consultasresp[0]['mail'], $mensaje);
-      }
-
-    }*/
-    $mensaje ="Se le informa que la decision tomada para el proceso #".$id." es la siguiente <br><br>".$efecto;
+    En relación con el proceso disciplinario que se le adelanta a Usted y una vez surtido el debido proceso de acuerdo con lo establecido por la Compañía, a continuación le informamos la decisión tomada.
+    <br>
+    Cualquier inquietud que tengo al respecto, la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com  , areajuridica@humantalentsas.com.co 
+    <br>
+    Cordialmente,
+    <br><br>
+    Área Jurídica  - 
+    Human Talent SAS";
     $envio = $this->enviocorreo($correo, $mensaje);
 
 
@@ -1376,8 +1410,31 @@ public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo){
 
 public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justificacion,$archivo,$horacita,$sedelugar,$modalidadcita){
     $conn = $this->conec();
+    $nombre="";
+    $consultas = "SELECT * from procesos where id_proceso=".$id;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $nombre  ="";
+    for($i= 0; $i<count($consultas); $i++) {
+        $nombre = $consultas[$i]['nombrefuncionario'];
+    
+    }
     $titulo="Citacion Proceso"; 
-    $mensaje = "Se le a citado para revisar una solucitud de proceso diciplinario #".$id." para la fecha y hora ".$fechacitacion."a las ".$horacita."Por motivo<br>".$justificacion."<br>Lugar  $sedelugar con modalidad de $modalidadcita";
+    if($modalidadcita=="Videollamada"){
+        $dato ="en la dirección ".$sedelugar;
+    } else {
+        $dato ="través de Video Conferencia por ".$sedelugar;
+    }
+    $mensaje = "Apreciado Empleado ".$nombre."<br><br>
+    
+    Le informamos que se le ha iniciado un proceso disciplinario, sobre un evento reportado por la Empresa Usuaria donde presta sus servicios, 
+    por lo cual usted deberá presentarse ".$dato.", para dar las explicaciones respectivas 
+    <br>
+    Cualquier inquietud que tengo al respecto, la atenderemos a traves de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com  , areajuridica@humantalentsas.com.co 
+    <br>
+    Cordialmente,
+    <br><br>
+    Área Jurídica  - 
+    Human Talent SAS";
     $envio = $this->enviarcorreoadjuntos($correo,$archivo,$mensaje,$titulo);
     $fechahora = $fechacitacion. " ".$horacita;
     $SQL ="UPDATE procesos  SET estado='E',fechacita='$fechahora',tipoproceso ='$tipo',justificacion='$justificacion',archivoenviado='$archivo',sedelugar='$sedelugar',modalidadcita='$modalidadcita'  WHERE id_proceso=".$id;
@@ -1387,8 +1444,24 @@ public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justific
 
 public function guardarfinretiro($id,$correo,$archivo){
     $conn = $this->conec();
-    $titulo="Documento Retiro"; 
-    $mensaje = "Se le a enviado el documento de retiro para su informacion";
+    $titulo="Documento Retiro";
+    $nombre="";
+    $consultas = "SELECT * from renuncias where id_renuncia=".$id;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $nombre  ="";
+    for($i= 0; $i<count($consultas); $i++) {
+        $nombre = $consultas[$i]['nombre'];
+    
+    } 
+    $mensaje = "Apreciado Empleado ".$nombre."<br><br>
+    En relación con el contrato de obra o labor que tiene suscrito con nuestra Empresa, en la comunicación anexa le estamos informando la terminación de este.
+    <br>
+    Cualquier inquietud que tengo al respecto, la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, 
+    <br>
+    Cordialmente,
+    <br><br>
+    Área Servicio al Cliente 
+    <br>Human Talent SAS";
     $envio = $this->enviarcorreoadjuntos($correo,$archivo,$mensaje,$titulo);
     $SQL ="UPDATE renuncias  SET estado='T',correo='$correo',archivo ='$archivo' WHERE id_renuncia=".$id;
     $conn->Execute($SQL);
@@ -1397,7 +1470,23 @@ public function guardarfinretiro($id,$correo,$archivo){
 
 public function enviarsolicitudexplicacion($id,$correo,$fechacitacion,$tipo,$razonllamado,$archivo){
     $conn = $this->conec();
-    $mensaje = "Se a reportado un proceso diciplinaro y el empleados solicita explicaciones de la falta $razonllamado <br>para diligenciar explicacion debe ir al siguiente <a href='".DIRWEB."registro.php?id=$id' target='_black'>link</a> fecha limite $fechacitacion";
+    $nombre="";
+    $consultas = "SELECT * from procesos where id_proceso=".$id;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $nombre  ="";
+    for($i= 0; $i<count($consultas); $i++) {
+        $nombre = $consultas[$i]['nombrefuncionario'];
+    
+    }
+    $mensaje = "Apreciado Empleado ".$nombre."<br><br>
+    Le informamos que se le ha iniciado un proceso disciplinario, sobre un evento reportado por la Empresa Usuaria donde presta sus servicios, para que Usted pueda dar las respectivas explicaciones sobre dicho evento, Usted deberá ingresar al siguiente <a href='".DIRWEB."registro.php?id=$id' target='_black'>LINK</a>, y enviar dichas explicaciones a mas tardar el día ".$fechacitacion."<br> 
+    
+    Cualquier inquietud que tengo al respecto, la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com  , areajuridica@humantalentsas.com.co 
+    <br>
+    Cordialmente,
+    <br><br>
+    Área Jurídica  - 
+    Human Talent SAS";
     $envio = $this->enviocorreo($correo, $mensaje);
     $SQL ="UPDATE procesos  SET estado='E',fechacita='$fechacitacion',tipoproceso ='$tipo',razon='$razonllamado',archivo='$archivo'  WHERE id_proceso=".$id;
     $conn->Execute($SQL);
