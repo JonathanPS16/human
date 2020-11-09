@@ -1541,36 +1541,41 @@ public function archivosatrasformar($idper,$idreq){
 public function enviardocumentacion($idper,$idreq){
 
     $conn = $this->conec();
-    $consultas = "SELECT correo,ordeningreso,hvhuman,docdocumen  FROM req_candidatos WHERE  id=".$idper;
-
+    $consultas = "SELECT req.cargo,req_candidatos.correo,req_candidatos.ordeningreso,req_candidatos.apertura,req_candidatos.examenesar,req_candidatos.nombre  FROM req_candidatos inner join req on req.id = req_candidatos.id_requisision WHERE  req_candidatos.id=".$idper;
     $consultas= $conn->Execute($consultas)-> getRows();
     $correo = "";
-    $ordeningreso = "archivosgenerales/";
-    $docdocumen = "archivosgenerales/";
-    $hvhuman = "archivosgenerales/";
+    $nombre ="";
+    $cargo ="";
+    //$ordeningreso = "archivosgenerales/";
+    $docdocumen = "archivosgenerales/documentacion.pdf";
+    $hvhuman = "archivosgenerales/formatohv.pdf";
+    $archivoaper = "archivosgenerales/";
+    $archivoexa =  "archivosgenerales/";
     for($i= 0; $i<count($consultas); $i++) {
         $correo  =$consultas[$i]['correo'];
-        $ordeningreso  .=str_replace(".docx", ".pdf",$consultas[$i]['ordeningreso']);
-        $hvhuman  .=str_replace(".docx", ".pdf",$consultas[$i]['hvhuman']);
-        $docdocumen  .=str_replace(".docx", ".pdf",$consultas[$i]['docdocumen']);
+        //$ordeningreso  =$consultas[$i]['ordeningreso'];
+        $archivoaper.=$consultas[$i]['apertura'];
+        $archivoexa.= $consultas[$i]['examenesar'];
+        $nombre.= $consultas[$i]['nombre'];
+        $cargo.= $consultas[$i]['cargo'];
     }
-    $archivoexa = "archivosgenerales/examen".$idper.$idreq.".pdf";
-    $archivoaper = "archivosgenerales/apertura".$idper.$idreq.".pdf";
-    
     
     $titulo2 = "Documentacion de Contratacion";
-    $cuerpo2 = "Señor Usuario
-<br><br>
-    Usted ha sido seleccionado, vamos a iniciar el proceso de contratación. 
-    <br><br>
-    Le fueron enviados unos archivos los cuales debe imprimir y diligenciar, según sea el caso.<br> 
-    Debe dirigirse al laboratorio para toma de exámenes y al banco para realizar apertura de cuenta y presentarse con toda la documentación requerida en la temporal, para la firma de contrato.
-    <br><br>
+    $cuerpo2 = "Apreciado ".$nombre."<br>br>
+
+    Dando continuidad al proceso de contratación para el cargo ".$cargo." , le estamos enviado los formatos que Usted debe diligenciar y la documentación que debe reunir y que es requerida para dar tramite a la contracción, tanto los formatos debidamente diligenciados como la documentación solicitada puede ser entregada en nuestra  oficina o remitirla  a los correos selección@humantalentsas.com, analistaseleccion@humantalentsas.com 
+    <br>
+    Anexamos la orden de exámenes de ingreso,  para que Usted se realice dichos exámenes en el Laboratorio Clínico relacionado en dicha comunicación 
+    <br>
+    Asimismo le estamos enviando la carta de autorización para la apertura de su cuenta en Bancolombia , donde se le efectuara el abono de su nomina. 
+    <br>
+    Cualquier inquietud que tengo al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos selección@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+    <br>
     Cordialmente,
     <br><br>
-    Área de Contratación.
-     <br /><br><br>
-                  &copy; ".date('Y')." humantalentsas.com - Todos los derechos reservados </p>";
+    Área de Selección<br>
+    Human Talent SAS
+    ";
     $maildos = new PHPMailer();
     $maildos->IsSMTP();
     $maildos->SMTPAuth = true;

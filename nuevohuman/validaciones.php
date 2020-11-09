@@ -1843,7 +1843,7 @@ $xmlWriter->save('omar.pdf');*/
                 case "enviardocumentacion":
                     $idper = $_GET["idper"];
                     $idreq = $_GET["idreq"];
-                    $listadearchivos=$objconsulta->archivosatrasformar($idper,$idreq);
+                   /* $listadearchivos=$objconsulta->archivosatrasformar($idper,$idreq);
                     require_once 'conversorwordpdf/vendor/autoload.php';
                     $nombrearchivo = $listadearchivos['ordeningreso'];
                     $nombre = str_replace(".docx","",$nombrearchivo);
@@ -1924,7 +1924,7 @@ $xmlWriter->save('omar.pdf');*/
                     }
                     $renderLibraryPath=''.$renderLibrary;
                     $objWriter= \PhpOffice\PhpWord\IOFactory::createWriter($contents,'PDF');
-                    $objWriter->save("archivosgenerales/".$archivoouput);
+                    $objWriter->save("archivosgenerales/".$archivoouput);*/
                 
                     $listadoreq=$objconsulta->enviardocumentacion($idper,$idreq);
                     echo "<script>alert('Informacion Guardada Correctamente');
