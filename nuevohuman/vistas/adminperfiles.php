@@ -71,7 +71,7 @@ function restaurar(id,valor){
 
 function eliminar(id){
 		
-		if (valor!=0) {
+		if (id!=0) {
 			var r = confirm("Seguro que Desea Eliminar el Usuario?");
 			if (r == true) {
 				location.href ="home.php?ctr=admon&acc=eliminarusu&usu="+id;
