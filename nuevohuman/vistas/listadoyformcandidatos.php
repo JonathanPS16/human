@@ -1,8 +1,20 @@
-<h5>Solicitud #<?=$_GET['id']." ".$tituloaaa;?></h5>
+<?php
+  $datos = explode("|",$tituloaaa);
+
+?>
+
+<h5>Solicitud #<?=$_GET['id']." ".$datos[0];?></h5>
 <br>
+<?php 
+
+if($datos[1]!="D"){
+?>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   Agregar Candidato
 </button>
+<?php 
+}
+?>
 <br>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -453,7 +465,7 @@ for($i=0; $i<count($listadoreq);$i++){
 </button>';	
     } else {
       $conteoreq++;
-      $botonhoja ='<a href="archivosgenerales/'.$hojavida.'" target="_black" >Descargar</a>';
+      $botonhoja ='<a href="archivosgenerales/'.$hojavida.'" target="_black" class="btn btn-primary" >Descargar</a>';
     }
     if($archivoprueba ==''){
     $modalboton ='<div class="modal fade" id="exampleModal'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -500,7 +512,7 @@ for($i=0; $i<count($listadoreq);$i++){
 </button>';	
 } elseif($archivoprueba!="") {
   $conteoreq++;
-  $boton ='<a href="archivosgenerales/'.$archivoprueba.'" target="_black" >Descargar</a>';
+  $boton ='<a href="archivosgenerales/'.$archivoprueba.'" target="_black" class="btn btn-primary" >Descargar</a>';
   	
 
 } 
@@ -752,7 +764,7 @@ if($fechacitan !="" && $estadopresen=="P")
 $ordenbtn= "En Proceso"; 
 if($ordeningreso!="")
 {
-  $ordenbtn ='<a href="archivosgenerales/'.$ordeningreso.'" target="_black" >Descargar</a>';	
+  $ordenbtn ='<a href="archivosgenerales/'.$ordeningreso.'" target="_black" class="btn btn-primary">Descargar</a>';	
 }
 $modalbotonextra ='<div class="modal fade" id="exampleModalextra'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -797,7 +809,7 @@ $modalbotonextra ='<div class="modal fade" id="exampleModalextra'.$idper.'" tabi
   Adjunto Extra
 </button>';	
 if($archivootro!=""){
-  $botonextra ='<a href="archivosgenerales/'.$archivootro.'" target="_black" >Descargar</a>';
+  $botonextra ='<a href="archivosgenerales/'.$archivootro.'" target="_black" class="btn btn-primary">Descargar</a>';
 }
     echo "<tr>
     		<td>".$jaja ."</td>

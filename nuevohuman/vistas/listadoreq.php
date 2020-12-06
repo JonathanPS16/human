@@ -40,6 +40,10 @@ for($i=0; $i<count($listadoreq);$i++){
 	if ($status == 'E'){
 		$accion  = "<a class='btn btn-primary' href='home.php?ctr=requisicion&acc=verreqcan&id=".$id."'>Ver Estado Solicitud</a>";
 	}
+
+	if($estadogene == "Finalizado"){
+		$accion  = "<a class='btn btn-primary' href='home.php?ctr=requisicion&acc=verreqcan&id=".$id."'>Ver Candidatos</a>";
+	}
     echo "<tr>
     		<td>".$id."</td>
 			<td>".$cargo."</td>

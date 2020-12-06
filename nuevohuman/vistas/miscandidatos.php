@@ -1,4 +1,4 @@
-<h2>Mi Requisicion #<?=$_GET['id']; ?></h2><br>
+<h4>Mi Requisicion #<?=$_GET['id']." ".$listadoreqcrea[0]['cargo']; ?></h4><br>
 <table class="table table-striped">
 	<thead>
 		<tr>
@@ -42,7 +42,6 @@ for($i=0; $i<count($listadoreq);$i++){
     $archivootro=$listadoreq[$i]['archivootro'];
     $conclusionentrevistagen=$listadoreq[$i]['conclusionentrevistagen'];
 
-    
 
     
      
@@ -268,8 +267,20 @@ for($i=0; $i<count($listadoreq);$i++){
       
     }
 
-      $botonhoja ='<a href="archivosgenerales/'.$hojavida.'" target="_black">Descargar</a>';
-      $boton ='<a href="archivosgenerales/'.$archivoprueba.'" target="_black">Descargar</a>';	
+      
+
+      if($hojavida!=""){
+        $botonhoja ='<a href="archivosgenerales/'.$hojavida.'" target="_black" class="btn btn-primary">Descargar</a>';
+      } else {
+        $botonhoja ="Sin Archivo";
+      }
+      if($archivoprueba!=""){
+        $boton ='<a href="archivosgenerales/'.$archivoprueba.'" target="_black" class="btn btn-primary">Descargar</a>';
+      } else {
+        $boton ="Sin Archivo";
+      }
+
+      //$boton ='<a href="archivosgenerales/'.$archivoprueba.'" target="_black">Descargar asdasd</a>';	
 $cantidad="";
 
 $cantidadestudios="";
@@ -477,7 +488,17 @@ $botonentre ='<button type="button" class="btn btn-primary" data-toggle="modal" 
 if($archivootro!=""){
   $botonextra ='<a href="archivosgenerales/'.$archivootro.'" target="_black" >Descargar</a>';
 }
+if($estadopresen=="EM" && $listadoreqcrea[0]['tipo']=="D"){
+ // echo "Examnes Directos";$botonrechazo
+ $botonrechazo ="";
+  $botaceptar="Deteminar Examenes Medicos";
+}
 
+if($estadopresen=="F" && $listadoreqcrea[0]['tipo']=="D"){
+  // echo "Examnes Directos";$botonrechazo
+  $botonrechazo ="";
+   $botaceptar="Proceso Finalizado";
+ }
     echo "<tr>
     		<td>".$idper."</td>
     		<td>".ucfirst($nombre)."</td>

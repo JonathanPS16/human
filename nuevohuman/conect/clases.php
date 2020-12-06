@@ -606,6 +606,27 @@ $empresacliente
     }
 }
 
+
+public function guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingreso,$correo,$cargo,$salario,$tasaarl,$jornadalaboral,$ciudadlaboral,$presentarsea,$nombre_archivo,$empresacliente,$empresaclientet){
+    $conn = $this->conec();
+
+    $SQL= "INSERT INTO req (cantidad,cargo,ciudadlaboral,jornadalaboral,salariobasico,fechacreacion,fechareqcargo,clientesol,status,empresacliente,empresaclientet,tipo) 
+    values (1,'$cargo','$ciudadlaboral','$jornadalaboral','$salario',now(),'$fechaingreso','".$_SESSION['usuario']."','E','$empresacliente','$empresaclientet','D')";
+    $conn->Execute($SQL);
+    $idreq = $conn->insert_Id();
+    $SQL= "INSERT INTO req_candidatos (id_requisision,nombre,cedula,telefono,correo,tasa,salariorh,direccion,presentarse,estado,hojavida) 
+    values ($idreq,'$nombre','$cedula','$numerocontacto','$correo','$tasaarl','$salario','$jornadalaboral','$presentarsea','EM','$nombre_archivo')";
+    $conn->Execute($SQL);
+    $idreqcan = $conn->insert_Id();
+    $SQL= "INSERT INTO entrevistas (id_req,id_can) 
+    values ($idreq,$idreqcan)";
+    $conn->Execute($SQL);
+    //$idreqcan = $conn->insert_Id();
+
+}
+
+
+
 public function guardarRequiCondiciones($id,
 $salariobasico,
 $comisiones,
@@ -1055,7 +1076,8 @@ public function obtenerreqinfo($id){
     $datos = array();
     for($i= 0; $i<count($consultas); $i++) {
       $nombreca = $consultas[$i]['cargo'];
-      return $nombreca;
+      $tipo = $consultas[$i]['tipo'];
+      return $nombreca."|".$tipo;
     }
 
 

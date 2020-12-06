@@ -1229,6 +1229,72 @@
                     }
                     include('vistas/reque.php');
                 break;
+
+                case "procesodirecto":
+                    $datoempre = "Human";
+                    $listatemporales=$objconsulta->obteneTemporales($datoempre);
+                    $listatemporalesusuarias=$objconsulta->obteneTemporalesUsarias($datoempre);
+                    /*$id = 0;
+                    $mireq=array();
+                    $ide=$_GET['id'];
+                    $datoempre = "Human";
+                    $listatemporales=$objconsulta->obteneTemporales($datoempre);
+                    $listatemporalesusuarias=$objconsulta->obteneTemporalesUsarias($datoempre);
+                    if($ide>0){
+                        $id=$_GET['id'];
+                        $mireq=$objconsulta->obteneRes($id);
+                        
+                    }*/
+                    include('vistas/requedirecta.php');
+                break;
+
+                case "savefirecta":
+                    $nombre_archivo = date('Ymd').$_FILES['archivo']['name'];
+                    $tipo_archivo = $_FILES['archivo']['type'];
+                    $tamano_archivo = $_FILES['archivo']['size'];
+                    //compruebo si las características del archivo son las que deseo
+                    if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+                        $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                    }else{
+                        if (move_uploaded_file($_FILES['archivo']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                        }else{
+                            $nombre_archivo ="";
+                        }
+                    }
+
+                    $nombre = $_POST['nombre'];
+                    $cedula = $_POST['cedula'];
+                    $numerocontacto = $_POST['numerocontacto'];
+                    $fechaingreso = $_POST['fechaingreso'];
+                    $correo = $_POST['correo'];
+                    $cargo = $_POST['cargo'];
+                    $salario = $_POST['text'];
+                    $tasaarl = $_POST['tasaarl'];
+                    $jornadalaboral = $_POST['jornadalaboral'];
+                    $ciudadlaboral = $_POST['ciudadlaboral'];
+                    $presentarsea = $_POST['presentarsea'];
+                    $empresacliente = $_POST['empresacliente'];
+                    $empresaclientet = $_POST['empresaclientet'];
+
+                    $objconsulta->guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingreso,$correo,$cargo,$salario,$tasaarl,$jornadalaboral,$ciudadlaboral,$presentarsea,$nombre_archivo,$empresacliente,$empresaclientet);
+                    $mensaje = "Solicitud Realizada Correctamente";
+                    echo "<script>alert('".$mensaje."');
+                    window.location.href = 'home.php?ctr=requisicion&acc=listadoReq';
+                    </script>";
+
+                    /*$id = 0;
+                    $mireq=array();
+                    $ide=$_GET['id'];
+                    $datoempre = "Human";
+                    $listatemporales=$objconsulta->obteneTemporales($datoempre);
+                    $listatemporalesusuarias=$objconsulta->obteneTemporalesUsarias($datoempre);
+                    if($ide>0){
+                        $id=$_GET['id'];
+                        $mireq=$objconsulta->obteneRes($id);
+                        
+                    }*/
+                    //include('vistas/requedirecta.php');
+                break;
                 case "guardarPrueba":
                     $nombre_archivo = date('Ymd').$_FILES['filebutton']['name'];
                     $tipo_archivo = $_FILES['filebutton']['type'];
@@ -2180,8 +2246,8 @@ $xmlWriter->save('omar.pdf');*/
 
                 case 'verreqcan':
                     $lastid=$_GET['id'];
-                    $listadoreq=$objconsulta->obteneMisRescreadas($lastid);
-                    $listadoreq=$objconsulta->obtenercandidatos($lastid,"estado in('E','P','A','R')");
+                    $listadoreqcrea=$objconsulta->obteneMisRescreadas($lastid);
+                    $listadoreq=$objconsulta->obtenercandidatos($lastid,"1=1");
                     include('vistas/miscandidatos.php');
                 break;
 

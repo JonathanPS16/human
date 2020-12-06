@@ -44,7 +44,7 @@ for($i=0; $i<count($listadoreq);$i++){
 			<td>".$salariobasico."</td>
 			<td>".$ciudadlaboral."</td>
 			<td>".$estadogene."</td>
-    		<td><a href='home.php?ctr=requisicion&acc=listaCandidatos&id=".$id."'>Gestionar Solicitud</a></td>
+    		<td><a href='home.php?ctr=requisicion&acc=listaCandidatos&id=".$id."' class='btn btn-primary'>Gestionar Solicitud</a></td>
     </tr>";
   }
 
