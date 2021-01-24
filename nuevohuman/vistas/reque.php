@@ -995,21 +995,7 @@ $estados = $mireq[0]['genero'];
 </form>
 
 <script>
-$( "#edadindiferente" ).change(function() {
-  if($( "#edadindiferente" ).val()=="S") {
-    $("select[name='edadminima']").find("option[value='0']").attr("selected",true);
-    $("select[name='edadmaxima']").find("option[value='0']").attr("selected",true);
-    $('#edadminima').prop('disabled', true);
-    $('#edadmaxima').prop('disabled', true);
-  } else {
-    $('#edadminima').prop('disabled', false);
-    $('#edadmaxima').prop('disabled', false);
-  }
-});
 
-$( "#final" ).click(function() {
-  return confirm("Esta Seguro de Terminar la Requision?");
-});
 
 
 

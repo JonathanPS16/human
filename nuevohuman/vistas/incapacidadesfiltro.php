@@ -82,16 +82,3 @@
 	?>
     </tbody>
 </table>
-<script>
- $(document).ready( function () {
-    $('#example').DataTable();
-	$('#myTable').DataTable(
-		{
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    }
-	);
-} );
-</script>

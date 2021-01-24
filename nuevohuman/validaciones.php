@@ -637,6 +637,11 @@
                         </script>";
                         }
                     }
+                    echo "<script>function volvercarega(){
+                        window.location.href = 'home.php?ctr=incapacidad&acc=cargararchivo';
+                    }</script>";
+                    $archivofail = $nombre_archivo."_LOG.txt";
+                    $file = fopen($archivofail, "w+");
                     $compania = $_POST['compania'];
                     $datocentros = array();
                     $datosincapaval =array();
@@ -661,14 +666,15 @@
                     $highestRow = $sheet->getHighestRow(); 
                     $highestColumn = $sheet->getHighestColumn();
                     $num = 0;
-                    $sql = "INSERT INTO incapacidadescargue (compania,codigo,nombre,fechaini,fechafinal,cantidaddias,mes,anio,periodo,cedula,nombreper,diaslaborados,codigoconcepto,concepto,responsable,valorliqui,observaciones,tipoau,nombregene,estado) 
+                    $sql = "INSERT INTO incapacidadescargue (compania,codigo,nombre,fechaini,fechafinal,cantidaddias,mes,anio,periodo,cedula,nombreper,diaslaborados,codigoconcepto,concepto,responsable,valorliqui,observaciones,tipoau,nombregene,estado,diasreconocidos) 
                     VALUES ";
                     $errorcentro = "";
                     $errorcodigo = "";
                     $creado=0;
-                    for ($row = 2; $row <= $highestRow; $row++){ $num++;
-                        
+                    for ($row = 2; $row <= $highestRow; $row++){ 
+                        $num++;
                         $codigo  = $sheet->getCell("A".$row)->getValue();
+                        $codigobk=$codigo;
                         $codigo = str_replace(" ","",$codigo);
                         $codigo = trim(substr($codigo, 0, -2));
                         $nombre  = trim($sheet->getCell("B".$row)->getValue());
@@ -693,28 +699,32 @@
                         $observaciones  = $sheet->getCell("P".$row)->getValue();
                         $tipoau  = $sheet->getCell("Q".$row)->getValue();
                         $nombregene  = $sheet->getCell("R".$row)->getValue();
+                        $diasreconocidos  = $sheet->getCell("T".$row)->getValue();
+                        if(trim($diasreconocidos)==""){
+                            $diasreconocidos=0;
+                        }
                         $responsable = $esp;
 
                         if(!in_array($codigo,$datocentros)){
                             $errorcentro.="$num";
+                            //echo "EN LA LINEA ". $num." = ". $codigobk." NO ESTA EN LOS CENTROS DE COSTOS<br>";
+                            fwrite($file, "EN LA LINEA ". $num." = ". $codigo." NO ESTA EN LOS CENTROS DE COSTOS" . PHP_EOL);
                         } else if(!in_array($codigoconcepto,$datosincapaval)){
                             $errorcodigo.="$num";
+                            fwrite($file, "EN LA LINEA ". $num." = ".$codigoconcepto." NO ESTA EN LOS CONCEPTOS" . PHP_EOL);
                         }else {
-                            $sql.="('$compania','$codigo','$nombre','$fechaini','$fechafinal','$cantidaddias','$mes','$anio','$periodo','$cedula','$nombreper','$diaslaborados','$codigoconcepto','$concepto','$eps','$valorliqui','$observaciones','$tipoau','$nombregene','C'),";
+                            $sql.="('$compania','$codigo','$nombre','$fechaini','$fechafinal','$cantidaddias','$mes','$anio','$periodo','$cedula','$nombreper','$diaslaborados','$codigoconcepto','$concepto','$eps','$valorliqui','$observaciones','$tipoau','$nombregene','C','$diasreconocidos'),";
                             $creado++;
                         }
                     }
                     $sql = substr($sql, 0, -1);
+                    fclose($file);
+                    echo "<center><h3>Se Ingresaron ".$creado." Registros de ".$num." en Total</h3><br>";
+                    echo '<a href="'.$archivofail.'" target="_black">Descargar Archivo Errores</a></center><button name="fff" type="button" onclick="volvercarega()" class="btn btn-primary">Terminar</button>';
                     if ($creado>0) {
                       $listatemporales=$objconsulta->guardarcarguearchivos($sql);
-                        echo "<script>alert('Registros Cargados Correctamente');
-                        window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
-                        </script>";
-                    } else {
-                        echo "<script>alert('Ningun Registro Encontrado');
-                        window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
-                        </script>";
-                    }
+                    } 
+                    
                     
                 break;
                 case "trasncripcion":
