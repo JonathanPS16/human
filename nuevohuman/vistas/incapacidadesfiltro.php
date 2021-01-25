@@ -35,7 +35,7 @@
 		$cantidaddias=$listatemporales[$i]['cantidaddias'];
 		$cedula=$listatemporales[$i]['cedula'];
 		$nombreper=$listatemporales[$i]['nombreper'];
-		$concepto=$listatemporales[$i]['concepto'];
+		$concepto=$listatemporales[$i]['codigoconcepto'];
 		$estado=$listatemporales[$i]['estado'];
 
 		$excluye=$listatemporales[$i]['excluye'];
