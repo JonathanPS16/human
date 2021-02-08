@@ -98,7 +98,7 @@ if(isset($_POST) && $_POST['vali']=='si')
   <div class="form-group row">
     <label for="archivo" class="col-4 col-form-label">Archivo Adjunto</label> 
     <div class="col-8">
-      <input id="archivo" name="archivo" type="file" class="form-control" required="required">
+      <input id="archivo" name="archivo" type="file" class="form-control">
     </div>
   </div> 
   <input type="hidden" name="id" id="id" value="<?php echo $_GET['id']; ?>">
