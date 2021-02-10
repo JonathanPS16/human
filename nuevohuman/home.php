@@ -52,7 +52,7 @@ require_once('conect/clases.php');
         </nav>
 
         <!-- Page Content  -->
-        <div id="content">
+        <div id="content" style="font-size: 0.8em !important;">
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
