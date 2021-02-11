@@ -11,7 +11,7 @@
     //echo $carpeta;
     //$ruta='/carpeta/'.$carpeta;
     
-    switch ($anio) {
+    /*switch ($anio) {
     case 2017:
             $ruta='/home4/byvnilval/public_html/humantalentsas.com/contabilidad/carpetas_empleados/HV_2017/'.$carpeta;
    	    $rutadoc='/contabilidad/carpetas_empleados/HV_2017/'.$carpeta;
@@ -28,7 +28,10 @@
           $ruta='/home4/byvnilval/public_html/humantalentsas.com/contabilidad/carpetas_empleados/HV_2020/'.$carpeta;
           $rutadoc='/contabilidad/carpetas_empleados/HV_2020/'.$carpeta;
       break;
-}
+}*/
+
+$ruta='/home4/byvnilval/public_html/humantalentsas.com/contabilidad/carpetas_empleados/HV_'.$anio.'/'.$carpeta;
+          $rutadoc='/contabilidad/carpetas_empleados/HV_'.$anio.'/'.$carpeta;
     
    
    

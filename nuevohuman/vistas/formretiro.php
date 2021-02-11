@@ -43,7 +43,7 @@
   </div>
 
   <div class="custom-file">
-    <input type="file" class="custom-file-input" id="archivo2" name="archivo2" required="required">
+    <input type="file" class="custom-file-input" id="archivo2" name="archivo2" >
     <label class="custom-file-label" for="archivo2">Paz y Salvo</label>
   </div>
 
