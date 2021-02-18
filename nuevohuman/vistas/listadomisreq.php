@@ -5,6 +5,7 @@
 			<th>ID</th>
 			<th>Cargo</th>
 			<th>Fecha Solicitud</th>
+			<th>Empresa Temporal</th>
 			<th>Empresa Usuaria</th>
 			<th>Fecha Requerida</th>
 			<th>Cantidad</th>
@@ -26,7 +27,8 @@ for($i=0; $i<count($listadoreq);$i++){
 	$ciudadlaboral=$listadoreq[$i]['ciudadlaboral'];
 	$salariobasico=$listadoreq[$i]['salariobasico'];
 	$fechacreacion=$listadoreq[$i]['fechacreacion'];
-	$empresacliente=$listadoreq[$i]['empresacliente'];
+	$empresacliente=$listadoreq[$i]['nombreempresausu'];
+	$empresatemporal=$listadoreq[$i]['nombretemporal'];
 	$fechareqcargo=$listadoreq[$i]['fechareqcargo'];
 	$cantidad=$listadoreq[$i]['cantidad'];
 	$cantidadapro =$listadoreq[$i]['cantidadapro'];
@@ -38,6 +40,7 @@ for($i=0; $i<count($listadoreq);$i++){
     		<td>".$id."</td>
 			<td>".$cargo."</td>
 			<td>".$fechacreacion."</td>
+			<td>".$empresatemporal."</td>
 			<td>".$empresacliente."</td>
 			<td>".$fechareqcargo."</td>
 			<td>".$cantidad."</td>

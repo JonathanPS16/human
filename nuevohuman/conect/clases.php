@@ -621,6 +621,48 @@ public function guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingr
     $SQL= "INSERT INTO entrevistas (id_req,id_can) 
     values ($idreq,$idreqcan)";
     $conn->Execute($SQL);
+
+    $consultas = "SELECT empresaclientet,cargo,clientesol  FROM req WHERE  id=".$idreq;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $ide = "";
+    $cargo = "";
+    $clientesol = "";
+    for($i= 0; $i<count($consultas); $i++) {
+        $ide  =$consultas[$i]['empresaclientet'];
+        $cargo =$consultas[$i]['cargo'];
+        $clientesol =$consultas[$i]['clientesol'];
+    }
+
+    $consultas = "SELECT nombre  FROM usuarios WHERE  usuario='".$clientesol."'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $nombreem = "";
+    for($i= 0; $i<count($consultas); $i++) {
+        $nombreem  =$consultas[$i]['nombre'];
+    }
+
+
+    $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
+      //echo $consultas;
+      $mensaje = "Apreciada Área de Selección <br>
+        <br>
+      Le informamos  que la empresa ".$nombreem.", ha Solicitado ContratacionDirecta del candidato ".$nombre.", del proceso de selección con consecutivo ".$idreq." <br>
+      Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
+      <br><br>
+      Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$idreq}'><strong>AQUI</strong></a>
+      <br><br>
+      Cordialmente,
+      <br>
+      Human Talent SAS";
+      $consultas= $conn->Execute($consultas)-> getRows();
+      for($i= 0; $i<count($consultas); $i++) {
+        $correos = explode(",", $consultas[$i]['correosselecccion']);
+        for($j=0; $j<count($correos); $j++){
+            $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
+            $consultasresp= $conn->Execute($consultascorr)-> getRows();
+            $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+        }
+
+      }
     //$idreqcan = $conn->insert_Id();
 
 }
@@ -856,7 +898,11 @@ public function obteneRes($ide=0,$clientesol=""){
     if ($clientesol != "") {
         $where .=" and clientesol= ".$clientesol;
     } 
-    $consultas = "SELECT *,(select count(*) from req_candidatos where id_requisision = req.id and estado ='F') as cantidadapro FROM req where 1=1 ".$where." ORDER BY 1 ASC";
+    if($_SESSION['id_perfil']==1){
+        $where =" "; 
+    }
+
+    $consultas = "SELECT empresasusuarias.nombreempresausu, empresasterporales.nombretemporal,req.*,(select count(*) from req_candidatos where id_requisision = req.id and estado ='F') as cantidadapro FROM req inner join empresasterporales on empresasterporales.id_temporal=req.empresaclientet INNER join empresasusuarias on empresasusuarias.ideempresatemporal=empresasterporales.id_temporal and req.empresacliente=empresasusuarias.id_empresausuaria where 1=1 ".$where." ORDER BY 1 ASC";
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
@@ -873,7 +919,7 @@ public function obteneMisRes($ide=0,$mis=""){
         $where .="and empresaclientet in(".substr($mis,0,-1).")"; 
     }
 
-    $consultas = "SELECT *,(select count(*) from req_candidatos where id_requisision = req.id and estado ='F') as cantidadapro FROM req where 1=1 ".$where." ORDER BY 1 ASC";
+    $consultas = "SELECT  empresasusuarias.nombreempresausu, empresasterporales.nombretemporal,req.*,(select count(*) from req_candidatos where id_requisision = req.id and estado ='F') as cantidadapro FROM req inner join empresasterporales on empresasterporales.id_temporal=req.empresaclientet INNER join empresasusuarias on empresasusuarias.ideempresatemporal=empresasterporales.id_temporal and req.empresacliente=empresasusuarias.id_empresausuaria where 1=1 ".$where." ORDER BY 1 ASC";
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;

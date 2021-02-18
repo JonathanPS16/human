@@ -96,6 +96,9 @@ $labo.='<option value="'.$laboratorios[$i]['id'].'">'.$laboratorios[$i]['nombrel
 		<tr>
 			<th>ID</th>
 			<th>Nombre Candidato</th>
+      <th>Numero Contacto</th>
+      <th>Documento</th>
+      <th>Correo</th>
       <th>Prueba Psicotecnica</th>
       <th>Adjunto Extra</th>
       <th>Entrevista</th>
@@ -136,11 +139,7 @@ for($i=0; $i<count($listadoreq);$i++){
     $ciudadcan=$listadoreq[$i]['ciudad']; 
     $archivootro=$listadoreq[$i]['archivootro']; 
 
-    
-
-    
-
-
+ 
 
     $modalbotonedit ='<div class="modal fade" id="exampleModaledit'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -814,6 +813,9 @@ if($archivootro!=""){
     echo "<tr>
     		<td>".$jaja ."</td>
     		<td>".$nombre."</td>
+        <td>".$telefono."</td>
+        <td>".$cedula."</td>
+        <td>".$correo."</td>
         <td>".$boton.$modalboton."</td>
         <td>".$botonextra.$modalbotonextra."</td>
         <td>".$botonentre.$modalbotonentre."</td>
