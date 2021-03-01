@@ -1217,9 +1217,102 @@
 
         break;
 
+        /*CARGUE MASIVO  */
+        case "carguemasivo":
+            $acc = $_GET['acc'];
+            switch ($acc) {
+                case "certificados":
+                    $tipo = $_GET['tp'];
+                    include('vistas/archivosmasivos.php');
+                break;
+                case "read":
+                   // print_r($_FILES);
+                    require_once 'PHPExcel/Classes/PHPExcel.php';
+                    $archivouno = "";
+                    $nombre_archivo = date('YmdHms').$_FILES['archivo']['name'];
+                    $tipo_archivo = $_FILES['archivo']['type'];
+                    $tamano_archivo = $_FILES['archivo']['size'];
+                    $mensaje = "";    
+                    //compruebo si las características del archivo son las que deseo
+                    if (!(strpos($nombre_archivo, "xlsx"))) {
+                        $mensaje = "Sola se permite archivo xlsx";
+                        $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            echo "<script>alert('{$mensaje}');
+                        window.location.href = 'home.php?ctr=carguemasivo&acc=certificados&tp=".$_POST['valor']."';
+                        </script>";
+                    }else{
+                        if (move_uploaded_file($_FILES['archivo']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                            $archivouno =$nombre_archivo;
+                            
+                        }else{
+                            $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            echo "<script>alert('{$mensaje}');
+                        window.location.href = 'home.php?ctr=carguemasivo&acc=certificados&tp=".$_POST['valor']."';
+                        </script>";
+                        }
+                    }
+                    echo "<script>function volvercarega(){
+                        window.location.href = 'home.php?ctr=carguemasivo&acc=certificados&tp=".$_POST['valor']."';
+                    }</script>";
+                    $archivofail = $nombre_archivo."_LOG.txt";
+                    $file = fopen($archivofail, "w+");
+                    $archivo = "archivosgenerales/".$archivouno;
+                    $inputFileType = PHPExcel_IOFactory::identify($archivo);
+                    $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+                    $objPHPExcel = $objReader->load($archivo);
+                    $sheet = $objPHPExcel->getSheet(0); 
+                    $highestRow = $sheet->getHighestRow(); 
+                    $highestColumn = $sheet->getHighestColumn();
+                    $num = 0;
+                    if($_POST['valor'] == 1) {
+                        $sql = "INSERT INTO certificados (contrato,nombre_empleado,cedula,fecha_ingreso,fecha_retiro,genero,centro_costos,subcentro_costos,nombrempresa,nombrecargo,salarioactual,correoelectronico) 
+                        VALUES ";
+                        $creado=0;
+                        for ($row = 2; $row <= $highestRow; $row++){ 
+                            $num++;
+                            $contrato  = $sheet->getCell("A".$row)->getValue();
+                            $nombreempleado  = trim($sheet->getCell("B".$row)->getValue());
+                            $cedula  = trim($sheet->getCell("C".$row)->getValue());
+                            $fechaini  = $sheet->getCell("D".$row)->getValue();
+                            $fechaini = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fechaini));
+                            $fechaini = date("d/m/Y",strtotime($fechaini."+ 1 days"));
+                            $fechafinal  = $sheet->getCell("E".$row)->getValue(); 
+                            if(trim($fechafinal)!=""){
+                                $fechafinal = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fechafinal));
+                                $fechafinal = date("d/m/Y",strtotime($fechafinal."+ 1 days")); 
+                            }
+                            
+                            $genero  = $sheet->getCell("F".$row)->getValue();
+                            $centrocostos  = $sheet->getCell("G".$row)->getValue();
+                            $subcentrocostos  = $sheet->getCell("H".$row)->getValue();
+                            $nombreempresa  = $sheet->getCell("I".$row)->getValue();
+                            $cargolaboral  = $sheet->getCell("J".$row)->getValue();
+                            $sueldoactual  = $sheet->getCell("K".$row)->getValue();
+                            $correoelectronico  = $sheet->getCell("L".$row)->getValue();
+                            $sql.="('$contrato','$nombreempleado','$cedula','$fechaini','$fechafinal','$genero','$centrocostos','$subcentrocostos','$nombreempresa','$cargolaboral','$sueldoactual','$correoelectronico'),";
+                            $creado++;
+                            
+                        }
+                    }
 
-        
+                    $sql = substr($sql, 0, -1);
 
+
+                   // echo $sql;
+                    fclose($file);
+                    echo "<center><h3>Se Ingresaron ".$creado." Registro(s) de ".$num." en Total</h3><br>";
+                    echo '<button name="fff" type="button" onclick="volvercarega()" class="btn btn-primary">Terminar</button></center>';
+                    if ($creado>0) {
+                      $listatemporales=$objconsulta->guardarcarguearchivos($sql);
+                    } 
+                
+                    
+                    break;
+            
+            }
+
+        break;
+            /*CARGUE MASIVO */ 
 
         case "requisicion":
             $acc = $_GET['acc'];
