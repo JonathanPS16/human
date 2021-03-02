@@ -1295,6 +1295,115 @@
                         }
                     }
 
+                    if($_POST['valor'] == 2) {
+                        $sql = "INSERT INTO volantes (cedula,numero_contrato,nombre_empleado,sueldo_actual,grupo,consecutivo,subgrupo,concepto,cantidad,valor_unitario,devengos,deducciones,centro_costo,
+                        nombre_empresa,cargo,nombre_cargo,anio,mes,periodo,fecha_inicial,fecha_final,dias_periodo,nit_alterno,cuenta_ahorro,cuenta_corriente,dias_vac_pendientes,codigo_fondo_pension,
+                        nombre_fondo,codigo_fondo_salud,nombre_salud,fecha_cargue) 
+                        VALUES ";
+                        $creado=0;
+                        for ($row = 2; $row <= $highestRow; $row++){ 
+                            $num++;
+                            $cedula  = $sheet->getCell("A".$row)->getValue();
+                            $numero_contrato  = $sheet->getCell("B".$row)->getValue();
+                            $nombre_empleado  = $sheet->getCell("C".$row)->getValue();
+                            $sueldo_actual  = $sheet->getCell("D".$row)->getValue();
+                            $grupo  = $sheet->getCell("E".$row)->getValue();
+                            $consecutivo  = $sheet->getCell("F".$row)->getValue();
+                            $subgrupo  = $sheet->getCell("G".$row)->getValue();
+                            $concepto  = $sheet->getCell("H".$row)->getValue();
+                            $cantidad  = $sheet->getCell("I".$row)->getValue();
+                            $valor_unitario  = $sheet->getCell("J".$row)->getValue();
+                            $devengos  = $sheet->getCell("K".$row)->getValue();
+                            $deducciones  = $sheet->getCell("L".$row)->getValue();
+                            $centro_costo  = $sheet->getCell("M".$row)->getValue();
+                            $nombre_empresa  = $sheet->getCell("N".$row)->getValue();
+                            $cargo  = $sheet->getCell("O".$row)->getValue();
+                            $nombre_cargo  = $sheet->getCell("P".$row)->getValue();
+                            $anio  = $sheet->getCell("Q".$row)->getValue();
+                            $mes  = $sheet->getCell("R".$row)->getValue();
+                            $periodo  = $sheet->getCell("S".$row)->getValue();
+                            $fecha_inicial  = $sheet->getCell("T".$row)->getValue();
+                            $fecha_final  = $sheet->getCell("U".$row)->getValue();
+                            $fecha_inicial = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fecha_inicial));
+                            $fecha_inicial = date("d/m/Y",strtotime($fecha_inicial."+ 1 days"));
+                            $fecha_final = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fecha_final));
+                            $fecha_final = date("d/m/Y",strtotime($fecha_final."+ 1 days")); 
+                            $dias_periodo  = $sheet->getCell("V".$row)->getValue();
+                            $nit_alterno  = $sheet->getCell("W".$row)->getValue();
+                            $cuenta_ahorro  = $sheet->getCell("X".$row)->getValue();
+                            $cuenta_corriente  = $sheet->getCell("Y".$row)->getValue();
+                            $dias_vac_pendientes  = $sheet->getCell("Z".$row)->getValue();
+                            $codigo_fondo_pension  = $sheet->getCell("AA".$row)->getValue();
+                            $nombre_fondo  = $sheet->getCell("AB".$row)->getValue();
+                            $codigo_fondo_salud  = $sheet->getCell("AC".$row)->getValue();
+                            $nombre_salud  = $sheet->getCell("AD".$row)->getValue();
+                            $fecha_cargue  = date('Y-m-d H:m:s');
+                            $sql.="('$cedula','$numero_contrato','$nombre_empleado','$sueldo_actual','$grupo','$consecutivo','$subgrupo','$concepto','$cantidad','$valor_unitario','$devengos','$deducciones','$centro_costo'
+                            ,'$nombre_empresa','$cargo','$nombre_cargo','$anio','$mes','$periodo','$fecha_inicial','$fecha_final','$dias_periodo','$nit_alterno','$cuenta_ahorro','$cuenta_corriente','$dias_vac_pendientes','$codigo_fondo_pension'
+                            ,'$nombre_fondo','$codigo_fondo_salud','$nombre_salud','$fecha_cargue'),";
+                            $creado++;
+                            
+                        }
+                    }
+
+                    if($_POST['valor'] == 3) {
+                        $sql = "INSERT INTO ingresos_ret_2017 (TIPODEDOCUMENTO,CEDULA,PRIMERAPELLIDO,SEGUNDOAPELLIDO,PRIMERNOMBRE,SEGUNDONOMBRE,DIRECCION,CODIGODEPARTAMENTO,CODIGOMUNICIPIO,CODIGOPAIS,CORREOELECTRONICO,FECHAINICIAL,FECHAFINAL,
+                        FECHAEXPEDICION,DEPARTAMENTORETENCION,MUNICIPIORETENCION,NUMERORETENCION,PAGOSSALARIOSOECLESISTICOS,PAGOSHONORARIOS,PAGOSSERVICIOS,PAGOSCOMISIONES,PAGOSPRESTACIONES,PAGOSVIATICOS,PAGOSREPRESENTACION,PAGOSCOOPERATIVO,OTROSPAGOS,CESANTIASPERIODO,
+                        PENSIONES,TOTALBRUTOS,APORTESSALUD,APORTESPENSIONESRAIS,APORTESVOLUNTARIOSPENSIONES,APORTESACUENTASAFC,RETENCIONFUENTETRABAJOPENSIONES,PERSONASACARGO,fecha_cargue) 
+                        VALUES ";
+                        $creado=0;
+                        for ($row = 2; $row <= $highestRow; $row++){ 
+                            $num++;
+                            $TIPODEDOCUMENTO  = $sheet->getCell("A".$row)->getValue();
+                            $CEDULA  = $sheet->getCell("B".$row)->getValue();
+                            $PRIMERAPELLIDO  = $sheet->getCell("C".$row)->getValue();
+                            $SEGUNDOAPELLIDO  = $sheet->getCell("D".$row)->getValue();
+                            $PRIMERNOMBRE  = $sheet->getCell("E".$row)->getValue();
+                            $SEGUNDONOMBRE  = $sheet->getCell("F".$row)->getValue();
+                            $DIRECCION  = $sheet->getCell("G".$row)->getValue();
+                            $CODIGODEPARTAMENTO  = $sheet->getCell("H".$row)->getValue();
+                            $CODIGOMUNICIPIO  = $sheet->getCell("I".$row)->getValue();
+                            $CODIGOPAIS  = $sheet->getCell("J".$row)->getValue();
+                            $CORREOELECTRONICO  = $sheet->getCell("K".$row)->getValue();
+                            $FECHAINICIAL  = $sheet->getCell("L".$row)->getValue();
+                            $FECHAFINAL  = $sheet->getCell("M".$row)->getValue();
+                            $FECHAEXPEDICION  = $sheet->getCell("N".$row)->getValue();
+                            $DEPARTAMENTORETENCION  = $sheet->getCell("O".$row)->getValue();
+                            $MUNICIPIORETENCION  = $sheet->getCell("P".$row)->getValue();
+                            $NUMERORETENCION  = $sheet->getCell("Q".$row)->getValue();
+                            $PAGOSSALARIOSOECLESISTICOS  = $sheet->getCell("R".$row)->getValue();
+                            $PAGOSHONORARIOS  = $sheet->getCell("S".$row)->getValue();
+                            $PAGOSSERVICIOS  = $sheet->getCell("T".$row)->getValue();
+                            $PAGOSCOMISIONES  = $sheet->getCell("U".$row)->getValue();
+                            $FECHAINICIAL = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($FECHAINICIAL));
+                            $FECHAINICIAL = date("d/m/Y",strtotime($FECHAINICIAL."+ 1 days"));
+                            $FECHAFINAL = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($FECHAFINAL));
+                            $FECHAFINAL = date("d/m/Y",strtotime($FECHAFINAL."+ 1 days"));
+                            $FECHAEXPEDICION = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($FECHAEXPEDICION));
+                            $FECHAEXPEDICION = date("d/m/Y",strtotime($FECHAEXPEDICION."+ 1 days")); 
+                            $PAGOSPRESTACIONES  = $sheet->getCell("V".$row)->getValue();
+                            $PAGOSVIATICOS  = $sheet->getCell("W".$row)->getValue();
+                            $PAGOSREPRESENTACION  = $sheet->getCell("X".$row)->getValue();
+                            $PAGOSCOOPERATIVO  = $sheet->getCell("Y".$row)->getValue();
+                            $OTROSPAGOS  = $sheet->getCell("Z".$row)->getValue();
+                            $CESANTIASPERIODO  = $sheet->getCell("AA".$row)->getValue();
+                            $PENSIONES  = $sheet->getCell("AB".$row)->getValue();
+                            $TOTALBRUTOS  = $sheet->getCell("AC".$row)->getValue();
+                            $APORTESSALUD  = $sheet->getCell("AD".$row)->getValue();
+                            $APORTESPENSIONESRAIS  = $sheet->getCell("AE".$row)->getValue();
+                            $APORTESVOLUNTARIOSPENSIONES  = $sheet->getCell("AF".$row)->getValue();
+                            $APORTESACUENTASAFC  = $sheet->getCell("AG".$row)->getValue();
+                            $RETENCIONFUENTETRABAJOPENSIONES  = $sheet->getCell("AH".$row)->getValue();
+                            $PERSONASACARGO  = $sheet->getCell("AI".$row)->getValue();
+                            $fecha_cargue  = date('Y-m-d H:m:s');
+                            $sql.="('$TIPODEDOCUMENTO','$CEDULA','$PRIMERAPELLIDO','$SEGUNDOAPELLIDO','$PRIMERNOMBRE','$SEGUNDONOMBRE','$DIRECCION','$CODIGODEPARTAMENTO','$CODIGOMUNICIPIO','$CODIGOPAIS','$CORREOELECTRONICO','$FECHAINICIAL','$FECHAFINAL'
+                            ,'$FECHAEXPEDICION','$DEPARTAMENTORETENCION','$MUNICIPIORETENCION','$NUMERORETENCION','$PAGOSSALARIOSOECLESISTICOS','$PAGOSHONORARIOS','$PAGOSSERVICIOS','$PAGOSCOMISIONES','$PAGOSPRESTACIONES','$PAGOSVIATICOS','$PAGOSREPRESENTACION','$PAGOSCOOPERATIVO','$OTROSPAGOS','$CESANTIASPERIODO'
+                            ,'$PENSIONES','$TOTALBRUTOS','$APORTESSALUD','$APORTESPENSIONESRAIS','$APORTESVOLUNTARIOSPENSIONES','$APORTESACUENTASAFC','$RETENCIONFUENTETRABAJOPENSIONES','$PERSONASACARGO','$fecha_cargue'),";
+                            $creado++;
+                            
+                        }
+                    }
+
                     $sql = substr($sql, 0, -1);
 
 
