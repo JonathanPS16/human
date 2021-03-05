@@ -77,7 +77,7 @@
                                         $valida = true;
                                     }
                                 }
-                                if($_SESSION['id_perfil']==1){
+                                if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9){
                                     $valida = true;
                                 }
                                 $certificados=$objconsulta->obtenerIngresosRete($numero,$anio);
@@ -673,33 +673,33 @@
                     $creado=0;
                     for ($row = 2; $row <= $highestRow; $row++){ 
                         $num++;
-                        $codigo  = $sheet->getCell("A".$row)->getValue();
+                        $codigo  = str_replace("'","",$sheet->getCell("A".$row)->getValue());
                         $codigobk=$codigo;
                         $codigo = str_replace(" ","",$codigo);
                         $codigo = trim(substr($codigo, 0, -2));
                         $nombre  = trim($sheet->getCell("B".$row)->getValue());
-                        $fechaini  = $sheet->getCell("C".$row)->getValue();
+                        $fechaini  = str_replace("'","",$sheet->getCell("C".$row)->getValue());
                         $fechaini = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fechaini));
                         $fechaini = date("d/m/Y",strtotime($fechaini."+ 1 days")); 
-                        $fechafinal  = $sheet->getCell("D".$row)->getValue();
+                        $fechafinal  = str_replace("'","",$sheet->getCell("D".$row)->getValue());
                         $fechafinal = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fechafinal));
                         $fechafinal = date("d/m/Y",strtotime($fechafinal."+ 1 days")); 
-                        $cantidaddias  = $sheet->getCell("E".$row)->getValue();
-                        $mes  = $sheet->getCell("F".$row)->getValue();
-                        $anio  = $sheet->getCell("G".$row)->getValue();
-                        $periodo  = $sheet->getCell("H".$row)->getValue();
-                        $cedula  = $sheet->getCell("I".$row)->getValue();
-                        $nombreper  = $sheet->getCell("J".$row)->getValue();
-                        $diaslaborados  = $sheet->getCell("K".$row)->getValue();
-                        $codigoconcepto  = $sheet->getCell("L".$row)->getValue();
+                        $cantidaddias  = str_replace("'","",$sheet->getCell("E".$row)->getValue());
+                        $mes  = str_replace("'","",$sheet->getCell("F".$row)->getValue());
+                        $anio  = str_replace("'","",$sheet->getCell("G".$row)->getValue());
+                        $periodo  = str_replace("'","",$sheet->getCell("H".$row)->getValue());
+                        $cedula  = str_replace("'","",$sheet->getCell("I".$row)->getValue());
+                        $nombreper  = str_replace("'","",$sheet->getCell("J".$row)->getValue());
+                        $diaslaborados  = str_replace("'","",$sheet->getCell("K".$row)->getValue());
+                        $codigoconcepto  = str_replace("'","",$sheet->getCell("L".$row)->getValue());
                         $codigoconcepto = trim(str_replace(" ","",$codigoconcepto));
-                        $concepto  = $sheet->getCell("M".$row)->getValue();
-                        $eps  = $sheet->getCell("N".$row)->getValue();
-                        $valorliqui  = $sheet->getCell("O".$row)->getValue();
-                        $observaciones  = $sheet->getCell("P".$row)->getValue();
-                        $tipoau  = $sheet->getCell("Q".$row)->getValue();
-                        $nombregene  = $sheet->getCell("R".$row)->getValue();
-                        $diasreconocidos  = $sheet->getCell("T".$row)->getValue();
+                        $concepto  = str_replace("'","",$sheet->getCell("M".$row)->getValue());
+                        $eps  = str_replace("'","",$sheet->getCell("N".$row)->getValue());
+                        $valorliqui  = str_replace("'","",$sheet->getCell("O".$row)->getValue());
+                        $observaciones  = str_replace("'","",$sheet->getCell("P".$row)->getValue());
+                        $tipoau  = str_replace("'","",$sheet->getCell("Q".$row)->getValue());
+                        $nombregene  = str_replace("'","",$sheet->getCell("R".$row)->getValue());
+                        $diasreconocidos  = str_replace("'","",$sheet->getCell("T".$row)->getValue());
                         if(trim($diasreconocidos)==""){
                             $diasreconocidos=0;
                         }
@@ -1265,30 +1265,34 @@
                     $highestColumn = $sheet->getHighestColumn();
                     $num = 0;
                     if($_POST['valor'] == 1) {
+                        $objconsulta->guardarcarguearchivos("truncate table certificados");
+                        $objconsulta->guardarcarguearchivos("ALTER TABLE certificados AUTO_INCREMENT = 1");
                         $sql = "INSERT INTO certificados (contrato,nombre_empleado,cedula,fecha_ingreso,fecha_retiro,genero,centro_costos,subcentro_costos,nombrempresa,nombrecargo,salarioactual,correoelectronico) 
                         VALUES ";
                         $creado=0;
                         for ($row = 2; $row <= $highestRow; $row++){ 
                             $num++;
-                            $contrato  = $sheet->getCell("A".$row)->getValue();
+                            $contrato  = str_replace("'","",$sheet->getCell("A".$row)->getValue());
                             $nombreempleado  = trim($sheet->getCell("B".$row)->getValue());
                             $cedula  = trim($sheet->getCell("C".$row)->getValue());
-                            $fechaini  = $sheet->getCell("D".$row)->getValue();
+                            $fechaini  = str_replace("'","",$sheet->getCell("D".$row)->getValue());
                             $fechaini = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fechaini));
                             $fechaini = date("d/m/Y",strtotime($fechaini."+ 1 days"));
-                            $fechafinal  = $sheet->getCell("E".$row)->getValue(); 
+                            $fechafinal  = str_replace("'","",$sheet->getCell("E".$row)->getValue()); 
                             if(trim($fechafinal)!=""){
                                 $fechafinal = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fechafinal));
                                 $fechafinal = date("d/m/Y",strtotime($fechafinal."+ 1 days")); 
+                            } else {
+                                $fechafinal = "";
                             }
                             
-                            $genero  = $sheet->getCell("F".$row)->getValue();
-                            $centrocostos  = $sheet->getCell("G".$row)->getValue();
-                            $subcentrocostos  = $sheet->getCell("H".$row)->getValue();
-                            $nombreempresa  = $sheet->getCell("I".$row)->getValue();
-                            $cargolaboral  = $sheet->getCell("J".$row)->getValue();
-                            $sueldoactual  = $sheet->getCell("K".$row)->getValue();
-                            $correoelectronico  = $sheet->getCell("L".$row)->getValue();
+                            $genero  = str_replace("'","",$sheet->getCell("F".$row)->getValue());
+                            $centrocostos  = str_replace("'","",$sheet->getCell("G".$row)->getValue());
+                            $subcentrocostos  = str_replace("'","",$sheet->getCell("H".$row)->getValue());
+                            $nombreempresa  = str_replace("'","",$sheet->getCell("I".$row)->getValue());
+                            $cargolaboral  = str_replace("'","",$sheet->getCell("J".$row)->getValue());
+                            $sueldoactual  = str_replace("'","",$sheet->getCell("K".$row)->getValue());
+                            $correoelectronico  = str_replace("'","",$sheet->getCell("L".$row)->getValue());
                             $sql.="('$contrato','$nombreempleado','$cedula','$fechaini','$fechafinal','$genero','$centrocostos','$subcentrocostos','$nombreempresa','$cargolaboral','$sueldoactual','$correoelectronico'),";
                             $creado++;
                             
@@ -1296,6 +1300,7 @@
                     }
 
                     if($_POST['valor'] == 2) {
+                        $objconsulta->guardarcarguearchivos("truncate table volantes");
                         $sql = "INSERT INTO volantes (cedula,numero_contrato,nombre_empleado,sueldo_actual,grupo,consecutivo,subgrupo,concepto,cantidad,valor_unitario,devengos,deducciones,centro_costo,
                         nombre_empresa,cargo,nombre_cargo,anio,mes,periodo,fecha_inicial,fecha_final,dias_periodo,nit_alterno,cuenta_ahorro,cuenta_corriente,dias_vac_pendientes,codigo_fondo_pension,
                         nombre_fondo,codigo_fondo_salud,nombre_salud,fecha_cargue) 
@@ -1303,40 +1308,40 @@
                         $creado=0;
                         for ($row = 2; $row <= $highestRow; $row++){ 
                             $num++;
-                            $cedula  = $sheet->getCell("A".$row)->getValue();
-                            $numero_contrato  = $sheet->getCell("B".$row)->getValue();
-                            $nombre_empleado  = $sheet->getCell("C".$row)->getValue();
-                            $sueldo_actual  = $sheet->getCell("D".$row)->getValue();
-                            $grupo  = $sheet->getCell("E".$row)->getValue();
-                            $consecutivo  = $sheet->getCell("F".$row)->getValue();
-                            $subgrupo  = $sheet->getCell("G".$row)->getValue();
-                            $concepto  = $sheet->getCell("H".$row)->getValue();
-                            $cantidad  = $sheet->getCell("I".$row)->getValue();
-                            $valor_unitario  = $sheet->getCell("J".$row)->getValue();
-                            $devengos  = $sheet->getCell("K".$row)->getValue();
-                            $deducciones  = $sheet->getCell("L".$row)->getValue();
-                            $centro_costo  = $sheet->getCell("M".$row)->getValue();
-                            $nombre_empresa  = $sheet->getCell("N".$row)->getValue();
-                            $cargo  = $sheet->getCell("O".$row)->getValue();
-                            $nombre_cargo  = $sheet->getCell("P".$row)->getValue();
-                            $anio  = $sheet->getCell("Q".$row)->getValue();
-                            $mes  = $sheet->getCell("R".$row)->getValue();
-                            $periodo  = $sheet->getCell("S".$row)->getValue();
-                            $fecha_inicial  = $sheet->getCell("T".$row)->getValue();
-                            $fecha_final  = $sheet->getCell("U".$row)->getValue();
+                            $cedula  = str_replace("'","",$sheet->getCell("A".$row)->getValue());
+                            $numero_contrato  = str_replace("'","",$sheet->getCell("B".$row)->getValue());
+                            $nombre_empleado  = str_replace("'","",$sheet->getCell("C".$row)->getValue());
+                            $sueldo_actual  = str_replace("'","",$sheet->getCell("D".$row)->getValue());
+                            $grupo  = str_replace("'","",$sheet->getCell("E".$row)->getValue());
+                            $consecutivo  = str_replace("'","",$sheet->getCell("F".$row)->getValue());
+                            $subgrupo  = str_replace("'","",$sheet->getCell("G".$row)->getValue());
+                            $concepto  = str_replace("'","",$sheet->getCell("H".$row)->getValue());
+                            $cantidad  = str_replace("'","",$sheet->getCell("I".$row)->getValue());
+                            $valor_unitario  = str_replace("'","",$sheet->getCell("J".$row)->getValue());
+                            $devengos  = str_replace("'","",$sheet->getCell("K".$row)->getValue());
+                            $deducciones  = str_replace("'","",$sheet->getCell("L".$row)->getValue());
+                            $centro_costo  = str_replace("'","",$sheet->getCell("M".$row)->getValue());
+                            $nombre_empresa  = str_replace("'","",$sheet->getCell("N".$row)->getValue());
+                            $cargo  = str_replace("'","",$sheet->getCell("O".$row)->getValue());
+                            $nombre_cargo  = str_replace("'","",$sheet->getCell("P".$row)->getValue());
+                            $anio  = str_replace("'","",$sheet->getCell("Q".$row)->getValue());
+                            $mes  = str_replace("'","",$sheet->getCell("R".$row)->getValue());
+                            $periodo  = str_replace("'","",$sheet->getCell("S".$row)->getValue());
+                            $fecha_inicial  = str_replace("'","",$sheet->getCell("T".$row)->getValue());
+                            $fecha_final  = str_replace("'","",$sheet->getCell("U".$row)->getValue());
                             $fecha_inicial = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fecha_inicial));
                             $fecha_inicial = date("d/m/Y",strtotime($fecha_inicial."+ 1 days"));
                             $fecha_final = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fecha_final));
                             $fecha_final = date("d/m/Y",strtotime($fecha_final."+ 1 days")); 
-                            $dias_periodo  = $sheet->getCell("V".$row)->getValue();
-                            $nit_alterno  = $sheet->getCell("W".$row)->getValue();
-                            $cuenta_ahorro  = $sheet->getCell("X".$row)->getValue();
-                            $cuenta_corriente  = $sheet->getCell("Y".$row)->getValue();
-                            $dias_vac_pendientes  = $sheet->getCell("Z".$row)->getValue();
-                            $codigo_fondo_pension  = $sheet->getCell("AA".$row)->getValue();
-                            $nombre_fondo  = $sheet->getCell("AB".$row)->getValue();
-                            $codigo_fondo_salud  = $sheet->getCell("AC".$row)->getValue();
-                            $nombre_salud  = $sheet->getCell("AD".$row)->getValue();
+                            $dias_periodo  = str_replace("'","",$sheet->getCell("V".$row)->getValue());
+                            $nit_alterno  = str_replace("'","",$sheet->getCell("W".$row)->getValue());
+                            $cuenta_ahorro  = str_replace("'","",$sheet->getCell("X".$row)->getValue());
+                            $cuenta_corriente  = str_replace("'","",$sheet->getCell("Y".$row)->getValue());
+                            $dias_vac_pendientes  = str_replace("'","",$sheet->getCell("Z".$row)->getValue());
+                            $codigo_fondo_pension  = str_replace("'","",$sheet->getCell("AA".$row)->getValue());
+                            $nombre_fondo  = str_replace("'","",$sheet->getCell("AB".$row)->getValue());
+                            $codigo_fondo_salud  = str_replace("'","",$sheet->getCell("AC".$row)->getValue());
+                            $nombre_salud  = str_replace("'","",$sheet->getCell("AD".$row)->getValue());
                             $fecha_cargue  = date('Y-m-d H:m:s');
                             $sql.="('$cedula','$numero_contrato','$nombre_empleado','$sueldo_actual','$grupo','$consecutivo','$subgrupo','$concepto','$cantidad','$valor_unitario','$devengos','$deducciones','$centro_costo'
                             ,'$nombre_empresa','$cargo','$nombre_cargo','$anio','$mes','$periodo','$fecha_inicial','$fecha_final','$dias_periodo','$nit_alterno','$cuenta_ahorro','$cuenta_corriente','$dias_vac_pendientes','$codigo_fondo_pension'
@@ -1354,47 +1359,47 @@
                         $creado=0;
                         for ($row = 2; $row <= $highestRow; $row++){ 
                             $num++;
-                            $TIPODEDOCUMENTO  = $sheet->getCell("A".$row)->getValue();
-                            $CEDULA  = $sheet->getCell("B".$row)->getValue();
-                            $PRIMERAPELLIDO  = $sheet->getCell("C".$row)->getValue();
-                            $SEGUNDOAPELLIDO  = $sheet->getCell("D".$row)->getValue();
-                            $PRIMERNOMBRE  = $sheet->getCell("E".$row)->getValue();
-                            $SEGUNDONOMBRE  = $sheet->getCell("F".$row)->getValue();
-                            $DIRECCION  = $sheet->getCell("G".$row)->getValue();
-                            $CODIGODEPARTAMENTO  = $sheet->getCell("H".$row)->getValue();
-                            $CODIGOMUNICIPIO  = $sheet->getCell("I".$row)->getValue();
-                            $CODIGOPAIS  = $sheet->getCell("J".$row)->getValue();
-                            $CORREOELECTRONICO  = $sheet->getCell("K".$row)->getValue();
-                            $FECHAINICIAL  = $sheet->getCell("L".$row)->getValue();
-                            $FECHAFINAL  = $sheet->getCell("M".$row)->getValue();
-                            $FECHAEXPEDICION  = $sheet->getCell("N".$row)->getValue();
-                            $DEPARTAMENTORETENCION  = $sheet->getCell("O".$row)->getValue();
-                            $MUNICIPIORETENCION  = $sheet->getCell("P".$row)->getValue();
-                            $NUMERORETENCION  = $sheet->getCell("Q".$row)->getValue();
-                            $PAGOSSALARIOSOECLESISTICOS  = $sheet->getCell("R".$row)->getValue();
-                            $PAGOSHONORARIOS  = $sheet->getCell("S".$row)->getValue();
-                            $PAGOSSERVICIOS  = $sheet->getCell("T".$row)->getValue();
-                            $PAGOSCOMISIONES  = $sheet->getCell("U".$row)->getValue();
+                            $TIPODEDOCUMENTO  = str_replace("'","",$sheet->getCell("A".$row)->getValue());
+                            $CEDULA  = str_replace("'","",$sheet->getCell("B".$row)->getValue());
+                            $PRIMERAPELLIDO  = str_replace("'","",$sheet->getCell("C".$row)->getValue());
+                            $SEGUNDOAPELLIDO  = str_replace("'","",$sheet->getCell("D".$row)->getValue());
+                            $PRIMERNOMBRE  = str_replace("'","",$sheet->getCell("E".$row)->getValue());
+                            $SEGUNDONOMBRE  = str_replace("'","",$sheet->getCell("F".$row)->getValue());
+                            $DIRECCION  = str_replace("'","",$sheet->getCell("G".$row)->getValue());
+                            $CODIGODEPARTAMENTO  = str_replace("'","",$sheet->getCell("H".$row)->getValue());
+                            $CODIGOMUNICIPIO  = str_replace("'","",$sheet->getCell("I".$row)->getValue());
+                            $CODIGOPAIS  = str_replace("'","",$sheet->getCell("J".$row)->getValue());
+                            $CORREOELECTRONICO  = str_replace("'","",$sheet->getCell("K".$row)->getValue());
+                            $FECHAINICIAL  = str_replace("'","",$sheet->getCell("L".$row)->getValue());
+                            $FECHAFINAL  = str_replace("'","",$sheet->getCell("M".$row)->getValue());
+                            $FECHAEXPEDICION  = str_replace("'","",$sheet->getCell("N".$row)->getValue());
+                            $DEPARTAMENTORETENCION  = str_replace("'","",$sheet->getCell("O".$row)->getValue());
+                            $MUNICIPIORETENCION  = str_replace("'","",$sheet->getCell("P".$row)->getValue());
+                            $NUMERORETENCION  = str_replace("'","",$sheet->getCell("Q".$row)->getValue());
+                            $PAGOSSALARIOSOECLESISTICOS  = str_replace("'","",$sheet->getCell("R".$row)->getValue());
+                            $PAGOSHONORARIOS  = str_replace("'","",$sheet->getCell("S".$row)->getValue());
+                            $PAGOSSERVICIOS  = str_replace("'","",$sheet->getCell("T".$row)->getValue());
+                            $PAGOSCOMISIONES  = str_replace("'","",$sheet->getCell("U".$row)->getValue());
                             $FECHAINICIAL = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($FECHAINICIAL));
                             $FECHAINICIAL = date("d/m/Y",strtotime($FECHAINICIAL."+ 1 days"));
                             $FECHAFINAL = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($FECHAFINAL));
                             $FECHAFINAL = date("d/m/Y",strtotime($FECHAFINAL."+ 1 days"));
                             $FECHAEXPEDICION = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($FECHAEXPEDICION));
                             $FECHAEXPEDICION = date("d/m/Y",strtotime($FECHAEXPEDICION."+ 1 days")); 
-                            $PAGOSPRESTACIONES  = $sheet->getCell("V".$row)->getValue();
-                            $PAGOSVIATICOS  = $sheet->getCell("W".$row)->getValue();
-                            $PAGOSREPRESENTACION  = $sheet->getCell("X".$row)->getValue();
-                            $PAGOSCOOPERATIVO  = $sheet->getCell("Y".$row)->getValue();
-                            $OTROSPAGOS  = $sheet->getCell("Z".$row)->getValue();
-                            $CESANTIASPERIODO  = $sheet->getCell("AA".$row)->getValue();
-                            $PENSIONES  = $sheet->getCell("AB".$row)->getValue();
-                            $TOTALBRUTOS  = $sheet->getCell("AC".$row)->getValue();
-                            $APORTESSALUD  = $sheet->getCell("AD".$row)->getValue();
-                            $APORTESPENSIONESRAIS  = $sheet->getCell("AE".$row)->getValue();
-                            $APORTESVOLUNTARIOSPENSIONES  = $sheet->getCell("AF".$row)->getValue();
-                            $APORTESACUENTASAFC  = $sheet->getCell("AG".$row)->getValue();
-                            $RETENCIONFUENTETRABAJOPENSIONES  = $sheet->getCell("AH".$row)->getValue();
-                            $PERSONASACARGO  = $sheet->getCell("AI".$row)->getValue();
+                            $PAGOSPRESTACIONES  = str_replace("'","",$sheet->getCell("V".$row)->getValue());
+                            $PAGOSVIATICOS  = str_replace("'","",$sheet->getCell("W".$row)->getValue());
+                            $PAGOSREPRESENTACION  = str_replace("'","",$sheet->getCell("X".$row)->getValue());
+                            $PAGOSCOOPERATIVO  = str_replace("'","",$sheet->getCell("Y".$row)->getValue());
+                            $OTROSPAGOS  = str_replace("'","",$sheet->getCell("Z".$row)->getValue());
+                            $CESANTIASPERIODO  = str_replace("'","",$sheet->getCell("AA".$row)->getValue());
+                            $PENSIONES  = str_replace("'","",$sheet->getCell("AB".$row)->getValue());
+                            $TOTALBRUTOS  = str_replace("'","",$sheet->getCell("AC".$row)->getValue());
+                            $APORTESSALUD  = str_replace("'","",$sheet->getCell("AD".$row)->getValue());
+                            $APORTESPENSIONESRAIS  = str_replace("'","",$sheet->getCell("AE".$row)->getValue());
+                            $APORTESVOLUNTARIOSPENSIONES  = str_replace("'","",$sheet->getCell("AF".$row)->getValue());
+                            $APORTESACUENTASAFC  = str_replace("'","",$sheet->getCell("AG".$row)->getValue());
+                            $RETENCIONFUENTETRABAJOPENSIONES  = str_replace("'","",$sheet->getCell("AH".$row)->getValue());
+                            $PERSONASACARGO  = str_replace("'","",$sheet->getCell("AI".$row)->getValue());
                             $fecha_cargue  = date('Y-m-d H:m:s');
                             $sql.="('$TIPODEDOCUMENTO','$CEDULA','$PRIMERAPELLIDO','$SEGUNDOAPELLIDO','$PRIMERNOMBRE','$SEGUNDONOMBRE','$DIRECCION','$CODIGODEPARTAMENTO','$CODIGOMUNICIPIO','$CODIGOPAIS','$CORREOELECTRONICO','$FECHAINICIAL','$FECHAFINAL'
                             ,'$FECHAEXPEDICION','$DEPARTAMENTORETENCION','$MUNICIPIORETENCION','$NUMERORETENCION','$PAGOSSALARIOSOECLESISTICOS','$PAGOSHONORARIOS','$PAGOSSERVICIOS','$PAGOSCOMISIONES','$PAGOSPRESTACIONES','$PAGOSVIATICOS','$PAGOSREPRESENTACION','$PAGOSCOOPERATIVO','$OTROSPAGOS','$CESANTIASPERIODO'
@@ -1408,6 +1413,7 @@
 
 
                    // echo $sql;
+                    //die();
                     fclose($file);
                     echo "<center><h3>Se Ingresaron ".$creado." Registro(s) de ".$num." en Total</h3><br>";
                     echo '<button name="fff" type="button" onclick="volvercarega()" class="btn btn-primary">Terminar</button></center>';

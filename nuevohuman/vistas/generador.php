@@ -36,7 +36,7 @@ $pdf->Image('img/CABECERA.png' , 0 ,0, 210 , 38);
 	}
 	else
 	{
-		$pdf->MultiCell(170,5,utf8_decode($tipificador).' '.utf8_decode($inf['nombre_empleado']).' '.$ident.' con C.C. No.'.' '.number_format($inf['cedula'], 0, ",", ".").', '.'laboro mediante contrato de obra o labor determinada, como trabajador en'.' '.utf8_decode('misión').' '.'para la empresa'.' '.utf8_decode($inf['nombrempresa']).', '.' desde el'.' '.$inf['fecha_ingreso'].' '.'a '.' '.$inf['fecha_retiro'].','.utf8_decode(' desempeñando el cargo de').' '.$inf['nombrecargo'].'.'); 	
+		$pdf->MultiCell(170,5,utf8_decode($tipificador).' '.utf8_decode($inf['nombre_empleado']).' '.$ident.' con C.C. No.'.' '.number_format($inf['cedula'], 0, ",", ".").', '.'laboro mediante contrato de obra o labor determinada, como trabajador en'.' '.utf8_decode('misión').' '.'para la empresa'.' '.utf8_decode($inf['nombrempresa']).', '.' desde el'.' '.$inf['fecha_ingreso'].' '.'a '.' '.$inf['fecha_retiro'].','.utf8_decode(' desempeñando el cargo de').' '.utf8_decode($inf['nombrecargo']).'.'); 	
 	}
 	$pdf->Ln();
 	$pdf->MultiCell(170,5,utf8_decode('Para constancia se firma en Bogotá, D.C, el día').' '.strtolower(num2letras(date("d"))).' de  '.$meses[date('n')-1].' de '.strtolower(num2letras(date("Y"))).'.');

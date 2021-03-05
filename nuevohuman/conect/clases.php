@@ -112,6 +112,9 @@ public function conec(){
 
     $conn->Connect($DBserver,$DBuser,$DBpass,$DBname) or die(header("location:../errores/msn_error.php"));
     $conn->execute("SET NAMES utf8");
+    $conn->setCharset('utf8');
+
+
     return $conn;
 }
 
@@ -365,7 +368,7 @@ public function guardarperfiles($insert,$id){
 
 public function guardarcarguearchivos ($sql){
     $conn = $this->conec();
-    $consultas= $conn->Execute($sql)-> getRows();
+    $consultas= $conn->Execute($sql);
     return $consultas;
 }
 
@@ -493,7 +496,7 @@ public function obtenerVolantes($anios,$mes,$periodo,$numero){
 
     $consultas = "SELECT volantes.* FROM volantes 
     inner join certificados on certificados.cedula=volantes.cedula $where
-    where volantes.anio='$anios' and volantes.mes='$mes' and volantes.periodo='$periodo' and volantes.cedula='$numero'  group by volantes.concepto limit 1";
+    where volantes.anio='$anios' and volantes.mes='$mes' and volantes.periodo='$periodo' and volantes.cedula='$numero'  group by volantes.concepto";
     /*echo $consultas;
     $rs = $conn->execute($consultas);
     if (!$rs) {

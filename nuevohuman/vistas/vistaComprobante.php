@@ -82,7 +82,7 @@ $datos=$certificados;
    </tr>
    <tr>
       <td width="2%">&nbsp;</td>
-    <td><div align="left">Cargo: <?php echo utf8_encode($datos[0][nombre_cargo]); ?></div></td>
+    <td><div align="left">Cargo: <?php echo utf8_decode($datos[0][nombre_cargo]); ?></div></td>
     <td><div align="left">Vacaciones Pendientes a la fecha: <?php echo $datos[0][dias_vac_pendientes]; ?> dias.</div></td>
    </tr>
   
