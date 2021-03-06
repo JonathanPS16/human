@@ -122,7 +122,7 @@
                                     $valida = true;
                                 }
                             }
-                            if($_SESSION['id_perfil']==1){
+                            if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9){
                                 $valida = true;
                             }
                             $certificados=$objconsulta->obtenerCertificadosCedula($numero);
@@ -141,7 +141,7 @@
                                     $valida = true;
                                 }
                             }
-                            if($_SESSION['id_perfil']==1){
+                            if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9){
                                 $valida = true;
                             }
                             $certificados=$objconsulta->obtenerCertificadosCedula($_POST['documento']);
@@ -189,8 +189,8 @@
                             if($_SESSION['id_perfil']==1){
                                 $valida = true;
                             }
-                    $certificados=$objconsulta->obtenerCertificadosCedula($_POST['documento']);
-                    if(count($certificados)==0 || $valida==false) {
+                    //$certificados=$objconsulta->obtenerCertificadosCedula($_POST['documento']);
+                    if($valida==false) {
                         echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
                         echo '<a href="home.php?ctr=buscardorCarpetas&acc=buscador" class="btn btn-info">Nueva Consulta</a>';
                     } else {

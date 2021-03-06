@@ -30,22 +30,31 @@
       break;
 }*/
 
-$ruta='/home4/byvnilval/public_html/humantalentsas.com/contabilidad/carpetas_empleados/HV_'.$anio.'/'.$carpeta;
-          $rutadoc='/contabilidad/carpetas_empleados/HV_'.$anio.'/'.$carpeta;
+$ruta='/home4/byvnilval/public_html/humantalentsas.com/contabilidad/carpetas_empleados/';
+          $rutadoc='/contabilidad/carpetas_empleados';
     
    
    
     
     //Creamos Nuestra Función
-    function listFiles($directorio,$rutadoc){ //La función recibira como parametro un directorio
+    function listFiles($directorio,$rutadoc,$documento=""){
+      //echo "Directorio $directorio  ---  RUTA DOC $rutadoc<br>";  //La función recibira como parametro un directorio
         if (is_dir($directorio)) { //Comprovamos que sea un directorio Valido
             if ($dir = opendir($directorio)) {//Abrimos el directorio
                 
-                echo '<div class="lista-archivos"><ul>'; //Abrimos una lista HTML para mostrar los archivos
+                echo '<div class="lista-archivos">'; //Abrimos una lista HTML para mostrar los archivos
                 
                 while (($archivo = readdir($dir)) !== false){ //Comenzamos a leer archivo por archivo
-                    
-                    if ($archivo != '.' && $archivo != '..'){//Omitimos los archivos del sistema . y ..
+                  $mostrar = true;
+                  if($documento!=""){
+                  $posicion_coincidencia = strpos($archivo, $documento);  
+                  if ($posicion_coincidencia === false) {
+                    $mostrar = false;
+                  }
+                }
+              
+
+                    if ($archivo != '.' && $archivo != '..' && $mostrar==true){//Omitimos los archivos del sistema . y ..
                         
                         $nuevaRuta = $directorio.$archivo.'/';//Creamos unaruta con la ruta anterior y el nombre del archivo actual
                         
@@ -53,23 +62,34 @@ $ruta='/home4/byvnilval/public_html/humantalentsas.com/contabilidad/carpetas_emp
                         $nuevaRuta2 = $rutadoc.'/'.$archivo;
                         
                         
-                        echo '<li>'; //Abrimos un elemento de lista
-                        
+                        //echo "--".$nuevaRuta."<br>"; 
                         if (is_dir($nuevaRuta)) { //Si la ruta que creamos es un directorio entonces:
-                            echo '<b>'.$nuevaRuta.'</b>'; //Imprimimos la ruta completa resaltandola en negrita
-                            listFiles($nuevaRuta);//Volvemos a llamar a este metodo para que explore ese directorio.
-                            
+                            echo '<b>Carpeta '.$archivo.'</b><br>'; //Imprimimos la ruta completa resaltandola en negrita
+                            listFiles($directorio."/".$archivo,$rutadoc."/".$archivo);//Volvemos a llamar a este metodo para que explore ese directorio.
+                            echo "<hr>";
                         } else { //si no es un directorio:
                             //echo 'Archivo: '.$archivo; //simplemente imprimimos el nombre del archivo actual
-                            echo "<a href=\"".$nuevaRuta2."\" target='_blank'>".'Archivo: '.$archivo."</a><br/>";
+                            echo "--<a  href=\"".$nuevaRuta2."\" target='_blank'>".'Archivo: '.$archivo."</a><br/>";
                         }
-                        echo'</li>'; //Cerramos el item actual y se inicia la llamada al siguiente archivo
+                         //Cerramos el item actual y se inicia la llamada al siguiente archivo
                         
                     }
                     
                 }//finaliza While
-                echo '</ul></div>';//Se cierra la lista
-                echo '<table class="table">
+                echo '</div>';//Se cierra la lista
+                
+                
+                closedir($dir);//Se cierra el archivo
+            }
+        }else{//Finaliza el If de la linea 12, si no es un directorio valido, muestra el siguiente mensaje
+            echo '<div class="error-colaboradores">No Existe informaci&oacute;n relacionada al número de documento y contrato</div>'.'<br/><br/>';
+        }
+    }//Fin de la Función
+    
+    //Llamamos a la función y le pasamos el nombre de nuestro directorio.
+    listFiles($ruta,$rutadoc,$documento);
+    ?>
+    <table class="table">
                 <thead>
                   <tr>
                     <th scope="col">Descripci&oacute;n Documento&nbsp;</th>
@@ -152,18 +172,7 @@ $ruta='/home4/byvnilval/public_html/humantalentsas.com/contabilidad/carpetas_emp
                     
                   </tr>
                 </tbody>
-              </table>';
-                
-                closedir($dir);//Se cierra el archivo
-            }
-        }else{//Finaliza el If de la linea 12, si no es un directorio valido, muestra el siguiente mensaje
-            echo '<div class="error-colaboradores">No Existe informaci&oacute;n relacionada al número de documento y contrato</div>'.'<br/><br/>';
-        }
-    }//Fin de la Función
-    
-    //Llamamos a la función y le pasamos el nombre de nuestro directorio.
-    listFiles($ruta,$rutadoc);
-    ?>
+              </table>
 <br><br><br>
 <div class="form-group">
   <div class="col-md-8">

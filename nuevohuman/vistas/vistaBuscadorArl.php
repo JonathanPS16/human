@@ -21,9 +21,10 @@
     $nombre=$nombre.".pdf";
     $carpeta=$anyo.'_'.$mes;
   // $ruta='carpeta/'.$carpeta;
-    $ruta='/home4/byvnilval/public_html/humantalentsas.com/contabilidad/carpetas_empleados/Seguridad_Social/'.$carpeta;
+    $ruta='/home4/byvnilval/public_html/humantalentsas.com/contabilidad/Seguridad_Social/'.$carpeta;
    //$rutadoc='carpeta/'.$carpeta;
-    $rutadoc='/contabilidad/carpetas_empleados/Seguridad_Social/'.$carpeta;
+    $rutadoc='/contabilidad/Seguridad_Social/'.$carpeta;
+   // echo $nombre;
     //Creamos Nuestra Función
 	function listFiles($directorio,$rutadoc,$nombre){ //La función recibira como parametro un directorio
 		
@@ -40,8 +41,7 @@
                         
                         $nuevaRuta2 = $rutadoc.'/'.$archivo;
                         $documentoArchivo=explode(" ", $archivo);
-                        
-                        if($nombre==$documentoArchivo[1])
+                        if($nombre==$archivo)
                         {
                             echo ''; //Abrimos un elemento de lista 
                             echo "<a class='btn btn-info' href=\"".$nuevaRuta2."\" target='_blank'>".'Archivo: '.$archivo."</a><br/><br/>"; 
