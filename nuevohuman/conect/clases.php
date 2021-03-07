@@ -1182,7 +1182,7 @@ public function cambiarclavept($perf,$usu,$per){
 
     }
 
-    $sqlcaliTe = "UPDATE $tabla set $campo='{$perf}' where $igual={$usu}";
+    $sqlcaliTe = "UPDATE $tabla set $campo='{$perf}',restore =0 where $igual={$usu}";
     $conn->Execute($sqlcaliTe);
     $SQL =$sql;
     $conn->Execute($SQL);
@@ -1899,6 +1899,50 @@ public function enviarCorreoReq($ide,$req){
 
       $this->altareq($req);
   }
+
+
+
+  public function enviarcorreorestauracion($documento){
+    $conn = $this->conec();
+    $consultas = "SELECT * FROM usuarios WHERE  usuario = ".$documento;
+    $consultas = $conn->Execute($consultas)-> getRows();
+    $correo = "";
+    $id = "";
+    $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+    $clavenueva = substr(str_shuffle($permitted_chars), 0, 10);
+    $calve = base64_encode($clavenueva);
+    $mensaje = "Le informamos la clave temporal con la cual usted podra acceder a la plataforma.Se recomienda cambiar la clave<br>Clave :".$clavenueva."<br>";
+    for($i= 0; $i<count($consultas); $i++) {
+      $correo = $consultas[0]['correo'];
+      $id_usuario = $consultas[0]['id_usuario'];
+    }
+
+    if($correo!=""){
+         $this->enviocorreo(trim($correo),$mensaje,"Restauracion de Clave");
+         $consultascorr = "UPDATE usuarios set pass ='$calve',restore=1 where id_usuario =".$id_usuario;
+         $consultasresp= $conn->Execute($consultascorr);
+         return "error=12";
+    } else {
+
+        $consultas = "SELECT * FROM empledos_ingreso WHERE  documento = ".$documento;
+        $consultas = $conn->Execute($consultas)-> getRows();
+        $correo = "";
+        $id = "";
+        for($i= 0; $i<count($consultas); $i++) {
+            $correo = $consultas[0]['correo'];
+            $id_usuario = $consultas[0]['id_ingreso'];
+        }
+        if($correo!=""){
+            $this->enviocorreo(trim($correo),$mensaje,"Restauracion de Clave");
+            $consultascorr = "UPDATE empledos_ingreso set clave ='$calve',restore=1 where id_ingreso =".$id_usuario;
+            $consultasresp= $conn->Execute($consultascorr);
+            return "error=12";
+        } else {
+            return "error=21";
+        }    
+    }
+
+}
 
   public function enviocorreo($correo,$mensaje,$asunto="Notificacion Gestion Human")
   {

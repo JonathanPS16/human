@@ -52,18 +52,18 @@ if (isset($_SESSION['idusuario'])) {
   <body class="text-center">
     <form class="form-signin" action="validacion.php" method="post">
   <img class="mb-4" src="img/LogoAzul.png" alt="" width="228" height="72">
-  <h1 class="h3 mb-3 font-weight-normal">Formulario de Ingreso</h1>
+  <h1 class="h3 mb-3 font-weight-normal">Reinicion de Contraseña</h1>
   <label for="inputEmail" class="sr-only">Email address</label>
+  <input type="hidden" name="tipore" id="tipore" value="1">
   <input type="number" id="inputEmail" name="inputEmail" class="form-control" placeholder="Usuario" required autofocus>
-  <label for="inputPassword" class="sr-only">Password</label>
-  <br><input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Clave" required>
+  
   <div class="checkbox mb-3">
   <p class="text-center"> </p>
   </div>
   <div class="g-recaptcha" data-sitekey="6LfFENwZAAAAAI4rMt4FzJF3S406UTp11qmsLf4V"></div>
   <br>
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
-  <a href="olvide.php">Olvide mi Contraseña</a>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Recuperar</button>
+  <a href="index.php">Ingresar</a>
   <p class="mt-5 mb-3 text-muted">&copy;<?php echo date('Y'); ?> Desarrollado por <a href="https://www.linkedin.com/in/omar-ernei-bonilla-franco" target="_black">Humantalentsas</a></p>
 </form>
 </body>
@@ -79,11 +79,5 @@ if(isset($_GET['error']) && $_GET['error']==2){
 
 if(isset($_GET['error']) && $_GET['error']==3){
   echo "<script>alert('Usuario Activado Correctamente');</script>";
-}
-if(isset($_GET['error']) && $_GET['error']==12){
-  echo "<script>alert('Clave Enviada a Correo Electronico');</script>";
-}
-if(isset($_GET['error']) && $_GET['error']==21){
-  echo "<script>alert('Documento No Encontrado');</script>";
 }
 ?>
