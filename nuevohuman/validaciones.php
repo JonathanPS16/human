@@ -618,12 +618,14 @@
                     $nombre_archivo = date('YmdHms').$_FILES['archivo']['name'];
                     $tipo_archivo = $_FILES['archivo']['type'];
                     $tamano_archivo = $_FILES['archivo']['size'];
-                    $mensaje = "";    
+                    $mensaje = ""; 
+                    //echo $tipo_archivo;   
                     //compruebo si las características del archivo son las que deseo
-                    if (!(strpos($nombre_archivo, "xlsx"))) {
+                    $valdiasext= array('application/vnd.ms-excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                    if (!in_array($tipo_archivo,$valdiasext)) {
                         $mensaje = "Sola se permite archivo xlsx";
                         $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
-                            echo "<script>alert('{$mensaje}');
+                        echo "<script>alert('{$mensaje}');
                         window.location.href = 'home.php?ctr=incapacidad&acc=cargararchivo';
                         </script>";
                     }else{
@@ -666,11 +668,12 @@
                     $highestRow = $sheet->getHighestRow(); 
                     $highestColumn = $sheet->getHighestColumn();
                     $num = 0;
-                    $sql = "INSERT INTO incapacidadescargue (compania,codigo,nombre,fechaini,fechafinal,cantidaddias,mes,anio,periodo,cedula,nombreper,diaslaborados,codigoconcepto,concepto,responsable,valorliqui,observaciones,tipoau,nombregene,estado,diasreconocidos) 
+                    $sql = "INSERT INTO incapacidadescargue (compania,codigo,nombre,fechaini,fechafinal,cantidaddias,mes,anio,periodo,cedula,nombreper,diaslaborados,codigoconcepto,concepto,responsable,valorliqui,observaciones,tipoau,nombregene,estado,diasreconocidos,fecha_cargue) 
                     VALUES ";
                     $errorcentro = "";
                     $errorcodigo = "";
                     $creado=0;
+                    $fechacargue = date('Y-m-d H:m:s');
                     for ($row = 2; $row <= $highestRow; $row++){ 
                         $num++;
                         $codigo  = str_replace("'","",$sheet->getCell("A".$row)->getValue());
@@ -713,11 +716,12 @@
                             $errorcodigo.="$num";
                             fwrite($file, "EN LA LINEA ". $num." = ".$codigoconcepto." NO ESTA EN LOS CONCEPTOS" . PHP_EOL);
                         }else {
-                            $sql.="('$compania','$codigo','$nombre','$fechaini','$fechafinal','$cantidaddias','$mes','$anio','$periodo','$cedula','$nombreper','$diaslaborados','$codigoconcepto','$concepto','$eps','$valorliqui','$observaciones','$tipoau','$nombregene','C','$diasreconocidos'),";
+                            $sql.="('$compania','$codigo','$nombre','$fechaini','$fechafinal','$cantidaddias','$mes','$anio','$periodo','$cedula','$nombreper','$diaslaborados','$codigoconcepto','$concepto','$eps','$valorliqui','$observaciones','$tipoau','$nombregene','C','$diasreconocidos','$fechacargue'),";
                             $creado++;
                         }
                     }
                     $sql = substr($sql, 0, -1);
+                    echo $sql;
                     fclose($file);
                     echo "<center><h3>Se Ingresaron ".$creado." Registros de ".$num." en Total</h3><br>";
                     echo '<a href="'.$archivofail.'" target="_black">Descargar Archivo Errores</a></center><button name="fff" type="button" onclick="volvercarega()" class="btn btn-primary">Terminar</button>';
