@@ -494,14 +494,20 @@ public function obtenerVolantes($anios,$mes,$periodo,$numero){
     $dato=array();
     $where ="";
     if (isset($_SESSION['centrocostos']) && $_SESSION['centrocostos']!="" && $_SESSION['id_perfil']!=1){
-        $where.=" AND certificados.centro_costos in (".$_SESSION['centrocostos'].")";
+        $where.=" AND centrocostos.id_centro in (".$_SESSION['centrocostos'].")";
     }
 
 
-    $consultas = "SELECT volantes.* FROM volantes 
-    inner join certificados on certificados.cedula=volantes.cedula $where
-    where volantes.anio='$anios' and volantes.mes='$mes' and volantes.periodo='$periodo' and volantes.cedula='$numero'  group by volantes.concepto";
-    /*echo $consultas;
+    $consultas = "
+    SELECT volantes.* from volantes
+INNER join certificados on certificados.cedula=volantes.cedula 
+INNER join empresasterporales on empresasterporales.id_temporal=volantes.id_empresaper 
+INNER JOIN centrocostos on centrocostos.id_empresapres=empresasterporales.id_temporal $where and SUBSTRING(volantes.centro_costo,1,length(volantes.centro_costo)-2)=centrocostos.centrocosto
+where volantes.anio='$anios' and volantes.mes='$mes' and volantes.periodo='$periodo' and volantes.cedula='$numero' group by volantes.concepto";
+
+
+    //echo $consultas;
+    /*
     $rs = $conn->execute($consultas);
     if (!$rs) {
         return;

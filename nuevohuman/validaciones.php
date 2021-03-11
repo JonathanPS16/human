@@ -48,16 +48,13 @@
                             $mes=$_POST['mes'];
                             $periodo=$_POST['periodo'];
                             $certificados=$objconsulta->obtenerVolantes($anios,$mes,$periodo,$numero);
-                            $valida = false;
-                                if($_SESSION['id_perfil']==8)
-                                {
-                                    if($_SESSION['usuario']==$numero){
-                                        $valida = true;
-                                    }
+                            $valida = true;
+                            if($_SESSION['id_perfil']==8)
+                            {
+                                if($_SESSION['usuario']!=$numero){
+                                    $valida = false;
                                 }
-                                if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==12){
-                                    $valida = true;
-                                }
+                            }
                             if(count($certificados)==0 || $valida==false) {
                                 echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
                                 echo '<a href="home.php?ctr=buscardorCertificados&acc=buscador" class="btn btn-info">Nueva Consulta</a>';
@@ -131,17 +128,15 @@
                             }
                         break;
                         case 4:
-                            $valida = false;
+                            
+                            $valida = true;
                             if($_SESSION['id_perfil']==8)
                             {
-                                if($_SESSION['usuario']==$numero){
-                                    $valida = true;
+                                if($_SESSION['usuario']!=$numero){
+                                    $valida = false;
                                 }
                             }
-                            if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==12){
-                                $valida = true;
-                            }
-                            $certificados=$objconsulta->obtenerCertificadosCedula($_POST['documento']);
+                            $certificados=$objconsulta->obtenerCertificadosCedula($numero);
 
                             if(count($certificados)==0  || $valida==false) {
                                 echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
