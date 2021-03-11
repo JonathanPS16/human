@@ -13,7 +13,7 @@
         </button>
       </div>
       <div class="modal-body">
-		<form action="home.php?ctr=admon&acc=guardarempresausuariap" method="post">
+		<form action="home.php?ctr=admon&acc=guardarempresausuariacent" method="post">
 			<input type="hidden" name="id" id="id" value="<?php echo $_GET['id']; ?>">
       <input type="hidden" name="idcand" id="idcand" value="0">
 	  <div class="form-group row">
@@ -52,6 +52,12 @@
 	    </div>
 	  </div>
 	  <div class="form-group row">
+	    <label for="nit" class="col-4 col-form-label">Nit</label> 
+	    <div class="col-8">
+	      <input id="nit" name="nit" placeholder="Nit" type="text" class="form-control" required="required">
+	    </div>
+	  </div>
+	  <div class="form-group row">
 	    <div class="offset-4 col-8">
 	      <button name="submit" type="submit" class="btn btn-primary">Guardar</button>
 	    </div>
@@ -69,6 +75,7 @@
 			<th>Codigo Empresa Usuaria</th>
 			<th>Nit</th>
 			<th>Empresa Prestadora</th>
+			<th>Descripcion</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -82,12 +89,14 @@
 		$empresausuaria=$listatemporales[$i]['empresausuaria'];
 		$nit=$listatemporales[$i]['nit'];	
 		$centrocosto=$listatemporales[$i]['centrocosto'];	
-		$nombretemporal=$listatemporales[$i]['nombretemporal'];			
+		$nombretemporal=$listatemporales[$i]['nombretemporal'];	
+		$descripcion=$listatemporales[$i]['descripcion'];			
 		echo  '<tr>
 		<td>'.$empresausuaria.'</td>
 		<td>'.$centrocosto.'</td>
 		<td>'.$nit.'</td>
-		<td>'.$nombretemporal.'</td></tr>';
+		<td>'.$nombretemporal.'</td>
+		<td>'.$descripcion.'</td></tr>';
 	}
 	?>
     </tbody>

@@ -1002,6 +1002,12 @@
                     $listatemporales=$objconsulta->obtenercentroscostosusuarios();
                     include('vistas/formprestadorausuaria.php');
                 break;
+                case "guardarempresausuariacent":
+                    $listatemporales=$objconsulta->guardarempresacentrocostos($_POST['nombre'],$_POST['empresa'],$_POST['descripcion'],$_POST['codigo'],$_POST['nit']);
+                    echo "<script>alert('Empresa Usuaria Cargada Correctamente');
+                                window.location.href = 'home.php?ctr=admon&acc=empresau';
+                                </script>";
+                break;
 
                 case "guardarempresaprestadora":
                     $listatemporales=$objconsulta->guardarempresaprestadora($_POST['nombre'],$_POST['descripcion']);

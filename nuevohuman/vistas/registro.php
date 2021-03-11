@@ -44,7 +44,7 @@
 			for($ja=0; $ja<count($listacentros);$ja++) {
 			$id_centro = $listacentros[$ja]['id_centro'];
 			$empresausuaria = $listacentros[$ja]['empresausuaria'];
-			$empresagen = $listacentros[$ja]['empresa'];
+			$empresagen = $listacentros[$ja]['nombretemporal'];
 
 			echo '<option value="'.$id_centro.'">'.$empresausuaria.' ('.$empresagen.')</option>';
 		}

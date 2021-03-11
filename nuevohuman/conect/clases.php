@@ -182,7 +182,7 @@ public function selectperfilesusuario(){
 public function listacentros(){
     $conn = $this->conec();
     $dato=array();
-    $consultas = "SELECT * FROM centrocostos order by empresausuaria";
+    $consultas = "SELECT centrocostos.*,empresasterporales.nombretemporal FROM centrocostos INNER join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres order by empresausuaria";
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;   
 }
@@ -542,6 +542,13 @@ public function obtenercentroscostosusuarios(){
 public function guardarempresaprestadora($nombre,$descipcion){
     $conn = $this->conec();
     $consultas = "INSERT INTO empresasterporales (nombretemporal,descripcion) values ('$nombre','$descipcion')";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function guardarempresacentrocostos($nombre,$empresa,$descipcion,$codigo,$nit){
+    $conn = $this->conec();
+    $consultas = "INSERT INTO centrocostos (nit,centrocosto,empresausuaria,id_empresapres,descripcion) values ('$nit','$codigo','$nombre',$empresa,'$descipcion')";
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
