@@ -525,6 +525,27 @@ public function obteneTemporales($dato){
     return $consultas;
 }
 
+public function obteneTemporalesform(){
+    $conn = $this->conec();
+    $consultas = "SELECT * FROM empresasterporales";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function obtenercentroscostosusuarios(){
+    $conn = $this->conec();
+    $consultas = "SELECT centrocostos.*,empresasterporales.nombretemporal FROM centrocostos INNER join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres ";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function guardarempresaprestadora($nombre,$descipcion){
+    $conn = $this->conec();
+    $consultas = "INSERT INTO empresasterporales (nombretemporal,descripcion) values ('$nombre','$descipcion')";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
 public function obteneTemporalesUsarias($dato){
     $conn = $this->conec();
     $consultas = "SELECT empresasusuarias.* FROM empresasterporales 

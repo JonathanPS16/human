@@ -52,7 +52,7 @@ if (isset($_SESSION['idusuario'])) {
   <body class="text-center">
     <form class="form-signin" action="validacion.php" method="post">
   <img class="mb-4" src="img/LogoAzul.png" alt="" width="228" height="72">
-  <h1 class="h3 mb-3 font-weight-normal">Reinicion de Contraseña</h1>
+  <h1 class="h3 mb-3 font-weight-normal">Recuperacion de Contraseña</h1>
   <label for="inputEmail" class="sr-only">Email address</label>
   <input type="hidden" name="tipore" id="tipore" value="1">
   <input type="number" id="inputEmail" name="inputEmail" class="form-control" placeholder="Usuario" required autofocus>

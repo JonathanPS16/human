@@ -55,7 +55,7 @@
                                         $valida = true;
                                     }
                                 }
-                                if($_SESSION['id_perfil']==1){
+                                if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==12){
                                     $valida = true;
                                 }
                             if(count($certificados)==0 || $valida==false) {
@@ -77,7 +77,7 @@
                                         $valida = true;
                                     }
                                 }
-                                if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9){
+                                if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==12){
                                     $valida = true;
                                 }
                                 $certificados=$objconsulta->obtenerIngresosRete($numero,$anio);
@@ -99,7 +99,7 @@
                                         $valida = true;
                                     }
                                 }
-                                if($_SESSION['id_perfil']==1){
+                                if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==12){
                                     $valida = true;
                                 }
                                 $certificados=$objconsulta->obtenerIngresosReteunosiete($numero);
@@ -122,7 +122,7 @@
                                     $valida = true;
                                 }
                             }
-                            if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9){
+                            if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==12){
                                 $valida = true;
                             }
                             $certificados=$objconsulta->obtenerCertificadosCedula($numero);
@@ -141,7 +141,7 @@
                                     $valida = true;
                                 }
                             }
-                            if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9){
+                            if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==12){
                                 $valida = true;
                             }
                             $certificados=$objconsulta->obtenerCertificadosCedula($_POST['documento']);
@@ -186,7 +186,7 @@
                                     $valida = true;
                                 }
                             }
-                            if($_SESSION['id_perfil']==1){
+                            if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==12){
                                 $valida = true;
                             }
                     //$certificados=$objconsulta->obtenerCertificadosCedula($_POST['documento']);
@@ -642,7 +642,7 @@
                     echo "<script>function volvercarega(){
                         window.location.href = 'home.php?ctr=incapacidad&acc=cargararchivo';
                     }</script>";
-                    $archivofail = $nombre_archivo."_LOG.txt";
+                    $archivofail = "logscargue/".$nombre_archivo."_LOG.txt";
                     $file = fopen($archivofail, "w+");
                     $compania = $_POST['compania'];
                     $datocentros = array();
@@ -721,7 +721,7 @@
                         }
                     }
                     $sql = substr($sql, 0, -1);
-                    echo $sql;
+                    //echo $sql;
                     fclose($file);
                     echo "<center><h3>Se Ingresaron ".$creado." Registros de ".$num." en Total</h3><br>";
                     echo '<a href="'.$archivofail.'" target="_black">Descargar Archivo Errores</a></center><button name="fff" type="button" onclick="volvercarega()" class="btn btn-primary">Terminar</button>';
@@ -992,6 +992,29 @@
                     include('vistas/perfiles.php');
                 break;
 
+                case "empresap":
+                    $listatemporales=$objconsulta->obteneTemporalesform();
+                    include('vistas/formprestadora.php');
+                break;
+
+                case "empresau":
+                    $listatemporalespres=$objconsulta->obteneTemporalesform();
+                    $listatemporales=$objconsulta->obtenercentroscostosusuarios();
+                    include('vistas/formprestadorausuaria.php');
+                break;
+
+                case "guardarempresaprestadora":
+                    $listatemporales=$objconsulta->guardarempresaprestadora($_POST['nombre'],$_POST['descripcion']);
+                    echo "<script>alert('Empresa Cargada Correctamente');
+                                window.location.href = 'home.php?ctr=admon&acc=empresap';
+                                </script>";
+                break;
+
+                $objconsulta->guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo);
+                    echo "<script>alert('Proceso Terminado Correctamente');
+                                window.location.href = 'home.php?ctr=proceso&acc=formacla';
+                                </script>";
+
                 
                 case "cambiarclave":
                     $pass = $_POST['pass'];
@@ -1258,7 +1281,7 @@
                     echo "<script>function volvercarega(){
                         window.location.href = 'home.php?ctr=carguemasivo&acc=certificados&tp=".$_POST['valor']."';
                     }</script>";
-                    $archivofail = $nombre_archivo."_LOG.txt";
+                    $archivofail = "logscargue/".$nombre_archivo."_LOG.txt";
                     $file = fopen($archivofail, "w+");
                     $archivo = "archivosgenerales/".$archivouno;
                     $inputFileType = PHPExcel_IOFactory::identify($archivo);
