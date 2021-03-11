@@ -160,12 +160,16 @@ public function obtenerCertificadosCedula($numero){
 
     $where = "";
     if(isset($_SESSION['centrocostos']) && $_SESSION['centrocostos']!="" && $_SESSION['id_perfil']!=1){
-       $where.="AND centro_costos in(".$_SESSION['centrocostos'].")";
+       $where.="AND centrocostos.id_centro in(".$_SESSION['centrocostos'].")";
     }
     $conn = $this->conec();
     $dato=array();
-    $consultas = "SELECT contrato,nombre_empleado,cedula,fecha_ingreso,fecha_retiro,genero,centro_costos,subcentro_costos,nombrempresa,nombrecargo,salarioactual,correoelectronico FROM certificados where cedula='$numero' ".$where;
-    //echo $consultas;
+    //$consultas = "SELECT contrato,nombre_empleado,cedula,fecha_ingreso,fecha_retiro,genero,centro_costos,subcentro_costos,nombrempresa,nombrecargo,salarioactual,correoelectronico FROM certificados where cedula='$numero' ".$where;
+    $consultas = "SELECT certificados.* FROM certificados
+    inner join centrocostos on centrocostos.centrocosto=certificados.centro_costos 
+    and certificados.id_empresapres=centrocostos.id_empresapres
+    inner join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres 
+    where certificados.cedula='$numero' ".$where;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }

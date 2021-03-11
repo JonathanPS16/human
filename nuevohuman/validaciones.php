@@ -115,15 +115,12 @@
                     
                         break;
                         case 3:
-                            $valida = false;
+                            $valida = true;
                             if($_SESSION['id_perfil']==8)
                             {
-                                if($_SESSION['usuario']==$numero){
-                                    $valida = true;
+                                if($_SESSION['usuario']!=$numero){
+                                    $valida = false;
                                 }
-                            }
-                            if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==12){
-                                $valida = true;
                             }
                             $certificados=$objconsulta->obtenerCertificadosCedula($numero);
                             if(count($certificados)==0 || $valida==false) {
