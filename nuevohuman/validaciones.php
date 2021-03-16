@@ -65,17 +65,14 @@
                             
                         break;
                         case 2:
+                            $valida = true;
                             if(intval($anio)<=2016)
                             {
-                                $valida = false;
                                 if($_SESSION['id_perfil']==8)
                                 {
-                                    if($_SESSION['usuario']==$numero){
-                                        $valida = true;
+                                    if($_SESSION['usuario']!=$numero){
+                                        $valida = false;
                                     }
-                                }
-                                if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==12){
-                                    $valida = true;
                                 }
                                 $certificados=$objconsulta->obtenerIngresosRete($numero,$anio);
                                 if(count($certificados)==0 || $valida==false) {
@@ -89,15 +86,11 @@
                             }
                             else			
                             {
-                                $valida = false;
                                 if($_SESSION['id_perfil']==8)
                                 {
-                                    if($_SESSION['usuario']==$numero){
-                                        $valida = true;
+                                    if($_SESSION['usuario']!=$numero){
+                                        $valida = false;
                                     }
-                                }
-                                if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==12){
-                                    $valida = true;
                                 }
                                 $certificados=$objconsulta->obtenerIngresosReteunosiete($numero);
                                 if(count($certificados)==0 || $valida==false) {
@@ -170,19 +163,18 @@
                     include('vistas/vistaBuscadorCarpeta.php');        
                 break;
                 case "buscadorFiltro":
-
-                    $valida = false;
+                    $numero =$_POST['documento'];
+                    
+                    $valida = true;
                             if($_SESSION['id_perfil']==8)
                             {
-                                if($_SESSION['usuario']==$numero){
-                                    $valida = true;
+                                if($_SESSION['usuario']!=$numero){
+                                    $valida = false;
                                 }
                             }
-                            if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==2 || $_SESSION['id_perfil']==3 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==9 || $_SESSION['id_perfil']==12){
-                                $valida = true;
-                            }
                     //$certificados=$objconsulta->obtenerCertificadosCedula($_POST['documento']);
-                    if($valida==false) {
+                    $certificados=$objconsulta->obtenerCertificadosCedula($numero);
+                    if(count($certificados)==0  || $valida==false) {
                         echo "<h5>Informacion No Encontrada o No Tiene Permisos Para la Consulta</h5>";
                         echo '<a href="home.php?ctr=buscardorCarpetas&acc=buscador" class="btn btn-info">Nueva Consulta</a>';
                     } else {
@@ -602,6 +594,7 @@
             switch ($acc) {
                 case "cargararchivo":
                     //$listatemporales=$objconsulta->obtenerProcesosAccidentes("","SI");
+                    $listatemporalesa=$objconsulta->obteneTemporalesform();
                     include('vistas/archivoincapacidad.php');
                 break;
                 case "cargarincapacidades":
@@ -1248,6 +1241,7 @@
             switch ($acc) {
                 case "certificados":
                     $tipo = $_GET['tp'];
+                    $listatemporalesa=$objconsulta->obteneTemporalesform();
                     include('vistas/archivosmasivos.php');
                 break;
                 case "read":
@@ -1258,6 +1252,7 @@
                     $tipo_archivo = $_FILES['archivo']['type'];
                     $tamano_archivo = $_FILES['archivo']['size'];
                     $mensaje = "";    
+                    $idempresaprestadora=$_POST['empresaprestadora'];
                     //compruebo si las características del archivo son las que deseo
                     if (!(strpos($nombre_archivo, "xlsx"))) {
                         $mensaje = "Sola se permite archivo xlsx";
@@ -1292,7 +1287,7 @@
                     if($_POST['valor'] == 1) {
                         $objconsulta->guardarcarguearchivos("truncate table certificados");
                         $objconsulta->guardarcarguearchivos("ALTER TABLE certificados AUTO_INCREMENT = 1");
-                        $sql = "INSERT INTO certificados (contrato,nombre_empleado,cedula,fecha_ingreso,fecha_retiro,genero,centro_costos,subcentro_costos,nombrempresa,nombrecargo,salarioactual,correoelectronico) 
+                        $sql = "INSERT INTO certificados (id_empresapres,contrato,nombre_empleado,cedula,fecha_ingreso,fecha_retiro,genero,centro_costos,subcentro_costos,nombrempresa,nombrecargo,salarioactual,correoelectronico) 
                         VALUES ";
                         $creado=0;
                         for ($row = 2; $row <= $highestRow; $row++){ 
@@ -1318,7 +1313,7 @@
                             $cargolaboral  = str_replace("'","",$sheet->getCell("J".$row)->getValue());
                             $sueldoactual  = str_replace("'","",$sheet->getCell("K".$row)->getValue());
                             $correoelectronico  = str_replace("'","",$sheet->getCell("L".$row)->getValue());
-                            $sql.="('$contrato','$nombreempleado','$cedula','$fechaini','$fechafinal','$genero','$centrocostos','$subcentrocostos','$nombreempresa','$cargolaboral','$sueldoactual','$correoelectronico'),";
+                            $sql.="($idempresaprestadora,'$contrato','$nombreempleado','$cedula','$fechaini','$fechafinal','$genero','$centrocostos','$subcentrocostos','$nombreempresa','$cargolaboral','$sueldoactual','$correoelectronico'),";
                             $creado++;
                             
                         }
@@ -1326,7 +1321,7 @@
 
                     if($_POST['valor'] == 2) {
                         $objconsulta->guardarcarguearchivos("truncate table volantes");
-                        $sql = "INSERT INTO volantes (cedula,numero_contrato,nombre_empleado,sueldo_actual,grupo,consecutivo,subgrupo,concepto,cantidad,valor_unitario,devengos,deducciones,centro_costo,
+                        $sql = "INSERT INTO volantes (id_empresaper,cedula,numero_contrato,nombre_empleado,sueldo_actual,grupo,consecutivo,subgrupo,concepto,cantidad,valor_unitario,devengos,deducciones,centro_costo,
                         nombre_empresa,cargo,nombre_cargo,anio,mes,periodo,fecha_inicial,fecha_final,dias_periodo,nit_alterno,cuenta_ahorro,cuenta_corriente,dias_vac_pendientes,codigo_fondo_pension,
                         nombre_fondo,codigo_fondo_salud,nombre_salud,fecha_cargue) 
                         VALUES ";
@@ -1353,7 +1348,9 @@
                             $mes  = str_replace("'","",$sheet->getCell("R".$row)->getValue());
                             $periodo  = str_replace("'","",$sheet->getCell("S".$row)->getValue());
                             $fecha_inicial  = str_replace("'","",$sheet->getCell("T".$row)->getValue());
+                            $fecha_inicial = substr(trim($fecha_inicial), 0, 10);
                             $fecha_final  = str_replace("'","",$sheet->getCell("U".$row)->getValue());
+                            $fecha_final = substr(trim($fecha_final), 0, 10);
                             $fecha_inicial = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fecha_inicial));
                             $fecha_inicial = date("d/m/Y",strtotime($fecha_inicial."+ 1 days"));
                             $fecha_final = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fecha_final));
@@ -1368,7 +1365,7 @@
                             $codigo_fondo_salud  = str_replace("'","",$sheet->getCell("AC".$row)->getValue());
                             $nombre_salud  = str_replace("'","",$sheet->getCell("AD".$row)->getValue());
                             $fecha_cargue  = date('Y-m-d H:m:s');
-                            $sql.="('$cedula','$numero_contrato','$nombre_empleado','$sueldo_actual','$grupo','$consecutivo','$subgrupo','$concepto','$cantidad','$valor_unitario','$devengos','$deducciones','$centro_costo'
+                            $sql.="($idempresaprestadora,'$cedula','$numero_contrato','$nombre_empleado','$sueldo_actual','$grupo','$consecutivo','$subgrupo','$concepto','$cantidad','$valor_unitario','$devengos','$deducciones','$centro_costo'
                             ,'$nombre_empresa','$cargo','$nombre_cargo','$anio','$mes','$periodo','$fecha_inicial','$fecha_final','$dias_periodo','$nit_alterno','$cuenta_ahorro','$cuenta_corriente','$dias_vac_pendientes','$codigo_fondo_pension'
                             ,'$nombre_fondo','$codigo_fondo_salud','$nombre_salud','$fecha_cargue'),";
                             $creado++;
@@ -1377,7 +1374,7 @@
                     }
 
                     if($_POST['valor'] == 3) {
-                        $sql = "INSERT INTO ingresos_ret_2017 (TIPODEDOCUMENTO,CEDULA,PRIMERAPELLIDO,SEGUNDOAPELLIDO,PRIMERNOMBRE,SEGUNDONOMBRE,DIRECCION,CODIGODEPARTAMENTO,CODIGOMUNICIPIO,CODIGOPAIS,CORREOELECTRONICO,FECHAINICIAL,FECHAFINAL,
+                        $sql = "INSERT INTO ingresos_ret_2017 (id_empresaper,TIPODEDOCUMENTO,CEDULA,PRIMERAPELLIDO,SEGUNDOAPELLIDO,PRIMERNOMBRE,SEGUNDONOMBRE,DIRECCION,CODIGODEPARTAMENTO,CODIGOMUNICIPIO,CODIGOPAIS,CORREOELECTRONICO,FECHAINICIAL,FECHAFINAL,
                         FECHAEXPEDICION,DEPARTAMENTORETENCION,MUNICIPIORETENCION,NUMERORETENCION,PAGOSSALARIOSOECLESISTICOS,PAGOSHONORARIOS,PAGOSSERVICIOS,PAGOSCOMISIONES,PAGOSPRESTACIONES,PAGOSVIATICOS,PAGOSREPRESENTACION,PAGOSCOOPERATIVO,OTROSPAGOS,CESANTIASPERIODO,
                         PENSIONES,TOTALBRUTOS,APORTESSALUD,APORTESPENSIONESRAIS,APORTESVOLUNTARIOSPENSIONES,APORTESACUENTASAFC,RETENCIONFUENTETRABAJOPENSIONES,PERSONASACARGO,fecha_cargue) 
                         VALUES ";
@@ -1426,7 +1423,7 @@
                             $RETENCIONFUENTETRABAJOPENSIONES  = str_replace("'","",$sheet->getCell("AH".$row)->getValue());
                             $PERSONASACARGO  = str_replace("'","",$sheet->getCell("AI".$row)->getValue());
                             $fecha_cargue  = date('Y-m-d H:m:s');
-                            $sql.="('$TIPODEDOCUMENTO','$CEDULA','$PRIMERAPELLIDO','$SEGUNDOAPELLIDO','$PRIMERNOMBRE','$SEGUNDONOMBRE','$DIRECCION','$CODIGODEPARTAMENTO','$CODIGOMUNICIPIO','$CODIGOPAIS','$CORREOELECTRONICO','$FECHAINICIAL','$FECHAFINAL'
+                            $sql.="($idempresaprestadora,'$TIPODEDOCUMENTO','$CEDULA','$PRIMERAPELLIDO','$SEGUNDOAPELLIDO','$PRIMERNOMBRE','$SEGUNDONOMBRE','$DIRECCION','$CODIGODEPARTAMENTO','$CODIGOMUNICIPIO','$CODIGOPAIS','$CORREOELECTRONICO','$FECHAINICIAL','$FECHAFINAL'
                             ,'$FECHAEXPEDICION','$DEPARTAMENTORETENCION','$MUNICIPIORETENCION','$NUMERORETENCION','$PAGOSSALARIOSOECLESISTICOS','$PAGOSHONORARIOS','$PAGOSSERVICIOS','$PAGOSCOMISIONES','$PAGOSPRESTACIONES','$PAGOSVIATICOS','$PAGOSREPRESENTACION','$PAGOSCOOPERATIVO','$OTROSPAGOS','$CESANTIASPERIODO'
                             ,'$PENSIONES','$TOTALBRUTOS','$APORTESSALUD','$APORTESPENSIONESRAIS','$APORTESVOLUNTARIOSPENSIONES','$APORTESACUENTASAFC','$RETENCIONFUENTETRABAJOPENSIONES','$PERSONASACARGO','$fecha_cargue'),";
                             $creado++;

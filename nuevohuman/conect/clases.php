@@ -170,6 +170,7 @@ public function obtenerCertificadosCedula($numero){
     and certificados.id_empresapres=centrocostos.id_empresapres
     inner join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres 
     where certificados.cedula='$numero' ".$where;
+    //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
@@ -259,7 +260,7 @@ public function selectperfiles(){
 
 public function listadocentros($empresa){
     $conn = $this->conec();
-    $consultas = "select * from centrocostos where empresa='$empresa'";
+    $consultas = "select * from centrocostos where id_empresapres=$empresa";
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
@@ -378,7 +379,7 @@ public function guardarcarguearchivos ($sql){
 
 public function listaresumengeneral(){
     $conn = $this->conec();
-    $consultas= $conn->Execute("SELECT * FROM incapacidadescargue inner JOIN centrocostos on centrocostos.empresa=incapacidadescargue.compania and incapacidadescargue.codigo=centrocostos.centrocosto INNER join codigoinca on codigoinca.id=incapacidadescargue.codigoconcepto")-> getRows();
+    $consultas= $conn->Execute("SELECT * FROM incapacidadescargue inner JOIN centrocostos on centrocostos.id_empresapres=incapacidadescargue.compania and incapacidadescargue.codigo=centrocostos.centrocosto INNER join codigoinca on codigoinca.id=incapacidadescargue.codigoconcepto inner JOIN empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres")-> getRows();
     //echo $consultas;
     return $consultas;
 }
@@ -528,9 +529,15 @@ where volantes.anio='$anios' and volantes.mes='$mes' and volantes.periodo='$peri
     return $consultas;*/
 }
 
-public function obteneTemporales($dato){
+public function obteneTemporales($var=""){
     $conn = $this->conec();
-    $consultas = "SELECT * FROM empresasterporales where nombretemporal like '%$dato%'";
+    //var_dump($_SESSION);
+    $where ="";
+    if($_SESSION['id_perfil']!="1") {
+        $where =" and centrocostos.id_centro in(".$_SESSION['centrocostos'].") ";
+    }
+    $consultas = "SELECT empresasterporales.* FROM empresasterporales INNER join centrocostos on centrocostos.id_empresapres=empresasterporales.id_temporal $where GROUP by 1 ";
+    //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
@@ -565,9 +572,11 @@ public function guardarempresacentrocostos($nombre,$empresa,$descipcion,$codigo,
 
 public function obteneTemporalesUsarias($dato){
     $conn = $this->conec();
-    $consultas = "SELECT empresasusuarias.* FROM empresasterporales 
-    inner join empresasusuarias on empresasusuarias.ideempresatemporal=empresasterporales.id_temporal 
-    WHERE nombretemporal  like '%$dato%'";
+    $where ="";
+    if($_SESSION['id_perfil']!="1") {
+        $where =" and centrocostos.id_centro in(".$_SESSION['centrocostos'].") ";
+    }
+    $consultas = "select centrocostos.* from centrocostos inner join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres $where";
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
@@ -594,9 +603,12 @@ public function obtenerIngresosReteunosiete($documento){
     $dato=array();
     $where ="";
     if (isset($_SESSION['centrocostos']) && $_SESSION['centrocostos']!="" && $_SESSION['id_perfil']!=1){
-        $where.=" AND certificados.centro_costos in (".$_SESSION['centrocostos'].")";
+        $where.=" AND centrocostos.id_centro in (".$_SESSION['centrocostos'].")";
     }
-    $consultas = "SELECT ingresos_ret_2017.* FROM ingresos_ret_2017 inner JOIN certificados on certificados.cedula=ingresos_ret_2017.CEDULA $where where ingresos_ret_2017.CEDULA='$documento'";
+    $consultas = "SELECT centrocostos.id_centro, ingresos_ret_2017.* 
+    from centrocostos inner JOIN empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres $where
+    inner join certificados on certificados.id_empresapres=empresasterporales.id_temporal and certificados.centro_costos=centrocostos.centrocosto 
+    inner join ingresos_ret_2017 on ingresos_ret_2017.CEDULA=certificados.cedula where ingresos_ret_2017.CEDULA= '$documento'";
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
@@ -934,21 +946,24 @@ public function obteneRes($ide=0,$clientesol=""){
     $dato=array();
     $where="";
     if ($ide != 0) {
-      $where .=" and id= ".$ide;
+      $where .=" and req.id= ".$ide;
     } 
     if ($clientesol != "") {
-        $where .=" and clientesol= ".$clientesol;
+        $where .=" and req.clientesol= ".$clientesol;
     } 
     if($_SESSION['id_perfil']==1){
         $where =" "; 
     }
 
-    $consultas = "SELECT empresasusuarias.nombreempresausu, empresasterporales.nombretemporal,req.*,(select count(*) from req_candidatos where id_requisision = req.id and estado ='F') as cantidadapro FROM req inner join empresasterporales on empresasterporales.id_temporal=req.empresaclientet INNER join empresasusuarias on empresasusuarias.ideempresatemporal=empresasterporales.id_temporal and req.empresacliente=empresasusuarias.id_empresausuaria where 1=1 ".$where." ORDER BY 1 ASC";
+    $consultas = "select centrocostos.empresausuaria as nombreempresausu,empresasterporales.nombretemporal,req.*,(select count(*) from req_candidatos where id_requisision = req.id and estado ='F') as cantidadapro from req INNER join empresasterporales on empresasterporales.id_temporal=req.empresaclientet inner JOIN centrocostos on centrocostos.id_centro=req.empresacliente and centrocostos.id_empresapres=empresasterporales.id_temporal where 1=1 ".$where." ORDER BY 1 ASC";
+    //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
 
 public function obteneMisRes($ide=0,$mis=""){
+   // echo $ide."<br>";
+    //echo $mis;
   //echo $ide;
     $conn = $this->conec();
     $dato=array();
@@ -959,8 +974,13 @@ public function obteneMisRes($ide=0,$mis=""){
     if($mis != "") {
         $where .="and empresaclientet in(".substr($mis,0,-1).")"; 
     }
+    //print_r($_SESSION);
+    if($_SESSION['id_perfil']!="1"){
+        $where .="and centrocostos.id_centro in(".$_SESSION['centrocostos'].")";   
+    }
 
-    $consultas = "SELECT  empresasusuarias.nombreempresausu, empresasterporales.nombretemporal,req.*,(select count(*) from req_candidatos where id_requisision = req.id and estado ='F') as cantidadapro FROM req inner join empresasterporales on empresasterporales.id_temporal=req.empresaclientet INNER join empresasusuarias on empresasusuarias.ideempresatemporal=empresasterporales.id_temporal and req.empresacliente=empresasusuarias.id_empresausuaria where 1=1 ".$where." ORDER BY 1 ASC";
+    //$consultas = "SELECT  empresasusuarias.nombreempresausu, empresasterporales.nombretemporal,req.*,(select count(*) from req_candidatos where id_requisision = req.id and estado ='F') as cantidadapro FROM req inner join empresasterporales on empresasterporales.id_temporal=req.empresaclientet INNER join empresasusuarias on empresasusuarias.ideempresatemporal=empresasterporales.id_temporal and req.empresacliente=empresasusuarias.id_empresausuaria where 1=1 ".$where." ORDER BY 1 ASC";
+    $consultas = "select centrocostos.empresausuaria as nombreempresausu,empresasterporales.nombretemporal,req.*,(select count(*) from req_candidatos where id_requisision = req.id and estado ='F') as cantidadapro from req INNER join empresasterporales on empresasterporales.id_temporal=req.empresaclientet inner JOIN centrocostos on centrocostos.id_centro=req.empresacliente and centrocostos.id_empresapres=empresasterporales.id_temporal where 1=1 ".$where." ORDER BY 1 ASC";
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
@@ -1923,6 +1943,8 @@ public function enviarCorreoReq($ide,$req){
       <br><br>
       Área de Selección<br>
       Human Talent SAS";
+      //echo $mensaje;
+      $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
       $consultas= $conn->Execute($consultas)-> getRows();
       for($i= 0; $i<count($consultas); $i++) {
         $correos = explode(",", $consultas[$i]['correosselecccion']);

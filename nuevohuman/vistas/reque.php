@@ -720,9 +720,10 @@ if(minsel!=10){
     <div class="col-sm">
 
     <div class="form-group">
-      <label class="col-md-10 control-label" for="cargo">Empresa Temporal</label>  
+      <label class="col-md-10 control-label" for="cargo">Empresa Prestadora</label>  
       <div class="col-md-10">
       <select id="empresaclientet" name="empresaclientet" class="form-control">
+      <option value="">Seleccione</option>
       <?php 
       for($i=0; $i<count($listatemporales);$i++){
         $id_temporal=$listatemporales[$i]['id_temporal'];
@@ -763,8 +764,8 @@ if(minsel!=10){
       <option value="0">Seleccione</option>
       <?php 
       for($i=0; $i<count($listatemporalesusuarias);$i++){
-        $id_temporal=$listatemporalesusuarias[$i]['id_empresausuaria'];
-        $nombretemporal=$listatemporalesusuarias[$i]['nombreempresausu'];
+        $id_temporal=$listatemporalesusuarias[$i]['id_centro'];
+        $nombretemporal=$listatemporalesusuarias[$i]['empresausuaria'];
         $slr = "";
         if ($mireq[0]['empresacliente']== $id_temporal){
           $slr = 'selected="selected"';

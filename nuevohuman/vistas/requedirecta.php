@@ -7,8 +7,8 @@
       <option value="0">Seleccione</option>
       <?php 
       for($i=0; $i<count($listatemporalesusuarias);$i++){
-        $id_temporal=$listatemporalesusuarias[$i]['id_empresausuaria'];
-        $nombretemporal=$listatemporalesusuarias[$i]['nombreempresausu'];
+        $id_temporal=$listatemporalesusuarias[$i]['id_centro'];
+        $nombretemporal=$listatemporalesusuarias[$i]['empresausuaria'];
         $slr = "";
         if ($mireq[0]['empresacliente']== $id_temporal){
           $slr = 'selected="selected"';

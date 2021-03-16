@@ -17,18 +17,20 @@ if($tipo=="3"){
 
 ?>
 <h5>Carga de Archivo de <?php  echo  $txt;?></h5>
-<form  action="home.php?ctr=carguemasivo&acc=read" method="post" enctype="multipart/form-data"><!--
+<form  action="home.php?ctr=carguemasivo&acc=read" method="post" enctype="multipart/form-data">
   <div class="form-group row">
-    <label for="compania" class="col-4 col-form-label">Compania</label> 
+    <label for="empresaprestadora" class="col-4 col-form-label">Empresa Prestadora</label> 
     <div class="col-8">
-      <select id="compania" name="compania" class="custom-select" required="required">
-        <option value="Human">Human</option>
-        <option value="Conexion">Conexión</option>
-        <option value="BYVOutsourcing ">BYV Outsourcing</option>
-        <option value="ByVFormalSi ">ByV FormalSi</option>
+      <select id="empresaprestadora" name="empresaprestadora" class="custom-select" required="required">
+      <?php 
+        for($j=0; $j<count($listatemporalesa);$j++){
+        $id_temporal=$listatemporalesa[$j]['id_temporal'];
+        $nombretemporal =$listatemporalesa[$j]['nombretemporal'];	
+        echo  '<option value="'.$id_temporal.'">'.$nombretemporal.'</option>';
+      }?>
       </select>
     </div>
-  </div>-->
+  </div>
   <input type="hidden" name="valor" id="valor" value="<?php echo $tipo; ?>">
   <div class="form-group row">
     <label for="archivo" class="col-4 col-form-label">Archivo</label> 

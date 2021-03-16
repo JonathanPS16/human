@@ -4,11 +4,14 @@
     <label for="compania" class="col-4 col-form-label">Compania</label> 
     <div class="col-8">
       <select id="compania" name="compania" class="custom-select" required="required">
-        <option value="Human">Human</option>
-        <option value="Conexion">Conexión</option>
-        <option value="BYVOutsourcing ">BYV Outsourcing</option>
-        <option value="ByVFormalSi ">ByV FormalSi</option>
-      </select>
+      <?php
+      for($j=0; $j<count($listatemporalesa);$j++){
+        $id_temporal=$listatemporalesa[$j]['id_temporal'];
+        $nombretemporal =$listatemporalesa[$j]['nombretemporal'];	
+        echo  '<option value="'.$id_temporal.'">'.$nombretemporal.'</option>';
+        } 
+      ?>
+        </select>
     </div>
   </div>
   <div class="form-group row">

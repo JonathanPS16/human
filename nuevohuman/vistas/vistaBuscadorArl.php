@@ -41,7 +41,15 @@
                         
                         $nuevaRuta2 = $rutadoc.'/'.$archivo;
                         $documentoArchivo=explode(" ", $archivo);
-                        if($nombre==$archivo)
+                        //echo $nombre."".$archivo."<br>";
+                        $mostrar = true;
+                  
+                        $posicion_coincidencia = strpos($archivo, $nombre);  
+                        if ($posicion_coincidencia === false) {
+                            $mostrar = false;
+                        }
+                
+                        if($mostrar)
                         {
                             echo ''; //Abrimos un elemento de lista 
                             echo "<a class='btn btn-info' href=\"".$nuevaRuta2."\" target='_blank'>".'Archivo: '.$archivo."</a><br/><br/>"; 

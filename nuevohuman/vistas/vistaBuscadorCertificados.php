@@ -57,7 +57,7 @@ if($_SESSION['id_perfil']==8)
             <div class="col-md-4">
                 <select id="anios" name="anios" class="form-control">
                 <?php 
-                for($i=2005;$i<=date('Y');$i++){
+                for($i=(date('Y')-1);$i<=date('Y');$i++){
                     echo "<option value='{$i}'>{$i}</option>";
                 }
                 ?>
@@ -104,7 +104,7 @@ if($_SESSION['id_perfil']==8)
             <div class="col-md-4">
                 <select id="anio" name="anio" class="form-control">
                 <?php 
-                for($i=2011;$i<=date('Y');$i++){
+                for($i=(date('Y')-1);$i<=date('Y');$i++){
                     echo "<option value='{$i}'>{$i}</option>";
                 }
                 ?>
@@ -121,7 +121,7 @@ if($_SESSION['id_perfil']==8)
             <div class="col-md-4">
                 <select id="anyoarl" name="anyoarl" class="form-control">
                 <?php 
-                for($i=2005;$i<=date('Y');$i++){
+                for($i=(date('Y')-1);$i<=date('Y');$i++){
                     echo "<option value='{$i}'>{$i}</option>";
                 }
                 ?>

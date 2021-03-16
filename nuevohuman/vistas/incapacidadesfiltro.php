@@ -25,7 +25,7 @@
 
 		$val ++;
 		$conteoreq = 0;
-		$empresa=$listatemporales[$i]['empresa'];
+		$empresa=$listatemporales[$i]['nombretemporal'];
 		$nit=$listatemporales[$i]['nit'];
 		$empresausuaria=$listatemporales[$i]['empresausuaria'];
 		$observaciones=$listatemporales[$i]['observaciones'];
