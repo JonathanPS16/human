@@ -32,7 +32,7 @@ $pdf->Image('img/CABECERA.png' , 0 ,0, 210 , 38);
 
 	if(empty($inf['fecha_retiro']))
 	{
-		$pdf->MultiCell(170,5,utf8_decode($tipificador).' '.utf8_decode($inf['nombre_empleado']).' '.$ident.' con C.C. No.'.' '.number_format($inf['cedula'], 0, ",", ".").', '.'se encuentra '.$vicula.' mediante contrato de obra o labor determinada, como '.$trabaja.' en'.' '.utf8_decode('misión').' '.'para la empresa'.' '.utf8_decode($inf['nombrempresa']).', '.' desde el'.' '.$inf['fecha_ingreso'].','.utf8_decode(' desempeñando el cargo de').' '.$inf['nombrecargo'].', '.utf8_decode('con una asignación salarial mensual de ').' ($'.number_format($inf['salarioactual'], 2, ",", ".") .') '.num2letras($inf['salarioactual'],false).' '.'pesos mcte.');
+		$pdf->MultiCell(170,5,utf8_decode($tipificador).' '.utf8_decode($inf['nombre_empleado']).' '.$ident.' con C.C. No.'.' '.number_format($inf['cedula'], 0, ",", ".").', '.'se encuentra '.$vicula.' mediante contrato de obra o labor determinada, como '.$trabaja.' en'.' '.utf8_decode('misión').' '.'para la empresa'.' '.utf8_decode($inf['nombrempresa']).', '.' desde el'.' '.$inf['fecha_ingreso'].','.utf8_decode(' desempeñando el cargo de').' '.utf8_decode($inf['nombrecargo']).', '.utf8_decode('con una asignación salarial mensual de ').' ($'.number_format($inf['salarioactual'], 2, ",", ".") .') '.num2letras($inf['salarioactual'],false).' '.'pesos mcte.');
 	}
 	else
 	{
