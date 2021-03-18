@@ -490,6 +490,27 @@ public function obtenerCertificadosporContrato($contrato,$numero){
     return $consultas;
 }
 
+public function obtenersemimanual(){
+    $conn = $this->conec();
+    $dato=array();
+    $consultas = "describe incapacidadescarguetemporal";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function obtenersemimanualdata($id=""){
+    $conn = $this->conec();
+    $dato=array();
+    $where = "";
+
+    if($id>0){
+        $where =" and id_registro=".$id;
+    }
+    $consultas = "select * from incapacidadescarguetemporal where 1=1".$where;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
 public function obtenerVolantes($anios,$mes,$periodo,$numero){
     $conn = $this->conec();
     $dato=array();

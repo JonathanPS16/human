@@ -597,6 +597,54 @@
                     $listatemporalesa=$objconsulta->obteneTemporalesform();
                     include('vistas/archivoincapacidad.php');
                 break;
+                case "procesosemimanual":
+                    //$listatemporales=$objconsulta->obtenerProcesosAccidentes("","SI");
+                    $listatemporalesa=$objconsulta->obtenersemimanual();
+                    $listatemporalesadata=$objconsulta->obtenersemimanualdata();
+                    //var_dump($listatemporalesadata);
+                    $dato = array();
+                    for($i=0;$i<count($listatemporalesa);$i++){
+                        //echo $listatemporalesa[$i]['Field'];
+                        array_push($dato,$listatemporalesa[$i]['Field']);
+                    }
+                    //array_push($dato,"Editar");
+                    //var_dump($dato);
+                    include('vistas/listasemimanual.php');
+                break;
+                case "updatesemimanual";
+                $id = 0;
+                $campos="";
+                foreach ($_POST as $clave => $valor) {
+                    if($clave!="id_registro")
+                    {
+                        if($clave!="submit"){
+                        $campos.=$clave."='$valor',";
+                        }
+                    } else {
+                        
+                            $id=$valor;
+                        
+                    }
+                }
+                $campos = substr($campos, 0, -1);
+                $sql="UPDATE incapacidadescarguetemporal set $campos where id_registro=".$id;
+                $listatemporales=$objconsulta->guardarcarguearchivos($sql);
+                //echo $sql;
+                echo "<script>alert('Registro Actualizado Correctamente');
+                        window.location.href = 'home.php?ctr=incapacidad&acc=procesosemimanual';
+                        </script>";
+                break;
+                case "editsemimanual":
+                    $listatemporalesa=$objconsulta->obtenersemimanual();
+                    $dato = array();
+                    for($i=0;$i<count($listatemporalesa);$i++){
+                        //echo $listatemporalesa[$i]['Field'];
+                        array_push($dato,$listatemporalesa[$i]['Field']);
+                    }
+                    $listatemporalesadata=$objconsulta->obtenersemimanualdata($_GET['id']);
+                    //var_dump($listatemporalesadata);
+                    include('vistas/formsemimanual.php');
+                break;
                 case "cargarincapacidades":
                     require_once 'PHPExcel/Classes/PHPExcel.php';
                     $archivouno = "";
@@ -1245,6 +1293,8 @@
                     include('vistas/archivosmasivos.php');
                 break;
                 case "read":
+                    //ini_set("memory_limit", '2048M');
+                    ini_set('memory_limit', '2G');
                    // print_r($_FILES);
                     require_once 'PHPExcel/Classes/PHPExcel.php';
                     $archivouno = "";
@@ -1320,7 +1370,7 @@
                     }
 
                     if($_POST['valor'] == 2) {
-                        $objconsulta->guardarcarguearchivos("truncate table volantes");
+                        //$objconsulta->guardarcarguearchivos("delete from volantes where id_empresaper=".$idempresaprestadora);
                         $sql = "INSERT INTO volantes (id_empresaper,cedula,numero_contrato,nombre_empleado,sueldo_actual,grupo,consecutivo,subgrupo,concepto,cantidad,valor_unitario,devengos,deducciones,centro_costo,
                         nombre_empresa,cargo,nombre_cargo,anio,mes,periodo,fecha_inicial,fecha_final,dias_periodo,nit_alterno,cuenta_ahorro,cuenta_corriente,dias_vac_pendientes,codigo_fondo_pension,
                         nombre_fondo,codigo_fondo_salud,nombre_salud,fecha_cargue) 
@@ -1348,12 +1398,17 @@
                             $mes  = str_replace("'","",$sheet->getCell("R".$row)->getValue());
                             $periodo  = str_replace("'","",$sheet->getCell("S".$row)->getValue());
                             $fecha_inicial  = str_replace("'","",$sheet->getCell("T".$row)->getValue());
+                            //echo $fecha_inicial;
                             $fecha_inicial = substr(trim($fecha_inicial), 0, 10);
+                            //$dataini = explode("-",$fecha_inicial);
+                            //var_dump($dataini);
+                            //$fecha_inicial=$dataini[2]."/".$dataini[1]."/".$dataini[0];
+                           
                             $fecha_final  = str_replace("'","",$sheet->getCell("U".$row)->getValue());
                             $fecha_final = substr(trim($fecha_final), 0, 10);
-                            $fecha_inicial = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fecha_inicial));
+                            //$fecha_inicial = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fecha_inicial));
                             $fecha_inicial = date("d/m/Y",strtotime($fecha_inicial."+ 1 days"));
-                            $fecha_final = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fecha_final));
+                            //$fecha_final = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fecha_final));
                             $fecha_final = date("d/m/Y",strtotime($fecha_final."+ 1 days")); 
                             $dias_periodo  = str_replace("'","",$sheet->getCell("V".$row)->getValue());
                             $nit_alterno  = str_replace("'","",$sheet->getCell("W".$row)->getValue());
@@ -1434,7 +1489,7 @@
                     $sql = substr($sql, 0, -1);
 
 
-                   // echo $sql;
+                   //echo $sql;
                     //die();
                     fclose($file);
                     echo "<center><h3>Se Ingresaron ".$creado." Registro(s) de ".$num." en Total</h3><br>";
