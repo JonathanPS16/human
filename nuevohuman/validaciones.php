@@ -1025,6 +1025,13 @@
                     include('vistas/perfiles.php');
                 break;
 
+                case "crearperfilu":
+                    $listamenus=$objconsulta->guardarnuevoperfil($_POST['nombreperfil']);
+                    echo "<script>alert('Perfil Creado Correctamente. Recuerde Configurarlo');
+                    window.location.href = 'home.php?ctr=admon&acc=adminperfiles';
+                    </script>";
+                break;
+
                 case "empresap":
                     $listatemporales=$objconsulta->obteneTemporalesform();
                     include('vistas/formprestadora.php');
@@ -1128,6 +1135,10 @@
                 case "asigperfiles":
                     $listamenus=$objconsulta->selectperfiles();
                     $listatemporales=$objconsulta->selectperfilesusuario();
+                    for($kk=0;$kk<count($listatemporales); $kk++) {
+                        $listatemporalesaaa=$objconsulta->listaempresasgeneral($listatemporales[$kk]['centrocostos']);
+                        $listatemporales[$kk]['centro']=$listatemporalesaaa;
+                    }
                     include('vistas/adminperfiles.php');
                 break;
 

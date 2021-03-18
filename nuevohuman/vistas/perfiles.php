@@ -1,5 +1,20 @@
 <h5>Administracion  de Perfiles</h5>
-<br><table class="table table-striped" id="tablagrid">
+<hr>
+<form action="home.php?ctr=admon&acc=crearperfilu" method="post">
+  <div class="form-group row">
+    <label for="nombreperfil" class="col-4 col-form-label">Nombre de Nuevo Perfil</label> 
+    <div class="col-8">
+      <input id="nombreperfil" name="nombreperfil" placeholder="Nombre del Nuevo Perfil" type="text" class="form-control" required="required">
+    </div>
+  </div> 
+  <div class="form-group row">
+    <div class="offset-4 col-8">
+      <button name="submit" type="submit" class="btn btn-primary">Crear Perfil</button>
+    </div>
+  </div>
+</form>
+<hr>
+<br><table class="table table-striped table-bordered" id="myTable">
 	<thead>
 		<tr>
 			<th>ID</th>

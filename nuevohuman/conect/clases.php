@@ -179,10 +179,29 @@ public function obtenerCertificadosCedula($numero){
 public function selectperfilesusuario(){
     $conn = $this->conec();
     $dato=array();
-    $consultas = "SELECT * FROM usuarios";
+    $consultas = "SELECT *,(SELECT GROUP_CONCAT(centrocostos.empresausuaria) AS names FROM centrocostos WHERE centrocostos.id_centro in(usuarios.centrocostos)) as centro FROM usuarios";
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;   
 }
+
+public function listaempresasgeneral($idcentros){
+    $conn = $this->conec();
+    $dato=array();
+    $texto ="";
+    if($idcentros=="all" || $idcentros==NULL || $idcentros==""){
+        return $texto;  
+    } else {
+        $consultas = "SELECT * FROM centrocostos where id_centro in ($idcentros)";
+        //echo $consultas;
+        $consultas= $conn->Execute($consultas)-> getRows();
+        for($kka=0;$kka<count($consultas); $kka++) {
+            $texto.=$consultas[$kka]['empresausuaria']."<br>";
+        }
+        return $texto;   
+    }       
+}
+
+
 
 public function listacentros(){
     $conn = $this->conec();
@@ -335,6 +354,15 @@ public function guardarhorasextra($fecha,$codigo,$nombre,$seccion,$desde,$hasta,
         return $consultas;
     }
 
+    public function guardarnuevoperfil($nombreperfil){
+
+        $conn = $this->conec();
+            $consultas = "INSERT INTO perfiles (nombreperfil)  values ('$nombreperfil')";
+            //echo $consultas;
+            $consultas= $conn->Execute($consultas)-> getRows();
+            return $consultas;
+        }
+    
 
 public function guardarcreditinca($id,$notacredito,$fechanotadci,$valornotaadci,$imagen,$otrasobserva,$digivsfisi){
     $conn = $this->conec();

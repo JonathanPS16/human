@@ -8,6 +8,7 @@
 			<th>nombre</th>
 			<th>Correo</th>
 			<th>Perfil</th>
+			<th>Empresa Usuaria</th>
 			<th>Restaurar Clave</th>
 			<th>Eliminar</th>
 		</tr>
@@ -24,7 +25,11 @@
 		$correo=$listatemporales[$i]['correo'];
 		$idrol=$listatemporales[$i]['idrol'];
 		$nombre=$listatemporales[$i]['nombre'];
-		
+		$centro =$listatemporales[$i]['centro'];
+		if($centro=="")
+		{
+			$centro="Sin Asignacion";
+		}
 		$pefillb = "";
 		for($j=0; $j<count($listamenus);$j++) {
 			$id_perfil = $listamenus[$j]['id_perfil'];
@@ -48,6 +53,7 @@
 			<td><?=$nombre?></td>
 			<td><?=$correo?></td>
 			<td><select onchange="cambiar(<?=$id_usuario?>,this.value)" class="form-control"><option value ="0">Seleccione</option><?=$pefillb?></select></td>
+			<td><?=$centro?></td>
 			<td><button onclick="restaurar(<?=$id_usuario?>,'<?=$usuario?>')" class="btn btn-primary col-md-20">Restaurar Clave</button></td>
 			<td><button onclick="eliminar(<?=$id_usuario?>)" class="btn btn-primary col-md-20">Eliminar</button></td></tr></th>
 	</tr><?php 
