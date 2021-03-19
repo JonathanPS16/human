@@ -319,6 +319,13 @@ public function listadoincap(){
     return $consultas;
 }
 
+public function traeusuario($id){
+    $conn = $this->conec();
+    $consultas = "select * from usuarios where id_usuario=".$id;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
 public function guardartrancripcion($id,$noincapacidad,$fechaincio,$diagnostico,$fechatrans,$fechafinal,$nodias,$notranscip,$archivouno,$archivodos,$prorroga,$diasacum){
     $conn = $this->conec();
     $consultas = "UPDATE incapacidadescargue set estado = 'T' ,noincapacidad='$noincapacidad',fechaincio='$fechaincio',diagnostico='$diagnostico',fechatrans='$fechatrans',fechafinaltra='$fechafinal',nodias='$nodias',notranscip='$notranscip',archivouno='$archivouno',archivodos='$archivodos',prorroga='$prorroga',diasacum='$diasacum' where id_registro=$id";
@@ -439,6 +446,14 @@ public function valdiaryguardar($documento,$clave,$nombre,$correo,$pefil,$centro
 
 
     
+}
+
+public function valdiaryguardareditar($llave,$correo,$pefil,$centrocostos){
+    $conn = $this->conec();
+
+        $SQL ="UPDATE usuarios set correo='{$correo}', idrol='$pefil', centrocostos='$centrocostos' where id_usuario= ".$llave;
+        $conn->Execute($SQL);
+        return true;
 }
 
 

@@ -1148,6 +1148,14 @@
                     /*$listatemporales=$objconsulta->selectperfilesusuario();*/
                     include('vistas/registro.php');
                 break;
+                case "editarusu":
+                    $listamenus=$objconsulta->selectperfiles();
+                    $listacentros=$objconsulta->listacentros();
+                    $listausuarioactu=$objconsulta->traeusuario($_GET['usu']);
+                    //var_dump($listausuarioactu);
+                    /*$listatemporales=$objconsulta->selectperfilesusuario();*/
+                    include('vistas/updateusu.php');
+                break;
 
                 case "guardarUsuario":
                     $separado_por_comas = implode(",", $_POST['centrocostos']);
@@ -1169,6 +1177,24 @@
                         echo "</script>";
                       }
                 break;
+
+                case "guardarEditUsuario":
+                    $separado_por_comas = implode(",", $_POST['centrocostos']);
+                    if($_POST['documento']!=""){
+                        $ret=$objconsulta->valdiaryguardareditar($_POST['llave'],$_POST['correo'],$_POST['perfilinicial'],$separado_por_comas);
+                        if($ret) {
+                          echo "<script>alert('Usuario Editado Correctamente');";
+                          echo "window.location.href = 'home.php?ctr=admon&acc=asigperfiles';";
+                          echo "</script>";
+                        } 
+                      } else {
+                        echo "<script>alert('Complete la Informacion Correctamente');";
+                        echo "window.location.href = 'home.php?ctr=admon&acc=asigperfiles';";
+                        echo "</script>";
+                      }
+                break;
+
+                
                 case "guardarpermisos":
                     $insert ="";
                     $id = $_POST['id'];

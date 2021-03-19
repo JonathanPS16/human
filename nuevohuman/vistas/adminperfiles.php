@@ -10,6 +10,7 @@
 			<th>Perfil</th>
 			<th>Empresa Usuaria</th>
 			<th>Restaurar Clave</th>
+			<th>Editar</th>
 			<th>Eliminar</th>
 		</tr>
 	</thead>
@@ -55,6 +56,7 @@
 			<td><select onchange="cambiar(<?=$id_usuario?>,this.value)" class="form-control"><option value ="0">Seleccione</option><?=$pefillb?></select></td>
 			<td><?=$centro?></td>
 			<td><button onclick="restaurar(<?=$id_usuario?>,'<?=$usuario?>')" class="btn btn-primary col-md-20">Restaurar Clave</button></td>
+			<td><button onclick="editarusu(<?=$id_usuario?>)" class="btn btn-primary col-md-20">Editar</button></td>
 			<td><button onclick="eliminar(<?=$id_usuario?>)" class="btn btn-primary col-md-20">Eliminar</button></td></tr></th>
 	</tr><?php 
 	}
@@ -119,6 +121,15 @@
 					return false;
 				} 
 			}
+}
+
+function editarusu(id){
+	if (id!=0) {
+			
+			location.href ="home.php?ctr=admon&acc=editarusu&usu="+id;
+			
+		}
+
 }
 
 function restaurar(id,valor){
