@@ -194,9 +194,14 @@ public function listaempresasgeneral($idcentros){
         $consultas = "SELECT * FROM centrocostos where id_centro in ($idcentros)";
         //echo $consultas;
         $consultas= $conn->Execute($consultas)-> getRows();
-        for($kka=0;$kka<count($consultas); $kka++) {
-            $texto.=$consultas[$kka]['empresausuaria']."<br>";
+        if(count($consultas)>10){
+            $texto = "Todos";
+        } else {
+            for($kka=0;$kka<count($consultas); $kka++) {
+                $texto.=$consultas[$kka]['empresausuaria']."<br>";
+            }
         }
+        
         return $texto;   
     }       
 }
@@ -307,6 +312,14 @@ public function listadohorasextrafinal(){
 public function obtenercargasinca(){
     $conn = $this->conec();
     $consultas = "SELECT * FROM `incapacidadescargue` where estado !='O'";
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
+public function infolaborati($id){
+    $conn = $this->conec();
+    $consultas = "SELECT * FROM `laboratorios` where id =".$id;
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
@@ -620,6 +633,13 @@ public function obtenercentroscostosusuarios(){
     return $consultas;
 }
 
+public function obtenerlistgridlabo(){
+    $conn = $this->conec();
+    $consultas = "SELECT * from laboratorios";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
 public function guardarempresaprestadora($nombre,$descipcion){
     $conn = $this->conec();
     $consultas = "INSERT INTO empresasterporales (nombretemporal,descripcion) values ('$nombre','$descipcion')";
@@ -627,10 +647,35 @@ public function guardarempresaprestadora($nombre,$descipcion){
     return $consultas;
 }
 
-public function guardarempresacentrocostos($nombre,$empresa,$descipcion,$codigo,$nit){
+public function guardarempresacentrocostosa($nombre,$empresa,$descipcion,$codigo,$nit){
     $conn = $this->conec();
     $consultas = "INSERT INTO centrocostos (nit,centrocosto,empresausuaria,id_empresapres,descripcion) values ('$nit','$codigo','$nombre',$empresa,'$descipcion')";
     $consultas= $conn->Execute($consultas)-> getRows();
+    $consultas = "update usuarios set centrocostos = (SELECT GROUP_CONCAT(centrocostos.id_centro) FROM centrocostos) where idrol in(1,2,3,4,5,6,9)";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    
+    return $consultas;
+}
+
+
+public function guardarexcamenesp($nombre,$recomendacion){
+    $conn = $this->conec();
+    $consultas = "INSERT INTO listaexamanesmedicos (nombreexamen,recomendaciones) values ('$nombre','$recomendacion')";
+    //echo $consultas;
+    //die();
+    $consultas= $conn->Execute($consultas)-> getRows();
+    
+    return $consultas;
+}
+
+//////////
+public function guardarinfolaboratorios($nombre,$ciudad,$direccion,$telefonos,$correos){
+    $conn = $this->conec();
+    $consultas = "INSERT INTO laboratorios (nombrelaboratorio,ciudad,direccion,telefonos,correo) values ('$ciudad','$nombre','$direccion',$telefonos,'$correos')";
+    //echo $consultas;
+    //die();
+    $consultas= $conn->Execute($consultas)-> getRows();
+    
     return $consultas;
 }
 
@@ -640,7 +685,8 @@ public function obteneTemporalesUsarias($dato){
     if($_SESSION['id_perfil']!="1") {
         $where =" and centrocostos.id_centro in(".$_SESSION['centrocostos'].") ";
     }
-    $consultas = "select centrocostos.* from centrocostos inner join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres $where";
+    $consultas = "select centrocostos.*,empresasterporales.nombretemporal as empresapres from centrocostos inner join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres $where";
+    //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
@@ -727,8 +773,8 @@ $empresacliente
 public function guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingreso,$correo,$cargo,$salario,$tasaarl,$jornadalaboral,$ciudadlaboral,$presentarsea,$nombre_archivo,$empresacliente,$empresaclientet){
     $conn = $this->conec();
 
-    $SQL= "INSERT INTO req (cantidad,cargo,ciudadlaboral,jornadalaboral,salariobasico,fechacreacion,fechareqcargo,clientesol,status,empresacliente,empresaclientet,tipo) 
-    values (1,'$cargo','$ciudadlaboral','$jornadalaboral','$salario',now(),'$fechaingreso','".$_SESSION['usuario']."','E','$empresacliente','$empresaclientet','D')";
+    $SQL= "INSERT INTO req (tiporeq,cantidad,cargo,ciudadlaboral,jornadalaboral,salariobasico,fechacreacion,fechareqcargo,clientesol,status,empresacliente,empresaclientet,tipo) 
+    values ('CD', 1,'$cargo','$ciudadlaboral','$jornadalaboral','$salario',now(),'$fechaingreso','".$_SESSION['usuario']."','E','$empresacliente','$empresaclientet','D')";
     $conn->Execute($SQL);
     $idreq = $conn->insert_Id();
     $SQL= "INSERT INTO req_candidatos (id_requisision,nombre,cedula,telefono,correo,tasa,salariorh,direccion,presentarse,estado,hojavida) 
@@ -1134,6 +1180,24 @@ public function obtenerLaboratorios(){
           $where .=" and ".$whereex;  
       }
       $consultas = "SELECT * FROM laboratorios";
+      //echo $consultas;
+      $consultas= $conn->Execute($consultas)-> getRows();
+      return $consultas;
+  }
+
+  public function obtenerexamenesmedicos(){
+    //echo $ide;
+      $conn = $this->conec();
+      $dato=array();
+      $where="";
+      if ($ide != 0) {
+        $where .=" and id_requisision= ".$ide;
+      } 
+      if($whereex!="")
+      {
+          $where .=" and ".$whereex;  
+      }
+      $consultas = "SELECT * FROM listaexamanesmedicos";
       //echo $consultas;
       $consultas= $conn->Execute($consultas)-> getRows();
       return $consultas;
@@ -1823,7 +1887,7 @@ public function archivosatrasformar($idper,$idreq){
 public function enviardocumentacion($idper,$idreq){
 
     $conn = $this->conec();
-    $consultas = "SELECT req.cargo,req_candidatos.correo,req_candidatos.ordeningreso,req_candidatos.apertura,req_candidatos.examenesar,req_candidatos.nombre  FROM req_candidatos inner join req on req.id = req_candidatos.id_requisision WHERE  req_candidatos.id=".$idper;
+    $consultas = "SELECT req_candidatos.lugar,req.cargo,req_candidatos.correo,req_candidatos.ordeningreso,req_candidatos.apertura,req_candidatos.examenesar,req_candidatos.nombre  FROM req_candidatos inner join req on req.id = req_candidatos.id_requisision WHERE  req_candidatos.id=".$idper;
     $consultas= $conn->Execute($consultas)-> getRows();
     $correo = "";
     $nombre ="";
@@ -1835,13 +1899,19 @@ public function enviardocumentacion($idper,$idreq){
     $archivoexa =  "archivosgenerales/";
     for($i= 0; $i<count($consultas); $i++) {
         $correo  =$consultas[$i]['correo'];
+        $correo  =$consultas[$i]['correo'];
         //$ordeningreso  =$consultas[$i]['ordeningreso'];
         $archivoaper.=$consultas[$i]['apertura'];
-        $archivoexa.= $consultas[$i]['examenesar'];
+        if($consultas[$i]['lugar']=="LP"){
+            $archivoexa= ""; 
+        } else {
+            $archivoexa.= $consultas[$i]['examenesar'];
+            //echo $consultas[$i]['lugar']."--".$consultas[$i]['examenesar']."----".$consultas[$i]['nombre'];
+            $this->enviarcorreocentromedico($consultas[$i]['lugar'],$consultas[$i]['examenesar'],$consultas[$i]['nombre']);
+        }
         $nombre.= $consultas[$i]['nombre'];
         $cargo.= $consultas[$i]['cargo'];
     }
-    
     $titulo2 = "Documentacion de Contratacion";
     $cuerpo2 = "Apreciado ".$nombre."<br>br>
 
@@ -1876,7 +1946,9 @@ public function enviardocumentacion($idper,$idreq){
     //$maildos->AddAttachment($ordeningreso,"ordeningreso.docx");
     $maildos->AddAttachment($hvhuman,"hojavidahuman.pdf");
     $maildos->AddAttachment($docdocumen,"documentacion.pdf");
-    $maildos->AddAttachment($archivoexa,"ordenexamenes.pdf");
+    if($archivoexa!=""){
+        $maildos->AddAttachment($archivoexa,"ordenexamenes.pdf");
+    }
     $maildos->AddAttachment($archivoaper,"aperturacuenta.pdf");
     $maildos->Subject = utf8_decode($titulo2); // Este es el titulo del email. 
     $maildos->MsgHTML(utf8_decode($cuerpo2));
@@ -1884,6 +1956,29 @@ public function enviardocumentacion($idper,$idreq){
 
     $SQL ="UPDATE req_candidatos SET estado='F' WHERE id=".$idper;
     $conn->Execute($SQL);
+
+}
+
+public function enviarcorreocentromedico($id,$archivoexa,$nombrepersona){
+    $conn = $this->conec();
+    $consultas = "SELECT * from  laboratorios where id=".$id;
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    //var_dump($consultas);
+    $correolaboratorio = $consultas[0]['correo'];
+    if($correolaboratorio!="") {
+        $datosa = explode("|", $correolaboratorio);
+        for($i=0;$i<count($datosa);$i++) {
+            if($datosa[$i]!=""){
+                $titulo="Envio Colaborador Para Examenes";
+                $mensaje="Se Envia la order de examenes del colaborador $nombrepersona para su gestion";
+                $this->enviarcorreoadjuntos($datosa[$i],$archivoexa,$mensaje,$titulo);
+            }
+        }
+    }
+
+
+
 
 }
 

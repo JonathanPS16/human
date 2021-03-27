@@ -78,7 +78,7 @@ if($datos[1]!="D"){
 	  </div>
 </form>
 <?php
-$labo  =""; 
+$labo  ="<option value ='LP'>-Laboratorio Propio-</option>"; 
 for($i=0; $i<count($laboratorios);$i++){
 $labo.='<option value="'.$laboratorios[$i]['id'].'">'.$laboratorios[$i]['nombrelaboratorio'].' ('.$laboratorios[$i]['ciudad'].')</option>';
 }
@@ -219,33 +219,22 @@ for($i=0; $i<count($listadoreq);$i++){
     $conteoreq++;
   }
     $minfor="";
-    $datos = array(
-      "Audiometría",
-    "Espirómetría",
-    "Examen Medico Ocupacional",
-    "Examen Médico con Énfasis Osteomuscular",
-    "Examen Médico con Énfasis en Alturas",
-    "Exámenes para manipulación de Alimentos",
-    "Optometría",
-    "Panel 2 Detección Consumo Drogas",
-    "Prueba Psicosensometrica.",
-    "Serología",
-    "Visiometria"
-    );
     $laboges = "<option value='N'>NO</option><option value='S'>SI</option>";
-    for($z=0;$z<count($datos);$z++){
-      $zz = $z+1;
+    for($iaa=0; $iaa<count($laboratoriosexamenes);$iaa++){
       $minfor.='      
       <div class="form-group row">
-        <label class="col-4 col-form-label" for="checkbox'.$zz.'">'.$datos[$z].'</label> 
+        <label class="col-4 col-form-label" for="checkbox'.$laboratoriosexamenes[$iaa]['id_examen'].'">'.$laboratoriosexamenes[$iaa]['nombreexamen'].'</label> 
         <div class="col-8">
-        <select id="exalaboratorio'.$zz.'" name="exalaboratorio'.$zz.'" class="custom-select"  class="custom-select" required="required">
+        <select id="exalaboratorio'.$laboratoriosexamenes[$iaa]['id_examen'].'" name="exalaboratorio'.$laboratoriosexamenes[$iaa]['id_examen'].'" class="custom-select"  class="custom-select" required="required">
           '.$laboges.'
           </select>
         </div>
       </div>';
-    //echo $datos[$z];
-    }
+
+
+
+     // $labo.='<option value="'.$laboratorios[$ia]['id'].'">'.$laboratorios[$ia]['nombrelaboratorio'].' ('.$laboratorios[$ia]['ciudad'].')</option>';
+      }
 
     $labola = "<option value='N'>NO</option><option value='S'>SI</option>";
 

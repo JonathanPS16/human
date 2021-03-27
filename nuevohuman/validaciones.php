@@ -1036,7 +1036,16 @@
                     $listatemporales=$objconsulta->obteneTemporalesform();
                     include('vistas/formprestadora.php');
                 break;
+                case "laboratorios":
+                    $listatemporales=$objconsulta->obtenerlistgridlabo();
+                    include('vistas/formlaboratorio.php');
+                break;
+                case "examenes":
+                    $listatemporales=$objconsulta->obtenerexamenesmedicos();
+                    include('vistas/formexamenes.php');
+                break;
 
+                
                 case "empresau":
                     $listatemporalespres=$objconsulta->obteneTemporalesform();
                     $listatemporales=$objconsulta->obtenercentroscostosusuarios();
@@ -1046,6 +1055,20 @@
                     $listatemporales=$objconsulta->guardarempresacentrocostos($_POST['nombre'],$_POST['empresa'],$_POST['descripcion'],$_POST['codigo'],$_POST['nit']);
                     echo "<script>alert('Empresa Usuaria Cargada Correctamente');
                                 window.location.href = 'home.php?ctr=admon&acc=empresau';
+                                </script>";
+                break;
+
+                case "guardarlaboratorio":
+                    $listatemporales=$objconsulta->guardarinfolaboratorios($_POST['nombre'],$_POST['ciudad'],$_POST['direccion'],$_POST['telefonos'],$_POST['correouno']."|".$_POST['correodos']);
+                    echo "<script>alert('Laboratorio Cargado Correctamente');
+                                window.location.href = 'home.php?ctr=admon&acc=laboratorios';
+                                </script>";
+                break;
+
+                case "guardarexamenp":
+                    $listatemporales=$objconsulta->guardarexcamenesp($_POST['nombre'],$_POST['recomendacion']);
+                    echo "<script>alert('Examen Cargado Correctamente');
+                                window.location.href = 'home.php?ctr=admon&acc=examenes';
                                 </script>";
                 break;
 
@@ -1163,17 +1186,17 @@
                         $ret=$objconsulta->valdiaryguardar($_POST['documento'],base64_encode($_POST['clave']),$_POST['nombre'],$_POST['correo'],$_POST['perfilinicial'],$separado_por_comas);
                         if($ret) {
                           echo "<script>alert('Usuario Creado Correctamente');";
-                          echo "window.location.href = 'home.php?ctr=admon&acc=creacionusuarios';";
+                          echo "window.location.href = 'home.php?ctr=admon&acc=asigperfiles';";
                           echo "</script>";
                         } else {
                           echo "<script>alert('Usuario Ya Creado en Sistema');";
-                          echo "window.location.href = 'home.php?ctr=admon&acc=creacionusuarios';";
+                          echo "window.location.href = 'home.php?ctr=admon&acc=asigperfiles';";
                           echo "</script>";
                     
                         }
                       } else {
                         echo "<script>alert('Complete la Informacion Correctamente');";
-                        echo "window.location.href = 'home.php?ctr=admon&acc=creacionusuarios';";
+                        echo "window.location.href = 'home.php?ctr=admon&acc=asigperfiles';";
                         echo "</script>";
                       }
                 break;
@@ -1905,9 +1928,10 @@ $xmlWriter->save('omar.pdf');*/
                         // Data
                         foreach($data as $row)
                         {
-                            $this->Cell($w[0],6,utf8_decode($row[0]),'LR');
-                            $this->Cell($w[1],6,utf8_decode($row[1]),'LR');
-                            $this->Cell($w[2],6,utf8_decode($row[2]),'LR');
+                            $this->Cell($w[0],6,utf8_decode($row[0]),'LR',0,'C');
+                            $this->Cell($w[1],6,utf8_decode($row[1]),'LR',0,'C');
+                            $this->Cell($w[2],6,utf8_decode($row[2]),'LR',0,'C');
+                            
                         // $this->Cell($w[2],6,number_format($row[2]),'LR',0,'R');
                         // $this->Cell($w[3],6,number_format($row[3]),'LR',0,'R');
                             $this->Ln();
@@ -1920,37 +1944,42 @@ $xmlWriter->save('omar.pdf');*/
                     ////////////////////////////////////////////////////
                     /////////  MANEJO DE EXAMENES MEDICOS
                     ///////////////////////////////////////////////////
+                    if($laboratorio!="LP")
+                    {
+                    $mislaboratorios = $objconsulta->infolaborati($_POST['laboratorio']);
+                    $laboratoriosexamenes=$objconsulta->obtenerexamenesmedicos();
+                    //var_dump($laboratoriosexamenes);
                     $pdf = new PDF();
                     // Column headings
                     $header = array(utf8_decode('Nombre'), utf8_decode('Realizar'),utf8_decode('Observaciones'));
                     // Data loading
                     $data = array();
-                    $pdf->SetFont('Arial','',12);
+                    $pdf->SetFont('Arial','',11);
                     $pdf->AddPage();
                     $pdf->Image('img/CABECERA.png' , 0 ,0, 210 , 38);
                     $pdf->Ln(30);
-                    $pdf->SetFont('Arial', '', 10);
+                    //$pdf->SetFont('Arial', '', 10);
                     $pdf->Multicell(0,7,utf8_decode('Bogotá'),0,'L');
                     $pdf->Ln(8);
                     $pdf->Multicell(0,7,utf8_decode('Señores'),0,'L');
-                    $pdf->SetFont('Arial', 'B', 10);
-                    $pdf->Multicell(0,7,'Laboratorios REYVELT',0,'L');
+                   // $pdf->SetFont('Arial', 'B', 10);
+                    $pdf->Multicell(0,7,$mislaboratorios[0]['ciudad'],0,'L');
                     $pdf->Multicell(0,7,utf8_decode('Medicina Especializada'),0,'L');
-                    $pdf->SetFont('Arial', '', 10);
-                    $pdf->Multicell(0,7,utf8_decode('Calle 85 A No. 22  32  Barrio El Polo '),0,'L');
-                    $pdf->Multicell(0,7,utf8_decode('Teléfono').' (+ 57 1) 702 0903 O 300 1465 ',0,'L');
-                    $pdf->Multicell(0,7,'Ciudad',0,'L');
-                    $pdf->SetFont('Arial', '', 10);
+                    //$pdf->SetFont('Arial', '', 10);
+                    $pdf->Multicell(0,7,utf8_decode($mislaboratorios[0]['direccion']),0,'L');
+                    $pdf->Multicell(0,7,utf8_decode('Teléfono').' '.$mislaboratorios[0]['telefonos'],0,'L');
+                    $pdf->Multicell(0,7,'Ciudad '.utf8_decode($mislaboratorios[0]['nombrelaboratorio']),0,'L');
+                   // $pdf->SetFont('Arial', '', 10);
                     $pdf->Ln(8);
                     $pdf->Ln(8);
-                    $pdf->SetFont('Arial', 'B', 10);
+                    //$pdf->SetFont('Arial', 'B', 10);
                     $pdf->Multicell(0,7,utf8_decode('Referencia: Orden de Exámenes Médicos '),0,'R');
-                    $pdf->SetFont('Arial', '', 10);
+                    //$pdf->SetFont('Arial', '', 10);
                     $pdf->Multicell(0,7,utf8_decode('Apreciados  Señores:'),0,'L');
                     $pdf->Ln(5);
                     $pdf->Multicell(0,7,utf8_decode('Por medio de la presente autorizamos la realización de los siguientes exámenes médicos a:'),0,'L');
                     $pdf->Ln(5);
-                    $pdf->SetFont('Arial', 'B', 10);
+                    //$pdf->SetFont('Arial', 'B', 10);
                     $pdf->Multicell(0,7,utf8_decode('Nombre '.$listadoreqpers[0]['nombre'].''),0,'L');
                     $pdf->Multicell(0,7,utf8_decode('Cedula '.$listadoreqpers[0]['cedula'].''),0,'L');
                     $pdf->Multicell(0,7,utf8_decode('Empresa Usuaria  '.$listadoreqpers[0]['nombretemporal'].''),0,'L');
@@ -1966,137 +1995,32 @@ $xmlWriter->save('omar.pdf');*/
                                             } else {
                                                 if($valor=='S'){
                                                     $datagen = explode("exalaboratorio",$clave);
-                                                    $cadena.=$datagen[1].",";
+                                                    //echo $datagen[1]."<br>";
+                                                    for($iaa=0;$iaa<count($laboratoriosexamenes);$iaa++){
+                                                        if($datagen[1]==$laboratoriosexamenes[$iaa]['id_examen'])
+                                                        {
+                                                            array_push($data,array($laboratoriosexamenes[$iaa]['nombreexamen'],"X",$laboratoriosexamenes[$iaa]['recomendaciones']));
+                                                        }
+                                                    }
+                                                  //  $cadena.=$datagen[1].",";
                                                 }
                                             }
                                     
                                         }
-                    $cadenavalid = ",".$cadena;
-                    $vali ="";
-                    $pos = strpos($cadenavalid, ",1,");
-                    if ($pos === false) {
-                    } else {
-                        $vali ="X";
-                    }
-                    array_push($data,array("Audiometría",$vali,"asdsad"));
-                    $vali ="";
-                    $pos = strpos($cadenavalid, ",2,");
-                    if ($pos === false) {
-                    } else {
-                        $vali ="X";
-                    }
-                    array_push($data,array("Espirómetría","{$vali}",""));
-                    $vali ="";
-                    $pos = strpos($cadenavalid, ",3,");
-                    if ($pos === false) {
-                    } else {
-                        $vali ="X";
-                    }
-                    array_push($data,array("Examen Medico Ocupacional","{$vali}",""));
-                    $vali ="";
-                    $pos = strpos($cadenavalid, ",4,");
-                    if ($pos === false) {
-                    } else {
-                        $vali ="X";
-                    }
-                    array_push($data,array("Examen Médico con Énfasis Osteomuscular","{$vali}",""));
-                    $vali ="";
-                    $pos = strpos($cadenavalid, ",5,");
-                    if ($pos === false) {
-                    } else {
-                        $vali ="X";
-                    }
-                    array_push($data,array("Examen Médico con Énfasis en Alturas ","{$vali}","Presentarse en Ayunas, de por lo menos 12 horas"));
-                    $vali ="";
-                    $pos = strpos($cadenavalid, ",6,");
-                    if ($pos === false) {
-                    } else {
-                        $vali ="X";
-                    }
-                    array_push($data,array("Exámenes para manipulación de Alimentos ","{$vali}",""));
-                    $vali ="";
-                    $pos = strpos($cadenavalid, ",7,");
-                    if ($pos === false) {
-                    } else {
-                        $vali ="X";
-                    }
-                    array_push($data,array("Exámenes para manipulación de Alimentos ","{$vali}",""));
-                    $vali ="";
-                    $pos = strpos($cadenavalid, ",8,");
-                    if ($pos === false) {
-                    } else {
-                        $vali ="X";
-                    }
-                    array_push($data,array("Optometría","{$vali}",""));
-                    $vali ="";
-                    $pos = strpos($cadenavalid, ",9,");
-                    if ($pos === false) {
-                    } else {
-                        $vali ="X";
-                    }
-                    array_push($data,array("Panel 2 Detección Consumo Drogas ","{$vali}",""));
-                    $vali ="";
-                    $pos = strpos($cadenavalid, ",10,");
-                    if ($pos === false) {
-                    } else {
-                        $vali ="X";
-                    }
-                    array_push($data,array("Prueba Psicosensometrica","{$vali}",""));
-                    $vali ="";
-                    $pos = strpos($cadenavalid, ",11,");
-                    if ($pos === false) {
-                    } else {
-                        $vali ="X";
-                    }
-                    array_push($data,array("Serología","{$vali}",""));
-                    $vali ="";
-                    $pos = strpos($cadenavalid, ",12,");
-                    if ($pos === false) {
-                    } else {
-                        $vali ="X";
-                    }
-                    array_push($data,array("Visiometria","{$vali}",""));
                     $pdf->SetFont('Arial', '', 9);
                     $pdf->ImprovedTabletres($header,$data);
                     $pdf->Ln(5);
-                    $pdf->Multicell(0,7,utf8_decode('Nota. Apreciado Colaborador, por favor presentarse al laboratorio que esta señalado con (X) en el siguiente cuadro'),0,'L');
+                    $pdf->Multicell(0,7,utf8_decode('Nota. Apreciado Colaborador, por favor presentarse al laboratorio '.$mislaboratorios[0]['ciudad'].' Ubicado en la ciudad de '.$mislaboratorios[0]['nombrelaboratorio'].' en la direcccion '.$mislaboratorios[0]['direccion'].' y sus telefonos son '.$mislaboratorios[0]['telefonos'].'.'),0,'L');
                     $pdf->Ln(5);
-                    $pdf->SetFont('Arial', '', 8);
-                    $header = array('Presentarse', 'Ciudad','Laboratorio - IPS ','Dirección','Teléfono','Celular');
+                    //$pdf->SetFont('Arial', '', 5);
+                    //$header = array('Presentarse', 'Ciudad','Laboratorio - IPS ','Dirección','Teléfono','Celular');
                     $dataa = array();
                     $vali ="";
-                    if ($_POST['laboratorio'] == "1") {
-                    $vali ="X";
-                    }
-                    array_push($dataa,array("{$vali}","Bogotá","Reyvelt ","Calle 85 A  No. 22 - 32","(1) 702 0903","313 323 9499"));
-
-                    $vali ="";
-                    if ($_POST['laboratorio'] == "2") {
-                    $vali ="X";
-                    }
-                    array_push($dataa,array("{$vali}","Cali","Santa Clara","Calle 23AN # 2N - 75","(2) 668 2828 ","318 348 2110"));
-
-                    $vali ="";
-                    if ($_POST['laboratorio'] == "3") {
-                    $vali ="X";
-                    }
-                    array_push($dataa,array("{$vali}","Medellín","OmniSalud - Sede Laureles","Calle 33  No 74E-56","(4) 448 10 44","321 643 8936"));
-
-                    $vali ="";
-                    if ($_POST['laboratorio'] == "4") {
-                    $vali ="X";
-                    }
-                    array_push($dataa,array("{$vali}","Medellín","OmniSalud - Sede Centro ","Carrera 49 No 49-24 2do Piso ","(4) 448 10 44","321 643 8936"));
-
-                    $vali ="";
-                    if ($_POST['laboratorio'] == "5") {
-                    $vali ="X";
-                    }
-                    array_push($dataa,array("{$vali}","Medellín","OmniSalud - Sede Itagüí","Calle 51   No 47-32","(4) 448 10 44","321 643 8936"));
-                    $pdf->ImprovedTableseis($header,$dataa);
+                    //array_push($dataa,array("X",$mislaboratorios[0]['nombrelaboratorio'],$mislaboratorios[0]['ciudad'],$mislaboratorios[0]['direccion'],$mislaboratorios[0]['telefonos'],$mislaboratorios[0]['telefonos']));
+                   // $pdf->ImprovedTableseis($header,$dataa);
                     $pdf->Ln(5);
                     $pdf->Multicell(0,7,'Cordialmente,',0,'L');
-                    $pdf->SetFont('Arial', 'B', 9);
+                    //$pdf->SetFont('Arial', 'B', 9);
                     $pdf->Multicell(0,7,utf8_decode('Area de Contratación'),0,'L');
                     $pdf->Multicell(0,7,'Human Talent',0,'L');
                     /*$pdf->AddPage();
@@ -2106,7 +2030,9 @@ $xmlWriter->save('omar.pdf');*/
                     $pdf->Image('img/pie.png' , 0,259, 210 , 38);
                     $examenes ='examenes'.$idper.'.pdf';
                     $pdf->Output(F,'archivosgenerales/'.$examenes);
-
+                    } else {
+                        $examenes ="PROPIO";
+                    }
 
                     ////////////////////////////////////////////////////
                     /////////  MANEJO DE APERTURA DE CUENTA
@@ -2207,6 +2133,8 @@ $xmlWriter->save('omar.pdf');*/
                     $orden ='order'.$idper.'.pdf';
                     $pdf->Output(F,'archivosgenerales/'.$orden);
                     ob_end_flush();
+                    //echo '<a href="archivosgenerales/'.$orden.'">Orden</a>';
+                    //echo '<a href="archivosgenerales/'.$examenes.'">examenes</a>';
                     $listadoreq=$objconsulta->ajustarlaboratorio($idper,$idreq,$laboratorio,$cadena,$orden,$apertura,$examenes);
                     echo "<script>alert('Informacion Guardada Correctamente');
                     window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$idreq."';
@@ -2240,90 +2168,7 @@ $xmlWriter->save('omar.pdf');*/
 
                 case "enviardocumentacion":
                     $idper = $_GET["idper"];
-                    $idreq = $_GET["idreq"];
-                   /* $listadearchivos=$objconsulta->archivosatrasformar($idper,$idreq);
-                    require_once 'conversorwordpdf/vendor/autoload.php';
-                    $nombrearchivo = $listadearchivos['ordeningreso'];
-                    $nombre = str_replace(".docx","",$nombrearchivo);
-                    //echo $nombre;
-                    $archivoouput = $nombre.".pdf";
-                    $objReader= \PhpOffice\PhpWord\IOFactory::createReader('Word2007');
-                    $contents=$objReader->load("archivosgenerales/".$nombrearchivo);
-                    $rendername= \PhpOffice\PhpWord\Settings::PDF_RENDERER_TCPDF;
-                    $renderLibrary="conversorwordpdf/tcpdf";
-                    $renderLibraryPath=''.$renderLibrary;
-                    if(!\PhpOffice\PhpWord\Settings::setPdfRenderer($rendername,$renderLibrary)){
-                        die("Provide Render Library And Path");
-                    }
-                    $renderLibraryPath=''.$renderLibrary;
-                    $objWriter= \PhpOffice\PhpWord\IOFactory::createWriter($contents,'PDF');
-                    $objWriter->save("archivosgenerales/".$archivoouput);
-                    
-                    $nombrearchivo = $listadearchivos['docdocumen'];
-                    $nombre = str_replace(".docx","",$nombrearchivo);
-                    //echo $nombre;
-                    $archivoouput = $nombre.".pdf";
-                    $objReader= \PhpOffice\PhpWord\IOFactory::createReader('Word2007');
-                    $contents=$objReader->load("archivosgenerales/".$nombrearchivo);
-                    $rendername= \PhpOffice\PhpWord\Settings::PDF_RENDERER_TCPDF;
-                    $renderLibrary="conversorwordpdf/tcpdf";
-                    $renderLibraryPath=''.$renderLibrary;
-                    if(!\PhpOffice\PhpWord\Settings::setPdfRenderer($rendername,$renderLibrary)){
-                        die("Provide Render Library And Path");
-                    }
-                    $renderLibraryPath=''.$renderLibrary;
-                    $objWriter= \PhpOffice\PhpWord\IOFactory::createWriter($contents,'PDF');
-                    $objWriter->save("archivosgenerales/".$archivoouput);
-                   
-                    $nombrearchivo = $listadearchivos['hvhuman'];
-                    $nombre = str_replace(".docx","",$nombrearchivo);
-                    //echo $nombre;
-                    $archivoouput = $nombre.".pdf";
-                    $objReader= \PhpOffice\PhpWord\IOFactory::createReader('Word2007');
-                    $contents=$objReader->load("archivosgenerales/".$nombrearchivo);
-                    $rendername= \PhpOffice\PhpWord\Settings::PDF_RENDERER_TCPDF;
-                    $renderLibrary="conversorwordpdf/tcpdf";
-                    $renderLibraryPath=''.$renderLibrary;
-                    if(!\PhpOffice\PhpWord\Settings::setPdfRenderer($rendername,$renderLibrary)){
-                        die("Provide Render Library And Path");
-                    }
-                    $renderLibraryPath=''.$renderLibrary;
-                    $objWriter= \PhpOffice\PhpWord\IOFactory::createWriter($contents,'PDF');
-                    $objWriter->save("archivosgenerales/".$archivoouput);
-
-
-                    $nombrearchivo = $listadearchivos['examen'];
-                    $nombre = str_replace(".docx","",$nombrearchivo);
-                    //echo $nombre;
-                    $archivoouput = $nombre.".pdf";
-                    $objReader= \PhpOffice\PhpWord\IOFactory::createReader('Word2007');
-                    $contents=$objReader->load("archivosgenerales/".$nombrearchivo);
-                    $rendername= \PhpOffice\PhpWord\Settings::PDF_RENDERER_TCPDF;
-                    $renderLibrary="conversorwordpdf/tcpdf";
-                    $renderLibraryPath=''.$renderLibrary;
-                    if(!\PhpOffice\PhpWord\Settings::setPdfRenderer($rendername,$renderLibrary)){
-                        die("Provide Render Library And Path");
-                    }
-                    $renderLibraryPath=''.$renderLibrary;
-                    $objWriter= \PhpOffice\PhpWord\IOFactory::createWriter($contents,'PDF');
-                    $objWriter->save("archivosgenerales/".$archivoouput);
-
-                    $nombrearchivo = $listadearchivos['apertura'];
-                    $nombre = str_replace(".docx","",$nombrearchivo);
-                    //echo $nombre;
-                    $archivoouput = $nombre.".pdf";
-                    $objReader= \PhpOffice\PhpWord\IOFactory::createReader('Word2007');
-                    $contents=$objReader->load("archivosgenerales/".$nombrearchivo);
-                    $rendername= \PhpOffice\PhpWord\Settings::PDF_RENDERER_TCPDF;
-                    $renderLibrary="conversorwordpdf/tcpdf";
-                    $renderLibraryPath=''.$renderLibrary;
-                    if(!\PhpOffice\PhpWord\Settings::setPdfRenderer($rendername,$renderLibrary)){
-                        die("Provide Render Library And Path");
-                    }
-                    $renderLibraryPath=''.$renderLibrary;
-                    $objWriter= \PhpOffice\PhpWord\IOFactory::createWriter($contents,'PDF');
-                    $objWriter->save("archivosgenerales/".$archivoouput);*/
-                
+                    $idreq = $_GET["idreq"];              
                     $listadoreq=$objconsulta->enviardocumentacion($idper,$idreq);
                     echo "<script>alert('Informacion Guardada Correctamente');
                 window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$idreq."';
@@ -2337,6 +2182,7 @@ $xmlWriter->save('omar.pdf');*/
                     $tituloaaa=$objconsulta->obtenerreqinfo($idreq);
                     $listadoreq=$objconsulta->obtenercandidatos($idreq);
                     $laboratorios=$objconsulta->obtenerLaboratorios();
+                    $laboratoriosexamenes=$objconsulta->obtenerexamenesmedicos();
                     include('vistas/listadoyformcandidatos.php');
                 break;
 

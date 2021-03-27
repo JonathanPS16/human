@@ -2,6 +2,7 @@
 	<thead>
 		<tr>
 			<th>ID</th>
+			<th>Tipo Solicitud</th>
 			<th>Cargo</th>
 			<th>Fecha Solicitud</th>
 			<th>Empresa Temporal</th>
@@ -33,6 +34,7 @@ for($i=0; $i<count($listadoreq);$i++){
 	$empresatemporal=$listadoreq[$i]['nombretemporal'];
 	$fechareqcargo=$listadoreq[$i]['fechareqcargo'];
 	$cantidad=$listadoreq[$i]['cantidad'];
+	$tiporeq=$listadoreq[$i]['tiporeq'];
 	$estadogene = "Finalizado";
 	$cantidadapro =$listadoreq[$i]['cantidadapro'];
 	if($cantidadapro!=$cantidad){
@@ -48,6 +50,7 @@ for($i=0; $i<count($listadoreq);$i++){
 	}
     echo "<tr>
     		<td>".$id."</td>
+			<td>".$tiporeq."</td>
 			<td>".$cargo."</td>
 			<td>".$fechacreacion."</td>
 			<td>".$empresatemporal."</td>

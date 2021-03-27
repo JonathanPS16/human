@@ -1,4 +1,9 @@
-<h5>Asignación de Perfiles</h5>
+<h5>Asignación Usuarios</h5>
+
+<button type="button" class="btn btn-primary" onclick="crearnuevo();">
+  Agregar Usuario
+</button><br>
+<br>
 
 <table class="table table-striped table-bordered" id="myTable">
 	<thead>
@@ -130,6 +135,10 @@ function editarusu(id){
 			
 		}
 
+}
+
+function crearnuevo(){
+	location.href ="home.php?ctr=admon&acc=creacionusuarios";
 }
 
 function restaurar(id,valor){

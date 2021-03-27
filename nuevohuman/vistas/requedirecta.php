@@ -9,11 +9,12 @@
       for($i=0; $i<count($listatemporalesusuarias);$i++){
         $id_temporal=$listatemporalesusuarias[$i]['id_centro'];
         $nombretemporal=$listatemporalesusuarias[$i]['empresausuaria'];
+        $empresapresaaaa=$listatemporalesusuarias[$i]['empresapres'];
         $slr = "";
         if ($mireq[0]['empresacliente']== $id_temporal){
           $slr = 'selected="selected"';
         }
-        echo '<option value="'.$id_temporal.'"  '.$slr.'>'.$nombretemporal.'</option>';
+        echo '<option value="'.$id_temporal.'"  '.$slr.'>'.$nombretemporal.' ('.$empresapresaaaa.')</option>';
       }
       ?>
       </select>
