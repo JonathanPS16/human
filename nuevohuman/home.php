@@ -100,6 +100,7 @@ require_once('conect/clases.php');
             $('#example').DataTable();
             $('#myTable').DataTable(
                 {
+                    order: [],
                     dom: 'Bfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
