@@ -647,7 +647,7 @@ public function guardarempresaprestadora($nombre,$descipcion){
     return $consultas;
 }
 
-public function guardarempresacentrocostosa($nombre,$empresa,$descipcion,$codigo,$nit){
+public function guardarempresacentrocostos($nombre,$empresa,$descipcion,$codigo,$nit){
     $conn = $this->conec();
     $consultas = "INSERT INTO centrocostos (nit,centrocosto,empresausuaria,id_empresapres,descripcion) values ('$nit','$codigo','$nombre',$empresa,'$descipcion')";
     $consultas= $conn->Execute($consultas)-> getRows();
