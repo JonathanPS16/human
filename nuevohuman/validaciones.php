@@ -1631,7 +1631,19 @@
                     $empresacliente = $_POST['empresacliente'];
                     $empresaclientet = $_POST['empresaclientet'];
 
-                    $objconsulta->guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingreso,$correo,$cargo,$salario,$tasaarl,$jornadalaboral,$ciudadlaboral,$presentarsea,$nombre_archivo,$empresacliente,$empresaclientet);
+                    $centrocostosor = $_POST['centrocostosor'];
+                    $centrosucursal = $_POST['centrosucursal'];
+                    $funcionarioaut = $_POST['funcionarioaut'];
+                    $cargofuncionarioaut = $_POST['cargofuncionarioaut'];
+                    $opbservacioncontratacion = $_POST['opbservacioncontratacion'];
+                    $funcionarioautorizath = $_POST['funcionarioautorizath'];
+                    $cargofuncionarioth = $_POST['cargofuncionarioth'];
+                    $fechaautori = $_POST['fechaautori'];
+                    $firmaautoriza = $_POST['firmaautoriza'];
+
+
+                    $objconsulta->guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingreso,$correo,$cargo,$salario,$tasaarl,$jornadalaboral,$ciudadlaboral,$presentarsea,$nombre_archivo,
+                    $empresacliente,$empresaclientet,$centrocostosor,$centrosucursal,$funcionarioaut,$cargofuncionarioaut,$opbservacioncontratacion,$funcionarioautorizath,$cargofuncionarioth,$fechaautori,$firmaautoriza);
                     $mensaje = "Solicitud Realizada Correctamente";
                     echo "<script>alert('".$mensaje."');
                     window.location.href = 'home.php?ctr=requisicion&acc=listadoReq';

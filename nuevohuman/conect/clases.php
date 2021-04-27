@@ -770,15 +770,15 @@ $empresacliente
 }
 
 
-public function guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingreso,$correo,$cargo,$salario,$tasaarl,$jornadalaboral,$ciudadlaboral,$presentarsea,$nombre_archivo,$empresacliente,$empresaclientet){
+public function guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingreso,$correo,$cargo,$salario,$tasaarl,$jornadalaboral,$ciudadlaboral,$presentarsea,$nombre_archivo,$empresacliente,$empresaclientet,$centrocostosor,$centrosucursal,$funcionarioaut,$cargofuncionarioaut,$opbservacioncontratacion,$funcionarioautorizath,$cargofuncionarioth,$fechaautori,$firmaautoriza){
     $conn = $this->conec();
 
     $SQL= "INSERT INTO req (tiporeq,cantidad,cargo,ciudadlaboral,jornadalaboral,salariobasico,fechacreacion,fechareqcargo,clientesol,status,empresacliente,empresaclientet,tipo) 
     values ('CD', 1,'$cargo','$ciudadlaboral','$jornadalaboral','$salario',now(),'$fechaingreso','".$_SESSION['usuario']."','E','$empresacliente','$empresaclientet','D')";
     $conn->Execute($SQL);
     $idreq = $conn->insert_Id();
-    $SQL= "INSERT INTO req_candidatos (id_requisision,nombre,cedula,telefono,correo,tasa,salariorh,direccion,presentarse,estado,hojavida) 
-    values ($idreq,'$nombre','$cedula','$numerocontacto','$correo','$tasaarl','$salario','$jornadalaboral','$presentarsea','EM','$nombre_archivo')";
+    $SQL= "INSERT INTO req_candidatos (id_requisision,nombre,cedula,telefono,correo,tasa,salariorh,direccion,presentarse,estado,hojavida,centrocostosor,centrosucursal,funcionarioaut,cargofuncionarioaut,opbservacioncontratacion,funcionarioautorizath,cargofuncionarioth,fechaautori,firmaautoriza) 
+    values ($idreq,'$nombre','$cedula','$numerocontacto','$correo','$tasaarl','$salario','$jornadalaboral','$presentarsea','EM','$nombre_archivo','$centrocostosor','$centrosucursal','$funcionarioaut','$cargofuncionarioaut','$opbservacioncontratacion','$funcionarioautorizath','$cargofuncionarioth','$fechaautori','$firmaautoriza')";
     $conn->Execute($SQL);
     $idreqcan = $conn->insert_Id();
     $SQL= "INSERT INTO entrevistas (id_req,id_can) 
