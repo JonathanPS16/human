@@ -2147,21 +2147,20 @@ $xmlWriter->save('omar.pdf');*/
                     $pdf->Ln(1);
                     $pdf->SetFont('Arial', '', 10);
                     $pdf->Ln(1);
-                    $header = array(utf8_decode('Centro de Costos de Empresa cliente '), "",utf8_decode('Ciudad/Sucursal '),"");
-                    $data = array(0=>array("Nombre Funcionario que Autoriza","","Cargo Funcionario que Autoriza", ""));
+                    $header = array(utf8_decode('Centro de Costos de Empresa cliente '), utf8_decode($listadoreqpers[0]['centrocostosor']),utf8_decode('Ciudad/Sucursal '),utf8_decode($listadoreqpers[0]['centrosucursal']));
+                    $data = array(0=>array("Nombre Funcionario que Autoriza",utf8_decode($listadoreqpers[0]['funcionarioaut']),"Cargo Funcionario que Autoriza", utf8_decode($listadoreqpers[0]['cargofuncionarioaut'])));
                     $pdf->ImprovedTablecuatro($header,$data);
                     $pdf->Ln(1);
                     $pdf->SetFont('Arial', 'B', 11);
                     $pdf->Multicell(0,7,utf8_decode('6.  Observaciones de Contratacion'),0,'L');
-                    $pdf->Multicell(0,7,utf8_decode(''),0,'L');
-                    $pdf->Multicell(0,7,utf8_decode(''),0,'L');
-                    $pdf->Multicell(0,7,utf8_decode(''),0,'L');
+                    $pdf->Multicell(0,7,utf8_decode($listadoreqpers[0]['opbservacioncontratacion']),0,'L');
+                   
                     $pdf->Multicell(0,7,utf8_decode('7.  Area Talento Humano'),0,'L');
                     $pdf->Ln(1);
                     $pdf->SetFont('Arial', '', 10);
                     $pdf->Ln(1);
-                    $header = array(utf8_decode('Nombre Funcionario que Autoriza'), "",utf8_decode('Cargo Funcionario Talento Humano'),"");
-                    $data = array(0=>array("Fecha Autorizacion","","Firma de Autorizacion Ingreso", ""));
+                    $header = array(utf8_decode('Nombre Funcionario que Autoriza'), utf8_decode($listadoreqpers[0]['funcionarioautorizath']),utf8_decode('Cargo Funcionario Talento Humano'),utf8_decode($listadoreqpers[0]['cargofuncionarioth']));
+                    $data = array(0=>array("Fecha Autorizacion",utf8_decode($listadoreqpers[0]['fechaautori']),"Firma de Autorizacion Ingreso",utf8_decode($listadoreqpers[0]['firmaautoriza'])));
                     $pdf->ImprovedTablecuatro($header,$data);
                     //$pdf->Ln(1);
                     $orden ='order'.$idper.'.pdf';
