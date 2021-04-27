@@ -3,7 +3,7 @@ session_start();
 define("DIRWEB", "https://".$_SERVER["HTTP_HOST"]."/human/");
 define("Host", "smtp.zoho.com");
 define("Username", "info@humantalentsas.com.co");
-define("Password", "HumanInfo2020*Zoho");
+define("Password", "Aplica2021HumanInfo*Zoho");
 define("Port", 465);
 define("correocor", "info@humantalentsas.com.co");
 define("mensajecorr", "Humantalentsas");

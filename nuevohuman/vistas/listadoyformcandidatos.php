@@ -103,7 +103,7 @@ $labo.='<option value="'.$laboratorios[$i]['id'].'">'.$laboratorios[$i]['nombrel
       <th>Adjunto Extra</th>
       <th>Entrevista</th>
       <th>Hoja de Vida</th>
-      <th>Orden</th>
+      <th>Orden de Ingreso</th>
 			<th>Acciones</th>
 		</tr>
 	</thead>

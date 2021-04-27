@@ -110,6 +110,59 @@
       <input id="presentarsea" name="presentarsea" placeholder="Presentarse con " type="text" class="form-control" required="required">
     </div>
   </div>
+
+  <div class="form-group row">
+    <label for="centrocostosor" class="col-4 col-form-label">Centro Costros Empresa Cliente</label> 
+    <div class="col-8">
+      <input id="centrocostosor" name="centrocostosor" placeholder="Centro Costros Empresa Cliente" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="centrosucursal" class="col-4 col-form-label">Ciudad/Sucursal</label> 
+    <div class="col-8">
+      <input id="centrosucursal" name="centrosucursal" placeholder="Ciudad/Sucursal" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="funcionarioaut" class="col-4 col-form-label">Nombre Funcionario que Autoriza</label> 
+    <div class="col-8">
+      <input id="funcionarioaut" name="funcionarioaut" placeholder="Nombre Funcionario que Autoriza" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="cargofuncionarioaut" class="col-4 col-form-label">Cargo Funcionario que Autoriza</label> 
+    <div class="col-8">
+      <input id="cargofuncionarioaut" name="cargofuncionarioaut" placeholder="Cargo Funcionario que Autoriza" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="opbservacioncontratacion" class="col-4 col-form-label">Observaciones de Contratacion</label> 
+    <div class="col-8">
+      <input id="opbservacioncontratacion" name="opbservacioncontratacion" placeholder="Observaciones de Contratacion" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="funcionarioautorizath" class="col-4 col-form-label">Funcionario que Autoriza Talento Humano</label> 
+    <div class="col-8">
+      <input id="funcionarioautorizath" name="funcionarioautorizath" placeholder="Funcionario que Autoriza Talento Humano" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="cargofuncionarioth" class="col-4 col-form-label">Cargo Funcionario Talento Humano</label> 
+    <div class="col-8">
+      <input id="cargofuncionarioth" name="cargofuncionarioth" placeholder="Cargo Funcionario Talento Humano" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="fechaautori" class="col-4 col-form-label">Fecha Autorizacion</label> 
+    <div class="col-8">
+      <input id="fechaautori" name="fechaautori" type="date" class="form-control" required="required">
+    </div>
+  </div>
+
+      <input id="firmaautoriza" name="firmaautoriza" placeholder="Presentarse con " type="hidden" value="Firmado Digitalmente" class="form-control" required="required">
+  
+
   <div class="form-group row">
     <label for="archivo" class="col-4 col-form-label">Hoja de Vida</label> 
     <div class="col-8">
