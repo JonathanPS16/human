@@ -1,4 +1,5 @@
 <h5>Incapacidades Cargadas</h5><br>
+<div id="generaldivincapacidades">
 <table class="table table-striped" id="tablagrid">
 	<thead>
 		<tr>
@@ -7,6 +8,12 @@
 			<th>Nompre Persona</th>
 			<th>Observaciones</th>
 			<th>Responsable</th>
+			<th>Fecha Inicial</th>
+			<th>Fecha Final</th>
+			<th>Numero de Dias</th>
+			<th>No de la Incapacidad</th>
+			<th>Archivo Incapacidad</th>
+			<th>Archivo Transcripcion</th>
 			<th>Valor Liquidacion</th>
 			<th>Estado</th>
 			<th>Accion</th>
@@ -26,6 +33,28 @@
 		$observaciones=$listatemporales[$i]['observaciones'];
 		$valorliqui=$listatemporales[$i]['valorliqui'];
 		$estado=$listatemporales[$i]['estado'];
+		$fechaincio=$listatemporales[$i]['fechaincio'];
+		$fechafinaltra=$listatemporales[$i]['fechafinaltra'];
+		$nodias=$listatemporales[$i]['nodias'];
+		$noincapacidad=$listatemporales[$i]['noincapacidad'];
+
+		$archivoinca=$listatemporales[$i]['archivouno'];
+		$archivotrans=$listatemporales[$i]['archivodos'];
+
+		if($archivoinca==""){
+
+			$archivoinca ="No Cargado";
+		} else {
+			
+			$archivoinca ='<a href="archivosgenerales/'.$archivoinca.'" target="_black">Descargar</a>';
+		}
+		
+		if($archivotrans==""){
+			$archivotrans ="No Cargado";
+		} else {
+			$archivotrans ='<a href="archivosgenerales/'.$archivotrans.'" target="_black">Descargar</a>';
+		}
+		
 		$codigoconcepto=$listatemporales[$i]['codigoconcepto'];
 		$responsable=$listatemporales[$i]['responsable'];
 		if(trim($codigoconcepto) == "1046" || trim($codigoconcepto) == "1046"){
@@ -417,15 +446,23 @@
   <td>'.$nombreper.'</td>
   <td>'.$observaciones.'</td>
   <td>'.$responsable.'</td>
+  <td>'.$fechaincio.'</td>
+  <td>'.$fechafinaltra.'</td>
+  <td>'.$nodias.'</td>
+  <td>'.$noincapacidad.'</td>
+  <td>'.$archivoinca.'</td>
+  <td>'.$archivotrans.'</td>
   <td>$ '.$valorliqui.'</td>
   <td>'.$estadolblmu.'</td>
   <td>'.$modal.$boton.'</td></tr>';
 	}
+
 	?>
     </tbody>
 </table>
+</div>
 <script>
- $( "#observacionesdiv" ).hide();
+ /*$( "#observacionesdiv" ).hide();
  $( "#fechadiv" ).hide();
  $( "#guardado" ).hide();
  
@@ -447,5 +484,5 @@ $( "#estado" ).change(function() {
 	if(dato!=""){
 		$( "#guardado" ).show();
 	}
-});
+});*/
 </script>

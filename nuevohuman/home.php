@@ -141,6 +141,29 @@ require_once('conect/clases.php');
             $( "#final" ).click(function() {
             return confirm("Esta Seguro de Terminar la Requision?");
             });
+            $( "#generaldivincapacidades #observacionesdiv" ).hide();
+            $( "#generaldivincapacidades #fechadiv" ).hide();
+            $( "#generaldivincapacidades #guardado" ).hide();
+            
+            $( "#generaldivincapacidades #estado" ).change(function() {
+                $( "#generaldivincapacidades #observacionesdiv" ).hide();
+                $( "#generaldivincapacidades #fechadiv" ).hide();
+                $( "#generaldivincapacidades #guardado" ).hide();
+                var dato = $( "#generaldivincapacidades #estado" ).val();
+                if(dato=="negada"){
+                    $( "#generaldivincapacidades #observacionesdiv" ).show();
+                    $( "#generaldivincapacidades #fechadiv" ).show();
+                    $( "#generaldivincapacidades #guardado" ).show();
+                }
+                if(dato=="liquidada"){
+                    $( "#generaldivincapacidades #fechadiv" ).show();
+                    $( "#generaldivincapacidades #guardado" ).show();
+                }
+                if(dato!=""){
+                    $( "#generaldivincapacidades #guardado" ).show();
+                }
+            });
+
         });
 
     </script>
