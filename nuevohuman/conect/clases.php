@@ -1454,7 +1454,7 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
             Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=verreqcan&id={$idreq}'>Aqui</a>
             <br>
             <br>
-            Cualquier inquietud que tengo al respecto, la atenderemos a traves de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos selección@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+            Cualquier inquietud que tengo al respecto, la atenderemos a traves de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com . 
             <br>
             <bR>
             Cordialmente,
@@ -1484,7 +1484,7 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
             Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=verreqcan&id={$idreq}'>Aqui</a>
             <br>
             <br>
-            Cualquier inquietud que tengo al respecto, la atenderemos a traves de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos selección@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+            Cualquier inquietud que tengo al respecto, la atenderemos a traves de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com . 
             <br>
             <bR>
             Cordialmente,
@@ -1546,7 +1546,7 @@ public function correopsico($id_req,$tipomen) {
             <br><br>
             Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
             <br>
-            Cualquier inquietud que tengo al respecto, con gusto la atenderemos a traves de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos selección@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+            Cualquier inquietud que tengo al respecto, con gusto la atenderemos a traves de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com . 
             <br><br>
             <br>
             Para Completar Orden puede dar clic <a href='".DIRWEB."home.php?ctr=requisicion&acc=verreqcan&id={$id_req}'>Aqui</a>
@@ -1814,7 +1814,7 @@ public function citarcandidato($id_per,$id_req,$fechahora,$lugar)
     <br><br>
     Le informamos que dentro del proceso de selección para el cargo ".$cargo.",  Usted ha sido citado para el día ".$fechahora.",  en las instalaciones de la  empresa  ".$lugar." , por favor presentar a XXXXX nombre de la persona XXXXXXXX, 
     <br>
-    Cualquier inquietud que tengo al respecto, con gusto la atenderemos a traves de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos selección@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+    Cualquier inquietud que tengo al respecto, con gusto la atenderemos a traves de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com . 
     <br><br>
     Cordialmente,
     <br><br>
@@ -1831,7 +1831,7 @@ public function citarcandidato($id_per,$id_req,$fechahora,$lugar)
       <br>
       Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a>
       <br>
-      Cualquier inquietud que tengo al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos selección@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+      Cualquier inquietud que tengo al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com . 
       <br><br>
       Cordialmente,
       <br><br>
@@ -1914,16 +1914,16 @@ public function enviardocumentacion($idper,$idreq){
         $cargo.= $consultas[$i]['cargo'];
     }
     $titulo2 = "Documentacion de Contratacion";
-    $cuerpo2 = "Apreciado ".$nombre."<br>br>
+    $cuerpo2 = "Apreciado ".$nombre."<br><br>
 
-    Dando continuidad al proceso de contratación para el cargo ".$cargo." , le estamos enviado los formatos que Usted debe diligenciar y la documentación que debe reunir y que es requerida para dar tramite a la contracción, tanto los formatos debidamente diligenciados como la documentación solicitada puede ser entregada en nuestra  oficina o remitirla  a los correos selección@humantalentsas.com, analistaseleccion@humantalentsas.com 
-    <br>
+    Dando continuidad al proceso de contratación para el cargo ".$cargo." , le estamos enviado los formatos que Usted debe diligenciar y la documentación que debe reunir y que es requerida para dar tramite a la contracción, tanto los formatos debidamente diligenciados como la documentación solicitada puede ser entregada en nuestra  oficina o remitirla  a los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com 
+    <br><br>
     Anexamos la orden de exámenes de ingreso,  para que Usted se realice dichos exámenes en el Laboratorio Clínico relacionado en dicha comunicación 
-    <br>
+    <br><br>
     Asimismo le estamos enviando la carta de autorización para la apertura de su cuenta en Bancolombia , donde se le efectuara el abono de su nomina. 
-    <br>
-    Cualquier inquietud que tengo al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos selección@humantalentsas.com, analistaseleccion@humantalentsas.com . 
-    <br>
+    <br><br>
+    Cualquier inquietud que tengo al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+    <br><br>
     Cordialmente,
     <br><br>
     Área de Selección<br>
@@ -2096,7 +2096,7 @@ public function enviarCorreoReq($ide,$req){
       Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$req}'>Aqui</a>
       <br>
       <br>
-      Cualquier inquietud que tengo al respecto, la atenderemos a traves de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos selección@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+      Cualquier inquietud que tengo al respecto, la atenderemos a traves de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com . 
       <br>
       <bR>
       Cordialmente,

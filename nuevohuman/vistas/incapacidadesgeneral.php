@@ -191,7 +191,7 @@
     <label for="estado" class="col-4 col-form-label">Estado</label> 
     <div class="col-8">
 	<select id="estado" name="estado" class="custom-select" required="required">
-	<option value="">Seleccione</option>
+	<option value="0">Seleccione</option>
 	<option value="liquidada">Liquidada</option>
 	<option value="negada">Negada</option>
 	<option value="pagada">Pagada</option>
@@ -201,25 +201,25 @@
   <div class="form-group row" id="fechadiv">
     <label for="fecha" class="col-4 col-form-label">Fecha</label> 
     <div class="col-8">
-      <input id="fecha" name="fecha" type="date" class="form-control" required="required">
+      <input id="fecha" name="fecha" type="date" class="form-control">
     </div>
   </div>
   <div class="form-group row">
     <label for="fechapagoeps" class="col-4 col-form-label">Fecha Pago EPS</label> 
     <div class="col-8">
-      <input id="fechapagoeps" name="fechapagoeps" type="date" class="form-control" required="required">
+      <input id="fechapagoeps" name="fechapagoeps" type="date" class="form-control">
     </div>
   </div>
   <div class="form-group row">
     <label for="valorreco" class="col-4 col-form-label">Valor Reconocido</label> 
     <div class="col-8">
-      <input id="valorreco" name="valorreco" placeholder="Valor Reconocido" type="text" class="form-control" required="required">
+      <input id="valorreco" name="valorreco" placeholder="Valor Reconocido" type="text" class="form-control">
     </div>
   </div>
   <div class="form-group row" id="observacionesdiv">
     <label for="observaciones" class="col-4 col-form-label">Observaciones</label> 
     <div class="col-8">
-      <textarea id="observaciones" name="observaciones" cols="40" rows="5" class="form-control" required="required"></textarea>
+      <textarea id="observaciones" name="observaciones" cols="40" rows="5" class="form-control" ></textarea>
     </div>
   </div> 
   <div class="form-group row" id="guardado">
@@ -236,7 +236,7 @@
 	  </div>
 	</div>
 	';
-		$boton ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalhv'.$id.'">Decision EPS/ARL</button>';
+		$boton ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalhv'.$id.'" id="limpiaform">Decision EPS/ARL</button>';
 
 		}
 
