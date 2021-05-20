@@ -15,7 +15,8 @@
 			<th>Archivo Incapacidad</th>
 			<th>Archivo Transcripcion</th>
 			<th>Valor Liquidacion</th>
-			<th>Estado</th>
+			<th>Estado Proceso</th>
+			<th>Estado Incapacidad</th>
 			<th>Accion</th>
 		</tr>
 	</thead>
@@ -37,6 +38,11 @@
 		$fechafinaltra=$listatemporales[$i]['fechafinaltra'];
 		$nodias=$listatemporales[$i]['nodias'];
 		$noincapacidad=$listatemporales[$i]['noincapacidad'];
+		$estadoeps=ucwords($listatemporales[$i]['estadoeps']);
+
+		if($estadoeps==""){
+			$estadoeps="Sin Estado";
+		}
 
 		$archivoinca=$listatemporales[$i]['archivouno'];
 		$archivotrans=$listatemporales[$i]['archivodos'];
@@ -46,13 +52,13 @@
 			$archivoinca ="No Cargado";
 		} else {
 			
-			$archivoinca ='<a href="archivosgenerales/'.$archivoinca.'" target="_black">Descargar</a>';
+			$archivoinca ='<a href="archivosgenerales/'.$archivoinca.'" target="_black" class="btn btn-primary">Descargar</a>';
 		}
 		
 		if($archivotrans==""){
 			$archivotrans ="No Cargado";
 		} else {
-			$archivotrans ='<a href="archivosgenerales/'.$archivotrans.'" target="_black">Descargar</a>';
+			$archivotrans ='<a href="archivosgenerales/'.$archivotrans.'" target="_black" class="btn btn-primary">Descargar</a>';
 		}
 		
 		$codigoconcepto=$listatemporales[$i]['codigoconcepto'];
@@ -441,6 +447,11 @@
 		}
 
 		$correo=$listatemporales[$i]['correo'];*/
+		if($estadoeps =="Negada")
+		{
+			$modal = "";
+			$boton = '<a href="home.php?ctr=requisicion&acc=reabrirnegada&id='.$id.'" class="btn btn-primary" >Volver a Abrir</a>';
+		}
 		echo  '<tr><td>'.$val.'</td>
 		<td>'.$cedula.'</td>
   <td>'.$nombreper.'</td>
@@ -454,6 +465,7 @@
   <td>'.$archivotrans.'</td>
   <td>$ '.$valorliqui.'</td>
   <td>'.$estadolblmu.'</td>
+  <td>'.$estadoeps.'</td>
   <td>'.$modal.$boton.'</td></tr>';
 	}
 

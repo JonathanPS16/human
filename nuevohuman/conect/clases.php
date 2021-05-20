@@ -408,6 +408,14 @@ public function guardardatabanco($id,$fechabanco,$valoringresobanco,$noreciboadc
     return $consultas;
 }
 
+public function guardarreapertura($id){
+    $conn = $this->conec();
+    $consultas = "UPDATE incapacidadescargue set estado = 'C' where id_registro=$id";
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
 
 public function guardarperfiles($insert,$id){
     $conn = $this->conec();
