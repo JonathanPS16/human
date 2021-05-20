@@ -11,6 +11,7 @@
 			<th>Fecha Inicial</th>
 			<th>Fecha Final</th>
 			<th>Numero de Dias</th>
+			<th>Codigo Concepto</th>
 			<th>No de la Incapacidad</th>
 			<th>Archivo Incapacidad</th>
 			<th>Archivo Transcripcion</th>
@@ -32,6 +33,7 @@
 		$cedula=$listatemporales[$i]['cedula'];
 		$nombreper=$listatemporales[$i]['nombreper'];
 		$observaciones=$listatemporales[$i]['observaciones'];
+		$codigoconcepto=$listatemporales[$i]['codigoconcepto'];
 		$valorliqui=$listatemporales[$i]['valorliqui'];
 		$estado=$listatemporales[$i]['estado'];
 		$fechaincio=$listatemporales[$i]['fechaincio'];
@@ -460,6 +462,7 @@
   <td>'.$fechaincio.'</td>
   <td>'.$fechafinaltra.'</td>
   <td>'.$nodias.'</td>
+  <td>'.$codigoconcepto.'</td>
   <td>'.$noincapacidad.'</td>
   <td>'.$archivoinca.'</td>
   <td>'.$archivotrans.'</td>
