@@ -15,6 +15,9 @@
 			<th>Responsable</th>
 			<th>Valor</th>
 			<th>Estado</th>
+			<th>Observaciones</th>
+			<th>Fecha Registrada</th>
+			<th>Valor Reconocido</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -37,6 +40,9 @@
 		$nombreper=$listatemporales[$i]['nombreper'];
 		$concepto=$listatemporales[$i]['codigoconcepto'];
 		$estado=$listatemporales[$i]['estado'];
+		$observacioneseps=$listatemporales[$i]['observacioneseps'];
+		$valorreco=$listatemporales[$i]['valorreco'];
+		$fechapagoeps=$listatemporales[$i]['fechapagoeps'];
 
 		$excluye=$listatemporales[$i]['excluye'];
 		$responsable = $listatemporales[$i]['responsable'];
@@ -63,6 +69,10 @@
 			$estadolblmu="Proceso Terminado";
 		}
 
+		if($valorreco=="" || !is_numeric($valorreco)){
+			$valorreco="0";
+		}
+
 		echo  '<tr>
 		<td>'.$empresa.'</td>
   <td>'.$nit.'</td>
@@ -77,6 +87,9 @@
   <td>'.$responsable.'</td>
   <td>$'.number_format($valorliqui, 2, '.', ',').'</td>
   <td>'.$estadolblmu.'</td>
+  <td>'.$observacioneseps.'</td>
+  <td>'.$fechapagoeps.'</td>
+  <td>$'.number_format($valorreco, 2, '.', ',').'</td>
   </tr>';
 	}
 	?>
