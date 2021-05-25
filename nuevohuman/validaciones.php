@@ -845,6 +845,13 @@
                         </script>";
                 break;
 
+                case "marcarduplicado":
+                    $listatemporales=$objconsulta->guardarduplicado($_GET['id']);
+                    echo "<script>alert('Registros Actualizado Correctamente');
+                        window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
+                        </script>";
+                break;
+
                 
 
                 case "formcentro":

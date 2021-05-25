@@ -415,6 +415,13 @@ public function guardarreapertura($id){
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
+public function guardarduplicado($id){
+    $conn = $this->conec();
+    $consultas = "UPDATE incapacidadescargue set duplicado = 'Si' where id_registro=$id";
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
 
 
 public function guardarperfiles($insert,$id){

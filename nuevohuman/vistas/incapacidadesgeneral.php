@@ -18,6 +18,7 @@
 			<th>Valor Liquidacion</th>
 			<th>Estado Proceso</th>
 			<th>Estado Incapacidad</th>
+			<th>Duplicado</th>
 			<th>Accion</th>
 		</tr>
 	</thead>
@@ -41,6 +42,7 @@
 		$nodias=$listatemporales[$i]['nodias'];
 		$noincapacidad=$listatemporales[$i]['noincapacidad'];
 		$estadoeps=ucwords($listatemporales[$i]['estadoeps']);
+		$duplicado=$listatemporales[$i]['duplicado'];
 
 		if($estadoeps==""){
 			$estadoeps="Sin Estado";
@@ -452,7 +454,10 @@
 		if($estadoeps =="Negada")
 		{
 			$modal = "";
-			$boton = '<a href="home.php?ctr=requisicion&acc=reabrirnegada&id='.$id.'" class="btn btn-primary" >Volver a Abrir</a>';
+			$boton = '<a href="home.php?ctr=incapacidad&acc=reabrirnegada&id='.$id.'" class="btn btn-primary" >Volver a Abrir</a>';
+		}
+		if($duplicado =="No"  || $duplicado =="NO"){
+			$duplicado = '<a href="home.php?ctr=incapacidad&acc=marcarduplicado&id='.$id.'">Marcar Como Duplicado</a>';
 		}
 		echo  '<tr><td>'.$val.'</td>
 		<td>'.$cedula.'</td>
@@ -469,6 +474,7 @@
   <td>$ '.$valorliqui.'</td>
   <td>'.$estadolblmu.'</td>
   <td>'.$estadoeps.'</td>
+  <td>'.$duplicado.'</td>
   <td>'.$modal.$boton.'</td></tr>';
 	}
 
