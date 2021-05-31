@@ -1837,6 +1837,12 @@ $xmlWriter->save('omar.pdf');*/
                     $idper = $_POST['id'];
                     $idreq = $_POST['idreq'];
                     $listadoreqpers=$objconsulta->obtenerInformacionreqformatos($idper);
+
+                    $listadoreq=$objconsulta->obtenerInformacionreq($idper);
+                    if ($listadoreq[0]['salariobasico'] == "") {
+                        $listadoreq[0]['salariobasico'] = 0;
+                    }
+                    //print_r($listadoreq);
                     require('vistas/fpdf.php');
                     $meses = array("enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre");
 
@@ -2179,10 +2185,135 @@ $xmlWriter->save('omar.pdf');*/
                     $orden ='order'.$idper.'.pdf';
                     $pdf->Output(F,'archivosgenerales/'.$orden);
                     ob_end_flush();
-                    //echo '<a href="archivosgenerales/'.$orden.'">Orden</a>';
+                   
+
+                    $archivo = "orden".$idper.date('YMDS').".docx";
+                    $orden = $archivo;
+                    require_once 'vendor/autoload.php';
+                    // Creating the new document...
+                    $phpWord = new \PhpOffice\PhpWord\PhpWord();
+                    $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('plantillas/orden.docx');
+                    $templateProcessor->setValue('empresacliente', $listadoreq[0]['empresacliente']);
+                    $templateProcessor->setValue('empresatem', $listadoreq[0]['nombretemporal']);
+                    $templateProcessor->setValue('nombre', $listadoreq[0]['nombre']);
+                    $templateProcessor->setValue('cedula', $listadoreq[0]['cedula']);
+                    $templateProcessor->setValue('telefono', $listadoreq[0]['telefono']);
+                    $templateProcessor->setValue('correo', $listadoreq[0]['correo']);
+                    $templateProcessor->setValue('celular', $listadoreq[0]['telefono']);
+                    $templateProcessor->setValue('fechaingreso', $listadoreq[0]['fechareqcargo']);
+                    $templateProcessor->setValue('cargodesempenar', $listadoreq[0]['cargo']);
+                    //$templateProcessor->setValue('salario', "$".number_format($listadoreq[0]['salariobasico'],2,",","."));
+                    //$templateProcessor->setValue('tasa', '');
+                    $templateProcessor->setValue('date', date('Y-m-d'));
+                    //$templateProcessor->setValue('direcciontrabajo', '');
+                    $templateProcessor->setValue('ciudad', $listadoreq[0]['ciudadlaboral']);
+                    //$templateProcessor->setValue('nombrepresente', '');
+                    $templateProcessor->setValue('horario', $listadoreq[0]['jornadalaboral']." ".$listadoreq[0]['horario']);
+                    $templateProcessor->saveAs('archivosgenerales/'.$archivo);
+                    
+                   // echo '<a href="archivosgenerales/'.$docdocumen.'">Extra Files</a>';
+                    //echo '<a href="archivosgenerales/'.$archivo.'">Extra Files</a>';
+                    $docdocumen = "docdocumen".$idper.date('Ymds').".docx";
+                    $phpWord2 = new \PhpOffice\PhpWord\PhpWord();
+                    $templateProcessor2 = new \PhpOffice\PhpWord\TemplateProcessor('plantillas/documentacion.docx');
+                    $templateProcessor2->setValue('empresacliente', $listadoreq[0]['empresacliente']);
+                    $templateProcessor2->setValue('empresatem', $listadoreq[0]['nombretemporal']);
+                    $templateProcessor2->setValue('nombre', $listadoreq[0]['nombre']);
+                    $templateProcessor2->setValue('cedula', $listadoreq[0]['cedula']);
+                    $templateProcessor2->setValue('telefono', $listadoreq[0]['telefono']);
+                    $templateProcessor2->setValue('celular', $listadoreq[0]['telefono']);
+                    $templateProcessor2->setValue('correo', $listadoreq[0]['correo']);
+                    $templateProcessor2->setValue('fechaingreso', $listadoreq[0]['fechareqcargo']);
+                    $templateProcessor2->setValue('cargodesempenar', $listadoreq[0]['cargo']);
+                    $templateProcessor2->setValue('date', date('Y-m-d'));
+                    $templateProcessor2->setValue('salario', "$".number_format($listadoreq[0]['salariobasico'],2,",","."));
+                    $templateProcessor2->setValue('tasa', '');
+                    $templateProcessor2->setValue('direcciontrabajo', '');
+                    $templateProcessor2->setValue('ciudad', $listadoreq[0]['ciudadlaboral']);
+                    $templateProcessor2->setValue('nombrepresente', '');
+                    $templateProcessor2->setValue('horario', $listadoreq[0]['jornadalaboral']." ".$listadoreq[0]['horario']);
+                    $templateProcessor2->saveAs('archivosgenerales/'.$docdocumen);
+                    
+                    $archivohv = "hv".$idper.date('Ymds').".docx";
+                    $phpWord3 = new \PhpOffice\PhpWord\PhpWord();
+                    $templateProcessor3 = new \PhpOffice\PhpWord\TemplateProcessor('plantillas/formatohv.docx');
+                    $templateProcessor3->setValue('empresacliente', $listadoreq[0]['empresacliente']);
+                    $templateProcessor3->setValue('empresatem', $listadoreq[0]['nombretemporal']);
+                    $templateProcessor3->setValue('nombre', $listadoreq[0]['nombre']);
+                    $templateProcessor3->setValue('cedula', $listadoreq[0]['cedula']);
+                    $templateProcessor3->setValue('telefono', $listadoreq[0]['telefono']);
+                    $templateProcessor3->setValue('celular', $listadoreq[0]['telefono']);
+                    $templateProcessor3->setValue('correo', $listadoreq[0]['correo']);
+                    $templateProcessor3->setValue('fechaingreso', $listadoreq[0]['fechareqcargo']);
+                    $templateProcessor3->setValue('cargodesempenar', $listadoreq[0]['cargo']);
+                    $templateProcessor3->setValue('date', date('Y-m-d'));
+                    $templateProcessor3->setValue('salario', "$".number_format($listadoreq[0]['salariobasico'],2,",","."));
+                    $templateProcessor3->setValue('tasa', '');
+                    $templateProcessor3->setValue('direcciontrabajo', '');
+                    $templateProcessor3->setValue('ciudad', $listadoreq[0]['ciudadlaboral']);
+                    $templateProcessor3->setValue('nombrepresente', '');
+                    $templateProcessor3->setValue('horario', $listadoreq[0]['jornadalaboral']." ".$listadoreq[0]['horario']);
+                    $templateProcessor3->saveAs('archivosgenerales/'.$archivohv);
+                    //echo '<a href="archivosgenerales/'.$archivohv.'">Extra Filesaaaaa</a>';
+                    /*
+                    $archivoaper = "apertura".$idper.$idreq.".docx";
+                    $phpWord4 = new \PhpOffice\PhpWord\PhpWord();
+                    $templateProcessor4 = new \PhpOffice\PhpWord\TemplateProcessor('plantillas/aperturacuenta.docx');
+                    $templateProcessor4->setValue('empresacliente', $listadoreq[0]['empresacliente']);
+                    $templateProcessor4->setValue('empresatem', $listadoreq[0]['nombretemporal']);
+                    $templateProcessor4->setValue('nombre', $listadoreq[0]['nombre']);
+                    $templateProcessor4->setValue('cedula', $listadoreq[0]['cedula']);
+                    $templateProcessor4->setValue('telefono', $listadoreq[0]['telefono']);
+                    $templateProcessor4->setValue('celular', $listadoreq[0]['telefono']);
+                    $templateProcessor4->setValue('correo', $listadoreq[0]['correo']);
+                    $templateProcessor4->setValue('fechaingreso', $listadoreq[0]['fechareqcargo']);
+                    $templateProcessor4->setValue('cargodesempenar', $listadoreq[0]['cargo']);
+                    $templateProcessor4->setValue('date', date('d-m-Y'));
+                    $templateProcessor4->setValue('salario', "$".number_format($listadoreq[0]['salariobasico'],2,",","."));
+                    $templateProcessor4->setValue('tasa', '');
+                    $templateProcessor4->setValue('direcciontrabajo', '');
+                    $templateProcessor4->setValue('ciudad', $listadoreq[0]['ciudadlaboral']);
+                    $templateProcessor4->setValue('nombrepresente', '');
+                    $templateProcessor4->setValue('horario', $listadoreq[0]['jornadalaboral']." ".$listadoreq[0]['horario']);
+                    $templateProcessor4->saveAs('archivosgenerales/'.$archivoaper);
+                    $archivoexa = "examen".$idper.$idreq.".docx";
+                    /*$phpWord5 = new \PhpOffice\PhpWord\PhpWord();
+                    $templateProcessor5 = new \PhpOffice\PhpWord\TemplateProcessor('plantillas/examenes.docx');
+                    $templateProcessor5->setValue('empresacliente', $listadoreq[0]['empresacliente']);
+                    $templateProcessor5->setValue('empresatem', $listadoreq[0]['nombretemporal']);
+                    $templateProcessor5->setValue('nombre', $listadoreq[0]['nombre']);
+                    $templateProcessor5->setValue('cedula', $listadoreq[0]['cedula']);
+                    $templateProcessor5->setValue('telefono', $listadoreq[0]['telefono']);
+                    $templateProcessor5->setValue('celular', $listadoreq[0]['telefono']);
+                    $templateProcessor5->setValue('correo', $listadoreq[0]['correo']);
+                    $templateProcessor5->setValue('fechaingreso', $listadoreq[0]['fechareqcargo']);
+                    $templateProcessor5->setValue('cargodesempenar', $listadoreq[0]['cargo']);
+                    $templateProcessor5->setValue('date', date('d-m-Y'));
+                    $templateProcessor5->setValue('salario', "$".number_format($listadoreq[0]['salariobasico'],2,",","."));
+                    $templateProcessor5->setValue('tasa', '');
+                    $templateProcessor5->setValue('direcciontrabajo', '');
+                    $templateProcessor5->setValue('ciudad', $listadoreq[0]['ciudadlaboral']);
+                    $templateProcessor5->setValue('nombrepresente', '');
+                    $templateProcessor5->setValue('horario', $listadoreq[0]['jornadalaboral']." ".$listadoreq[0]['horario']);
+                    $templateProcessor5->saveAs('archivosgenerales/'.$archivoexa);
+                    echo '<a href="archivosgenerales/'.$archivo.'">Extra Files</a>';*/
+                    /*require_once 'vendor/autoload.php';
+                    $archivoexa = $orden;
+                    $phpWord5 = new \PhpOffice\PhpWord\PhpWord();
+                    $templateProcessor5 = new \PhpOffice\PhpWord\TemplateProcessor('archivosgenerales/'.$archivoexa);
+                    $templateProcessor5->setValue('tasa', $tasa);
+                    $templateProcessor5->setValue('direcciontrabajo', $direccion);
+                    $templateProcessor5->setValue('nombrepresente', $presentarse);
+                    $templateProcessor5->setValue('salario', "$".number_format($salario,2,",","."));
+                    $templateProcessor5->saveAs('archivosgenerales/'.$archivoexa);
+                    
+                    */
                     //die();
-                    //echo '<a href="archivosgenerales/'.$examenes.'">examenes</a>';
-                    $listadoreq=$objconsulta->ajustarlaboratorio($idper,$idreq,$laboratorio,$cadena,$orden,$apertura,$examenes);
+
+
+
+
+                    $listadoreq=$objconsulta->ajustarlaboratorio($idper,$idreq,$laboratorio,$cadena,$orden,$apertura,$examenes,$docdocumen,$archivohv);
                     echo "<script>alert('Informacion Guardada Correctamente');
                     window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$idreq."';
                     </script>";

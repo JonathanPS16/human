@@ -1276,9 +1276,9 @@ public function guardarArchivoHv($nombre_archivo,$id)
     $conn->Execute($SQL);
 }
 
-public function ajustarlaboratorio($id,$idreq,$laboratorio,$cadena,$orden,$apertura,$examenesar){
+public function ajustarlaboratorio($id,$idreq,$laboratorio,$cadena,$orden,$apertura,$examenesar,$docdocumentos,$archivohv){
     $conn = $this->conec();
-    $SQL ="UPDATE req_candidatos SET examenes='$cadena',lugar='$laboratorio',ordeningreso='$orden',apertura='$apertura',examenesar='$examenesar' WHERE id=".$id;
+    $SQL ="UPDATE req_candidatos SET hvhuman = '$archivohv', docdocumen = '$docdocumentos', examenes='$cadena',lugar='$laboratorio',ordeningreso='$orden',apertura='$apertura',examenesar='$examenesar' WHERE id=".$id;
     $conn->Execute($SQL);
 }
 
@@ -1907,14 +1907,14 @@ public function archivosatrasformar($idper,$idreq){
 public function enviardocumentacion($idper,$idreq){
 
     $conn = $this->conec();
-    $consultas = "SELECT req_candidatos.lugar,req.cargo,req_candidatos.correo,req_candidatos.ordeningreso,req_candidatos.apertura,req_candidatos.examenesar,req_candidatos.nombre  FROM req_candidatos inner join req on req.id = req_candidatos.id_requisision WHERE  req_candidatos.id=".$idper;
+    $consultas = "SELECT  req_candidatos.hvhuman, req_candidatos.docdocumen,req_candidatos.lugar,req.cargo,req_candidatos.correo,req_candidatos.ordeningreso,req_candidatos.apertura,req_candidatos.examenesar,req_candidatos.nombre  FROM req_candidatos inner join req on req.id = req_candidatos.id_requisision WHERE  req_candidatos.id=".$idper;
     $consultas= $conn->Execute($consultas)-> getRows();
     $correo = "";
     $nombre ="";
     $cargo ="";
     //$ordeningreso = "archivosgenerales/";
-    $docdocumen = "archivosgenerales/documentacion.pdf";
-    $hvhuman = "archivosgenerales/formatohv.pdf";
+    $docdocumen = "archivosgenerales/";
+    $hvhuman = "archivosgenerales/";
     $archivoaper = "archivosgenerales/";
     $archivoexa =  "archivosgenerales/";
     for($i= 0; $i<count($consultas); $i++) {
@@ -1922,6 +1922,8 @@ public function enviardocumentacion($idper,$idreq){
         $correo  =$consultas[$i]['correo'];
         //$ordeningreso  =$consultas[$i]['ordeningreso'];
         $archivoaper.=$consultas[$i]['apertura'];
+        $hvhuman.=$consultas[$i]['hvhuman'];
+        $docdocumen.=$consultas[$i]['docdocumen'];
         if($consultas[$i]['lugar']=="LP"){
             $archivoexa= ""; 
         } else {
@@ -1964,8 +1966,8 @@ public function enviardocumentacion($idper,$idreq){
     $maildos->SetFrom('info@formalsi.com', 'Humantalentsas');*/
     $maildos->AddAddress($correo, "Usuario");
     //$maildos->AddAttachment($ordeningreso,"ordeningreso.docx");
-    $maildos->AddAttachment($hvhuman,"hojavidahuman.pdf");
-    $maildos->AddAttachment($docdocumen,"documentacion.pdf");
+    $maildos->AddAttachment($hvhuman,"hojavidahuman.docx");
+    $maildos->AddAttachment($docdocumen,"documentacion.docx");
     if($archivoexa!=""){
         $maildos->AddAttachment($archivoexa,"ordenexamenes.pdf");
     }
