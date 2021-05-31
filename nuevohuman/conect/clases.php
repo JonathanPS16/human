@@ -254,7 +254,6 @@ public function obtenerProcesos($id="",$propirtario=""){
 }
 
 public function obtenerProcesosAccidentes($id="",$propirtario=""){
-    print_r($_SESSION);
     $conn = $this->conec();
     $dato=array();
     $where  ="1=1";
