@@ -311,9 +311,11 @@ public function listadohorasextrafinal(){
 
 public function obtenercargasinca(){
     $conn = $this->conec();
-    $consultas = "SELECT * FROM `incapacidadescargue` where estado !='O'";
+    $consultas= $conn->Execute("SELECT * FROM incapacidadescargue inner JOIN centrocostos on centrocostos.id_empresapres=incapacidadescargue.compania and incapacidadescargue.codigo=centrocostos.centrocosto INNER join codigoinca on codigoinca.id=incapacidadescargue.codigoconcepto inner JOIN empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres where  incapacidadescargue.estado !='O'")-> getRows();
+    
+   // $consultas = "SELECT * FROM `incapacidadescargue` where estado !='O'";
     //echo $consultas;
-    $consultas= $conn->Execute($consultas)-> getRows();
+   // $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
 

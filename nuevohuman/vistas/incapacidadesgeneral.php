@@ -4,8 +4,10 @@
 	<thead>
 	<tr>
 	<th>ID</th>
+	<th>Empresa</th>
 			<th>Documento</th>
-			<th>Nompre Persona</th>
+			<th>Nombre Persona</th>
+			<th>Centro Costos</th>
 			<th>Observaciones</th>
 			<th>Responsable</th>
 			<th>Fecha Inicial</th>
@@ -31,6 +33,8 @@
 		$val ++;
 		$conteoreq = 0;
 		$id=$listatemporales[$i]['id_registro'];
+		$empresa=$listatemporales[$i]['nombretemporal'];
+		$empresausuaria=$listatemporales[$i]['empresausuaria'];
 		$cedula=$listatemporales[$i]['cedula'];
 		$nombreper=$listatemporales[$i]['nombreper'];
 		$observaciones=$listatemporales[$i]['observaciones'];
@@ -368,7 +372,7 @@
 		$boton ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalhv'.$id.'">Nota Credito</button>';
 
 		}
-		if($estadoeps =="Negada")
+		if($estadoeps =="Negada" && $estado!="C")
 		{
 			$modal = "";
 			$boton = '<a href="home.php?ctr=incapacidad&acc=reabrirnegada&id='.$id.'" class="btn btn-primary" >Volver a Abrir</a>';
@@ -396,8 +400,10 @@
 ?>
 <tr>
 	<th><?php echo $val ?></th>
+	<td><?php echo $empresa;?></td>
 			<td><?php echo $cedula;?></td>
 			<td><?php echo $nombreper;?></td>
+			<td><?php echo $empresausuaria;?></td>
 			<td><?php echo $observaciones;?></td>
 			<td><?php echo $responsable;?></td>
 			<td><?php echo $fechaincio;?></td>
