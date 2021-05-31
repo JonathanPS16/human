@@ -254,14 +254,16 @@ public function obtenerProcesos($id="",$propirtario=""){
 }
 
 public function obtenerProcesosAccidentes($id="",$propirtario=""){
+    print_r($_SESSION);
     $conn = $this->conec();
     $dato=array();
     $where  ="1=1";
     if($id!=""){
         $where.=" and id_accidente = {$id}";
     }
+    if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==6) {
 
-    if($propirtario!=""){
+    }else if($propirtario!=""){
         $where.=" and grabador  = '{$_SESSION['usuario']}'";
     }
 
@@ -524,8 +526,8 @@ public function obtenerProcesosGestAcci($id="",$propirtario=""){
     if($id!=""){
         $where.=" and id_accidente = {$id}";
     }
-
-    if($propirtario!=""){
+    if($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==6) {
+    }else if($propirtario!=""){
         $where.=" and grabador  = '{$_SESSION['usuario']}'";
     }
 
