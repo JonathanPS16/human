@@ -41,7 +41,16 @@ public function consultarempleado($usuario,$clave){
         if($recordCount == 0) {
             $result= $conn->Execute("INSERT INTO empledos_ingreso(documento,correo,clave,estado) values ('$usuario','$correo','$clave','P')");
             $asunto = "Activacion de Cuenta";
-            $mensaje="Bienvenido al modulo de certificaciones para activar su cuenta por favor ingrese al siguiente <a href='".DIRWEB."validate.php?data=".base64_encode($usuario)."'><strong>link de activacion</strong></a>";
+            $mensaje="Apreciado Colaborador<br><br>
+            Con el propósito de agilizar y optimizar los tiempo de respuesta a sus requerimientos, ponemos a su disposición nuestras soluciones de tecnología, para que Usted pueda consultar,  generar y descargar la información correspondiente con nuestra relación laboral. Para activar su cuenta por favor hacer click en el siguiente <a href='".DIRWEB."validate.php?data=".base64_encode($usuario)."'><strong>link de activacion</strong></a><br><br>
+            Esperamos que estas herramientas les genere mayor comodidad para la solución de sus requerimientos. Así mismo, si tiene cualquier inquietud adicional lo invitamos a contactar a nuestra área de servicio al cliente a través del correo servicioalcliente@humantalentsas.com o al teléfono  214 2011 o al celular 318 335 2194 - 315 612 9899
+            <br><br>
+            Seguiremos trabajando para Usted,  para continuar mejorando nuestros canales de comunicación.
+            <br><br>
+            Cordialmente,
+            <br><br>
+            Área Servicio al Cliente<br>
+            Human Talent SAS";
             $this->enviocorreo($correo,$mensaje,$asunto);
             return "creado";
         } else {
@@ -844,20 +853,29 @@ public function guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingr
     for($i= 0; $i<count($consultas); $i++) {
         $nombreem  =$consultas[$i]['nombre'];
     }
+    $nombreempresas = "";
+    $consultasa = "SELECT nombretemporal FROM empresasterporales WHERE id_temporal= ".$ide;
+    $consultasa= $conn->Execute($consultasa)-> getRows();
+    for($i= 0; $i<count($consultasa); $i++) {
+        $nombreempresas  =$nombreempresas[$i]['nombretemporal'];
+    }
 
 
     $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
       //echo $consultas;
-      $mensaje = "Apreciada Área de Selección <br>
-        <br>
-      Le informamos  que la empresa ".$nombreem.", ha Solicitado ContratacionDirecta del candidato ".$nombre.", del proceso de selección con consecutivo ".$idreq." <br>
-      Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
-      <br><br>
-      Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$idreq}'><strong>AQUI</strong></a>
-      <br><br>
-      Cordialmente,
-      <br>
-      Human Talent SAS";
+      $mensaje = "
+      Señor Usuario<br>
+        Apreciada Área de Selección<br><br>
+
+        Le informamos que la empresa  $nombreempresas, Usuario $nombreem, ha Solicitado Contratación Directa del candidato $nombre, para lo cual hemos asignado el proceso de selección con el consecutivo No. $idreq
+        <br><br>
+        Apreciado(a)  $nombreem  recuerde que puede hacer seguimiento a su solicitud, iniciando sesión en nuestra pagina web www.humantalentsas.com ingresando con su usuario y clave.
+        <br><br>
+        Para visualizar dar click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$idreq}'><strong>AQUI</strong></a>
+        <br><br>
+        Cordialmente,<br>
+        Human Talent SAS<br><br>
+        Para su Seguimiento y/o Gestión";
       $consultas= $conn->Execute($consultas)-> getRows();
       for($i= 0; $i<count($consultas); $i++) {
         $correos = explode(",", $consultas[$i]['correosselecccion']);
@@ -1325,16 +1343,15 @@ public function notificarProcesos($id,$correojefe){
           $consultasresp= $conn->Execute($consultascorr)-> getRows();
 
           $mensaje  ="Apreciado Cliente
-
-          Le informamos que hemos recibido su solicitud para efectuar proceso disciplinario al empleado en misión Nombre ".$nombre.", y se le ha generado el consecutivo ".$id.".;  estaremos procediendo de manera inmediata a dar tramite a su solicitud.<br>
-          
-          Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
-          <br>
-          Cualquier inquietud que tengo al respecto, la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com  , areajuridica@humantalentsas.com.co 
-          <br>
+            <br><br>
+          Le informamos que hemos recibido su solicitud para efectuar proceso disciplinario al empleado en misión ".$nombre.", y se le ha generado el consecutivo ".$id.".;  estaremos procediendo de manera inmediata a dar tramite a su solicitud.<br>
+          <br><br>
+          Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web www.humantalentsas.com ingresando con su usuario y clave.<br><br>
+          Cualquier inquietud que tengo al respecto, la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los 
+correos servicioalcliente@humantalentsas.com , areajuridica@humantalentsas.com.co<br><br>
           Cordialmente,
           <br><br>
-          Área Jurídica
+          Área Jurídica<br>
           Human Talent SAS";
 
           $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
@@ -1627,15 +1644,49 @@ public function correopsico($id_req,$tipomen) {
 
 public function notificarProcesosAccidente($id){
     $conn = $this->conec();
+    $consultas = "SELECT empresausuaria,grabador,nombrefuncionario FROM accidentes WHERE id_accidente=".$id;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $nombreempresaa = "";
+    $usuariograba = "";
+    $nombrefuncionario = "";
+    for($i= 0; $i<count($consultas); $i++) {
+        $nombreempresaa = $consultas[$i]['empresausuaria'];
+        $usuariograba = $consultas[$i]['grabador'];
+        $nombrefuncionario =  $consultas[$i]['nombrefuncionario'];
+    }
+
+    $consultas = "SELECT nombre FROM usuarios where usuario='$usuariograba'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $nombrereporte = "";
+    for($i= 0; $i<count($consultas); $i++) {
+        $nombrereporte = $consultas[$i]['nombre'];
+    }
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'accientes'";
     $consultas= $conn->Execute($consultas)-> getRows();
+
+    
+
+
+    
     for($i= 0; $i<count($consultas); $i++) {
       $correos = explode(",", $consultas[$i]['usuarios']);
       for($j=0; $j<count($correos); $j++){
           $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
           $consultasresp= $conn->Execute($consultascorr)-> getRows();
 
-          $mensaje  ="Se a reportado un nuevo accidente con el identifidor #".$id."";
+          $mensaje  ="Señor Usuario<br>
+          Apreciada Área de Salud y Seguridad en el Trabajo 
+          <br><br>
+          Le informamos que la empresa $nombreempresaa, Usuario $nombrereporte, ha reportado un accidente de trabajo de $nombrefuncionario, para lo cual hemos asignado el consecutivo No. $id
+          <br><br>
+          Apreciado(a)  $nombrereporte  recuerde que puede hacer seguimiento a su solicitud, iniciando sesión en nuestra pagina web www.humantalentsas.com ingresando con su usuario y clave.
+          <br><br>
+          Para visualizar dar click <a href='https://humantalentsas.com/human/home.php?ctr=accidentes&acc=listaaccidentes'>AQUI</a> 
+          <br><br>
+          Cordialmente,<br>
+          Human Talent SAS
+          <br><br>
+          Para su Seguimiento y/o Gestión";
 
           $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
       }
@@ -1658,12 +1709,12 @@ public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$func
 
           $mensaje  ="Apreciado Cliente<br><br>
 
-          Le informamos que hemos recibido el reporte de retiro del empleado en misión Nombre ".$funcionario.";  estaremos procediendo de manera inmediata a dar el tramite respectivo.
-          <br>
+          Le informamos que hemos recibido el reporte de retiro del empleado en misión ".$funcionario.";  estaremos procediendo de manera inmediata a dar el tramite respectivo.
+          <br><br>
           Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
-          <br>
-          Cualquier inquietud que tengo al respecto, la atenderemos a traves de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, nomina@humantalentsas.com, contabilidad@humantalentsas.com  
-          <br>
+          <br><br>
+          Cualquier inquietud que tengo al respecto, la atenderemos a traves de nuestro PBX 214 2011, o Celular 318 335 2194 - 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, nomina@humantalentsas.com, contabilidad@humantalentsas.com  
+          <br><br>
           Cordialmente,
           <br><br>
           Área Servicio al Cliente 
@@ -1753,11 +1804,11 @@ public function guardarfinretiro($id,$correo,$archivo){
         $nombre = $consultas[$i]['nombre'];
     
     } 
-    $mensaje = "Apreciado Empleado ".$nombre."<br><br>
+    $mensaje = "Apreciado Señor (a) ".$nombre."<br><br>
     En relación con el contrato de obra o labor que tiene suscrito con nuestra Empresa, en la comunicación anexa le estamos informando la terminación de este.
-    <br>
-    Cualquier inquietud que tengo al respecto, la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, 
-    <br>
+    <br><br>
+    Cualquier inquietud que tengo al respecto, la atenderemos a través de nuestro PBX 214 2011, o Celular 318 335 2194 - 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, 
+    <br><br>
     Cordialmente,
     <br><br>
     Área Servicio al Cliente 
@@ -2016,7 +2067,14 @@ public function enviarcorreocentromedico($id,$archivoexa,$nombrepersona){
         for($i=0;$i<count($datosa);$i++) {
             if($datosa[$i]!=""){
                 $titulo="Envio Colaborador Para Examenes";
-                $mensaje="Se Envia la order de examenes del colaborador $nombrepersona para su gestion";
+                $mensaje="Apreciados señores Laboratorio Clinico:<br><br>
+                Para su conocimiento y gestion respectiva, en el archivo anexo encontraran la autorización correspondiente para lque le sean realizado los examenes medicos a a nuestro colaborador  $nombrepersona<br><br>Cualquier inquietud que tengo al respecto, la atenderemos a traves de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com, servicioalcliente@humantalentsas.com
+                <br><br>
+                Cordialmente,
+                <br><br>
+                Área Selección de Personal <br>
+                Human Talent SAS
+                ";
                 $this->enviarcorreoadjuntos($datosa[$i],$archivoexa,$mensaje,$titulo);
             }
         }
