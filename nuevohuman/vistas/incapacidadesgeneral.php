@@ -7,6 +7,9 @@
 	<th>Empresa</th>
 			<th>Documento</th>
 			<th>Nombre Persona</th>
+			<th>Fecha Inicial ADCI</th>
+			<th>Fecha Final ADCI</th>
+			<th>Dias ADCI</th>
 			<th>Centro Costos</th>
 			<th>Observaciones</th>
 			<th>Responsable</th>
@@ -21,6 +24,7 @@
 			<th>Estado Proceso</th>
 			<th>Estado Incapacidad</th>
 			<th>Duplicado</th>
+			<th>Observacion General</th>
 			<th>Accion</th>
 	</tr>
 	</thead>
@@ -34,6 +38,9 @@
 		$conteoreq = 0;
 		$id=$listatemporales[$i]['id_registro'];
 		$empresa=$listatemporales[$i]['nombretemporal'];
+		$fechainigenere=$listatemporales[$i]['fechaini'];
+		$fechafinalgenere=$listatemporales[$i]['fechafinal'];
+		$diasad=$listatemporales[$i]['cantidaddias'];
 		$empresausuaria=$listatemporales[$i]['empresausuaria'];
 		$cedula=$listatemporales[$i]['cedula'];
 		$nombreper=$listatemporales[$i]['nombreper'];
@@ -47,6 +54,7 @@
 		$noincapacidad=$listatemporales[$i]['noincapacidad'];
 		$estadoeps=ucwords($listatemporales[$i]['estadoeps']);
 		$duplicado=$listatemporales[$i]['duplicado'];
+		$otrasobserva=$listatemporales[$i]['descgeneral'];
 
 		if($estadoeps==""){
 			$estadoeps="Sin Estado";
@@ -380,6 +388,46 @@
 		if($duplicado =="No"  || $duplicado =="NO"){
 			$duplicado = '<a href="home.php?ctr=incapacidad&acc=marcarduplicado&id='.$id.'">Marcar Como Duplicado</a>';
 		}
+		
+		$reabre = "";
+		if($estadolblmu=="Transcrita"){
+			$reabre = '<br><br><a href="home.php?ctr=incapacidad&acc=reabrirnegada&id='.$id.'" style="color: #0069d9;">Volver a Abrir</a>';
+		}
+
+
+		$modaleditnota ='<div class="modal fade" id="exampleModalnotaseg'.$id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Editar Nota General</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<form class="form-horizontal" action="home.php?ctr=incapacidad&acc=editarNotaGeneral" method="post" enctype="multipart/form-data">
+			
+		  <input id="id" name="id" type="hidden" value="'.$id.'">
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Observaciones Generales</label> 
+		  <div class="col-8">
+			<textarea id="descgeneral" name="descgeneral" cols="40" rows="5" class="form-control" required="required"></textarea>
+		  </div>
+		</div>
+		
+		<div class="form-group row">
+		  <div class="offset-4 col-8">
+			<button name="submit" type="submit" class="btn btn-primary">Guardar Nota</button>
+		  </div>
+		</div>
+			</form>	
+		  </div>
+		</div>
+	  </div>
+	</div>
+	';
+		$btnEditNota  ='<br><br><a  data-toggle="modal" data-target="#exampleModalnotaseg'.$id.'" style="color: #0069d9;">Editar Nota</a>';
+
 		/*echo  '<tr><td>'.$val.'</td>
 		<td>'.$cedula.'</td>
   <td>'.$nombreper.'</td>
@@ -403,6 +451,9 @@
 	<td><?php echo $empresa;?></td>
 			<td><?php echo $cedula;?></td>
 			<td><?php echo $nombreper;?></td>
+			<td><?php echo $fechainigenere;?></td>
+			<td><?php echo $fechafinalgenere;?></td>
+			<td><?php echo $diasad;?></td>
 			<td><?php echo $empresausuaria;?></td>
 			<td><?php echo $observaciones;?></td>
 			<td><?php echo $responsable;?></td>
@@ -417,7 +468,8 @@
 			<td><?php echo $estadolblmu;?></td>
 			<td><?php echo $estadoeps;?></td>
 			<td><?php echo $duplicado;?></td>
-			<td><?php echo $modal.$boton;?></td>
+			<td><?php echo $otrasobserva.$modaleditnota.$btnEditNota;?></td>
+			<td><?php echo $modal.$boton.$reabre;?></td>
 	</tr>
 <?php 
 	} ?>

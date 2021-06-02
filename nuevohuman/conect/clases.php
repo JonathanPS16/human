@@ -418,6 +418,15 @@ public function guardarreapertura($id){
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
+
+public function guardarnotageneral($id,$nota){
+    $conn = $this->conec();
+    $consultas = "UPDATE incapacidadescargue set descgeneral = '$nota' where id_registro=$id";
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
 public function guardarduplicado($id){
     $conn = $this->conec();
     $consultas = "UPDATE incapacidadescargue set duplicado = 'Si' where id_registro=$id";
