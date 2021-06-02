@@ -696,11 +696,26 @@ public function guardarexcamenesp($nombre,$recomendacion){
 }
 
 //////////
-public function guardarinfolaboratorios($nombre,$ciudad,$direccion,$telefonos,$correos){
+public function guardarinfolaboratorios($nombre,$ciudad,$direccion,$telefonos,$correos,$id){
     $conn = $this->conec();
-    $consultas = "INSERT INTO laboratorios (nombrelaboratorio,ciudad,direccion,telefonos,correo) values ('$ciudad','$nombre','$direccion',$telefonos,'$correos')";
-    //echo $consultas;
+    if($id>0)
+    {
+        $consultas = "UPDATE laboratorios SET nombrelaboratorio='$ciudad',ciudad='$nombre',direccion='$direccion',telefonos=$telefonos,correo='$correos' where id=".$id;
+    
+    } else {
+        $consultas = "INSERT INTO laboratorios (nombrelaboratorio,ciudad,direccion,telefonos,correo) values ('$ciudad','$nombre','$direccion',$telefonos,'$correos')";
+    }//echo $consultas;
     //die();
+    $consultas= $conn->Execute($consultas)-> getRows();
+    
+    return $consultas;
+}
+
+public function eliminarlaboratorios($id){
+    $conn = $this->conec();
+  
+        $consultas = "DELETE FROM  laboratorios  where id=".$id;
+    
     $consultas= $conn->Execute($consultas)-> getRows();
     
     return $consultas;

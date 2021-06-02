@@ -176,6 +176,19 @@ require_once('conect/clases.php');
 
         });
 
+        function editarlaboratorio (nombrelaboratorio,ciudad,direccion,telefono,correo1,correo2,id)
+        {
+            $('#laboratoriosadd').click();
+            $("#nombre").val(nombrelaboratorio);
+            $("#ciudad").val(ciudad);
+            $("#direccion").val(direccion);
+            $("#telefonos").val(telefono);
+            $("#correouno").val(correo1);
+            $("#correodos").val(correo2);
+            $("#id").val(id);
+
+        }
+
     </script>
 </body>
 

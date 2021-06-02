@@ -1,5 +1,5 @@
 <h5>Laboratorios</h5><br>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="laboratoriosadd">
   Agregar Laboratorio
 </button>
 <br>
@@ -7,7 +7,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Agregar Laboratorios</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Agregar/Editar Laboratorios</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -73,6 +73,8 @@
 			<th>Telefono</th>
 			<th>Correo 1</th>
 			<th>Correo 2</th>
+			<th>Editar</th>
+			<th>Eliminar</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -87,7 +89,8 @@
 		$ciudad=$listatemporales[$i]['ciudad'];	
 		$direccion=$listatemporales[$i]['direccion'];	
 		$correo=$listatemporales[$i]['correo'];	
-		$telefono=$listatemporales[$i]['telefonos'];	
+		$telefono=$listatemporales[$i]['telefonos'];
+		$id=$listatemporales[$i]['id'];	
 		$correo = explode("|",$correo);
 		
 		$descripcion=$listatemporales[$i]['descripcion'];			
@@ -97,7 +100,12 @@
 		<td>'.$direccion.'</td>
 		<td>'.$telefono.'</td>
 		<td>'.$correo[0].'</td>
-		<td>'.$correo[1].'</td></tr>';
+		<td>'.$correo[1].'</td>';
+		echo  '<td><a class="btn btn-primary" onclick="';
+		echo  "editarlaboratorio('$nombrelaboratorio','$ciudad','$direccion','$telefono','".$correo[0]."','".$correo[1]."',$id)";
+		echo '">Editar Laboratorio</a></td>';
+		echo  '<td><a class="btn btn-primary" href="home.php?ctr=admon&acc=eliminarlaboratorio&id='.$id.'">Eliminar Laboratorio</a></td></tr>';
+		
 	}
 	?>
     </tbody>

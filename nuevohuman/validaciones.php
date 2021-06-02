@@ -1079,12 +1079,18 @@
                 break;
 
                 case "guardarlaboratorio":
-                    $listatemporales=$objconsulta->guardarinfolaboratorios($_POST['nombre'],$_POST['ciudad'],$_POST['direccion'],$_POST['telefonos'],$_POST['correouno']."|".$_POST['correodos']);
+                    $listatemporales=$objconsulta->guardarinfolaboratorios($_POST['nombre'],$_POST['ciudad'],$_POST['direccion'],$_POST['telefonos'],$_POST['correouno']."|".$_POST['correodos'],$_POST['id']);
                     echo "<script>alert('Laboratorio Cargado Correctamente');
                                 window.location.href = 'home.php?ctr=admon&acc=laboratorios';
                                 </script>";
                 break;
 
+                case "eliminarlaboratorio":
+                    $listatemporales=$objconsulta->eliminarlaboratorios($_GET['id']);
+                    echo "<script>alert('Laboratorio Eliminado Correctamente');
+                                window.location.href = 'home.php?ctr=admon&acc=laboratorios';
+                                </script>";
+                break;
                 case "guardarexamenp":
                     $listatemporales=$objconsulta->guardarexcamenesp($_POST['nombre'],$_POST['recomendacion']);
                     echo "<script>alert('Examen Cargado Correctamente');
@@ -1831,6 +1837,26 @@ $xmlWriter->save('omar.pdf');*/
                     $objWriter= \PhpOffice\PhpWord\IOFactory::createWriter($contents,'PDF');
                     $objWriter->save("conversorwordpdf/testaaaaa.pdf");
 
+                    $inputFile = "conversorwordpdf/examenes.docx";
+
+// get the name of the output MS-WORD file
+$outputFile = "conversorwordpdf/examenes.pdf";
+
+try
+    {
+    $oLoader = new COM("easyPDF.Loader.8");
+    $oPrinter = $oLoader->LoadObject("easyPDF.Printer.8");
+    $oPrintJob = $oPrinter->PrintJob;
+    $oPrintJob->PrintOut ($inputFile, $outputFile);
+    print "Success";
+    }
+
+
+catch(com_exception $e)
+    {
+    Print "error code".$e->getcode(). "\n";
+    print $e->getMessage();
+    }
 
                     ?>
                     <a href="conversorwordpdf/testaaaaa.pdf">testaaaaa.pdf</a>
