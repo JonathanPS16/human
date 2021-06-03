@@ -1151,9 +1151,17 @@
 
                 case "eliminarusu":
                     $usu = $_GET['usu'];
-                    $listamenus=$objconsulta->eliminarusu($usu);
+                    $ext = $_GET['ext'];
+                    if($ext!="S"){
+                        $ext ="N";
+                    }
+                    $listamenus=$objconsulta->eliminarusu($usu,$ext);
+                    $data ="asigperfiles";
+                    if($ext=="S"){
+                        $data ="adminexternos"; 
+                    }
                     echo "<script>alert('Usuario Eliminado Correctamente');
-                                window.location.href = 'home.php?ctr=admon&acc=asigperfiles';
+                                window.location.href = 'home.php?ctr=admon&acc=$data';
                                 </script>";
                 break;
 
@@ -1189,6 +1197,12 @@
                         $listatemporales[$kk]['centro']=$listatemporalesaaa;
                     }
                     include('vistas/adminperfiles.php');
+                break;
+                case "adminexternos":
+                    //$listamenus=$objconsulta->selectperfiles();
+                    $listatemporales=$objconsulta->selectexternos();
+                    
+                    include('vistas/admonexternos.php');
                 break;
 
                 case "creacionusuarios":

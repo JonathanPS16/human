@@ -193,6 +193,14 @@ public function selectperfilesusuario(){
     return $consultas;   
 }
 
+public function selectexternos(){
+    $conn = $this->conec();
+    $dato=array();
+    $consultas = "SELECT * FROM `empledos_ingreso`";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;   
+}
+
 public function listaempresasgeneral($idcentros){
     $conn = $this->conec();
     $dato=array();
@@ -1443,12 +1451,15 @@ public function restaurarclave($usu,$perf){
     $conn->Execute($SQL);
 }
 
-public function eliminarusu($usu){
+public function eliminarusu($usu,$ext){
     $conn = $this->conec();
     $sqlcaliTe = "DELETE FROM  usuarios  where id_usuario={$usu}";
+
+    if($ext=="S"){
+        $sqlcaliTe = "DELETE FROM  empledos_ingreso  where id_ingreso={$usu}";
+    }
     $conn->Execute($sqlcaliTe);
-    $SQL =$sql;
-    $conn->Execute($SQL);
+
 }
 public function guardanotificausu($proceso,$accidentes,$retiro,$seleccion){
     $conn = $this->conec();
