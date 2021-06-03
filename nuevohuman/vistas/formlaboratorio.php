@@ -101,10 +101,10 @@
 		<td>'.$telefono.'</td>
 		<td>'.$correo[0].'</td>
 		<td>'.$correo[1].'</td>';
-		echo  '<td><a class="btn btn-primary" onclick="';
+		echo  '<td><a style="color: white !important;" class="btn btn-primary" onclick="';
 		echo  "editarlaboratorio('$nombrelaboratorio','$ciudad','$direccion','$telefono','".$correo[0]."','".$correo[1]."',$id)";
-		echo '">Editar Laboratorio</a></td>';
-		echo  '<td><a class="btn btn-primary" href="home.php?ctr=admon&acc=eliminarlaboratorio&id='.$id.'">Eliminar Laboratorio</a></td></tr>';
+		echo '">Editar</a></td>';
+		echo  '<td><a class="btn btn-primary" href="home.php?ctr=admon&acc=eliminarlaboratorio&id='.$id.'">Eliminar</a></td></tr>';
 		
 	}
 	?>

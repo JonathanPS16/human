@@ -2218,7 +2218,9 @@ catch(com_exception $e)
                     $orden ='order'.$idper.'.pdf';
                     $pdf->Output(F,'archivosgenerales/'.$orden);
                     ob_end_flush();
-                   
+                    require_once 'vendor/autoload.php';
+                    //echo "<a href='archivosgenerales/$orden'>Ordern</a>";
+                   /*
 
                     $archivo = "orden".$idper.date('YMDS').".docx";
                     $orden = $archivo;
@@ -2242,7 +2244,7 @@ catch(com_exception $e)
                     $templateProcessor->setValue('ciudad', $listadoreq[0]['ciudadlaboral']);
                     //$templateProcessor->setValue('nombrepresente', '');
                     $templateProcessor->setValue('horario', $listadoreq[0]['jornadalaboral']." ".$listadoreq[0]['horario']);
-                    $templateProcessor->saveAs('archivosgenerales/'.$archivo);
+                    $templateProcessor->saveAs('archivosgenerales/'.$archivo);*/
                     
                    // echo '<a href="archivosgenerales/'.$docdocumen.'">Extra Files</a>';
                     //echo '<a href="archivosgenerales/'.$archivo.'">Extra Files</a>';
