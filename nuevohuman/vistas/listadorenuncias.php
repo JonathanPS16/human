@@ -27,6 +27,22 @@ for($i=0; $i<count($listatemporales);$i++){
 	$estado=$listatemporales[$i]['estado'];
 	$archivo=$listatemporales[$i]['archivo'];
 	$correo=$listatemporales[$i]['correo'];
+	$correoregi=$listatemporales[$i]['correoregi'];
+	
+	$fi=$listatemporales[$i]['fi'];
+	$gene=$listatemporales[$i]['gene'];
+	$nombrecargo=$listatemporales[$i]['nombrecargo'];
+	$empresausuaria=$listatemporales[$i]['empresausuaria'];
+	$nombretemporal =$listatemporales[$i]['nombretemporal'];
+	$fechasoli =$listatemporales[$i]['fechasolicitud'];
+	$ne =$listatemporales[$i]['ne'];
+	$renunciada = $listatemporales[$i]['fecharetiro'];
+	$contrato = $listatemporales[$i]['contrato'];
+	
+	
+	
+
+	
 
 	
 	$modalbotonextra ='<div class="modal fade" id="exampleModalextra'.$id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -42,19 +58,49 @@ for($i=0; $i<count($listatemporales);$i++){
         <form class="form-horizontal" action="home.php?ctr=retiro&acc=guardarenviar" method="post" enctype="multipart/form-data">
 		<fieldset>
 		<div class="form-group row">
-            <label for="presentarse" class="col-4 col-form-label">Correo Electronico</label> 
+            <label for="presentarse" class="col-4 col-form-label">Correos Electronico (Separados por ;)</label> 
             <div class="col-8">
-              <input id="correo" name="correo" placeholder="correo@electronico.com" type="email" class="form-control" required="required">
+              <input id="correo" name="correo" placeholder="correo@electronico.com;correo2@electronico.com" type="text" class="form-control" >
             </div>
           </div> 
-		<!-- File Button --> 
-		<div class="form-group">
-		  <label class="col-md-4 control-label" for="filebutton"></label>
-		  <div class="col-md-4">
+		  <div class="form-group row">
+    <label class="col-4 col-form-label">Enviar a</label> 
+    <div class="col-8">
+      <div class="custom-controls-stacked">
+        <div class="custom-control custom-checkbox">
+          <input name="checkbox_0" id="checkbox_0" type="checkbox" class="custom-control-input" value="1" checked="checked"> 
+          <label for="checkbox_0" class="custom-control-label">Candidato</label>
+        </div>
+      </div>
+      <div class="custom-controls-stacked">
+        <div class="custom-control custom-checkbox">
+          <input name="checkbox_1" id="checkbox_1" type="checkbox" class="custom-control-input" value="2" checked="checked"> 
+          <label for="checkbox_1" class="custom-control-label">Servicio Cliente</label>
+        </div>
+      </div>
+      <div class="custom-controls-stacked">
+        <div class="custom-control custom-checkbox">
+          <input name="checkbox_2" id="checkbox_2" type="checkbox" class="custom-control-input" value="3" checked="checked"> 
+          <label for="checkbox_2" class="custom-control-label">Facturacion</label>
+        </div>
+      </div>
+    </div>
+  </div> 
+		
       <input id="id" name="id" type="hidden" value="'.$id.'">
-		    <input id="filebutton" name="filebutton" class="input-file" type="file" required="required">
-		  </div>
-		</div>
+	  <input id="contrato" name="contrato" type="hidden" value="'.$contrato.'">
+	  <input id="fechai" name="fechai" type="hidden" value="'.$fi.'">
+	  <input id="cedula" name="cedula" type="hidden" value="'.$cedula.'">
+	  <input id="ne" name="ne" type="hidden" value="'.$ne.'">
+	  <input id="correoempleado" name="correoempleado" type="hidden" value="'.$correoregi.'">
+	  <input id="gene" name="gene" type="hidden" value="'.$gene.'">
+	  <input id="motivo" name="motivo" type="hidden" value="'.$motivo.'">
+	  <input id="renuncia" name="renuncia" type="hidden" value="'.$renunciada.'">
+	  <input id="nombrecargo" name="nombrecargo" type="hidden" value="'.$nombrecargo.'">
+	  <input id="empresausuaria" name="empresausuaria" type="hidden" value="'.$empresausuaria.'">
+	  <input id="fechasoli" name="fechasoli" type="hidden" value="'.$fechasoli.'">
+	  <input id="nombretemporal" name="nombretemporal" type="hidden" value="'.$nombretemporal.'">
+	  		    
 		<!-- Button -->
 		<div class="form-group">
 		  <label class="col-md-4 control-label" for="guardar"></label>

@@ -439,7 +439,7 @@
             switch ($acc) {
 
                 case "guardarenviar":
-                    $archivouno = "";
+                    /*$archivouno = "";
                     $nombre_archivo = date('YmdHms').$_FILES['filebutton']['name'];
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['filebutton']['type'];
@@ -456,22 +456,82 @@
                             }
                         }
                     }
+                    OMAR ACA*/
                     $correo = $_POST['correo'];
                     $id = $_POST['id'];
+                    $datosdia = array(
+                        "01"=>"Enero",
+                        "02"=>"Febrero",
+                        "03"=>"Marzo",
+                        "04"=>"Abril",
+                        "05"=>"Mayo",
+                        "06"=>"Junio",
+                        "07"=>"Julio",
+                        "08"=>"Agosto",
+                        "09"=>"Septiembre",
+                        "10"=>"Octubre",
+                        "11"=>"Noviembre",
+                        "12"=>"Diciembre"
+                    );
+                    require_once 'vendor/autoload.php';
+                    $docdocumen = "cartagene".$id.date('Ymds').".docx";
+                    $phpWord2 = new \PhpOffice\PhpWord\PhpWord();
+                    if($_POST['motivo']=="terminacion"){
+                        $templateProcessor2 = new \PhpOffice\PhpWord\TemplateProcessor('plantillas/terminacioncontrato.docx');
+                    } else {
+                        $templateProcessor2 = new \PhpOffice\PhpWord\TemplateProcessor('plantillas/aceptacionrenuncia.docx');
+                    
+                    }
+                    $fechareg =  explode("-",substr($_POST['fechasoli'], 0, 10));
+                    
+                    $fecharegi =  explode("/",$_POST['fechai']);
 
-                    $listatemporales=$objconsulta->guardarfinretiro($id,$correo,$archivouno);
+                    $fecharegire =  explode("-",$_POST['renuncia']);
+
+                    $templateProcessor2->setValue('dia', date("d"));
+                    $templateProcessor2->setValue('mes', $datosdia[date("m")]);
+                    $templateProcessor2->setValue('anio', date("Y"));
+                    $templateProcessor2->setValue('nombreempleado', $_POST['ne']);
+                    $templateProcessor2->setValue('cedula', $_POST['cedula']);
+                    $templateProcessor2->setValue('empresageneral', $_POST['nombretemporal']);
+                    $templateProcessor2->setValue('contrato', $_POST['contrato']);
+                    $templateProcessor2->setValue('diarecibido', $fechareg[2]);
+                    $templateProcessor2->setValue('mesrecibido', $datosdia[$fechareg[1]]);
+                    $templateProcessor2->setValue('aniorecibido', $fechareg[0]);
+                    $templateProcessor2->setValue('diarenuncia', $fecharegire[2]);
+                    $templateProcessor2->setValue('mesrenuncia', $datosdia[$fecharegire[1]]);
+                    $templateProcessor2->setValue('aniorenuncia', $fecharegire[0]);
+                    $templateProcessor2->setValue('diainicio', $fecharegi[0]);
+                    $templateProcessor2->setValue('mesinicio', $fecharegi[1]);
+                    $templateProcessor2->setValue('anioinicio', $fecharegi[2]);
+                    $templateProcessor2->setValue('empresasecundaria', $_POST['empresausuaria']);
+                    $templateProcessor2->saveAs('archivosgenerales/'.$docdocumen);
+                    $correo = $_POST['correo'];
+                    $id = $_POST['id'];
+                    $correoenvio = "";
+                    if(isset($_POST['checkbox_0']) && $_POST['checkbox_0']>0){
+                        $correoenvio.=$_POST['correoempleado'].";";
+                    }
+                    if(isset($_POST['checkbox_1']) && $_POST['checkbox_1']>0){
+                        $correoenvio.="servicioalcliente@humantalentsas.com".";";
+                    }
+                    if(isset($_POST['checkbox_2']) && $_POST['checkbox_2']>0){
+                        $correoenvio.="nomina@humantalentsas.com".";";
+                    }
+                    $correo = $_POST['correo'].";".$correoenvio; 
+                    $listatemporales=$objconsulta->guardarfinretiro($id,$correo,$docdocumen);
                     echo "<script>alert('Retiro Cargado Correctamente');
                         window.location.href = 'home.php?ctr=retiro&acc=listaretiros';
                         </script>";
                     
                 break;
                 case "listaretiros":
-                    $listatemporales = $objconsulta->obtenerretiros(" AND estado = 'C'");
+                    $listatemporales = $objconsulta->obtenerretiros(" AND renuncias.estado = 'C'");
                     include('vistas/listadorenuncias.php');
                 break;
                 case "listadoret":
                     $mios = "S";
-                    $listatemporales = $objconsulta->obtenerretiros(" AND estado in ('T','C')");
+                    $listatemporales = $objconsulta->obtenerretiros(" AND renuncias.estado in ('T','C')");
                     include('vistas/listadorenuncias.php');
                 break;
                 
