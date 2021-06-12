@@ -248,7 +248,7 @@ public function obtenerretiros($estado=""){
     $consultas = "
     select renuncias.*,certificados.correoelectronico as correoregi,certificados.fecha_ingreso as fi,certificados.genero as gene,certificados.nombre_empleado as ne,certificados.contrato,certificados.nombrecargo,centrocostos.empresausuaria,empresasterporales.nombretemporal from renuncias INNER JOIN certificados on certificados.cedula=renuncias.cedula inner JOIN centrocostos on centrocostos.centrocosto=certificados.centro_costos inner JOIN empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres 
      where 1=1 ".$estado;
-    echo $consultas;
+   // echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas; 
 }

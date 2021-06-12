@@ -1,5 +1,14 @@
-<h5>Proceso de Renuncias </h5>
-<table class="table table-striped">
+<?php
+$label = "Proceso Gestion Renuncias";
+if($mios=="S"){
+	$label = "Resumen Informe Retiros Empleados";
+}
+?>
+
+
+<h5><?=$label?></h5>
+
+<table class="table table-striped" id="myTable">
 	<thead>
 		<tr>
 			<th>ID</th>
@@ -8,13 +17,16 @@
 			<th>Nombre</th>
 			<th>Cedula</th>
 			<th>Observaciones</th>
-			<th>Archivos</th>
-			<th>Ver</th>
+			<th>Paz y Salvo</th>
+			<th>Renuncia</th>
+			<th>Carta Enviada</th>
+			<th>Correo Enviados</th>
+			<th>Estado</th>
 		</tr>
 	</thead>
 	<tbody>
 <?php 
-for($i=0; $i<count($listatemporales);$i++){
+for($i=0; $i<count($listatemporales);$i++){	
     $id=$listatemporales[$i]['id_renuncia'];
 	$cargo=$listatemporales[$i]['cargo'];
 	$nombre=$listatemporales[$i]['nombre'];
@@ -81,7 +93,7 @@ for($i=0; $i<count($listatemporales);$i++){
       <div class="custom-controls-stacked">
         <div class="custom-control custom-checkbox">
           <input name="checkbox_2" id="checkbox_2" type="checkbox" class="custom-control-input" value="3" checked="checked"> 
-          <label for="checkbox_2" class="custom-control-label">Facturacion</label>
+          <label for="checkbox_2" class="custom-control-label">Nomina</label>
         </div>
       </div>
     </div>
@@ -120,19 +132,47 @@ for($i=0; $i<count($listatemporales);$i++){
 </div>
 ';
     $botonextra ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalextra'.$id.'">
-  Enviar Documento
+  Gestionar Retiro
 </button>';	
-$boton ='<a href="archivosgenerales/'.$paz.'" target="_black" >Paz y salvo</a><br>';
-$botondos ='<a href="archivosgenerales/'.$renuncia.'" target="_black" >Renuncia</a>';
-
+$boton ='<a href="archivosgenerales/'.$paz.'" target="_black" class="btn btn-primary">Paz y salvo</a><br>';
+$botondos ='<a href="archivosgenerales/'.$renuncia.'" target="_black" class="btn btn-primary">Renuncia</a>';
+$archivocorreoenviadocarta = "No Enviado";
 if($estado=='T'){
 	$modalbotonextra ="";
+	if($archivo!=""){
+		$archivocorreoenviadocarta = '<a href="archivosgenerales/'.$archivo.'" target="_black" class="btn btn-primary">Carta Enviada</a>';	
+	}
 	$botonextra ="Enviado a:<br>".$correo.'<br><a href="archivosgenerales/'.$archivo.'" target="_black" >Archivo</a>';
 }
 if($mios=="S" && $estado=='C'){
 	$modalbotonextra ="";
 	$botonextra ="En Proceso";
 }
+
+if($estado=='T'){
+	$modalbotonextra ="";
+	$botonextra ="Procesado";
+}
+
+
+if($motivo=="renuncia"){
+	$motivo = "RV";
+}else if($motivo=="terminacion"){
+	$motivo = "TC";
+} else {
+	$motivo = "OT";
+}
+$correolbl = "";
+if($correo!=""){
+	$datosmensaje= explode(";",$correo);
+	for($lb=0;$lb<=count($datosmensaje); $lb++){
+		if($datosmensaje[$lb]!=""){
+			$correolbl .= $datosmensaje[$lb]."<br>";	
+		}
+	}
+
+}
+
     echo "<tr>
     		<td>".$id."</td>
 			<td>".$motivo."</td>
@@ -140,7 +180,10 @@ if($mios=="S" && $estado=='C'){
 			<td>".$nombre."</td>
 			<td>".$cedula."</td>
 			<td>".$observaciones."</td>
-			<td>".$boton.$botondos."</td>
+			<td>".$boton."</td>
+			<td>".$botondos."</td>
+			<td>".$archivocorreoenviadocarta."</td>
+			<td>".$correolbl."</td>
     		<td>".$modalbotonextra.$botonextra."</td>
     </tr>";
   }

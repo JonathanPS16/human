@@ -37,17 +37,21 @@
     </div>
   </div> 
 
-  <div class="custom-file">
-    <input type="file" class="custom-file-input" id="archivo1" name="archivo1">
-    <label class="custom-file-label" for="archivo1"> Renuncia </label>
-  </div>
-
-  <div class="custom-file">
-    <input type="file" class="custom-file-input" id="archivo2" name="archivo2" >
-    <label class="custom-file-label" for="archivo2">Paz y Salvo</label>
-  </div>
 
   <div class="form-group row">
+    <label for="archivo1" class="col-4 col-form-label">Renuncia</label> 
+    <div class="col-8">
+    <input type="file"  id="archivo1" name="archivo1">
+    </div>
+  </div> 
+
+  <div class="form-group row">
+    <label for="archivo2" class="col-4 col-form-label">Paz y Salvo</label> 
+    <div class="col-8">
+    <input type="file" id="archivo2" name="archivo2" >
+    </div>
+  </div> 
+  <div >
     <div class="offset-4 col-8">
       <button name="submit" type="submit" class="btn btn-primary">Guardar Retiro</button>
     </div>
@@ -56,6 +60,7 @@
 <script>
 // Add the following code if you want the name of the file appear on select
 $(".custom-file-input").on("change", function() {
+  alert($(this).id());
   var fileName = $(this).val().split("\\").pop();
   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });
