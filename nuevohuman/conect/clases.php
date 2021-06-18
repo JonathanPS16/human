@@ -1131,13 +1131,12 @@ public function obteneRes($ide=0,$clientesol=""){
     if ($clientesol != "") {
         $where .=" and req.clientesol= ".$clientesol;
     } 
-    if($_SESSION['id_perfil']==1){
+    if($_SESSION['id_perfil']==1 && $ide == 0){
         $where =" "; 
     }
 
     $consultas = "select centrocostos.empresausuaria as nombreempresausu,empresasterporales.nombretemporal,req.*,(select count(*) from req_candidatos where id_requisision = req.id and estado ='F') as cantidadapro from req INNER join empresasterporales on empresasterporales.id_temporal=req.empresaclientet inner JOIN centrocostos on centrocostos.id_centro=req.empresacliente and centrocostos.id_empresapres=empresasterporales.id_temporal where 1=1 ".$where." ORDER BY 1 ASC";
-    //echo $consultas;
-    $consultas= $conn->Execute($consultas)-> getRows();
+     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
 
@@ -1568,8 +1567,12 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
             $mesaje =  "i es igual a 2";
             break;
     }
-
-    $envio = $this->enviocorreo($correo, $mesaje, $labe);
+    if($correo!=""){
+        $envio = $this->enviocorreo($correo, $mesaje, $labe);
+    } else {
+        echo "Correo No Identificado";
+    }
+    
 }
 
 public function actualizarformatos($idper,$idreq,$orden,$documentos,$hv)
@@ -2205,6 +2208,7 @@ public function enviarCorreoReq($ide,$req){
       for($i= 0; $i<count($consultas); $i++) {
         $carfo = $consultas[0]['cargo'];
       }
+      //echo $req;
       /*
       $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
       //echo $consultas;
@@ -2234,8 +2238,12 @@ public function enviarCorreoReq($ide,$req){
         for($j=0; $j<count($correos); $j++){
             $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
-            $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje, "Nueva Solictud Generada");
-        }
+            if($consultasresp[0]['correo']!=""){
+                //echo "<br>HOLA=".$consultasresp[0]['correo'];
+                $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje, "Nueva Solictud Generada");
+            }
+    
+           }
       }
 
       $this->enviarcorreoClienteGen($req,"NUEVAREQ");

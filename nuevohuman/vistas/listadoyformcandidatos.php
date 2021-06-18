@@ -455,7 +455,7 @@ for($i=0; $i<count($listadoreq);$i++){
       $conteoreq++;
       $botonhoja ='<a href="archivosgenerales/'.$hojavida.'" target="_black" class="btn btn-primary" >Descargar</a>';
     }
-    if($archivoprueba ==''){
+   
     $modalboton ='<div class="modal fade" id="exampleModal'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -498,9 +498,10 @@ for($i=0; $i<count($listadoreq);$i++){
     $boton ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal'.$idper.'">
   Adjuntar Prueba
 </button>';	
-} elseif($archivoprueba!="") {
+if($archivoprueba!="") {
   $conteoreq++;
   $boton ='<a href="archivosgenerales/'.$archivoprueba.'" target="_black" class="btn btn-primary" >Descargar</a>';
+  $boton .='<br><br><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal'.$idper.'">Recargar Prueba</button>';
   	
 
 } 

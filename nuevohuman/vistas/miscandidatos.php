@@ -1,4 +1,4 @@
-<h4>Mi Requisicion #<?=$_GET['id']." ".$listadoreqcrea[0]['cargo']; ?></h4><br>
+<h4>Proceso Aprobacion - Rechazo  Requisicion #<?=$_GET['id']." ".$listadoreqcrea[0]['cargo']; ?></h4><br>
 <table class="table table-striped">
 	<thead>
 		<tr>
@@ -486,7 +486,7 @@ $botonentre ='<button type="button" class="btn btn-primary" data-toggle="modal" 
 </button>';	
 
 if($archivootro!=""){
-  $botonextra ='<a href="archivosgenerales/'.$archivootro.'" target="_black" >Descargar</a>';
+  $botonextra ='<a class="btn btn-primary" href="archivosgenerales/'.$archivootro.'" target="_black" >Descargar</a>';
 }
 if($estadopresen=="EM" && $listadoreqcrea[0]['tipo']=="D"){
  // echo "Examnes Directos";$botonrechazo
