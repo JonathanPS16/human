@@ -1,6 +1,38 @@
+<?php
+$litadoUsuarios = "";
+for($a=0; $a<count($listausuariosgenerales);$a++){
+  $selecteda ="";
+  if($_SESSION['usuario']==$listausuariosgenerales[$a]['usuario']){
+    $selecteda ="selected='selected'";
+  }
+
+  $litadoUsuarios.='<option value="'.$listausuariosgenerales[$a]['usuario'].'" '.$selecteda.'>'.$listausuariosgenerales[$a]['nombre'].'</option>';
+
+}
+?>
 <h5>Contratacion Directa</h5><br>
 <form action="home.php?ctr=requisicion&acc=savefirecta" method="post" enctype="multipart/form-data">
 <div class="form-group row">
+    <label for="empresacliente" class="col-4 col-form-label">Propietario Requisicion</label> 
+    <div class="col-8">
+      <select id="registry" name="registry" class="custom-select" required="required">
+      <option value="0">Seleccione</option>
+      <?php 
+      for($a=0; $a<count($listausuariosgenerales);$a++){
+        $selecteda ="";
+        if($_SESSION['usuario']==$listausuariosgenerales[$a]['usuario']){
+          $selecteda ="selected='selected'";
+        }
+      
+        echo '<option value="'.$listausuariosgenerales[$a]['usuario'].'" '.$selecteda.'>'.$listausuariosgenerales[$a]['nombre'].'</option>';
+      
+      }
+      ?>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
     <label for="empresacliente" class="col-4 col-form-label">Nombre Empresa Usuaria</label> 
     <div class="col-8">
       <select id="empresacliente" name="empresacliente" class="custom-select" required="required">

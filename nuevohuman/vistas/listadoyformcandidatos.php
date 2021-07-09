@@ -710,7 +710,11 @@ for($j=0; $j<5;$j++){
   </div>
 </div>
 ';
-$botonentre ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalentre'.$idper.'">Entrevista
+$styleentre= "btn btn-primary";
+if($conteoentre==0){
+  $styleentre= "btn btn-warning";
+}
+$botonentre ='<button type="button" class="'.$styleentre.'" data-toggle="modal" data-target="#exampleModalentre'.$idper.'">Entrevista
 </button>';	
 /*if ($conteoentre>0){
   $botonentre ='Entrevista Realizada';	

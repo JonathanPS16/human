@@ -1676,6 +1676,7 @@
                     $ide=$_GET['id'];
                     $datoempre = "Human";
                     $listatemporales=$objconsulta->obteneTemporales($datoempre);
+                    $listausuariosgenerales=$objconsulta->listadousuariosper();
                     $listatemporalesusuarias=$objconsulta->obteneTemporalesUsarias($datoempre);
                     if($ide>0){
                         $id=$_GET['id'];
@@ -1688,6 +1689,7 @@
                 case "procesodirecto":
                     $datoempre = "Human";
                     $listatemporales=$objconsulta->obteneTemporales($datoempre);
+                    $listausuariosgenerales=$objconsulta->listadousuariosper();
                     $listatemporalesusuarias=$objconsulta->obteneTemporalesUsarias($datoempre);
                     /*$id = 0;
                     $mireq=array();
@@ -1740,10 +1742,11 @@
                     $cargofuncionarioth = $_POST['cargofuncionarioth'];
                     $fechaautori = $_POST['fechaautori'];
                     $firmaautoriza = $_POST['firmaautoriza'];
+                    $registry = $_POST['registry'];
 
 
                     $objconsulta->guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingreso,$correo,$cargo,$salario,$tasaarl,$jornadalaboral,$ciudadlaboral,$presentarsea,$nombre_archivo,
-                    $empresacliente,$empresaclientet,$centrocostosor,$centrosucursal,$funcionarioaut,$cargofuncionarioaut,$opbservacioncontratacion,$funcionarioautorizath,$cargofuncionarioth,$fechaautori,$firmaautoriza);
+                    $empresacliente,$empresaclientet,$centrocostosor,$centrosucursal,$funcionarioaut,$cargofuncionarioaut,$opbservacioncontratacion,$funcionarioautorizath,$cargofuncionarioth,$fechaautori,$firmaautoriza,$registry);
                     $mensaje = "Solicitud Realizada Correctamente";
                     echo "<script>alert('".$mensaje."');
                     window.location.href = 'home.php?ctr=requisicion&acc=listadoReq';
@@ -2437,6 +2440,15 @@ catch(com_exception $e)
                     $direccion = $_POST['direccion'];
                     $presentarse = $_POST['presentarse'];
                     $fechainicio = $_POST['fechainicio'];
+
+                    $centrocostosor=$_POST['centrocostosor'];
+                    $centrosucursal=$_POST['centrosucursal'];
+                    $funcionarioaut=$_POST['funcionarioaut'];
+                    $cargofuncionarioaut=$_POST['cargofuncionarioaut'];
+                    $opbservacioncontratacion=$_POST['opbservacioncontratacion'];
+                    $funcionarioautorizath=$_POST['funcionarioautorizath'];
+                    $cargofuncionarioth=$_POST['cargofuncionarioth'];
+                    $fechaautori=$_POST['fechaautori'];
                     $orden = $_POST['orden'];
                     /*require_once 'vendor/autoload.php';
                     $archivoexa = $orden;
@@ -2447,7 +2459,7 @@ catch(com_exception $e)
                     $templateProcessor5->setValue('nombrepresente', $presentarse);
                     $templateProcessor5->setValue('salario', "$".number_format($salario,2,",","."));
                     $templateProcessor5->saveAs('archivosgenerales/'.$archivoexa);*/
-                    $listadoreq=$objconsulta->ajustarorden($idper,$idreq,$tasa,$salario,$presentarse,$direccion,$fechainicio);
+                    $listadoreq=$objconsulta->ajustarorden($idper,$idreq,$tasa,$salario,$presentarse,$direccion,$fechainicio,$centrocostosor,$centrosucursal,$funcionarioaut,$cargofuncionarioaut,$opbservacioncontratacion,$funcionarioautorizath,$fechaautori,$cargofuncionarioth);
                     echo "<script>alert('Informacion Guardada Correctamente');
                     window.location.href = 'home.php?ctr=requisicion&acc=verreqcan&id=".$idreq."';
                     </script>";
@@ -2669,6 +2681,7 @@ catch(com_exception $e)
                     $cantidad=$_POST['cantidad'];
                     $ciudadlaboral=$_POST['ciudadlaboral'];
                     $jornadalaboral= $_POST['jornadalaboral'];
+                    $registry= $_POST['registry'];
                     $lastid = $objconsulta->guardarRequi($id,
                     $cargo,
                     $edadminima,
@@ -2684,7 +2697,8 @@ catch(com_exception $e)
                     $tipocargosele,
                     $empresaclientet,
                     $fechareqcargo,
-                    $empresacliente
+                    $empresacliente,
+                    $registry
                 );
 
                 /*AREA DE ENVIO DE CORREOS*/

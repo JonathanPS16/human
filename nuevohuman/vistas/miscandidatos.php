@@ -1,5 +1,5 @@
 <h4>Proceso Aprobacion - Rechazo  Requisicion #<?=$_GET['id']." ".$listadoreqcrea[0]['cargo']; ?></h4><br>
-<table class="table table-striped">
+<table class="table table-striped" id="myTable">
 	<thead>
 		<tr>
 			<th>ID</th>
@@ -9,7 +9,7 @@
       <th>Entrevista</th>
       <th>Hoja de Vida</th>
       <th>Informacion Citacion</th>
-			<th colspan ="3">Acciones Candidato</th>
+			<th colspan ="2">Acciones Candidato</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -41,6 +41,7 @@ for($i=0; $i<count($listadoreq);$i++){
     $ciudadcan=$listadoreq[$i]['ciudad']; 
     $archivootro=$listadoreq[$i]['archivootro'];
     $conclusionentrevistagen=$listadoreq[$i]['conclusionentrevistagen'];
+    $estadoreal=$listadoreq[$i]['estadoreal'];
 
 
     
@@ -235,6 +236,54 @@ for($i=0; $i<count($listadoreq);$i++){
                 <input id="presentarse" name="presentarse" placeholder="Presentarse a " type="text" class="form-control" required="required">
               </div>
             </div> 
+            <div class="form-group row">
+    <label for="centrocostosor" class="col-4 col-form-label">Centro Costros Empresa Cliente</label> 
+    <div class="col-8">
+      <input id="centrocostosor" name="centrocostosor" placeholder="Centro Costros Empresa Cliente" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="centrosucursal" class="col-4 col-form-label">Ciudad/Sucursal</label> 
+    <div class="col-8">
+      <input id="centrosucursal" name="centrosucursal" placeholder="Ciudad/Sucursal" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="funcionarioaut" class="col-4 col-form-label">Nombre Funcionario que Autoriza</label> 
+    <div class="col-8">
+      <input id="funcionarioaut" name="funcionarioaut" placeholder="Nombre Funcionario que Autoriza" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="cargofuncionarioaut" class="col-4 col-form-label">Cargo Funcionario que Autoriza</label> 
+    <div class="col-8">
+      <input id="cargofuncionarioaut" name="cargofuncionarioaut" placeholder="Cargo Funcionario que Autoriza" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="opbservacioncontratacion" class="col-4 col-form-label">Observaciones de Contratacion</label> 
+    <div class="col-8">
+      <input id="opbservacioncontratacion" name="opbservacioncontratacion" placeholder="Observaciones de Contratacion" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="funcionarioautorizath" class="col-4 col-form-label">Funcionario que Autoriza Talento Humano</label> 
+    <div class="col-8">
+      <input id="funcionarioautorizath" name="funcionarioautorizath" placeholder="Funcionario que Autoriza Talento Humano" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="cargofuncionarioth" class="col-4 col-form-label">Cargo Funcionario Talento Humano</label> 
+    <div class="col-8">
+      <input id="cargofuncionarioth" name="cargofuncionarioth" placeholder="Cargo Funcionario Talento Humano" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="fechaautori" class="col-4 col-form-label">Fecha Autorizacion</label> 
+    <div class="col-8">
+      <input id="fechaautori" name="fechaautori" type="date" class="form-control" required="required">
+    </div>
+  </div>
           <div class="form-group row">
             <div class="offset-4 col-8">
               <button name="submit" type="submit" class="btn btn-primary">Guardar</button>
@@ -259,8 +308,18 @@ for($i=0; $i<count($listadoreq);$i++){
     $botonrechazo = $modalbotonfinal.$botonfinal;
 
     } else {
+      
       $botoncita ="";
       $botonrechazo ='Motivo Rechazo<br><strong>'.$motivorechazo.'</strong>';
+      if(($estadopresen=="EM" || $estadopresen=="F") && $estadoreal=='A')
+      {
+        $botonrechazo = "Aprobado";
+      }
+
+      if( $estadopresen=="F" && $estadoreal=='A')
+      {
+        $botonrechazo = "Finalizado";
+      }
       $botaceptar ="";
       
 

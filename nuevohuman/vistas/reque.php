@@ -1,4 +1,16 @@
 <?php 
+$litadoUsuarios = "";
+for($a=0; $a<count($listausuariosgenerales);$a++){
+  $selecteda ="";
+  if($mireq[0]['clientesol']!="" && ($listausuariosgenerales[$a]['usuario']==$mireq[0]['clientesol'])){
+    $selecteda ="selected='selected'";
+  } else if($_SESSION['usuario']==$listausuariosgenerales[$a]['usuario']){
+    $selecteda ="selected='selected'";
+  }
+
+  $litadoUsuarios.='<option value="'.$listausuariosgenerales[$a]['usuario'].'" '.$selecteda.'>'.$listausuariosgenerales[$a]['nombre'].'</option>';
+
+}
 $title="FORMULARIO REQUISICION";
 if($id>0){
   ?>
@@ -920,6 +932,11 @@ $estados = $mireq[0]['genero'];
     </div>
     <div class="col-sm">
     <div class="form-group">
+    <label class="col-md-10 control-label" for="registry">Propietario Requisicion</label>  
+  <div class="col-md-10">
+<select name="registry" id="registry" class="form-control">
+<?=$litadoUsuarios?>
+</select>
 </div>
     </div>
   </div>

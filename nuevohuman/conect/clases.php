@@ -795,7 +795,8 @@ $jornadalaboral,
 $tipocargosele,
 $empresaclientet,
 $fechareqcargo,
-$empresacliente
+$empresacliente,
+$registry
 ) 
 {
     $conn = $this->conec();
@@ -810,7 +811,7 @@ $empresacliente
     } else {
 
         $campos = "cargo,edadminima,edadmaxima,edadindiferente,horario,
-        tipocontrato,estado,genero,cantidad,ciudadlaboral,jornadalaboral,tipocargosele,empresaclientet,fechareqcargo,empresacliente,clientesol";
+        tipocontrato,estado,genero,cantidad,ciudadlaboral,jornadalaboral,tipocargosele,empresaclientet,fechareqcargo,empresacliente,grabadorreal,clientesol";
         $valores = "'$cargo','$edadminima','$edadmaxima','$edadindiferente','$horario',
         '$tipocontrato',
         '$strsta',
@@ -822,7 +823,8 @@ $empresacliente
         '$empresaclientet',
         '$fechareqcargo',
         '$empresacliente',
-        '".$_SESSION['usuario']."'";
+        '".$_SESSION['usuario']."',
+        '$registry'";
         $SQL= "INSERT INTO req (".$campos.") values (".$valores.")";
         $conn->Execute($SQL);
         $lastId = $conn->insert_Id();
@@ -831,11 +833,11 @@ $empresacliente
 }
 
 
-public function guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingreso,$correo,$cargo,$salario,$tasaarl,$jornadalaboral,$ciudadlaboral,$presentarsea,$nombre_archivo,$empresacliente,$empresaclientet,$centrocostosor,$centrosucursal,$funcionarioaut,$cargofuncionarioaut,$opbservacioncontratacion,$funcionarioautorizath,$cargofuncionarioth,$fechaautori,$firmaautoriza){
+public function guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingreso,$correo,$cargo,$salario,$tasaarl,$jornadalaboral,$ciudadlaboral,$presentarsea,$nombre_archivo,$empresacliente,$empresaclientet,$centrocostosor,$centrosucursal,$funcionarioaut,$cargofuncionarioaut,$opbservacioncontratacion,$funcionarioautorizath,$cargofuncionarioth,$fechaautori,$firmaautoriza,$registry){
     $conn = $this->conec();
 
-    $SQL= "INSERT INTO req (tiporeq,cantidad,cargo,ciudadlaboral,jornadalaboral,salariobasico,fechacreacion,fechareqcargo,clientesol,status,empresacliente,empresaclientet,tipo) 
-    values ('CD', 1,'$cargo','$ciudadlaboral','$jornadalaboral','$salario',now(),'$fechaingreso','".$_SESSION['usuario']."','E','$empresacliente','$empresaclientet','D')";
+    $SQL= "INSERT INTO req (tiporeq,cantidad,cargo,ciudadlaboral,jornadalaboral,salariobasico,fechacreacion,fechareqcargo,clientesol,grabadorreal,status,empresacliente,empresaclientet,tipo) 
+    values ('CD', 1,'$cargo','$ciudadlaboral','$jornadalaboral','$salario',now(),'$fechaingreso','".$registry."','".$_SESSION['usuario']."','E','$empresacliente','$empresaclientet','D')";
     $conn->Execute($SQL);
     $idreq = $conn->insert_Id();
     $SQL= "INSERT INTO req_candidatos (id_requisision,nombre,cedula,telefono,correo,tasa,salariorh,direccion,presentarse,estado,hojavida,centrocostosor,centrosucursal,funcionarioaut,cargofuncionarioaut,opbservacioncontratacion,funcionarioautorizath,cargofuncionarioth,fechaautori,firmaautoriza) 
@@ -1287,12 +1289,12 @@ public function guardarCandidato($idreq,
   $conn = $this->conec();
 
   if($idcan>0){
-    $SQL ="UPDATE  req_candidatos SET nombre = '$nombre',cedula='$cedula',telefono='$telefono',correo='$correo',
+    $SQL ="UPDATE  req_candidatos SET estadoreal='C' nombre = '$nombre',cedula='$cedula',telefono='$telefono',correo='$correo',
     direccioncan='$direccioncan',barriocan='$barriocan',ciudad='$ciudad' WHERE id=".$idcan ;
     $conn->Execute($SQL);
 
   } else {
-  $SQL ="INSERT INTO req_candidatos (id_requisision,nombre,cedula,telefono,correo,direccioncan,barriocan,ciudad) VALUES ($idreq,'$nombre','$cedula','$telefono','$correo','$direccioncan','$barriocan','$ciudad')";
+  $SQL ="INSERT INTO req_candidatos (estadoreal,id_requisision,nombre,cedula,telefono,correo,direccioncan,barriocan,ciudad) VALUES ('C',$idreq,'$nombre','$cedula','$telefono','$correo','$direccioncan','$barriocan','$ciudad')";
        $conn->Execute($SQL);
   }
 
@@ -1386,16 +1388,17 @@ public function obtenerreqinfo($id){
 
 
 }
-public function ajustarorden($id,$idreq,$tasa,$salario,$presentarse,$direccion,$fechainicio){
+public function ajustarorden($id,$idreq,$tasa,$salario,$presentarse,$direccion,$fechainicio,$centrocostosor,$centrosucursal,$funcionarioaut,$cargofuncionarioaut,$opbservacioncontratacion,$funcionarioautorizath,$fechaautori,$cargofuncionarioth){
     $conn = $this->conec();
-    $SQL ="UPDATE req_candidatos SET estado = 'EM', tasa='$tasa',salariorh='$salario',presentarse='$presentarse',direccion='$direccion',fechainiciot ='$fechainicio' WHERE id=".$id;
+    $SQL ="UPDATE req_candidatos SET estado = 'EM', tasa='$tasa',salariorh='$salario',presentarse='$presentarse',direccion='$direccion',fechainiciot ='$fechainicio'
+    ,centrocostosor='$centrocostosor',centrosucursal='$centrosucursal',funcionarioaut='$funcionarioaut',cargofuncionarioaut='$cargofuncionarioaut',opbservacioncontratacion='$opbservacioncontratacion',funcionarioautorizath='$funcionarioautorizath',cargofuncionarioth='$cargofuncionarioth',fechaautori='$fechaautori' WHERE id=".$id;
     $conn->Execute($SQL);
 }
 
 public function enviarcandidatocliente($id)
 {
     $conn = $this->conec();
-   $SQL ="UPDATE req_candidatos SET estado='E' WHERE id=".$id;
+   $SQL ="UPDATE req_candidatos SET estado='E',estadoreal='E' WHERE id=".$id;
     $conn->Execute($SQL);
 }
 
@@ -1579,7 +1582,7 @@ public function actualizarformatos($idper,$idreq,$orden,$documentos,$hv)
 {
     $this->correopsico($idreq,"APROBADO");
     $conn = $this->conec();
-    $SQL ="UPDATE req_candidatos SET estado='A', ordeningreso='$orden',docdocumen='$documentos',hvhuman='$hv' WHERE id=".$idper;
+    $SQL ="UPDATE req_candidatos SET estado='A', estadoreal= 'A', ordeningreso='$orden',docdocumen='$documentos',hvhuman='$hv' WHERE id=".$idper;
     $conn->Execute($SQL);
 
 
@@ -1588,6 +1591,7 @@ public function actualizarformatos($idper,$idreq,$orden,$documentos,$hv)
 public function correopsico($id_req,$tipomen) {
     $conn = $this->conec();
     $consultas = "SELECT empresaclientet,clientesol,cargo  FROM req WHERE  id=".$id_req;
+    
     $consultas= $conn->Execute($consultas)-> getRows();
     $clientesol = "";
     $ide = "";
@@ -1650,11 +1654,14 @@ public function correopsico($id_req,$tipomen) {
         for($j=0; $j<count($correos); $j++){
             $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
-            $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+            if($consultasresp[0]['correo']!=""){
+                $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+               
+            }
+            
         }
 
       }
-
 }
 
 
@@ -2192,7 +2199,7 @@ public function rechazarcandidato($id_per,$id_req,$rechazo)
 
       }
 
-    $SQL ="UPDATE req_candidatos SET estado='R',motivorechazo='$rechazo' WHERE id=".$id_per;
+    $SQL ="UPDATE req_candidatos SET estado='R',estadoreal='R',motivorechazo='$rechazo' WHERE id=".$id_per;
     $conn->Execute($SQL);
     
 
