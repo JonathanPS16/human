@@ -734,7 +734,7 @@ if(minsel!=10){
     <div class="form-group">
       <label class="col-md-10 control-label" for="cargo">Empresa Prestadora</label>  
       <div class="col-md-10">
-      <select id="empresaclientet" name="empresaclientet" class="form-control">
+      <select id="empresaclientet" name="empresaclientet" class="form-control" onchange="validarusuarias()">
       <option value="">Seleccione</option>
       <?php 
       for($i=0; $i<count($listatemporales);$i++){
@@ -771,7 +771,7 @@ if(minsel!=10){
     <div class="form-group">
       <label class="col-md-10 control-label" for="cargo">Nombre Empresa Usuaria</label>  
       <div class="col-md-10">
-
+      <input type="hidden" name="validaeu" id="validaeu" value="<?php echo $mireq[0]['empresacliente'] ?>">
       <select id="empresacliente" name="empresacliente" class="form-control" required="required">
       <option value="0">Seleccione</option>
       <?php 
@@ -781,8 +781,9 @@ if(minsel!=10){
         $slr = "";
         if ($mireq[0]['empresacliente']== $id_temporal){
           $slr = 'selected="selected"';
+          echo '<option value="'.$id_temporal.'"  '.$slr.'>'.$nombretemporal.'</option>';
         }
-        echo '<option value="'.$id_temporal.'"  '.$slr.'>'.$nombretemporal.'</option>';
+        
       }
       ?>
       </select>
@@ -1013,8 +1014,5 @@ $estados = $mireq[0]['genero'];
 </form>
 
 <script>
-
-
-
 
 </script>

@@ -686,6 +686,13 @@ public function obtenerlistgridlabo(){
     return $consultas;
 }
 
+public function listadeempresassuarias($id){
+    $conn = $this->conec();
+    $consultas = "SELECT * from centrocostos where id_empresapres = ".$id;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
 public function guardarempresaprestadora($nombre,$descipcion){
     $conn = $this->conec();
     $consultas = "INSERT INTO empresasterporales (nombretemporal,descripcion) values ('$nombre','$descipcion')";

@@ -7,6 +7,12 @@ if (!isset($_SESSION['idusuario'])) {
 die();
 } 
 require_once('conect/clases.php');
+
+if($_GET['ctr']=="admon" && $_GET['acc']=="listadoextras")
+{
+    include('validaciones.php');
+    die();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -187,6 +193,23 @@ require_once('conect/clases.php');
             $("#correodos").val(correo2);
             $("#id").val(id);
 
+        }
+
+        function validarusuarias()
+        {
+            var id = $("#empresaclientet").val();
+
+            var validaeu = $("#validaeu").val();
+
+            
+            $.ajax({
+            type: "POST",
+            url: "home.php?ctr=admon&acc=listadoextras",
+            data: 'id=' + id+'&pres='+validaeu,
+            success: function(datos) {
+                $('#empresacliente').html(datos);
+            }
+            });
         }
 
     </script>

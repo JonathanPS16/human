@@ -32,6 +32,26 @@ for($a=0; $a<count($listausuariosgenerales);$a++){
     </div>
   </div>
 
+  
+  <div class="form-group row">
+    <label for="empresaclientet" class="col-4 col-form-label">Empresa Temporal</label> 
+    <div class="col-8">
+      <select id="empresaclientet" name="empresaclientet" class="custom-select" required="required" onchange="validarusuarias()">
+      <option value="">Seleccione</option>
+      <?php 
+      for($i=0; $i<count($listatemporales);$i++){
+        $id_temporal=$listatemporales[$i]['id_temporal'];
+        $nombretemporal=$listatemporales[$i]['nombretemporal'];
+        $slr = "";
+        if ($mireq[0]['empresaclientet']== $id_temporal){
+          $slr = 'selected="selected"';
+        }
+        echo '<option value="'.$id_temporal.'"  '.$slr.'>'.$nombretemporal.'</option>';
+      }
+      ?>
+      </select>
+    </div>
+  </div>
   <div class="form-group row">
     <label for="empresacliente" class="col-4 col-form-label">Nombre Empresa Usuaria</label> 
     <div class="col-8">
@@ -47,24 +67,6 @@ for($a=0; $a<count($listausuariosgenerales);$a++){
           $slr = 'selected="selected"';
         }
         echo '<option value="'.$id_temporal.'"  '.$slr.'>'.$nombretemporal.' ('.$empresapresaaaa.')</option>';
-      }
-      ?>
-      </select>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="empresaclientet" class="col-4 col-form-label">Empresa Temporal</label> 
-    <div class="col-8">
-      <select id="empresaclientet" name="empresaclientet" class="custom-select" required="required">
-      <?php 
-      for($i=0; $i<count($listatemporales);$i++){
-        $id_temporal=$listatemporales[$i]['id_temporal'];
-        $nombretemporal=$listatemporales[$i]['nombretemporal'];
-        $slr = "";
-        if ($mireq[0]['empresaclientet']== $id_temporal){
-          $slr = 'selected="selected"';
-        }
-        echo '<option value="'.$id_temporal.'"  '.$slr.'>'.$nombretemporal.'</option>';
       }
       ?>
       </select>

@@ -1105,6 +1105,22 @@
                     include('vistas/perfiles.php');
                 break;
 
+                case "listadoextras":
+                    $listado=$objconsulta->listadeempresassuarias($_POST['id']);
+                    echo "<option value=''>Seleccione</option>";
+                    for($i=0; $i<count($listado);$i++){
+                        $id = $listado[$i]['id_centro'];
+                        $name = $listado[$i]['empresausuaria'];
+                        $selected ="";
+                        if($_POST['pres']!="" && $_POST['pres']==$id){
+                            $selected ='selected="selected"';
+                        }
+                        echo "<option value='$id' $selected>$name</option>";
+                    }
+
+                    //echo "adasdsadsadsadsadsadas";
+                break;
+
                 case "crearperfilu":
                     $listamenus=$objconsulta->guardarnuevoperfil($_POST['nombreperfil']);
                     echo "<script>alert('Perfil Creado Correctamente. Recuerde Configurarlo');
