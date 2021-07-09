@@ -2730,6 +2730,14 @@ catch(com_exception $e)
                     include('vistas/miscandidatos.php');
                 break;
 
+                case 'eliminarreq':
+                    $lastid=$_GET['id'];
+                    $listadoreqcrea=$objconsulta->eliminarReq($lastid);
+                    echo "<script>alert('Solicitud Eliminada Correctamente');
+                window.location.href = 'home.php?ctr=requisicion&acc=listadoReq';
+                </script>";
+                break;
+
                 case 'citar':
                     $fechahora=$_POST['fechahora'];
                     $hora=$_POST['hora'];
@@ -2737,7 +2745,8 @@ catch(com_exception $e)
                     $id_req=$_POST['id_req'];
                     $id_per=$_POST['id_per'];
                     $lugarentre=$_POST['lugarentre'];
-                    $listadoreq=$objconsulta->citarcandidato($id_per,$id_req,$fechahora,$lugarentre);
+                    $tipocita=$_POST['tipocita'];
+                    $listadoreq=$objconsulta->citarcandidato($id_per,$id_req,$fechahora,$lugarentre,$tipocita);
 
                     echo "<script>alert('Candidato Citado Correctamente ');
                     window.location.href = 'home.php?ctr=requisicion&acc=verreqcan&id={$id_req}';
@@ -2748,7 +2757,10 @@ catch(com_exception $e)
                     $concuentre=$_POST['concuentre'];
                     $id_req=$_POST['id_req'];
                     $id_per=$_POST['id_per'];
-                    $listadoreq=$objconsulta->conclucioncitacitacionc($id_per,$id_req,$concuentre);
+                    $fortalezaentre=$_POST['fortalezaentre'];
+                    $aspectosentre=$_POST['aspectosentre'];
+                    $otrosentrev=$_POST['otrosentrev'];
+                    $listadoreq=$objconsulta->conclucioncitacitacionc($id_per,$id_req,$concuentre,$fortalezaentre,$aspectosentre,$otrosentrev);
 
                     echo "<script>alert('Guardado Correctamente');
                     window.location.href = 'home.php?ctr=requisicion&acc=verreqcan&id={$id_req}';
@@ -2759,7 +2771,8 @@ catch(com_exception $e)
                     $rechazo=$_POST['rechazo'];
                     $id_req=$_POST['id_req'];
                     $id_per=$_POST['id_per'];
-                    $listadoreq=$objconsulta->rechazarcandidato($id_per,$id_req,$rechazo);
+                    $observacionesrechazo=$_POST['observacionesrechazo'];
+                    $listadoreq=$objconsulta->rechazarcandidato($id_per,$id_req,$rechazo,$observacionesrechazo);
                     echo "<script>alert('Candidato Rechazado Correctamente');
                     window.location.href = 'home.php?ctr=requisicion&acc=verreqcan&id={$id_req}';
                     </script>";

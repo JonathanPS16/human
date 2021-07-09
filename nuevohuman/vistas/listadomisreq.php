@@ -44,28 +44,155 @@ for($i=0; $i<count($listadoreq);$i++){
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Editar Nota General</h5>
+			<h5 class="modal-title" id="exampleModalLabel">Detalle Requisicion</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
 		  </div>
 		  <div class="modal-body">
-			<form class="form-horizontal" action="home.php?ctr=incapacidad&acc=editarNotaGeneral" method="post" enctype="multipart/form-data">
-			
-		  <input id="id" name="id" type="hidden" value="'.$id.'">
 		<div class="form-group row">
-		  <label for="descgeneral" class="col-4 col-form-label">Observaciones Generales</label> 
+		  <label for="descgeneral" class="col-4 col-form-label">Tipo Requisicion</label> 
 		  <div class="col-8">
-			<textarea id="descgeneral" name="descgeneral" cols="40" rows="5" class="form-control" required="required"></textarea>
+			'.$tiporeq.'
 		  </div>
 		</div>
-		
+
 		<div class="form-group row">
-		  <div class="offset-4 col-8">
-			
+		  <label for="descgeneral" class="col-4 col-form-label">Cargo</label> 
+		  <div class="col-8">
+			'.$cargo.'
 		  </div>
 		</div>
-			</form>	
+
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Edad Minima</label> 
+		  <div class="col-8">
+			'.$edadminima.'
+		  </div>
+		</div>
+
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Edad Maxima</label> 
+		  <div class="col-8">
+			'.$edadmaxima.'
+		  </div>
+		</div>
+
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Edad Indiferente</label> 
+		  <div class="col-8">
+		  '.$listadoreq[$i]['edadindiferente'].'
+		  </div>
+		</div>
+
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Tipo Contrato</label> 
+		  <div class="col-8">
+			'.$tipocontrato.'
+		  </div>
+		</div>
+
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Estado Civil</label> 
+		  <div class="col-8">
+			'.$listadoreq[$i]['estado'].'
+		  </div>
+		</div>
+
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Genero</label> 
+		  <div class="col-8">
+		  '.$listadoreq[$i]['genero'].'
+		  </div>
+		</div>
+
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Cantidad Solicitados</label> 
+		  <div class="col-8">
+		  '.$listadoreq[$i]['cantidad'].'
+		  </div>
+		</div>
+
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Ciudad Laborar</label> 
+		  <div class="col-8">
+		  '.$listadoreq[$i]['ciudadlaboral'].'
+		  </div>
+		</div>
+
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Jornada Laboral</label> 
+		  <div class="col-8">
+		  '.$listadoreq[$i]['jornadalaboral'].'
+		  </div>
+		</div>
+
+
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Salario Basico</label> 
+		  <div class="col-8">
+		  '.$listadoreq[$i]['salariobasico'].'
+		  </div>
+		</div>
+
+
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Funciones</label> 
+		  <div class="col-8">
+		  '.$listadoreq[$i]['funciones'].'
+		  </div>
+		</div>
+
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Educacion Primaria</label> 
+		  <div class="col-8">
+		  '.$listadoreq[$i]['primaria'].'
+		  </div>
+		</div>
+
+
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Educacion Secundaria</label> 
+		  <div class="col-8">
+		  '.$listadoreq[$i]['secundaria'].'
+		  </div>
+		</div>
+
+
+
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Educacion Tecnica</label> 
+		  <div class="col-8">
+		  '.$listadoreq[$i]['tecnico'].'
+		  </div>
+		</div>
+
+
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Educacion Tecnologica</label> 
+		  <div class="col-8">
+		  '.$listadoreq[$i]['tecnologo'].'
+		  </div>
+		</div>
+
+
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Educacion Profesional</label> 
+		  <div class="col-8">
+		  '.$listadoreq[$i]['profesional'].'
+		  </div>
+		</div>
+
+
+
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Experiencia Minima</label> 
+		  <div class="col-8">
+		  '.$listadoreq[$i]['minimaexpe'].'
+		  </div>
+		</div>
+
+
 		  </div>
 		</div>
 	  </div>

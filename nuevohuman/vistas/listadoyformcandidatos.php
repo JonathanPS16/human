@@ -138,6 +138,7 @@ for($i=0; $i<count($listadoreq);$i++){
     $barriocan=$listadoreq[$i]['barriocan']; 
     $ciudadcan=$listadoreq[$i]['ciudad']; 
     $archivootro=$listadoreq[$i]['archivootro']; 
+    $observacionrechazo=$listadoreq[$i]['observacionrechazo']; 
 
  
 
@@ -732,7 +733,7 @@ if($fechacitan !="" && $estadopresen=="P")
 } else if($motivorechazo!="" && $estadopresen=="R"){
   $botonedit ="";
   $botnenvi = "Rechazado <br><strong>
-  $motivorechazo
+  $motivorechazo:<br>$observacionrechazo
   </strong>";
 
 } else if($estadopresen=="EM" && $lugar!="" && $salariorh!="") {

@@ -1903,7 +1903,7 @@ public function enviarconclucionprocesoAcci($id,$diasinca,$obserini,$obser,$obse
 }
 
 
-public function citarcandidato($id_per,$id_req,$fechahora,$lugar)
+public function citarcandidato($id_per,$id_req,$fechahora,$lugar,$tipocita)
 {
     $conn = $this->conec();
     $consultas = "SELECT correo,nombre  FROM req_candidatos WHERE  id=".$id_per;
@@ -1936,7 +1936,7 @@ public function citarcandidato($id_per,$id_req,$fechahora,$lugar)
     $mensaje = "
     Apreciado ".$nombre."
     <br><br>
-    Le informamos que dentro del proceso de selección para el cargo ".$cargo.",  Usted ha sido citado para el día ".$fechahora.",  en las instalaciones de la  empresa  ".$lugar." , por favor presentar a XXXXX nombre de la persona XXXXXXXX, 
+    Le informamos que dentro del proceso de selección para el cargo ".$cargo.",  Usted ha sido citado para el día ".$fechahora." en la metodologia ".$tipocita.",  en las instalaciones de la  empresa  ".$lugar." , por favor presentar a XXXXX nombre de la persona XXXXXXXX, 
     <br>
     Cualquier inquietud que tengo al respecto, con gusto la atenderemos a traves de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com . 
     <br><br>
@@ -1949,7 +1949,7 @@ public function citarcandidato($id_per,$id_req,$fechahora,$lugar)
       //echo $consultas;
       $mensaje = "Apreciado Cliente ".$nombresol."
         <br><br>
-      Le informamos que dentro del proceso de selección para el cargo ".$cargo.", se ha citado al candidato ".$nombre.",  según el consecutivo ".$id_req.", para el día ".$fechahora.", en lugar ".$lugar.",  según sus indicaciones .
+      Le informamos que dentro del proceso de selección para el cargo ".$cargo.", se ha citado al candidato ".$nombre.",  según el consecutivo ".$id_req.", para el día ".$fechahora.", en la metodologia ".$tipocita." en lugar ".$lugar.",  según sus indicaciones .
       <br>
       Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
       <br>
@@ -1967,23 +1967,39 @@ public function citarcandidato($id_per,$id_req,$fechahora,$lugar)
         for($j=0; $j<count($correos); $j++){
             $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
-            $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje,"Informacion sobre Citacion");
+            if($consultasresp[0]['correo']!="")
+            {
+                $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje,"Informacion sobre Citacion");
+            }
+            
         }
 
       }
-    $SQL ="UPDATE req_candidatos SET estado='P', fechacita='$fechahora',lugarcita ='$lugar' WHERE id=".$id_per;
+    $SQL ="UPDATE req_candidatos SET estado='P', fechacita='$fechahora',lugarcita ='$lugar',tipocita = '$tipocita' WHERE id=".$id_per;
     $conn->Execute($SQL);
     
 
 
 }
 
-public function conclucioncitacitacionc($id_per,$id_req,$conclu)
+public function conclucioncitacitacionc($id_per,$id_req,$conclu,$fortalezaentre,$aspectosentre,$otrosentrev)
 {
     $conn = $this->conec();
-    $SQL ="UPDATE req_candidatos SET  conclusionentrevistagen='$conclu' WHERE id=".$id_per;
+    $SQL ="UPDATE req_candidatos SET  conclusionentrevistagen='$conclu',fortalezaentre='$fortalezaentre',aspectosentre='$aspectosentre',otrosentrev='$otrosentrev' WHERE id=".$id_per;
     $conn->Execute($SQL);
 }
+
+public function eliminarReq($id)
+{
+    $conn = $this->conec();
+    $SQL ="delete from req_candidatos where id_requisision= ".$id;
+    $conn->Execute($SQL);
+    $SQL ="delete from req where id= ".$id;
+    $conn->Execute($SQL);
+    $SQL ="delete from entrevistas where id_req= ".$id;
+    $conn->Execute($SQL);  
+}
+
 
 public function archivosatrasformar($idper,$idreq){
 
@@ -2134,7 +2150,7 @@ public function enviarcorreoadjuntos($correo,$documento,$mensaje,$titulo){
     $maildos->Send();
 }
 
-public function rechazarcandidato($id_per,$id_req,$rechazo)
+public function rechazarcandidato($id_per,$id_req,$rechazo,$observacion)
 {
     $conn = $this->conec();
     $consultas = "SELECT correo,nombre  FROM req_candidatos WHERE  id=".$id_per;
@@ -2180,7 +2196,7 @@ public function rechazarcandidato($id_per,$id_req,$rechazo)
       //echo $consultas;
       $mensaje = "Apreciada Área de Selección <br>
         <br>
-      Le informamos  que la empresa ".$nombreem.", ha rechazado el candidato ".$nombre.", del proceso de selección con consecutivo ".$id_req.",  por el motivo ".$rechazo." <br>
+      Le informamos  que la empresa ".$nombreem.", ha rechazado el candidato ".$nombre.", del proceso de selección con consecutivo ".$id_req.",  por el motivo ".$rechazo." observaciones ".$observacion." <br>
       Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
       <br><br>
       Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a>
@@ -2194,12 +2210,15 @@ public function rechazarcandidato($id_per,$id_req,$rechazo)
         for($j=0; $j<count($correos); $j++){
             $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
-            $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+            if($consultasresp[0]['correo']!=""){
+                $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+            }
+            
         }
 
       }
 
-    $SQL ="UPDATE req_candidatos SET estado='R',estadoreal='R',motivorechazo='$rechazo' WHERE id=".$id_per;
+    $SQL ="UPDATE req_candidatos SET estado='R',estadoreal='R',motivorechazo='$rechazo',observacionrechazo ='$observacion' WHERE id=".$id_per;
     $conn->Execute($SQL);
     
 

@@ -42,6 +42,11 @@ for($i=0; $i<count($listadoreq);$i++){
     $archivootro=$listadoreq[$i]['archivootro'];
     $conclusionentrevistagen=$listadoreq[$i]['conclusionentrevistagen'];
     $estadoreal=$listadoreq[$i]['estadoreal'];
+    $fortalezaentre = $listadoreq[$i]['fortalezaentre'];
+    $aspectosentre = $listadoreq[$i]['aspectosentre'];
+    $otrosentrev = $listadoreq[$i]['otrosentrev'];
+    $tipocita = $listadoreq[$i]['tipocita'];
+    $observacionrechazo  = $listadoreq[$i]['observacionrechazo'];
 
 
     
@@ -72,7 +77,17 @@ for($i=0; $i<count($listadoreq);$i++){
           <input id="hora" name="hora" placeholder="HH:mm" type="text" class="form-control" required="required">
         </div>
       </div> 
-
+      <div class="form-group row">
+        <label class="col-4 col-form-label" for="tipocita">Tipo de Cita</label> 
+        <div class="col-8">
+          <select id="tipocita" name="tipocita" class="custom-select">
+            <option value="Video Conferencia">Video Conferencia</option>
+            <option value="Presencial">Presencial</option>
+            <option value="Telefonica">Telefonica</option>
+            <option value="Otros">Otros</option>
+          </select>
+        </div>
+      </div> 
       <div class="form-group row">
         <label for="lugarentre" class="col-4 col-form-label">Lugar o Link de Reunion</label> 
         <div class="col-8">
@@ -100,26 +115,93 @@ for($i=0; $i<count($listadoreq);$i++){
   Citar
 </button>';	
     } elseif($conclusionentrevistagen!="") {
-      $botoncita = $conclusionentrevistagen;
+
+      $modalbotoncitaconcluresumen ='<div class="modal fade" id="conclumodalModalhv'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Conclusiones Citas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="form-group row">
+        <label for="fechahora" class="col-4 col-form-label">Observaciones Generales</label> 
+        <div class="col-8">
+          '.$conclusionentrevistagen.'
+        </div>
+      </div> 
+
+      <div class="form-group row">
+        <label for="hora" class="col-4 col-form-label">Fortalezas</label> 
+        <div class="col-8">
+          '.$fortalezaentre.'
+        </div>
+      </div> 
+      <div class="form-group row">
+        <label class="col-4 col-form-label" for="tipocita">Aspectos a Mejorar</label> 
+        <div class="col-8">
+          '.$aspectosentre.'
+        </div>
+      </div> 
+      <div class="form-group row">
+        <label for="lugarentre" class="col-4 col-form-label">Otros</label> 
+        <div class="col-8">
+         '.$otrosentrev.'
+        </div>
+      </div> 
+      </div>
+      
+    </div>
+  </div>
+</div>
+';
+      $botoncitaconcluresumen ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#conclumodalModalhv'.$idper.'">
+  Ver Conclusiones Cita
+</button>';	
+
+      $botoncita = $modalbotoncitaconcluresumen.$botoncitaconcluresumen;
     } else {
 
       $modalbotoncitaconclu ='<div class="modal fade" id="exampleModalcitaconclu'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Conclusion Entrevista</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Conclusion Entrevista '.$listadoreqcrea[0]['cargo'].'</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
+          <strong><p>Nombre Candidato: </strong>'.$nombre.'</p>
+          <strong><p>Cedula Candidato: </strong>'.$cedula.'</p>
             <form class="form-horizontal" action="home.php?ctr=requisicion&acc=conclusionentrevistac" method="post" enctype="multipart/form-data">
             <div class="form-group row">
-    <label for="concuentre" class="col-4 col-form-label">Conclusion Entrevista</label> 
-    <div class="col-8">
-      <textarea id="concuentre" name="concuentre" cols="40" rows="5" class="form-control" required="required"></textarea>
-    </div>
-  </div>
+              <label for="concuentre" class="col-4 col-form-label">Observaciones Generales</label> 
+              <div class="col-8">
+                <textarea id="concuentre" name="concuentre" cols="40" rows="5" class="form-control" required="required"></textarea>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="fortalezaentre" class="col-4 col-form-label">Fortalezas</label> 
+              <div class="col-8">
+                <textarea id="fortalezaentre" name="fortalezaentre" cols="40" rows="5" class="form-control" required="required"></textarea>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="aspectosentre" class="col-4 col-form-label">Aspectos a Reforzar</label> 
+              <div class="col-8">
+                <textarea id="aspectosentre" name="aspectosentre" cols="40" rows="5" class="form-control" required="required"></textarea>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="otrosentrev" class="col-4 col-form-label">Otros</label> 
+              <div class="col-8">
+                <textarea id="otrosentrev" name="otrosentrev" cols="40" rows="5" class="form-control" required="required"></textarea>
+              </div>
+            </div>
           <div class="form-group row">
             <div class="offset-4 col-8">
               <input type="hidden" name="id_req" id="id_req" value="'.$idreq.'">
@@ -138,9 +220,7 @@ for($i=0; $i<count($listadoreq);$i++){
     ';
         $botoncitaconclu ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalcitaconclu'.$idper.'"> Conclusion Cita
         '.$fechacitan.'</button>';
-      $botoncita =$modalbotoncitaconclu.$botoncitaconclu.'
-      
-    ';
+      $botoncita =$modalbotoncitaconclu.$botoncitaconclu.'';
       
 
     }
@@ -156,6 +236,8 @@ for($i=0; $i<count($listadoreq);$i++){
         </button>
       </div>
       <div class="modal-body">
+      <strong><p>Nombre Candidato: </strong>'.$nombre.'</p>
+          <strong><p>Cedula Candidato: </strong>'.$cedula.'</p>
         <form class="form-horizontal" action="home.php?ctr=requisicion&acc=rechazo" method="post" enctype="multipart/form-data">
         <div class="form-group row">
           <label for="rechazo" class="col-4 col-form-label">Motivo Rechazo</label> 
@@ -164,9 +246,19 @@ for($i=0; $i<count($listadoreq);$i++){
               <option value="Mal perfilado">Mal perfilado</option>
               <option value="Informacion Inconsistente">Informacion Inconsistente</option>
               <option value="Edad Insuficiente">Edad Insuficiente</option>
+              <option value="Perfil No Se Ajusta">Perfil No Se Ajusta</option>
+              <option value="Estudios">Estudios</option>
+              <option value="Experiencia Laboral">Experiencia Laboral</option>
+              <option value="Estabilidad Laboral">Estabilidad Laboral</option>
             </select>
           </div>
         </div> 
+        <div class="form-group row">
+          <label for="observacionesrechazo" class="col-4 col-form-label">Observaciones</label> 
+          <div class="col-8">
+            <textarea id="observacionesrechazo" name="observacionesrechazo" cols="40" rows="5" class="form-control" required="required"></textarea>
+          </div>
+        </div>
         <div class="form-group row">
           <div class="offset-4 col-8">
             <input type="hidden" name="id_req" id="id_req" value="'.$idreq.'">
@@ -310,7 +402,7 @@ for($i=0; $i<count($listadoreq);$i++){
     } else {
       
       $botoncita ="";
-      $botonrechazo ='Motivo Rechazo<br><strong>'.$motivorechazo.'</strong>';
+      $botonrechazo ='Motivo Rechazo<br><strong>'.$motivorechazo.':<br>'.$observacionrechazo.'</strong>';
       if(($estadopresen=="EM" || $estadopresen=="F") && $estadoreal=='A')
       {
         $botonrechazo = "Aprobado";
