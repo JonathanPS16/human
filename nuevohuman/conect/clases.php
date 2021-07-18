@@ -493,18 +493,19 @@ public function valdiaryguardar($documento,$clave,$nombre,$correo,$pefil,$centro
     $result = $conn->Execute("SELECT * from  usuarios WHERE  correo='{$correo}' OR  usuario = '{$documento}'");
     $recordCount = $result->recordCount();
     if($recordCount == 0) {
-
         $SQL ="INSERT INTO usuarios (usuario,correo,pass,nombre,idrol,centrocostos) VALUES ('{$documento}','{$correo}','{$clave}','{$nombre}',$pefil,'$centrocostos')";
         $conn->Execute($SQL);
         return true;
-
-
     } else {
         return false;
     }
+   
+}
 
-
-    
+public function guardarcodigoincap($code,$desc,$tipo){
+    $conn = $this->conec();
+    $SQL ="INSERT INTO codigoinca (id,descripcodigo,excluye) VALUES ('{$code}','{$desc}','{$tipo}')";
+        $conn->Execute($SQL);
 }
 
 public function valdiaryguardareditar($llave,$correo,$pefil,$centrocostos){

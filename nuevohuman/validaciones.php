@@ -883,6 +883,8 @@
                         window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
                         </script>";
                 break;
+
+                
                 case "guardarprocebanco":
                     $fecha ="".$_POST['fecha']."";
                     $observaciones="".$_POST['observaciones']."";
@@ -1131,6 +1133,17 @@
                 case "empresap":
                     $listatemporales=$objconsulta->obteneTemporalesform();
                     include('vistas/formprestadora.php');
+                break;
+                case "codincap":
+                    $listatemporales=$objconsulta->codigosinca();
+                    include('vistas/codincap.php');
+                break;
+
+                case "agregarcodigo":
+                    $listatemporales=$objconsulta->guardarcodigoincap($_POST['codigo'],$_POST['descripcodigo'],$_POST['tipo']);
+                    echo "<script>alert('Registros Guardado Correctamente');
+                        window.location.href = 'home.php?ctr=admon&acc=codincap';
+                        </script>";
                 break;
                 case "laboratorios":
                     $listatemporales=$objconsulta->obtenerlistgridlabo();
