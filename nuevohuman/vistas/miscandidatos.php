@@ -14,7 +14,9 @@
 	</thead>
 	<tbody>
 <?php 
+$contadorgene = 0;
 for($i=0; $i<count($listadoreq);$i++){
+    $contadorgene ++;
     $conteoreq = 0; 
     $idper=$listadoreq[$i]['id'];
     $idreq=$listadoreq[$i]['id_requisision'];
@@ -403,6 +405,9 @@ for($i=0; $i<count($listadoreq);$i++){
       
       $botoncita ="";
       $botonrechazo ='Motivo Rechazo<br><strong>'.$motivorechazo.':<br>'.$observacionrechazo.'</strong>';
+      if($motivorechazo=="" && $observacionrechazo==""){
+        $botonrechazo = "Pendiente por Presentar";
+      }
       if(($estadopresen=="EM" || $estadopresen=="F") && $estadoreal=='A')
       {
         $botonrechazo = "Aprobado";
@@ -412,6 +417,8 @@ for($i=0; $i<count($listadoreq);$i++){
       {
         $botonrechazo = "Finalizado";
       }
+
+      
       $botaceptar ="";
       
 
@@ -423,12 +430,12 @@ for($i=0; $i<count($listadoreq);$i++){
       if($hojavida!=""){
         $botonhoja ='<a href="archivosgenerales/'.$hojavida.'" target="_black" class="btn btn-primary">Descargar</a>';
       } else {
-        $botonhoja ="Sin Archivo";
+        $botonhoja ="<p class='btn btn-warning'>Sin Archivo</p>";
       }
       if($archivoprueba!=""){
         $boton ='<a href="archivosgenerales/'.$archivoprueba.'" target="_black" class="btn btn-primary">Descargar</a>';
       } else {
-        $boton ="Sin Archivo";
+        $boton ="<p class='btn btn-warning'>Sin Archivo</p>";
       }
 
       //$boton ='<a href="archivosgenerales/'.$archivoprueba.'" target="_black">Descargar asdasd</a>';	
@@ -651,7 +658,7 @@ if($estadopresen=="F" && $listadoreqcrea[0]['tipo']=="D"){
    $botaceptar="Proceso Finalizado";
  }
     echo "<tr>
-    		<td>".$idper."</td>
+    		<td>".$contadorgene."</td>
     		<td>".ucfirst($nombre)."</td>
         <td>".$boton.$modalboton."</td>
         <td>".$botonextra.$modalbotonextra."</td>

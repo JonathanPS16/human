@@ -408,9 +408,7 @@ for($i=0; $i<count($listadoreq);$i++){
       $botonarchivos ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalarchivos'.$idper.'">
     Adjuntar Documentos
   </button>';	
-
-    if ($hojavida==""){
-      $modalbotonhoja ='<div class="modal fade" id="exampleModalhv'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  $modalbotonhoja ='<div class="modal fade" id="exampleModalhv'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -449,12 +447,16 @@ for($i=0; $i<count($listadoreq);$i++){
   </div>
 </div>
 ';
-    $botonhoja ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalhv'.$idper.'">
+    if ($hojavida==""){
+    $botonhoja ='<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalhv'.$idper.'">
   Adjuntar HV
 </button>';	
     } else {
       $conteoreq++;
-      $botonhoja ='<a href="archivosgenerales/'.$hojavida.'" target="_black" class="btn btn-primary" >Descargar</a>';
+      $botonhoja ='<a href="archivosgenerales/'.$hojavida.'" target="_black" class="btn btn-primary" >Descargar</a><br><br>';
+      $botonhoja .='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalhv'.$idper.'">
+  Volver a Cargar
+</button>';	
     }
    
     $modalboton ='<div class="modal fade" id="exampleModal'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -496,13 +498,18 @@ for($i=0; $i<count($listadoreq);$i++){
   </div>
 </div>
 ';
-    $boton ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal'.$idper.'">
+$amarillo = "warning";
+if($archivoprueba!="")
+{
+  $amarillo = "primary";
+}
+    $boton ='<button type="button" class="btn btn-'.$amarillo.'" data-toggle="modal" data-target="#exampleModal'.$idper.'">
   Adjuntar Prueba
 </button>';	
 if($archivoprueba!="") {
   $conteoreq++;
   $boton ='<a href="archivosgenerales/'.$archivoprueba.'" target="_black" class="btn btn-primary" >Descargar</a>';
-  $boton .='<br><br><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal'.$idper.'">Recargar Prueba</button>';
+  $boton .='<br><br><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal'.$idper.'">Volver a Cargar</button>';
   	
 
 } 
@@ -799,11 +806,19 @@ $modalbotonextra ='<div class="modal fade" id="exampleModalextra'.$idper.'" tabi
   </div>
 </div>
 ';
-    $botonextra ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalextra'.$idper.'">
+$amarillo = "warning";
+if($archivootro!=""){
+  $amarillo = "primary";
+}
+    $botonextra ='<button type="button" class="btn btn-'.$amarillo.'" data-toggle="modal" data-target="#exampleModalextra'.$idper.'">
   Adjunto Extra
 </button>';	
 if($archivootro!=""){
   $botonextra ='<a href="archivosgenerales/'.$archivootro.'" target="_black" class="btn btn-primary">Descargar</a>';
+  $amarillo = "primary";
+    $botonextra .='<br><br><button type="button" class="btn btn-'.$amarillo.'" data-toggle="modal" data-target="#exampleModalextra'.$idper.'">
+  Volver a Cargar
+</button>';	
 }
     echo "<tr>
     		<td>".$jaja ."</td>
