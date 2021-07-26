@@ -39,6 +39,31 @@ for($i=0; $i<count($listadoreq);$i++){
 	if($cantidadapro!=$cantidad){
 		$estadogene = "Abierto <br>($cantidadapro) Aprobados";
 	}
+	$nanana = "";
+ if($listadoreq[$i]['adaptabilidad'] =="SI") { $nanana.="Adaptabilidad a Normas y Ambiente de Trabajo<br>"; } 
+ if($listadoreq[$i]['administracion'] =="SI") { $nanana.="Administración del Tiempo<br>"; } 
+ if($listadoreq[$i]['analisis'] =="SI") { $nanana.="Análisis y Solución De Problemas<br>"; }   
+ if($listadoreq[$i]['gestion'] =="SI") { $nanana.="Capacidad De Gestión<br>"; } 
+ if($listadoreq[$i]['negociacion'] =="SI") { $nanana.="Capacidad De Negociación<br>"; } 
+ if($listadoreq[$i]['normas'] =="SI") {  $nanana.="Orientación al Cumplimiento Normas Y Procesos<br>"; } 
+ if($listadoreq[$i]['aprendizaje'] =="SI") { $nanana.="Disposición Hacia El Aprendizaje<br>"; }  
+ if($listadoreq[$i]['flexibilidad'] =="SI") { $nanana.="Flexibilidad<br>"; }       
+ if($listadoreq[$i]['riesgo'] =="SI") { $nanana.="Identificación Y Control Del Riesgo<br>"; }
+ if($listadoreq[$i]['innovacion'] =="SI") { $nanana.="Innovación Y Creatividad<br>"; } 
+ if($listadoreq[$i]['ambiente'] =="SI") { $nanana.="Seguridad, Salud Ocupacional Y Medio Ambiente<br>"; }
+ if($listadoreq[$i]['observacion'] =="SI") { $nanana.="Observación Y Atención Al Detalle<br>"; }     
+ if($listadoreq[$i]['resultados'] =="SI") { $nanana.="Orientación A Los Resultados<br>"; } 
+ if($listadoreq[$i]['cliente'] =="SI") { $nanana.="Orientación Al Cliente Interno Y Externo<br>"; }       
+ if($listadoreq[$i]['comunicacion'] =="SI") { $nanana.="Comunicación<br>"; } 
+ if($listadoreq[$i]['tecnologica'] =="SI") { $nanana.="Orientación Tecnológica<br>"; }      
+ if($listadoreq[$i]['planeacion'] =="SI") { $nanana.="Planeación<br>"; }  
+ if($listadoreq[$i]['relaciones'] =="SI") { $nanana.="Relaciones Interpersonales<br>"; }
+ if($listadoreq[$i]['liderazgo'] =="SI") { $nanana.="Liderazgo<br>"; } 
+ if($listadoreq[$i]['sensibilidad'] =="SI") { $nanana.="Sensibilidad Organizacional<br>"; }   
+ if($listadoreq[$i]['conflictos'] =="SI") { $nanana.="Solución Y Manejo De Conflictos<br>"; }   
+ if($listadoreq[$i]['tolerancia'] =="SI") { $nanana.="Tolerancia Al Trabajo Bajo Presión<br>"; } 
+ if($listadoreq[$i]['equipo'] =="SI") { $nanana.="Trabajo En Equipo<br>"; }  
+ if($listadoreq[$i]['habilidades'] =="SI") { $nanana.="Otros habilidades y competencias<br>";  } 
 
 	$modaleditnota ='<div class="modal fade" id="exampleModalnotaseg'.$id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
@@ -126,8 +151,9 @@ for($i=0; $i<count($listadoreq);$i++){
 		  '.$listadoreq[$i]['jornadalaboral'].'
 		  </div>
 		</div>
-
-
+		<div class="col-8">
+			<h6>Condiciones Salariales y Funciones</h6>
+		</div>
 		<div class="form-group row">
 		  <label for="descgeneral" class="col-4 col-form-label">Salario Basico</label> 
 		  <div class="col-8">
@@ -135,7 +161,30 @@ for($i=0; $i<count($listadoreq);$i++){
 		  </div>
 		</div>
 
-
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Comisiones</label> 
+		  <div class="col-8">
+		  '.$listadoreq[$i]['comisiones'].'
+		  </div>
+		</div>
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Rodamiento</label> 
+		  <div class="col-8">
+		  '.$listadoreq[$i]['rodamiento'].'
+		  </div>
+		</div>
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Bonificacion</label> 
+		  <div class="col-8">
+		  '.$listadoreq[$i]['bonificacion'].'
+		  </div>
+		</div>
+		<div class="form-group row">
+		  <label for="descgeneral" class="col-4 col-form-label">Otra Ingreso</label> 
+		  <div class="col-8">
+		  '.$listadoreq[$i]['otraingreso'].'
+		  </div>
+		</div>
 		<div class="form-group row">
 		  <label for="descgeneral" class="col-4 col-form-label">Funciones</label> 
 		  <div class="col-8">
@@ -143,6 +192,73 @@ for($i=0; $i<count($listadoreq);$i++){
 		  </div>
 		</div>
 
+		<div class="col-8">
+			<h6>Responsabilidades</h6>
+		</div>
+		
+		<div class="form-group row">
+			<label for="descgeneral" class="col-4 col-form-label">Personas a Cargo</label> 
+			<div class="col-8">
+			'.$listadoreq[$i]['acargo'].'
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="descgeneral" class="col-4 col-form-label">Dinero</label> 
+			<div class="col-8">
+			'.$listadoreq[$i]['dinero'].'
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="descgeneral" class="col-4 col-form-label">Equipos</label> 
+			<div class="col-8">
+			'.$listadoreq[$i]['equipos'].'
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="descgeneral" class="col-4 col-form-label">Materiales y Mercancía</label> 
+			<div class="col-8">
+			'.$listadoreq[$i]['materiales'].'
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="descgeneral" class="col-4 col-form-label">Herramientas</label> 
+			<div class="col-8">
+			'.$listadoreq[$i]['herramientas'].'
+			</div>
+		</div>
+
+		
+		<div class="form-group row">
+			<label for="descgeneral" class="col-4 col-form-label">Documentos</label> 
+			<div class="col-8">
+			'.$listadoreq[$i]['documentos'].'
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label for="descgeneral" class="col-4 col-form-label">Información Confidencial</label> 
+			<div class="col-8">
+			'.$listadoreq[$i]['confidencial'].'
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label for="descgeneral" class="col-4 col-form-label">Valores</label> 
+			<div class="col-8">
+			'.$listadoreq[$i]['valores'].'
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label for="descgeneral" class="col-4 col-form-label">Otras Responsabilidades</label> 
+			<div class="col-8">
+			'.$listadoreq[$i]['otrosresponsabilidades'].'
+			</div>
+		</div>
+
+		<div class="col-8">
+			<h6>Formacion y Experiencia</h6>
+		</div>
 		<div class="form-group row">
 		  <label for="descgeneral" class="col-4 col-form-label">Educacion Primaria</label> 
 		  <div class="col-8">
@@ -182,8 +298,7 @@ for($i=0; $i<count($listadoreq);$i++){
 		  '.$listadoreq[$i]['profesional'].'
 		  </div>
 		</div>
-
-
+		
 
 		<div class="form-group row">
 		  <label for="descgeneral" class="col-4 col-form-label">Experiencia Minima</label> 
@@ -191,7 +306,14 @@ for($i=0; $i<count($listadoreq);$i++){
 		  '.$listadoreq[$i]['minimaexpe'].'
 		  </div>
 		</div>
-
+		
+		<div class="form-group row">
+		<label for="descgeneral" class="col-4 col-form-label">Habilidades y Competencias</label> 
+		<div class="col-8">	
+		'.$nanana.'
+		</div>
+		</div>
+		
 
 		  </div>
 		</div>
