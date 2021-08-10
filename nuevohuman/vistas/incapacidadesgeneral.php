@@ -336,7 +336,7 @@
 		<div class="form-group row">
 		  <label for="fechanotadci" class="col-4 col-form-label">Fecha Nota Credto ADCI</label> 
 		  <div class="col-8">
-			<input id="fechanotadci" name="fechanotadci" placeholder="Fecha Nota Credto ADCI" type="text" required="required" class="form-control">
+			<input id="fechanotadci" name="fechanotadci" placeholder="Fecha Nota Credto ADCI" type="date" required="required" class="form-control">
 		  </div>
 		</div>
 		<div class="form-group row">
@@ -357,10 +357,10 @@
 			<textarea id="otrasobserva" name="otrasobserva" cols="40" rows="5" class="form-control" required="required"></textarea>
 		  </div>
 		</div>
-		<div class="form-group row">
+		<div class="form-group row" style="display:none">
 		  <label for="digivsfisi" class="col-4 col-form-label">Digital Vrs Fisico</label> 
 		  <div class="col-8">
-			<input id="digivsfisi" name="digivsfisi" placeholder="Digital Vrs Fisico " type="text" required="required" class="form-control">
+			<input id="digivsfisi" name="digivsfisi" placeholder="Digital Vrs Fisico " type="text"  class="form-control">
 		  </div>
 		</div> 
 		<div class="form-group row">
