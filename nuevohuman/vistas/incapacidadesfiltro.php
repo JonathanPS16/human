@@ -18,6 +18,30 @@
 			<th>Observaciones</th>
 			<th>Fecha Registrada</th>
 			<th>Valor Reconocido</th>
+			<th>No Incapacidad</th>
+			<th>Fecha Inicio</th>
+			<th>Diagnostico</th>
+			<th>Fecha Transcripcion</th>
+			<th>Fecha Final</th>
+			<th>No Dias</th>
+			<th>No Transcripcion</th>
+			<th>Prorroga</th>
+			<th>Dias Acumulados</th>
+			<th>Archivo Incapacidad</th>
+			<th>Archivo Transcripcion</th>
+			<th>Estado</th>
+			<th>Fecha</th>
+			<th>Fecha Pago EPS</th>
+			<th>Valor Reconocido</th>
+			<th>Observaciones EPS/ARL</th>
+			<th>Fecha Ingreso Banco</th>
+			<th>Valor Ingreso Banco</th>
+			<th>Recibo Caja ADCI</th>
+			<th>Nota Credito</th>
+			<th>Fecha Nota ADCI</th>
+			<th>Valor Nota ADCI</th>
+			<th>Imagen</th>
+			<th>Observaciones Nota Credito</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -90,6 +114,43 @@
   <td>'.$observacioneseps.'</td>
   <td>'.$fechapagoeps.'</td>
   <td>$'.number_format($valorreco, 2, '.', ',').'</td>
+  <td>'.$listatemporales[$i]['noincapacidad'].'</td>
+	<td>'.$listatemporales[$i]['fechaincio'].'</td>
+	<td>'.$listatemporales[$i]['diagnostico'].'</td>
+	<td>'.$listatemporales[$i]['fechatrans'].'</td>
+	<td>'.$listatemporales[$i]['fechafinaltra'].'</td>
+	<td>'.$listatemporales[$i]['nodias'].'</td>
+	<td>'.$listatemporales[$i]['notranscip'].'</td>
+	<td>'.$listatemporales[$i]['prorroga'].'</td>
+	<td>'.$listatemporales[$i]['diasacum'].'</td>';
+	if(file_exists("archivosgenerales/".$listatemporales[$i]['archivouno'])) {
+		echo '<td><a href="archivosgenerales/'.$listatemporales[$i]['archivouno'].'" target="_black" class="btn btn-primary">Descargar</a></td>';
+	} else {
+		echo '<td></td>';
+	}
+	if(file_exists("archivosgenerales/".$listatemporales[$i]['archivodos'])) {
+		echo '<td><a href="archivosgenerales/'.$listatemporales[$i]['archivodos'].'" target="_black" class="btn btn-primary">Descargar</a></td>';
+	} else {
+		echo '<td></td>';
+	}
+echo '
+	<td>'.$listatemporales[$i]['estadoeps'].'</td>
+	<td>'.$listatemporales[$i]['fechaeps'].'</td>
+	<td>'.$listatemporales[$i]['fechapagoeps'].'</td>
+	<td>'.$listatemporales[$i]['valorreco'].'</td>
+	<td>'.$listatemporales[$i]['observacioneseps'].'</td>
+	<td>'.$listatemporales[$i]['fechabanco'].'</td>
+	<td>'.$listatemporales[$i]['valoringresobanco'].'</td>
+	<td>'.$listatemporales[$i]['noreciboadci'].'</td>
+	<td>'.$listatemporales[$i]['notacredito'].'</td>
+	<td>'.$listatemporales[$i]['fechanotadci'].'</td>
+	<td>'.$listatemporales[$i]['valornotaadci'].'</td>';
+	if(file_exists("archivosgenerales/".$listatemporales[$i]['imagen'])) {
+		echo '<td><a href="archivosgenerales/'.$listatemporales[$i]['imagen'].'" target="_black" class="btn btn-primary">Descargar</a></td>';
+	} else {
+		echo '<td></td>';
+	}
+echo '<td>'.$listatemporales[$i]['otrasobserva'].'</td>
   </tr>';
 	}
 	?>

@@ -348,7 +348,7 @@
 		<div class="form-group row">
 		  <label for="imagen" class="col-4 col-form-label">Imagen</label> 
 		  <div class="col-8">
-			<input id="imagen" name="imagen" placeholder="Imagen" type="text" class="form-control">
+			<input id="imagen" name="imagen" type="file" class="form-control" required="required">
 		  </div>
 		</div>
 		<div class="form-group row">

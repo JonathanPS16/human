@@ -895,7 +895,24 @@
                 break;
 
                 case "guardarcreit":
-                    $listatemporales=$objconsulta->guardarcreditinca($_POST['id'],$_POST['notacredito'],$_POST['fechanotadci'],$_POST['valornotaadci'],$_POST['imagen'],$_POST['otrasobserva'],$_POST['digivsfisi']);
+                    $archivodos = "";
+                    $nombre_archivo = date('YmdHms').$_FILES['imagen']['name'];
+                    if($nombre_archivo!="") {
+                        $tipo_archivo = $_FILES['imagen']['type'];
+                        $tamano_archivo = $_FILES['imagen']['size'];
+                        $mensaje = "";    
+                        //compruebo si las características del archivo son las que deseo
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+                            $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                        }else{
+                            if (move_uploaded_file($_FILES['imagen']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $archivodos =$nombre_archivo;
+                            }else{
+                                $archivodos =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            }
+                        }
+                    }
+                    $listatemporales=$objconsulta->guardarcreditinca($_POST['id'],$_POST['notacredito'],$_POST['fechanotadci'],$_POST['valornotaadci'],$archivodos,$_POST['otrasobserva'],$_POST['digivsfisi']);
                     echo "<script>alert('Registros Actualizado Correctamente');
                         window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
                         </script>";
