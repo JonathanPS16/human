@@ -474,7 +474,6 @@ foreach ($datos as $estado) {
       <input id="estudio['.$estado.'][\'terminacion\']" name="estudio['.$estado.'][\'terminacion\']" placeholder="Año Terminación" type="text" class="form-control" value="'.$listadoreq[$i]['terminacion'.$estado].'">
     </div>
   </div></div>';
-	# code...
 }
 
 for($j=0; $j<5;$j++){
@@ -645,7 +644,9 @@ $botonentre ='<button type="button" class="btn btn-primary" data-toggle="modal" 
 
 if($archivootro!=""){
   $botonextra ='<a class="btn btn-primary" href="archivosgenerales/'.$archivootro.'" target="_black" >Descargar</a>';
-}
+} else {
+  $botonextra ="<p class='btn btn-warning'>Sin Archivo</p>";
+} 
 if($estadopresen=="EM" && $listadoreqcrea[0]['tipo']=="D"){
  // echo "Examnes Directos";$botonrechazo
  $botonrechazo ="";

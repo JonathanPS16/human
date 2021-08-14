@@ -1412,6 +1412,12 @@ public function ajustarorden($id,$idreq,$tasa,$salario,$presentarse,$direccion,$
     $conn->Execute($SQL);
 }
 
+public function ajustarordendoc($id,$orden){
+    $conn = $this->conec();
+    $SQL ="UPDATE req_candidatos SET ordeningreso = '$orden'  WHERE id=".$id;
+    $conn->Execute($SQL);
+}
+
 public function enviarcandidatocliente($id)
 {
     $conn = $this->conec();
