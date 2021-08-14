@@ -138,7 +138,8 @@ for($i=0; $i<count($listadoreq);$i++){
     $barriocan=$listadoreq[$i]['barriocan']; 
     $ciudadcan=$listadoreq[$i]['ciudad']; 
     $archivootro=$listadoreq[$i]['archivootro']; 
-    $observacionrechazo=$listadoreq[$i]['observacionrechazo']; 
+    $observacionrechazo=$listadoreq[$i]['observacionrechazo'];
+    $estadoreal=$listadoreq[$i]['estadoreal']; 
 
  
 
@@ -820,6 +821,58 @@ if($archivootro!=""){
   Volver a Cargar
 </button>';	
 }
+if($estadoreal == "A"){
+$modalcerrar ='<div class="modal fade" id="exampleModalcerrar'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Rechazar por Inconsistencia</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="home.php?ctr=requisicion&acc=rechazaraprobado" method="post" enctype="multipart/form-data">
+		<fieldset>
+    <div class="form-group row">
+    <label for="motivo" class="col-4 col-form-label">Motivo</label> 
+    <div class="col-8">
+      <input id="motivo" name="motivo" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="descipcion" class="col-4 col-form-label">Descripcion Motivo</label> 
+    <div class="col-8">
+      <textarea id="descipcion" name="descipcion" cols="40" rows="5" class="form-control" required="required"></textarea>
+    </div>
+    <input id="id" name="id" type="hidden" value="'.$idper.'">
+      <input id="idreq" name="idreq" type="hidden" value="'.$idreq.'">
+  </div> 
+		<!-- Button -->
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="guardar"></label>
+		  <div class="col-md-4">
+		    <button id="guardar" name="guardar" class="btn btn-primary">Guardar</button>
+		  </div>
+		</div>
+
+		</fieldset>
+		</form>
+
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+';
+
+$modalcerrar .='<br><br><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalcerrar'.$idper.'">
+  Rechazar por Inconsistencia
+</button>';	} else {
+  $modalcerrar = "";
+}
+
     echo "<tr>
     		<td>".$jaja ."</td>
     		<td>".$nombre."</td>
@@ -832,7 +885,7 @@ if($archivootro!=""){
         <td>".$botonhoja.$modalbotonhoja."</td>
         <td>".$ordenbtn."</td>
         <td>".$botonedit.$modalbotonedit."</td>
-    		<td>".$botnenvi."</td>
+    		<td>".$botnenvi.$modalcerrar."</td>
     </tr>";
   }
 

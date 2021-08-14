@@ -1186,6 +1186,15 @@ public function obteneMisRescreadas($id){
       return $consultas;
   }
 
+  public function cerrarregistroaprobado($id,$req,$descripcion,$motivo)
+  {
+    $conn = $this->conec();
+    $usuario = $_SESSION['usuario'];
+    $consultas = "update req_candidatos  set observacionrechazo = '$descripcion', estadoreal ='R',estado ='R',motivorechazo ='$motivo' where id =".$id;
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+  }
+
 public function obtenerInformacionreq($id){
     //echo $ide;
       $conn = $this->conec();

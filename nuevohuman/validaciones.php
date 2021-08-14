@@ -1854,6 +1854,13 @@
                         </script>";
                 break;
 
+                case "rechazaraprobado":
+                    $listadoreq=$objconsulta->cerrarregistroaprobado($_POST["id"],$_POST["idreq"],$_POST["descipcion"],$_POST['motivo']);
+                    echo "<script>alert('Candidato Rechazado Correctamente');
+                        window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$_POST['idreq']."';
+                        </script>";
+                break;
+
                 case "guardarhv":
                     $nombre_archivo = date('Ymd').$_FILES['filebutton']['name'];
                     $tipo_archivo = $_FILES['filebutton']['type'];
