@@ -734,14 +734,26 @@ if(minsel!=10){
     <div class="form-group">
       <label class="col-md-10 control-label" for="cargo">Empresa Prestadora</label>  
       <div class="col-md-10">
-      <select id="empresaclientet" name="empresaclientet" class="form-control" onchange="validarusuarias()">
-      <option value="">Seleccione</option>
       <?php 
+      $valfuncion = 'onchange="validarusuarias()"';
+      if(count($listatemporales)==1){
+        $valfuncion = "";
+      }
+      ?>
+      <select id="empresaclientet" name="empresaclientet" class="form-control" <?php echo $valfuncion; ?>>
+      <?php 
+      if($valfuncion!=""){
+        ?>
+        <option value="">Seleccione</option>
+        <?php 
+      } 
       for($i=0; $i<count($listatemporales);$i++){
         $id_temporal=$listatemporales[$i]['id_temporal'];
         $nombretemporal=$listatemporales[$i]['nombretemporal'];
         $slr = "";
         if ($mireq[0]['empresaclientet']== $id_temporal){
+          $slr = 'selected="selected"';
+        } else if(count($listatemporales)==1){
           $slr = 'selected="selected"';
         }
         echo '<option value="'.$id_temporal.'"  '.$slr.'>'.$nombretemporal.'</option>';
@@ -773,13 +785,20 @@ if(minsel!=10){
       <div class="col-md-10">
       <input type="hidden" name="validaeu" id="validaeu" value="<?php echo $mireq[0]['empresacliente'] ?>">
       <select id="empresacliente" name="empresacliente" class="form-control" required="required">
-      <option value="0">Seleccione</option>
       <?php 
+        if(count($listatemporalesusuarias)>1){
+          ?>
+          <option value="0">Seleccione</option>
+          <?php
+        } 
       for($i=0; $i<count($listatemporalesusuarias);$i++){
         $id_temporal=$listatemporalesusuarias[$i]['id_centro'];
         $nombretemporal=$listatemporalesusuarias[$i]['empresausuaria'];
         $slr = "";
         if ($mireq[0]['empresacliente']== $id_temporal){
+          $slr = 'selected="selected"';
+          echo '<option value="'.$id_temporal.'"  '.$slr.'>'.$nombretemporal.'</option>';
+        }else if(count($listatemporalesusuarias)==1){
           $slr = 'selected="selected"';
           echo '<option value="'.$id_temporal.'"  '.$slr.'>'.$nombretemporal.'</option>';
         }
