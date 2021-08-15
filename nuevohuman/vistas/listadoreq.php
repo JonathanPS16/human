@@ -14,7 +14,7 @@
 			<th>Ciudad</th>
 			<th>Estado</th>
 			<th>Ver</th>
-			<th>Eliminar</th>
+			<th>Accion</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -51,7 +51,7 @@ for($i=0; $i<count($listadoreq);$i++){
 		$accion  = "<a class='btn btn-primary' href='home.php?ctr=requisicion&acc=verreqcan&id=".$id."'>Ver Candidatos</a>";
 	}
 
-	$eliminardata  = "<a class='btn btn-danger' href='home.php?ctr=requisicion&acc=eliminarreq&id=".$id."'>Eliminar</a>";
+	$eliminardata  = "<a class='btn btn-danger' href='home.php?ctr=requisicion&acc=eliminarreq&id=".$id."'>Cancelar</a>";
     echo "<tr>
     		<td>".$id."</td>
 			<td>".$tiporeq."</td>
