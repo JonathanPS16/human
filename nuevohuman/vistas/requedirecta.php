@@ -19,12 +19,23 @@ for($a=0; $a<count($listausuariosgenerales);$a++){
       <option value="0">Seleccione</option>
       <?php 
       for($a=0; $a<count($listausuariosgenerales);$a++){
-        $selecteda ="";
+        if($_SESSION['id_perfil']!="1") {
+          $selecteda ="";
         if($_SESSION['usuario']==$listausuariosgenerales[$a]['usuario']){
           $selecteda ="selected='selected'";
+          echo '<option value="'.$listausuariosgenerales[$a]['usuario'].'" '.$selecteda.'>'.$listausuariosgenerales[$a]['nombre'].'</option>';
         }
       
-        echo '<option value="'.$listausuariosgenerales[$a]['usuario'].'" '.$selecteda.'>'.$listausuariosgenerales[$a]['nombre'].'</option>';
+        } else {
+          $selecteda ="";
+          if($_SESSION['usuario']==$listausuariosgenerales[$a]['usuario']){
+            $selecteda ="selected='selected'";
+          }
+        
+          echo '<option value="'.$listausuariosgenerales[$a]['usuario'].'" '.$selecteda.'>'.$listausuariosgenerales[$a]['nombre'].'</option>';
+
+        }
+        
       
       }
       ?>
@@ -36,16 +47,30 @@ for($a=0; $a<count($listausuariosgenerales);$a++){
   <div class="form-group row">
     <label for="empresaclientet" class="col-4 col-form-label">Empresa Temporal</label> 
     <div class="col-8">
-      <select id="empresaclientet" name="empresaclientet" class="custom-select" required="required" onchange="validarusuarias()">
-      <option value="">Seleccione</option>
       <?php 
+      $valfuncion = 'onchange="validarusuarias()"';
+      if(count($listatemporales)==1){
+        $valfuncion = "";
+      }
+      ?>
+      <select id="empresaclientet" name="empresaclientet" class="custom-select" required="required" <?php echo $valfuncion; ?>>
+      <?php 
+      if($valfuncion!=""){
+        ?>
+        <option value="">Seleccione</option>
+        <?php 
+      }
+      
       for($i=0; $i<count($listatemporales);$i++){
         $id_temporal=$listatemporales[$i]['id_temporal'];
         $nombretemporal=$listatemporales[$i]['nombretemporal'];
         $slr = "";
         if ($mireq[0]['empresaclientet']== $id_temporal){
           $slr = 'selected="selected"';
+        } else if(count($listatemporales)==1){
+          $slr = 'selected="selected"';
         }
+
         echo '<option value="'.$id_temporal.'"  '.$slr.'>'.$nombretemporal.'</option>';
       }
       ?>
@@ -56,14 +81,20 @@ for($a=0; $a<count($listausuariosgenerales);$a++){
     <label for="empresacliente" class="col-4 col-form-label">Nombre Empresa Usuaria</label> 
     <div class="col-8">
       <select id="empresacliente" name="empresacliente" class="custom-select" required="required">
-      <option value="0">Seleccione</option>
-      <?php 
+        <?php 
+        if(count($listatemporalesusuarias)>1){
+          ?>
+          <option value="0">Seleccione</option>
+          <?php
+        } 
       for($i=0; $i<count($listatemporalesusuarias);$i++){
         $id_temporal=$listatemporalesusuarias[$i]['id_centro'];
         $nombretemporal=$listatemporalesusuarias[$i]['empresausuaria'];
         $empresapresaaaa=$listatemporalesusuarias[$i]['empresapres'];
         $slr = "";
         if ($mireq[0]['empresacliente']== $id_temporal){
+          $slr = 'selected="selected"';
+        }else if(count($listatemporalesusuarias)==1){
           $slr = 'selected="selected"';
         }
         echo '<option value="'.$id_temporal.'"  '.$slr.'>'.$nombretemporal.' ('.$empresapresaaaa.')</option>';
@@ -200,7 +231,7 @@ for($a=0; $a<count($listausuariosgenerales);$a++){
   <div class="form-group row">
     <label for="archivo" class="col-4 col-form-label">Hoja de Vida</label> 
     <div class="col-8">
-      <input id="archivo" name="archivo" placeholder="Hoja de Vida" type="file" class="form-control">
+      <input id="archivo" name="archivo" placeholder="Hoja de Vida" type="file" class="form-control" required="required">
     </div>
   </div> 
   <div class="form-group row">

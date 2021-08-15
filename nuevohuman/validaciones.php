@@ -1734,7 +1734,7 @@
 
                 case "procesodirecto":
                     $datoempre = "Human";
-                    $listatemporales=$objconsulta->obteneTemporales($datoempre);
+                    $listatemporales=$objconsulta->obteneTemporales($datoempre);                   
                     $listausuariosgenerales=$objconsulta->listadousuariosper();
                     $listatemporalesusuarias=$objconsulta->obteneTemporalesUsarias($datoempre);
                     /*$id = 0;
