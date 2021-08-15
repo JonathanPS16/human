@@ -12,7 +12,7 @@
 			<th>Cantidad</th>
 			<th>Salario</th>
 			<th>Ciudad</th>
-			<th>Estado</th>
+			<th>Estado Candidatos</th>
 			<th>Detalle Requisicion</th>
 			<th>Ver</th>
 		</tr>
@@ -34,11 +34,16 @@ for($i=0; $i<count($listadoreq);$i++){
 	$fechareqcargo=$listadoreq[$i]['fechareqcargo'];
 	$cantidad=$listadoreq[$i]['cantidad'];
 	$cantidadapro =$listadoreq[$i]['cantidadapro'];
+	$cantidadrechazados =$listadoreq[$i]['cantidadrechazados'];
+	$cantidadtotal =$listadoreq[$i]['cantidadtotal'];
 	$tiporeq=$listadoreq[$i]['tiporeq'];
-	$estadogene = "Finalizado";
-	if($cantidadapro!=$cantidad){
-		$estadogene = "Abierto <br>($cantidadapro) Aprobados";
-	}
+	//$estadogene = "Finalizado";
+	//if($cantidadapro!=$cantidad){
+		$estadogene = "Aprobados: $cantidadapro<br>Rechazados:$cantidadrechazados<br>Total Registros:$cantidadtotal ";
+	//}
+
+
+
 	$nanana = "";
  if($listadoreq[$i]['adaptabilidad'] =="SI") { $nanana.="Adaptabilidad a Normas y Ambiente de Trabajo<br>"; } 
  if($listadoreq[$i]['administracion'] =="SI") { $nanana.="Administración del Tiempo<br>"; } 
