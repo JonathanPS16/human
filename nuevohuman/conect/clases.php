@@ -1304,9 +1304,8 @@ public function guardarCandidato($idreq,
                     )
 {
   $conn = $this->conec();
-
   if($idcan>0){
-    $SQL ="UPDATE  req_candidatos SET estadoreal='C' nombre = '$nombre',cedula='$cedula',telefono='$telefono',correo='$correo',
+    $SQL ="UPDATE  req_candidatos SET estadoreal='C', nombre = '$nombre',cedula='$cedula',telefono='$telefono',correo='$correo',
     direccioncan='$direccioncan',barriocan='$barriocan',ciudad='$ciudad' WHERE id=".$idcan ;
     $conn->Execute($SQL);
 

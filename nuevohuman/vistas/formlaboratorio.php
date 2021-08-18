@@ -53,6 +53,13 @@
 	      <input id="correodos" name="correodos" placeholder="Correo 2" type="email" class="form-control" required="required">
 	    </div>
 	  </div>
+
+	  <div class="form-group row">
+	    <label for="correodos" class="col-4 col-form-label">Correo 3</label> 
+	    <div class="col-8">
+	      <input id="correotres" name="correotres" placeholder="Correo 3" type="email" class="form-control" required="required">
+	    </div>
+	  </div>
 	  <div class="form-group row">
 	    <div class="offset-4 col-8">
 	      <button name="submit" type="submit" class="btn btn-primary">Guardar</button>
@@ -73,6 +80,7 @@
 			<th>Telefono</th>
 			<th>Correo 1</th>
 			<th>Correo 2</th>
+			<th>Correo 3</th>
 			<th>Editar</th>
 			<th>Eliminar</th>
 		</tr>
@@ -100,7 +108,9 @@
 		<td>'.$direccion.'</td>
 		<td>'.$telefono.'</td>
 		<td>'.$correo[0].'</td>
-		<td>'.$correo[1].'</td>';
+		<td>'.$correo[1].'</td>
+		<td>'.$correo[2].'</td>';
+		
 		echo  '<td><a style="color: white !important;" class="btn btn-primary" onclick="';
 		echo  "editarlaboratorio('$nombrelaboratorio','$ciudad','$direccion','$telefono','".$correo[0]."','".$correo[1]."',$id)";
 		echo '">Editar</a></td>';

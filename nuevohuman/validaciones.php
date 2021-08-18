@@ -1185,7 +1185,7 @@
                 break;
 
                 case "guardarlaboratorio":
-                    $listatemporales=$objconsulta->guardarinfolaboratorios($_POST['nombre'],$_POST['ciudad'],$_POST['direccion'],$_POST['telefonos'],$_POST['correouno']."|".$_POST['correodos'],$_POST['id']);
+                    $listatemporales=$objconsulta->guardarinfolaboratorios($_POST['nombre'],$_POST['ciudad'],$_POST['direccion'],$_POST['telefonos'],$_POST['correouno']."|".$_POST['correodos']."|".$_POST['correotres'],$_POST['id']);
                     echo "<script>alert('Laboratorio Cargado Correctamente');
                                 window.location.href = 'home.php?ctr=admon&acc=laboratorios';
                                 </script>";
@@ -2889,6 +2889,32 @@ catch(com_exception $e)
                     $direccioncan = $_POST['direccioncan'];
                     $barriocan = $_POST['barriocan'];
                     $ciudad = $_POST['ciudad'];
+                    $guardarcan = $objconsulta->guardarCandidato($idreq,
+                        $nombre,
+                        $cedula,
+                        $telefono,
+                        $correo,
+                        $direccioncan,
+                        $barriocan,
+                        $ciudad,
+                        $idcand
+                    );
+
+                    echo "<script>alert('Informacion Guardada Correctamente');
+                window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$idreq."';
+                </script>";
+                break;
+
+                case "guardarNuevoCandidatoe":
+                    $idreq = $_POST['ide'];
+                    $idcand = $_POST['idcande'];
+                    $nombre = $_POST['nombree'];
+                    $cedula = $_POST['cedulae'];
+                    $telefono = $_POST['telefonoe'];
+                    $correo = $_POST['correoe'];
+                    $direccioncan = $_POST['direccioncane'];
+                    $barriocan = $_POST['barriocane'];
+                    $ciudad = $_POST['ciudade'];
                     $guardarcan = $objconsulta->guardarCandidato($idreq,
                         $nombre,
                         $cedula,

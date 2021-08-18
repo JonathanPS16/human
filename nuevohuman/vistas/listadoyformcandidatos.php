@@ -104,6 +104,7 @@ $labo.='<option value="'.$laboratorios[$i]['id'].'">'.$laboratorios[$i]['nombrel
       <th>Entrevista</th>
       <th>Hoja de Vida</th>
       <th>Orden de Ingreso</th>
+      <th>Estado Candidato</th>
 			<th>Acciones</th>
 		</tr>
 	</thead>
@@ -153,49 +154,49 @@ for($i=0; $i<count($listadoreq);$i++){
           </button>
         </div>
         <div class="modal-body">
-        <form action="home.php?ctr=requisicion&acc=guardarNuevoCandidato" method="post">
-        <input type="hidden" name="idcand" id="idcand" value="'.$idper.'">
-        <input type="hidden" name="id" id="id" value="'.$_GET['id'].'">
+        <form action="home.php?ctr=requisicion&acc=guardarNuevoCandidatoe" method="post">
+        <input type="hidden" name="idcande" id="idcande" value="'.$idper.'">
+        <input type="hidden" name="ide" id="ide" value="'.$_GET['id'].'">
       <div class="form-group row">
         <label class="col-4 col-form-label" for="nombre">Nombre Candidato</label> 
         <div class="col-8">
-          <input id="nombre" name="nombre" placeholder="Nombre Candidato" type="text" class="form-control" required="required" value ="'.$nombre.'">
+          <input id="nombree" name="nombree" placeholder="Nombre Candidato" type="text" class="form-control" required="required" value ="'.$nombre.'">
         </div>
       </div>
       <div class="form-group row">
         <label for="cedula" class="col-4 col-form-label">Cedula</label> 
         <div class="col-8">
-          <input id="cedula" name="cedula" placeholder="Cedula" type="number" class="form-control" required="required" value ="'.$cedula.'">
+          <input id="cedulae" name="cedulae" placeholder="Cedula" type="number" class="form-control" required="required" value ="'.$cedula.'">
         </div>
       </div>
       <div class="form-group row">
         <label for="telefono" class="col-4 col-form-label">Telefono</label> 
         <div class="col-8">
-          <input id="telefono" name="telefono" placeholder="Telefono" type="number" class="form-control" required="required" value ="'.$telefono.'">
+          <input id="telefonoe" name="telefonoe" placeholder="Telefono" type="number" class="form-control" required="required" value ="'.$telefono.'">
         </div>
       </div>
       <div class="form-group row">
         <label for="correo" class="col-4 col-form-label">Correo</label> 
         <div class="col-8">
-          <input id="correo" name="correo" placeholder="Correo" type="email" class="form-control" required="required" value ="'.$correo.'">
+          <input id="correoe" name="correoe" placeholder="Correo" type="email" class="form-control" required="required" value ="'.$correo.'">
         </div>
       </div>
       <div class="form-group row">
         <label for="correo" class="col-4 col-form-label">Direccion</label> 
         <div class="col-8">
-          <input id="direccioncan" name="direccioncan" placeholder="Direccion Vivienda" type="text" class="form-control" required="required" value ="'.$direccioncan.'">
+          <input id="direccioncane" name="direccioncane" placeholder="Direccion Vivienda" type="text" class="form-control" required="required" value ="'.$direccioncan.'">
         </div>
       </div>
       <div class="form-group row">
         <label for="correo" class="col-4 col-form-label">Barrio</label> 
         <div class="col-8">
-          <input id="barriocan" name="barriocan" placeholder="Barrio Vivienda" type="text" class="form-control" required="required" value ="'.$barriocan.'">
+          <input id="barriocane" name="barriocane" placeholder="Barrio Vivienda" type="text" class="form-control" required="required" value ="'.$barriocan.'">
         </div>
       </div> 
       <div class="form-group row">
 	    <label for="correo" class="col-4 col-form-label">Ciudad</label> 
 	    <div class="col-8">
-	      <input id="ciudad" name="ciudad" placeholder="Ciudad Vivienda" type="text" class="form-control" required="required" value ="'.$ciudadcan.'">
+	      <input id="ciudade" name="ciudade" placeholder="Ciudad Vivienda" type="text" class="form-control" required="required" value ="'.$ciudadcan.'">
 	    </div>
 	  </div> 
       <div class="form-group row">
@@ -872,7 +873,18 @@ $modalcerrar .='<br><br><button type="button" class="btn btn-primary" data-toggl
 </button>';	} else {
   $modalcerrar = "";
 }
-
+$hola = "";
+if($estadoreal.$estadopresen=="AF") {
+  $hola= "Aprobado Finalizado";
+} else if($estadoreal.$estadopresen=="RR") {
+  $hola= "Rechazado";
+} else if($estadoreal.$estadopresen=="CC") {
+  $hola = "Registrado";
+} else if($estadoreal.$estadopresen=="AEM"){ 
+  $hola = "Aprobado";
+} else {
+  $hola = $estadoreal.$estadopresen;
+}
     echo "<tr>
     		<td>".$jaja ."</td>
     		<td>".$nombre."</td>
@@ -885,6 +897,7 @@ $modalcerrar .='<br><br><button type="button" class="btn btn-primary" data-toggl
         <td>".$botonhoja.$modalbotonhoja."</td>
         <td>".$ordenbtn."</td>
         <td>".$botonedit.$modalbotonedit."</td>
+        <td>".$hola."</td>
     		<td>".$botnenvi.$modalcerrar."</td>
     </tr>";
   }
