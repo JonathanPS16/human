@@ -91,21 +91,22 @@ $labo.='<option value="'.$laboratorios[$i]['id'].'">'.$laboratorios[$i]['nombrel
   </div>
 </div>
 <br>
-<table class="table table-striped">
+<table class="table table-striped" id="myTable">
 	<thead>
 		<tr>
 			<th>ID</th>
 			<th>Nombre Candidato</th>
+      <th>Hoja de Vida</th>
       <th>Numero Contacto</th>
       <th>Documento</th>
       <th>Correo</th>
       <th>Prueba Psicotecnica</th>
       <th>Adjunto Extra</th>
-      <th>Entrevista</th>
-      <th>Hoja de Vida</th>
+      <th>Entrevista</th>    
       <th>Orden de Ingreso</th>
+      <th>Documentos Enviados</th>
       <th>Estado Candidato</th>
-			<th>Acciones</th>
+			<th colspan="2">Acciones</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -874,8 +875,15 @@ $modalcerrar .='<br><br><button type="button" class="btn btn-primary" data-toggl
   $modalcerrar = "";
 }
 $hola = "";
+$listarchivossend = "";
 if($estadoreal.$estadopresen=="AF") {
   $hola= "Aprobado Finalizado";
+  $listarchivossend = "<a target='_black' href='archivosgenerales/".$listadoreq[$i]['examenesar']."'>Examenes</a><br>"; 
+  $listarchivossend .= "<a target='_black' href='archivosgenerales/".$listadoreq[$i]['hvhuman']."'>Hoja de Vida</a><br>";
+  $listarchivossend .= "<a target='_black' href='archivosgenerales/".$listadoreq[$i]['ordeningreso']."'>Orden Ingreso</a><br>";
+  $listarchivossend .= "<a target='_black' href='archivosgenerales/".$listadoreq[$i]['apertura']."'>Apertura Cuenta</a><br>";
+  $listarchivossend .= "<a target='_black' href='archivosgenerales/".$listadoreq[$i]['docdocumen']."'>Documentacion</a><br>";
+
 } else if($estadoreal.$estadopresen=="RR") {
   $hola= "Rechazado";
 } else if($estadoreal.$estadopresen=="CC") {
@@ -888,14 +896,15 @@ if($estadoreal.$estadopresen=="AF") {
     echo "<tr>
     		<td>".$jaja ."</td>
     		<td>".$nombre."</td>
+        <td>".$botonhoja.$modalbotonhoja."</td>
         <td>".$telefono."</td>
         <td>".$cedula."</td>
         <td>".$correo."</td>
         <td>".$boton.$modalboton."</td>
         <td>".$botonextra.$modalbotonextra."</td>
         <td>".$botonentre.$modalbotonentre."</td>
-        <td>".$botonhoja.$modalbotonhoja."</td>
         <td>".$ordenbtn."</td>
+        <td>".$listarchivossend."</td>
         <td>".$botonedit.$modalbotonedit."</td>
         <td>".$hola."</td>
     		<td>".$botnenvi.$modalcerrar."</td>

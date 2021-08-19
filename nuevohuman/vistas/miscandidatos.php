@@ -43,10 +43,14 @@ for($i=0; $i<count($listadoreq);$i++){
     $ciudadcan=$listadoreq[$i]['ciudad']; 
     $archivootro=$listadoreq[$i]['archivootro'];
     $conclusionentrevistagen=$listadoreq[$i]['conclusionentrevistagen'];
+    $conclusionentrevistagendos=$listadoreq[$i]['conclusionentrevistagendos'];
     $estadoreal=$listadoreq[$i]['estadoreal'];
     $fortalezaentre = $listadoreq[$i]['fortalezaentre'];
     $aspectosentre = $listadoreq[$i]['aspectosentre'];
     $otrosentrev = $listadoreq[$i]['otrosentrev'];
+    $fortalezaentredos = $listadoreq[$i]['fortalezaentredos'];
+    $aspectosentredos = $listadoreq[$i]['aspectosentredos'];
+    $otrosentrevdos = $listadoreq[$i]['otrosentrevdos'];
     $tipocita = $listadoreq[$i]['tipocita'];
     $observacionrechazo  = $listadoreq[$i]['observacionrechazo'];
 
@@ -116,7 +120,7 @@ for($i=0; $i<count($listadoreq);$i++){
     $botoncita ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalhv'.$idper.'">
   Citar
 </button>';	
-    } elseif($conclusionentrevistagen!="") {
+    } else if(($conclusionentrevistagen!="" && $listadoreq[$i]['citanum']!="S") || ($conclusionentrevistagendos!="" && $listadoreq[$i]['citanum']=="S")) {
 
       $modalbotoncitaconcluresumen ='<div class="modal fade" id="conclumodalModalhv'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -154,6 +158,32 @@ for($i=0; $i<count($listadoreq);$i++){
          '.$otrosentrev.'
         </div>
       </div> 
+
+      <div class="form-group row">
+        <label for="fechahora" class="col-4 col-form-label">Observaciones Generales Segunda Cita</label> 
+        <div class="col-8">
+          '.$conclusionentrevistagendos.'
+        </div>
+      </div> 
+
+      <div class="form-group row">
+        <label for="hora" class="col-4 col-form-label">Fortalezas Segunda Cita</label> 
+        <div class="col-8">
+          '.$fortalezaentredos.'
+        </div>
+      </div> 
+      <div class="form-group row">
+        <label class="col-4 col-form-label" for="tipocita">Aspectos a Mejorar Segunda Cita</label> 
+        <div class="col-8">
+          '.$aspectosentredos.'
+        </div>
+      </div> 
+      <div class="form-group row">
+        <label for="lugarentre" class="col-4 col-form-label">Otros Segunda Cita</label> 
+        <div class="col-8">
+         '.$otrosentrevdos.'
+        </div>
+      </div> 
       </div>
       
     </div>
@@ -164,7 +194,74 @@ for($i=0; $i<count($listadoreq);$i++){
   Ver Conclusiones Cita
 </button>';	
 
-      $botoncita = $modalbotoncitaconcluresumen.$botoncitaconcluresumen;
+$modalbotoncitados ='<div class="modal fade" id="exampleModalhvaa'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cita Segunda Entrevista</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="home.php?ctr=requisicion&acc=citar" method="post" enctype="multipart/form-data">
+        <div class="form-group row">
+        <label for="fechahora" class="col-4 col-form-label">Fecha</label> 
+        <div class="col-8">
+          <input id="fechahora" name="fechahora" placeholder="AAAA-MM-DD HH:MM" type="date" class="form-control" required="required">
+        </div>
+      </div> 
+
+      <div class="form-group row">
+        <label for="hora" class="col-4 col-form-label">Hora</label> 
+        <div class="col-8">
+          <input id="hora" name="hora" placeholder="HH:mm" type="text" class="form-control" required="required">
+        </div>
+      </div> 
+      <div class="form-group row">
+        <label class="col-4 col-form-label" for="tipocita">Tipo de Cita</label> 
+        <div class="col-8">
+          <select id="tipocita" name="tipocita" class="custom-select">
+            <option value="Video Conferencia">Video Conferencia</option>
+            <option value="Presencial">Presencial</option>
+            <option value="Telefonica">Telefonica</option>
+            <option value="Otros">Otros</option>
+          </select>
+        </div>
+      </div> 
+      <div class="form-group row">
+        <label for="lugarentre" class="col-4 col-form-label">Lugar o Link de Reunion</label> 
+        <div class="col-8">
+          <input id="lugarentre" name="lugarentre" placeholder="Lugar o Link de Entrevista" type="text" class="form-control" required="required">
+        </div>
+      </div> 
+      <div class="form-group row">
+        <div class="offset-4 col-8">
+          <input type="hidden" name="id_req" id="id_req" value="'.$idreq.'">
+          <input type="hidden" name="id_per" id="id_per" value="'.$idper.'">
+          <input type="hidden" name="tipo" id="tipo" value="S">
+          <button name="submit" type="submit" class="btn btn-primary">Gestionar Cita</button>
+        </div>
+      </div>
+		</form>
+
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+';
+
+    $botoncitados ='<br><br><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalhvaa'.$idper.'">
+  Citar Segunda Vez
+</button>';	
+      if($listadoreq[$i]['citanum'] == "S"){
+        $botoncita = $modalbotoncitaconcluresumen.$botoncitaconcluresumen;
+      } else {
+        $botoncita = $modalbotoncitaconcluresumen.$botoncitaconcluresumen.$modalbotoncitados.$botoncitados;
+      }
+      
     } else {
 
       $modalbotoncitaconclu ='<div class="modal fade" id="exampleModalcitaconclu'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -208,6 +305,7 @@ for($i=0; $i<count($listadoreq);$i++){
             <div class="offset-4 col-8">
               <input type="hidden" name="id_req" id="id_req" value="'.$idreq.'">
               <input type="hidden" name="id_per" id="id_per" value="'.$idper.'">
+              <input type="hidden" name="tipo" id="tipo" value="'.$listadoreq[$i]['citanum'].'">
               <button name="submit" type="submit" class="btn btn-primary">Guardar</button>
             </div>
           </div>
@@ -220,8 +318,15 @@ for($i=0; $i<count($listadoreq);$i++){
       </div>
     </div>
     ';
+    if($listadoreq[$i]['citanum']=="S"){
         $botoncitaconclu ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalcitaconclu'.$idper.'"> Conclusion Cita
+        '.$listadoreq[$i]['fechacitados'].'</button>';
+    }else {
+      $botoncitaconclu ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalcitaconclu'.$idper.'"> Conclusion Cita
         '.$fechacitan.'</button>';
+    }
+
+
       $botoncita =$modalbotoncitaconclu.$botoncitaconclu.'';
       
 

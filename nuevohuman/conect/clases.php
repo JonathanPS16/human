@@ -1925,7 +1925,7 @@ public function enviarconclucionprocesoAcci($id,$diasinca,$obserini,$obser,$obse
 }
 
 
-public function citarcandidato($id_per,$id_req,$fechahora,$lugar,$tipocita)
+public function citarcandidato($id_per,$id_req,$fechahora,$lugar,$tipocita,$tipo)
 {
     $conn = $this->conec();
     $consultas = "SELECT correo,nombre  FROM req_candidatos WHERE  id=".$id_per;
@@ -1997,17 +1997,27 @@ public function citarcandidato($id_per,$id_req,$fechahora,$lugar,$tipocita)
         }
 
       }
-    $SQL ="UPDATE req_candidatos SET estado='P', fechacita='$fechahora',lugarcita ='$lugar',tipocita = '$tipocita' WHERE id=".$id_per;
+      if($tipo=="S") {
+        $SQL ="UPDATE req_candidatos SET estado='P', fechacitados='$fechahora',lugarcitados ='$lugar',tipocitados = '$tipocita',citanum='S' WHERE id=".$id_per;
+      } else {
+        $SQL ="UPDATE req_candidatos SET estado='P', fechacita='$fechahora',lugarcita ='$lugar',tipocita = '$tipocita',citanum='P' WHERE id=".$id_per;
+      }
     $conn->Execute($SQL);
     
 
 
 }
 
-public function conclucioncitacitacionc($id_per,$id_req,$conclu,$fortalezaentre,$aspectosentre,$otrosentrev)
+public function conclucioncitacitacionc($id_per,$id_req,$conclu,$fortalezaentre,$aspectosentre,$otrosentrev,$tipo)
 {
     $conn = $this->conec();
-    $SQL ="UPDATE req_candidatos SET  conclusionentrevistagen='$conclu',fortalezaentre='$fortalezaentre',aspectosentre='$aspectosentre',otrosentrev='$otrosentrev' WHERE id=".$id_per;
+    if($tipo=="S"){
+        $SQL ="UPDATE req_candidatos SET  conclusionentrevistagendos='$conclu',fortalezaentredos='$fortalezaentre',aspectosentredos='$aspectosentre',otrosentrevdos='$otrosentrev' WHERE id=".$id_per;
+    
+    } else {
+        $SQL ="UPDATE req_candidatos SET  conclusionentrevistagen='$conclu',fortalezaentre='$fortalezaentre',aspectosentre='$aspectosentre',otrosentrev='$otrosentrev' WHERE id=".$id_per;
+    
+    }
     $conn->Execute($SQL);
 }
 

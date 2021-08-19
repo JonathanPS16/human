@@ -3036,7 +3036,11 @@ catch(com_exception $e)
                     $id_per=$_POST['id_per'];
                     $lugarentre=$_POST['lugarentre'];
                     $tipocita=$_POST['tipocita'];
-                    $listadoreq=$objconsulta->citarcandidato($id_per,$id_req,$fechahora,$lugarentre,$tipocita);
+                    $tipo = "N";
+                    if($_POST['tipo'] == "S"){
+                        $tipo = "S";
+                    }
+                    $listadoreq=$objconsulta->citarcandidato($id_per,$id_req,$fechahora,$lugarentre,$tipocita,$tipo);
 
                     echo "<script>alert('Candidato Citado Correctamente ');
                     window.location.href = 'home.php?ctr=requisicion&acc=verreqcan&id={$id_req}';
@@ -3050,7 +3054,11 @@ catch(com_exception $e)
                     $fortalezaentre=$_POST['fortalezaentre'];
                     $aspectosentre=$_POST['aspectosentre'];
                     $otrosentrev=$_POST['otrosentrev'];
-                    $listadoreq=$objconsulta->conclucioncitacitacionc($id_per,$id_req,$concuentre,$fortalezaentre,$aspectosentre,$otrosentrev);
+                    $tipo = "P";
+                    if($_POST['tipo'] == "S"){
+                        $tipo = "S";
+                    }
+                    $listadoreq=$objconsulta->conclucioncitacitacionc($id_per,$id_req,$concuentre,$fortalezaentre,$aspectosentre,$otrosentrev,$tipo);
 
                     echo "<script>alert('Guardado Correctamente');
                     window.location.href = 'home.php?ctr=requisicion&acc=verreqcan&id={$id_req}';
