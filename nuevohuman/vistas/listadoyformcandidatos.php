@@ -757,7 +757,322 @@ if($fechacitan !="" && $estadopresen=="P")
 {
 
   //$botnenvi = $modalbotonarchivos.$botonarchivos;
-  $botnenvi = "Proceso Terminado";
+  
+  
+  
+  
+  
+  
+  $botnenvi = "Proceso Terminado<br>";
+
+  $botnenvi.='<br><div class="modal fade" id="exampleModalextraref'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Referenciación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="home.php?ctr=requisicion&acc=guardarreferenciacion" method="post" enctype="multipart/form-data">
+		<fieldset>
+		<input id="idper" name="idper" type="hidden" value="'.$idper.'">
+      <input id="idreq" name="idreq" type="hidden" value="'.$idreq.'">
+    <div class="form-group row">
+    <label for="nombreempresa" class="col-4 col-form-label">Nombre de la Empresa</label> 
+    <div class="col-8">
+      <input id="nombreempresa" name="nombreempresa" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="nombrereferencia" class="col-4 col-form-label">Nombre quien da la Referencia</label> 
+    <div class="col-8">
+      <input id="nombrereferencia" name="nombrereferencia" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="cargo" class="col-4 col-form-label">Cargo</label> 
+    <div class="col-8">
+      <input id="cargo" name="cargo" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="telefono" class="col-4 col-form-label">Teléfono o Celular</label> 
+    <div class="col-8">
+      <input id="telefono" name="telefono" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="ultimocargo" class="col-4 col-form-label">Ultimo Cargo Desempeñado</label> 
+    <div class="col-8">
+      <input id="ultimocargo" name="ultimocargo" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="tiempodesemp" class="col-4 col-form-label">Tiempo  de desempeño en el cargo</label> 
+    <div class="col-8">
+      <input id="tiempodesemp" name="tiempodesemp" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="motivoretiro" class="col-4 col-form-label">Motivo del Retiro</label> 
+    <div class="col-8">
+      <input id="motivoretiro" name="motivoretiro" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="conceptodesempeno" class="col-4 col-form-label">Concepto Desempeño</label> 
+    <div class="col-8">
+      <input id="conceptodesempeno" name="conceptodesempeno" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="fortalezas" class="col-4 col-form-label">Fortalezas</label> 
+    <div class="col-8">
+      <input id="fortalezas" name="fortalezas" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="aspectosmejorar" class="col-4 col-form-label">Aspecto a Mejorar</label> 
+    <div class="col-8">
+      <input id="aspectosmejorar" name="aspectosmejorar" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  
+
+  <div class="form-group row">
+    <label for="resp" class="col-4 col-form-label">Personas a Cargo</label> 
+    <div class="col-8">
+      <select id="personascargo" name="personascargo" class="custom-select" required="required">
+        <option value="No">No</option>
+        <option value="Si">Si</option>
+      </select>
+    </div>
+  </div> 
+
+  <div class="form-group row">
+    <label for="resp" class="col-4 col-form-label">Responsabilidad</label> 
+    <div class="col-8">
+      <select id="responsabilidad" name="responsabilidad" class="custom-select" required="required">
+        <option value="">Seleccione</option>
+        <option value="Excelente">Excelente</option>
+        <option value="Bueno">Bueno</option>
+        <option value="Regular">Regular</option>
+        <option value="Deficiente">Deficiente</option> 
+      </select>
+    </div>
+  </div> 
+
+  <div class="form-group row">
+    <label for="resp" class="col-4 col-form-label">Calidad de Trabajo</label> 
+    <div class="col-8">
+      <select id="calidad" name="calidad" class="custom-select" required="required">
+        <option value="">Seleccione</option>
+        <option value="Excelente">Excelente</option>
+        <option value="Bueno">Bueno</option>
+        <option value="Regular">Regular</option>
+        <option value="Deficiente">Deficiente</option> 
+      </select>
+    </div>
+  </div> 
+
+  <div class="form-group row">
+    <label for="resp" class="col-4 col-form-label">Manejo de Tiempo (Prioridades)</label> 
+    <div class="col-8">
+      <select id="manejot" name="manejot" class="custom-select" required="required">
+        <option value="">Seleccione</option>
+        <option value="Excelente">Excelente</option>
+        <option value="Bueno">Bueno</option>
+        <option value="Regular">Regular</option>
+        <option value="Deficiente">Deficiente</option> 
+      </select>
+    </div>
+  </div> 
+
+  <div class="form-group row">
+    <label for="resp" class="col-4 col-form-label">Toma de decisiones propias de su puesto de trabajo</label> 
+    <div class="col-8">
+      <select id="tomad" name="tomad" class="custom-select" required="required">
+        <option value="">Seleccione</option>
+        <option value="Excelente">Excelente</option>
+        <option value="Bueno">Bueno</option>
+        <option value="Regular">Regular</option>
+        <option value="Deficiente">Deficiente</option> 
+      </select>
+    </div>
+  </div> 
+
+  <div class="form-group row">
+    <label for="resp" class="col-4 col-form-label">Agilidad y precisión en sus funciones</label> 
+    <div class="col-8">
+      <select id="agilidad" name="agilidad" class="custom-select" required="required">
+        <option value="">Seleccione</option>
+        <option value="Excelente">Excelente</option>
+        <option value="Bueno">Bueno</option>
+        <option value="Regular">Regular</option>
+        <option value="Deficiente">Deficiente</option> 
+      </select>
+    </div>
+  </div> 
+
+  <div class="form-group row">
+    <label for="resp" class="col-4 col-form-label">Actitud de servicio</label> 
+    <div class="col-8">
+      <select id="actitudse" name="actitudse" class="custom-select" required="required">
+        <option value="">Seleccione</option>
+        <option value="Excelente">Excelente</option>
+        <option value="Bueno">Bueno</option>
+        <option value="Regular">Regular</option>
+        <option value="Deficiente">Deficiente</option> 
+      </select>
+    </div>
+  </div> 
+  <div class="form-group row">
+    <label for="resp" class="col-4 col-form-label">Manejo de conflictos</label> 
+    <div class="col-8">
+      <select id="manejoco" name="manejoco" class="custom-select" required="required">
+        <option value="">Seleccione</option>
+        <option value="Excelente">Excelente</option>
+        <option value="Bueno">Bueno</option>
+        <option value="Regular">Regular</option>
+        <option value="Deficiente">Deficiente</option> 
+      </select>
+    </div>
+  </div> 
+
+  <div class="form-group row">
+    <label for="resp" class="col-4 col-form-label">Adaptabilidad a diversos contextos</label> 
+    <div class="col-8">
+      <select id="adaptabilidad" name="adaptabilidad" class="custom-select" required="required">
+        <option value="">Seleccione</option>
+        <option value="Excelente">Excelente</option>
+        <option value="Bueno">Bueno</option>
+        <option value="Regular">Regular</option>
+        <option value="Deficiente">Deficiente</option> 
+      </select>
+    </div>
+  </div> 
+
+  <div class="form-group row">
+    <label for="resp" class="col-4 col-form-label">Relaciones con compañeros de trabajo</label> 
+    <div class="col-8">
+      <select id="relacionesct" name="relacionesct" class="custom-select" required="required">
+        <option value="">Seleccione</option>
+        <option value="Excelente">Excelente</option>
+        <option value="Bueno">Bueno</option>
+        <option value="Regular">Regular</option>
+        <option value="Deficiente">Deficiente</option> 
+      </select>
+    </div>
+  </div> 
+
+  <div class="form-group row">
+    <label for="resp" class="col-4 col-form-label">Relaciones con superiores</label> 
+    <div class="col-8">
+      <select id="relacionessuper" name="relacionessuper" class="custom-select" required="required">
+        <option value="">Seleccione</option>
+        <option value="Excelente">Excelente</option>
+        <option value="Bueno">Bueno</option>
+        <option value="Regular">Regular</option>
+        <option value="Deficiente">Deficiente</option> 
+      </select>
+    </div>
+  </div> 
+  
+  <div class="form-group row">
+    <label for="observacionesgenerales" class="col-4 col-form-label">Observaciones Generales</label> 
+    <div class="col-8">
+      <textarea id="observacionesgenerales" name="observacionesgenerales" cols="40" rows="5" class="form-control" required="required"></textarea>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="referenciafinal" class="col-4 col-form-label">Referenciación Final del Candidato</label> 
+    <div class="col-8">
+      <input id="referenciafinal" name="referenciafinal" type="text" class="form-control" required="required">
+    </div>
+  </div>
+ 
+
+  <div class="form-group row">
+    <label for="resp" class="col-4 col-form-label">Volvería a contratarlo</label> 
+    <div class="col-8">
+      <select id="volveriaa" name="volveriaa" class="custom-select" required="required">
+        <option value="No">No</option>
+        <option value="Si">Si</option>
+      </select>
+    </div>
+  </div> 
+
+  <div class="form-group row">
+    <label for="porquecontra" class="col-4 col-form-label">Porque?</label> 
+    <div class="col-8">
+      <input id="porquecontra" name="porquecontra" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="resp" class="col-4 col-form-label">Recomienda Usted al Candidato</label> 
+    <div class="col-8">
+      <select id="lorecomienda" name="lorecomienda" class="custom-select" required="required">
+        <option value="No">No</option>
+        <option value="Si">Si</option>
+      </select>
+    </div>
+  </div> 
+  <div class="form-group row">
+    <label for="porquelorecomienda" class="col-4 col-form-label">Porque?</label> 
+    <div class="col-8">
+      <input id="porquelorecomienda" name="porquelorecomienda" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="personareferenciacion" class="col-4 col-form-label">Persona que realiza la Referenciación</label> 
+    <div class="col-8">
+      <input id="personareferenciacion" name="personareferenciacion" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="cargoguar" class="col-4 col-form-label">Cargo</label> 
+    <div class="col-8">
+      <input id="cargoguar" name="cargoguar" type="text" class="form-control" required="required">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="fechareferenciacion" class="col-4 col-form-label">Fecha Referenciación</label> 
+    <div class="col-8">
+      <input id="fechareferenciacion" name="fechareferenciacion" type="date" required="required" class="form-control">
+    </div>
+  </div>
+		<!-- Button -->
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="guardar"></label>
+		  <div class="col-md-4">
+		    <button id="guardar" name="guardar" class="btn btn-primary">Guardar</button>
+		  </div>
+		</div>
+
+		</fieldset>
+		</form>
+
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+';
+
+$amarillo = "warning";
+if($botnenvi!=""){
+  $amarillo = "primary";
+}
+    $botnenvi.='<button type="button" class="btn btn-'.$amarillo.'" data-toggle="modal" data-target="#exampleModalextraref'.$idper.'">
+    Referenciación
+</button>';
+
+
+
+
   $botonedit ="";
 } else if ($estadopresen=="E"){
   $botnenvi = "Candidato Presentado";

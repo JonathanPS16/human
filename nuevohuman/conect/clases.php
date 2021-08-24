@@ -2032,6 +2032,15 @@ public function eliminarReq($id)
     $conn->Execute($SQL);  
 }
 
+public function guardarinformacionyformato($nombreempresa,$nombrereferencia,$cargo,$telefono,$ultimocargo,$tiempodesemp,$motivoretiro,$conceptodesempeno,$fortalezas,$aspectosmejorar,$personascargo,$responsabilidad,$calidad,$manejot,$tomad,$agilidad,$actitudse,$manejoco,$adaptabilidad,$relacionesct,$relacionessuper,$observacionesgenerales,$referenciafinal,$volveriaa,$porquecontra,$lorecomienda,$porquelorecomienda,$personareferenciacion,$cargoguar,$fechareferenciacion,$idreq,$id_per)
+{
+    
+    $SQL ="UPDATE req_candidatos SET  refnombreempresa='$nombreempresa',refnombrereferencia='$nombrereferencia',refcargo='$cargo',reftelefono='$telefono',refultimocargo'$ultimocargo',reftiempodesemp='$tiempodesemp',refmotivoretiro='$motivoretiro',refconceptodesempeno='$conceptodesempeno',reffortalezas='$fortalezas',refaspectosmejorar='$aspectosmejorar',refpersonascargo='$personascargo',refresponsabilidad='$responsabilidad',refcalidad='$calidad',refmanejot='$manejot',reftomad='$tomad',refagilidad='$agilidad',refactitudse='$actitudse',refmanejoco='$manejoco',refadaptabilidad='$adaptabilidad',refrelacionesct='$relacionesct',refrelacionessuper='$relacionessuper',refobservacionesgenerales='$observacionesgenerales',refreferenciafinal='$referenciafinal',refvolveriaa='$volveriaa',refporquecontra='$porquecontra',reflorecomienda='$lorecomienda',refporquelorecomienda='$porquelorecomienda',refpersonareferenciacion='$personareferenciacion',refcargoguar='$cargoguar',reffechareferenciacion='$fechareferenciacion' WHERE id=".$id_per;
+   echo $SQL;
+   die();
+    $conn->Execute($SQL);
+}
+
 
 public function archivosatrasformar($idper,$idreq){
 

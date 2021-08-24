@@ -2739,6 +2739,19 @@ catch(com_exception $e)
                     
                 break;
 
+
+                case "guardarreferenciacion":
+
+
+                    $idper = $_GET["idper"];
+                    $idreq = $_GET["idreq"];              
+                    $listadoreq=$objconsulta->guardarinformacionyformato($_POST['nombreempresa'],$_POST['nombrereferencia'],$_POST['cargo'],$_POST['telefono'],$_POST['ultimocargo'],$_POST['tiempodesemp'],$_POST['motivoretiro'],$_POST['conceptodesempeno'],$_POST['fortalezas'],$_POST['aspectosmejorar'],$_POST['personascargo'],$_POST['responsabilidad'],$_POST['calidad'],$_POST['manejot'],$_POST['tomad'],$_POST['agilidad'],$_POST['actitudse'],$_POST['manejoco'],$_POST['adaptabilidad'],$_POST['relacionesct'],$_POST['relacionessuper'],$_POST['observacionesgenerales'],$_POST['referenciafinal'],$_POST['volveriaa'],$_POST['porquecontra'],$_POST['lorecomienda'],$_POST['porquelorecomienda'],$_POST['personareferenciacion'],$_POST['cargoguar'],$_POST['fechareferenciacion'],$idreq,$idper);
+                    echo "<script>alert('Informacion Guardada Correctamente');
+                window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$idreq."';
+                </script>";
+                    
+                break;
+
                 case "listaCandidatos":
                     $idreq = $_GET["id"];
                     $tituloaaa ="";
