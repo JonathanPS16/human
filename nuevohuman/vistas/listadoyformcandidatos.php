@@ -764,7 +764,7 @@ if($fechacitan !="" && $estadopresen=="P")
   
   
   $botnenvi = "Proceso Terminado<br>";
-
+if($listadoreq[$i]['formatorefer']==""){
   $botnenvi.='<br><div class="modal fade" id="exampleModalextraref'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -987,14 +987,6 @@ if($fechacitan !="" && $estadopresen=="P")
     </div>
   </div>
   <div class="form-group row">
-    <label for="referenciafinal" class="col-4 col-form-label">Referenciación Final del Candidato</label> 
-    <div class="col-8">
-      <input id="referenciafinal" name="referenciafinal" type="text" class="form-control" required="required">
-    </div>
-  </div>
- 
-
-  <div class="form-group row">
     <label for="resp" class="col-4 col-form-label">Volvería a contratarlo</label> 
     <div class="col-8">
       <select id="volveriaa" name="volveriaa" class="custom-select" required="required">
@@ -1069,6 +1061,10 @@ if($botnenvi!=""){
     $botnenvi.='<button type="button" class="btn btn-'.$amarillo.'" data-toggle="modal" data-target="#exampleModalextraref'.$idper.'">
     Referenciación
 </button>';
+} else {
+  $botnenvi.='<a href="archivosgenerales/'.$listadoreq[$i]['formatorefer'].'" target="_black" class="btn btn-primary" >Descargar Referenciación</a>';
+  
+}
 
 
 
