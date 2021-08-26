@@ -14,7 +14,7 @@
 			<th>Ciudad</th>
 			<th>Estado Candidatos</th>
 			<th>Detalle Requisicion</th>
-			<th>Ver</th>
+			<th>Acciones</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -39,7 +39,7 @@ for($i=0; $i<count($listadoreq);$i++){
 	$tiporeq=$listadoreq[$i]['tiporeq'];
 	//$estadogene = "Finalizado";
 	//if($cantidadapro!=$cantidad){
-		$estadogene = "Aprobados: $cantidadapro<br>Rechazados:$cantidadrechazados<br>Total Registros:$cantidadtotal ";
+		$estadogene = "Total Registros:$cantidadtotal <br>Aprobados: $cantidadapro<br>Rechazados:$cantidadrechazados";
 	//}
 
 

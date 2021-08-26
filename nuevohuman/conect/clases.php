@@ -1219,10 +1219,11 @@ public function obtenerInformacionreq($id){
       return $consultas;
   }
 
-  public function listadousuariosper(){
+  public function listadousuariosper($where=""){
     //echo $ide;
       $conn = $this->conec();
-      $consultas = "SELECT * FROM usuarios";
+
+      $consultas = "SELECT * FROM usuarios where 1=1 ".$where;
       //echo $consultas;
       $consultas= $conn->Execute($consultas)-> getRows();
       return $consultas;

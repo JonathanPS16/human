@@ -96,17 +96,19 @@ $labo.='<option value="'.$laboratorios[$i]['id'].'">'.$laboratorios[$i]['nombrel
 		<tr>
 			<th>ID</th>
 			<th>Nombre Candidato</th>
-      <th>Hoja de Vida</th>
       <th>Numero Contacto</th>
       <th>Documento</th>
       <th>Correo</th>
+      <th>Hoja de Vida</th>
       <th>Prueba Psicotecnica</th>
       <th>Adjunto Extra</th>
       <th>Entrevista</th>    
       <th>Orden de Ingreso</th>
-      <th>Documentos Enviados</th>
+      <th>Editar</th>
       <th>Estado Candidato</th>
-			<th colspan="2">Acciones</th>
+      <th>Documentos Enviados</th>
+      <th>Referenciación</th>
+			<th>Acciones</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -143,7 +145,7 @@ for($i=0; $i<count($listadoreq);$i++){
     $observacionrechazo=$listadoreq[$i]['observacionrechazo'];
     $estadoreal=$listadoreq[$i]['estadoreal']; 
 
- 
+    $referenciacion ="";
 
     $modalbotonedit ='<div class="modal fade" id="exampleModaledit'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -763,9 +765,9 @@ if($fechacitan !="" && $estadopresen=="P")
   
   
   
-  $botnenvi = "Proceso Terminado<br>";
+  $botnenvi = "Proceso Terminado";
 if($listadoreq[$i]['formatorefer']==""){
-  $botnenvi.='<br><div class="modal fade" id="exampleModalextraref'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  $referenciacion.='<br><div class="modal fade" id="exampleModalextraref'.$idper.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -1058,11 +1060,12 @@ $amarillo = "warning";
 if($botnenvi!=""){
   $amarillo = "primary";
 }
-    $botnenvi.='<button type="button" class="btn btn-'.$amarillo.'" data-toggle="modal" data-target="#exampleModalextraref'.$idper.'">
+    $referenciacion.='<button type="button" class="btn btn-'.$amarillo.'" data-toggle="modal" data-target="#exampleModalextraref'.$idper.'">
     Referenciación
 </button>';
 } else {
-  $botnenvi.='<a href="archivosgenerales/'.$listadoreq[$i]['formatorefer'].'" target="_black" class="btn btn-primary" >Descargar Referenciación</a>';
+  $referenciacion = '<a href="archivosgenerales/'.$listadoreq[$i]['formatorefer'].'" target="_black" class="btn btn-primary" >Descargar</a>';
+  //$botnenvi.='<a href="archivosgenerales/'.$listadoreq[$i]['formatorefer'].'" target="_black" class="btn btn-primary" >Descargar Referenciación</a>';
   
 }
 
@@ -1187,7 +1190,7 @@ $modalcerrar .='<br><br><button type="button" class="btn btn-primary" data-toggl
 }
 $hola = "";
 $listarchivossend = "";
-if($estadoreal.$estadopresen=="AF") {
+if($estadoreal.$estadopresen=="AF" || $estadoreal.$estadopresen=="CF") {
   $hola= "Aprobado Finalizado";
   $listarchivossend = "<a target='_black' href='archivosgenerales/".$listadoreq[$i]['examenesar']."'>Examenes</a><br>"; 
   $listarchivossend .= "<a target='_black' href='archivosgenerales/".$listadoreq[$i]['hvhuman']."'>Hoja de Vida</a><br>";
@@ -1199,7 +1202,11 @@ if($estadoreal.$estadopresen=="AF") {
   $hola= "Rechazado";
 } else if($estadoreal.$estadopresen=="CC") {
   $hola = "Registrado";
-} else if($estadoreal.$estadopresen=="AEM"){ 
+} else if($estadoreal.$estadopresen=="EP" ){ 
+  $hola = "Proceso Entrevista";
+} else if($estadoreal.$estadopresen=="EE" ){ 
+  $hola = "Presentado";
+} else if($estadoreal.$estadopresen=="AEM" ){ 
   $hola = "Aprobado";
 } else {
   $hola = $estadoreal.$estadopresen;
@@ -1207,17 +1214,18 @@ if($estadoreal.$estadopresen=="AF") {
     echo "<tr>
     		<td>".$jaja ."</td>
     		<td>".$nombre."</td>
-        <td>".$botonhoja.$modalbotonhoja."</td>
         <td>".$telefono."</td>
         <td>".$cedula."</td>
         <td>".$correo."</td>
+        <td>".$botonhoja.$modalbotonhoja."</td>
         <td>".$boton.$modalboton."</td>
         <td>".$botonextra.$modalbotonextra."</td>
         <td>".$botonentre.$modalbotonentre."</td>
         <td>".$ordenbtn."</td>
-        <td>".$listarchivossend."</td>
         <td>".$botonedit.$modalbotonedit."</td>
         <td>".$hola."</td>
+        <td>".$listarchivossend."</td>
+        <td>".$referenciacion."</td>
     		<td>".$botnenvi.$modalcerrar."</td>
     </tr>";
   }

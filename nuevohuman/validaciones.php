@@ -1722,7 +1722,11 @@
                     $ide=$_GET['id'];
                     $datoempre = "Human";
                     $listatemporales=$objconsulta->obteneTemporales($datoempre);
-                    $listausuariosgenerales=$objconsulta->listadousuariosper();
+                    $whera = "";
+                    if($_SESSION['id_perfil'] != 1 || $_SESSION['id_perfil'] != 4){
+                        $whera = "and usuario = '".$_SESSION['usuario']."'";
+                    }
+                    $listausuariosgenerales=$objconsulta->listadousuariosper($whera);
                     $listatemporalesusuarias=$objconsulta->obteneTemporalesUsarias($datoempre);
                     if($ide>0){
                         $id=$_GET['id'];
