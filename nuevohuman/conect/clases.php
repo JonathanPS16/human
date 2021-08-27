@@ -184,6 +184,24 @@ public function obtenerCertificadosCedula($numero){
     return $consultas;
 }
 
+public function consultarempleadosreap($numero){
+   /* $where = "";
+    if(isset($_SESSION['centrocostos']) && $_SESSION['centrocostos']!="" && $_SESSION['id_perfil']!=1){
+       $where.="AND centrocostos.id_centro in(".$_SESSION['centrocostos'].")";
+    }*/
+    $conn = $this->conec();
+    $dato=array();
+    //$consultas = "SELECT contrato,nombre_empleado,cedula,fecha_ingreso,fecha_retiro,genero,centro_costos,subcentro_costos,nombrempresa,nombrecargo,salarioactual,correoelectronico FROM certificados where cedula='$numero' ".$where;
+    $consultas = "SELECT certificados.*,centrocostos.empresausuaria as a FROM certificados
+    inner join centrocostos on centrocostos.centrocosto=certificados.centro_costos 
+    and certificados.id_empresapres=centrocostos.id_empresapres
+    inner join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres 
+    where certificados.cedula like '%$numero%' ".$where;
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
 
 public function selectperfilesusuario(){
     $conn = $this->conec();
@@ -1141,11 +1159,12 @@ public function obteneRes($ide=0,$clientesol=""){
     if ($clientesol != "") {
         $where .=" and req.clientesol= ".$clientesol;
     } 
-    if($_SESSION['id_perfil']==1 && $ide == 0){
+    if(($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==4)  && $ide == 0){
         $where =" "; 
     }
 
     $consultas = "select centrocostos.empresausuaria as nombreempresausu,empresasterporales.nombretemporal,req.*,(select count(*) from req_candidatos where id_requisision = req.id and estado ='F') as cantidadapro from req INNER join empresasterporales on empresasterporales.id_temporal=req.empresaclientet inner JOIN centrocostos on centrocostos.id_centro=req.empresacliente and centrocostos.id_empresapres=empresasterporales.id_temporal where 1=1 ".$where." ORDER BY 1 ASC";
+    //echo $consultas;
      $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }

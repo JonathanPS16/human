@@ -2,33 +2,69 @@
 if($listatemporales[0]['id_proceso']==""){
   $listatemporales[0]['id_proceso'] = 0;
 }
+$explode = "";
+if(isset($_POST['validacion']) && $_POST['validacion']!=""){
+  $explode = explode("|", $_POST['validacion']) ;
+  //var_export($_POST);
+  
+}
 ?>
 <br>
-<h5>Registro de Proceso</h5><br>
+<h5>Solicitud Proceso Disciplinario</h5><br>
 <form action="home.php?ctr=proceso&acc=guardarsolicitud" method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" id="id" value="<?php echo $listatemporales[0]['id_proceso']; ?>">
   <div class="form-group row">
     <label for="funcionario" class="col-4 col-form-label">Nombre Empleado</label> 
     <div class="col-8">
-      <input id="funcionario" name="funcionario" value ="<?php echo $listatemporales[0]['nombrefuncionario']; ?>" type="text" class="form-control" placeholder="Nombre Empleado">
+      <input id="funcionario" name="funcionario" value ="<?php 
+      if(isset($_POST['validacion']) && $_POST['validacion']!=""){
+        echo $explode[0];
+      } else {
+        echo $listatemporales[0]['nombrefuncionario'];
+      }
+      
+       ?>" type="text" class="form-control" placeholder="Nombre Empleado" readonly="readonly">
     </div>
   </div>
   <div class="form-group row">
     <label for="cargo" class="col-4 col-form-label">Cargo</label> 
     <div class="col-8">
-      <input id="cargo" name="cargo" type="text" value ="<?php echo $listatemporales[0]['cargo']; ?>" required="required" class="form-control" placeholder="Cargo">
+      <input id="cargo" name="cargo" type="text" value ="<?php 
+      if(isset($_POST['validacion']) && $_POST['validacion']!=""){
+        echo $explode[4];
+      } else {
+        echo $listatemporales[0]['cargo']; 
+      } ?>
+      
+      " required="required" class="form-control" placeholder="Cargo" readonly="readonly">
     </div>
   </div>
   <div class="form-group row">
     <label for="cedula" class="col-4 col-form-label">Cedula</label> 
     <div class="col-8">
-      <input id="cedula" name="cedula" type="text" value ="<?php echo $listatemporales[0]['cedula']; ?>" required="required" class="form-control" placeholder="Cedula">
+      <input id="cedula" name="cedula" type="text" value ="<?php 
+      
+
+      if(isset($_POST['validacion']) && $_POST['validacion']!=""){
+        echo $explode[1];
+      } else {
+        echo $listatemporales[0]['cedula']; 
+      }
+      
+      ?>" required="required" class="form-control" placeholder="Cedula" readonly="readonly">
     </div>
   </div>
 <div class="form-group row">
     <label for="correoempleado" class="col-4 col-form-label">Correo</label> 
     <div class="col-8">
-      <input id="correoempleado" name="correoempleado" type="text" class="form-control" required="required" value ="<?php echo $listatemporales[0]['correoempleado']; ?>" placeholder="Correo Empleado">
+      <input id="correoempleado" name="correoempleado" type="text" class="form-control" required="required" value ="<?php 
+      //echo $listatemporales[0]['correoempleado']; 
+      if(isset($_POST['validacion']) && $_POST['validacion']!=""){
+        echo $explode[2];
+      } else {
+        echo $listatemporales[0]['correoempleado']; 
+      }
+      ?>" placeholder="Correo Empleado" readonly="readonly">
     </div>
   </div>
   <div class="form-group row">
@@ -41,7 +77,14 @@ if($listatemporales[0]['id_proceso']==""){
   <div class="form-group row">
     <label for="cedula" class="col-4 col-form-label">Centro de Costos</label> 
     <div class="col-8">
-      <input id="centrocostos" name="centrocostos" type="text" value ="<?php echo $listatemporales[0]['centrocostos']; ?>" required="required" class="form-control" placeholder="Centro Costos">
+      <input id="centrocostos" name="centrocostos" type="text" value ="<?php 
+      //echo $listatemporales[0]['centrocostos'];
+      if(isset($_POST['validacion']) && $_POST['validacion']!=""){
+        echo $explode[3];
+      } else {
+        echo $listatemporales[0]['centrocostos']; 
+      }
+      ?>" required="required" class="form-control" placeholder="Centro Costos" readonly="readonly">
     </div>
   </div>
 
@@ -109,23 +152,32 @@ if($listatemporales[0]['id_proceso']==""){
     </div>
   </div> 
 
-  <div class="custom-file">
-    <input type="file" class="custom-file-input" id="archivo1" name="archivo1">
-    <label class="custom-file-label" for="archivo1"> Primer Archivo </label>
+  <div class="form-group row">
+    <label for="text" class="col-4 col-form-label">Primer Archivo</label> 
+    <div class="col-8">
+    <input type="file" class="form-control" id="archivo1" name="archivo1">
+    </div>
   </div>
 
-  <div class="custom-file">
-    <input type="file" class="custom-file-input" id="archivo2" name="archivo2">
-    <label class="custom-file-label" for="archivo2">Segundo Archivo</label>
+  <div class="form-group row">
+    <label for="text" class="col-4 col-form-label">Segundo Archivo</label> 
+    <div class="col-8">
+    <input type="file" class="form-control" id="archivo2" name="archivo2">
+    </div>
   </div>
 
-  <div class="custom-file">
-    <input type="file" class="custom-file-input" id="archivo3" name="archivo3">
-    <label class="custom-file-label" for="archivo3">Tercer Archivo</label>
+  <div class="form-group row">
+    <label for="text" class="col-4 col-form-label">Tercer Archivo</label> 
+    <div class="col-8">
+    <input type="file" class="form-control" id="archivo3" name="archivo3">
+    </div>
   </div>
+
+
   <div class="form-group row">
     <div class="offset-4 col-8">
       <button name="submit" type="submit" class="btn btn-primary">Guardar Proceso</button>
+      &nbsp;&nbsp;||&nbsp; &nbsp;<a href="home.php?ctr=proceso&acc=validinfo" class="btn btn-primary">Volver</a>
     </div>
   </div>
 </form>

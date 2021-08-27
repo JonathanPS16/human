@@ -19,7 +19,7 @@ for($a=0; $a<count($listausuariosgenerales);$a++){
       <option value="0">Seleccione</option>
       <?php 
       for($a=0; $a<count($listausuariosgenerales);$a++){
-        if($_SESSION['id_perfil']!="1") {
+        if($_SESSION['id_perfil']!="4" && $_SESSION['id_perfil']!="1") {
           $selecteda ="";
         if($_SESSION['usuario']==$listausuariosgenerales[$a]['usuario']){
           $selecteda ="selected='selected'";

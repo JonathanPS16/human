@@ -8,7 +8,7 @@ die();
 } 
 require_once('conect/clases.php');
 
-if($_GET['ctr']=="admon" && $_GET['acc']=="listadoextras")
+if($_GET['ctr']=="admon" && ($_GET['acc']=="listadoextras" || $_GET['acc']=="registrosmas"))
 {
     include('validaciones.php');
     die();
@@ -211,6 +211,21 @@ if($_GET['ctr']=="admon" && $_GET['acc']=="listadoextras")
             }
             });
         }
+
+        $( "#filtrador #button").click(function() {
+            $('#listausuarios').empty();
+            var datos = $( "#filtrador #cedula").val();
+            $.ajax({
+            type: "POST",
+            url: "home.php?ctr=admon&acc=registrosmas",
+            data: 'id=' + datos,
+            success: function(datos) {
+                $('#listausuarios').html(datos);
+              
+            }
+            });
+        });
+        
 
     </script>
 </body>

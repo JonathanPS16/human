@@ -314,6 +314,9 @@
                         </script>";
                     
                 break;
+                case "validinfo":
+                    include('vistas/validinfo.php');
+                break;
                 case "formu":
                     if($_GET['id']>0) {
                         $listatemporales=$objconsulta->obtenerProcesos($_GET['id'],"SI");
@@ -1140,6 +1143,71 @@
                     //echo "adasdsadsadsadsadsadas";
                 break;
 
+                case "registrosmas":
+                    echo '<h4>Registros Encontrados</h4>
+                    <table class="table table-striped table-bordered" id="myTable">
+                    <thead>
+                    <tr>
+                    <th>Nombre
+                    </th>
+                    <th>Cedula
+                    </th>
+                    <th>Correo
+                    </th>
+                    <th>Centro de Costos
+                    </th>
+                    <th>Cargo
+                    </th>
+                    <th>Seleccionar
+                    </th>
+                    </tr>
+                    </thead>
+                    <tbody>';
+                    $texto = preg_replace('([^0-9])', '', $_POST['id']);
+                    //echo $texto;
+                    $listado=$objconsulta->consultarempleadosreap($texto);
+                    //var_export($listado);
+                    for($i=0; $i<count($listado);$i++){
+                        echo '
+                        <tr>
+                        <td>'.$listado[$i]['nombre_empleado'].'
+                        </td>
+                        <td>'.$listado[$i]['cedula'].'
+                        </td>
+                        <td>'.$listado[$i]['correoelectronico'].'
+                        </td>
+                        <td>'.$listado[$i]['a'].'
+                        </td>
+                        <td>'.preg_replace('([^a-zA-Z ])', '', $listado[$i]['nombrecargo']).'
+                        </td>
+                        <td>
+                        <form id="'.$i.'" action="home.php?ctr=proceso&acc=formu&id=0" method="post">
+                        <input type="hidden" name="validacion" id="validacion" value="'.$listado[$i]['nombre_empleado'].'|'.$listado[$i]['cedula'].'|'.$listado[$i]['correoelectronico'].'|'.$listado[$i]['a'].'|'.$listado[$i]['nombrecargo'].'">
+                        <button name="button" id="button" type="submit" class="btn btn-primary">Solicitar Proceso Disciplinario</button>
+                        </form>
+                        </td>
+                        </tr>
+                        
+                        ';
+                    }
+                    echo '
+                    </tbody>
+                    </table>';
+                    /*$listado=$objconsulta->listadeempresassuarias($_POST['id']);
+                    echo "<option value=''>Seleccione</option>";
+                    for($i=0; $i<count($listado);$i++){
+                        $id = $listado[$i]['id_centro'];
+                        $name = $listado[$i]['empresausuaria'];
+                        $selected ="";
+                        if($_POST['pres']!="" && $_POST['pres']==$id){
+                            $selected ='selected="selected"';
+                        }
+                        echo "<option value='$id' $selected>$name</option>";
+                    }*/
+
+                    //echo "adasdsadsadsadsadsadas";
+                break;
+
                 case "crearperfilu":
                     $listamenus=$objconsulta->guardarnuevoperfil($_POST['nombreperfil']);
                     echo "<script>alert('Perfil Creado Correctamente. Recuerde Configurarlo');
@@ -1723,7 +1791,7 @@
                     $datoempre = "Human";
                     $listatemporales=$objconsulta->obteneTemporales($datoempre);
                     $whera = "";
-                    if($_SESSION['id_perfil'] != 1 || $_SESSION['id_perfil'] != 4){
+                    if($_SESSION['id_perfil'] != "1" && $_SESSION['id_perfil'] != "4"){
                         $whera = "and usuario = '".$_SESSION['usuario']."'";
                     }
                     $listausuariosgenerales=$objconsulta->listadousuariosper($whera);
