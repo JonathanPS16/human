@@ -1,4 +1,5 @@
-<table class="table table-striped">
+<h5>Gestionar Procesos Disciplinarios</h5>
+<table class="table table-striped table-bordered" id="myTable">
 	<thead>
 		<tr>
 			<th>ID</th>
@@ -12,7 +13,6 @@
 		</tr>
 	</thead>
 	<tbody>
-    <tr>
 	<?php 
 	$val = 0;
 	for($i=0; $i<count($listatemporales);$i++){

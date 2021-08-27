@@ -558,7 +558,7 @@ public function obtenerProcesosGest($id="",$propirtario=""){
     }
 
 
-    $consultas = "SELECT * FROM procesos where ".$where;
+    $consultas = "SELECT * FROM procesos where ".$where. " order by id_proceso DESC";
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
@@ -1010,7 +1010,7 @@ public function guardarprocesoAccidente($id,$funcionario,$cargo,$cedula,$lugartr
 
 
 
-public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado,$testigo,$cargotestigo,$telefonotestigo,$telefonojefei) {
+public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado,$testigo,$cargotestigo,$telefonotestigo,$telefonojefei,$grabador) {
     $dat=date('Y-m-d H:i:s');
     $conn = $this->conec();
     $insertararchivos1  ="";
@@ -1048,7 +1048,7 @@ public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$je
 
     } else {
         $SQL ="INSERT INTO  procesos (".$insertararchivos1.$insertararchivos2.$insertararchivos3."nombrefuncionario,cargo,cedula,lugartrabajo,jefeinmediato,coreojefe,fechaevento,descripcion,grabador,fechagrab,horario,centrocostos,empresausuaria,correoempleado,testigo,cargotestigo,telefonotestigo,telefonojefei) VALUES (".$val1.$val2.$val3."'$funcionario','$cargo','$cedula','$lugartrabajo','$jefe','$correojefe',
-        '$fechaevento','$descripcion','".$_SESSION['usuario']."','$dat','$horario','$centrocostos','$empresausuaria','$correoempleado','$testigo','$cargotestigo','$telefonotestigo','$telefonojefei')";
+        '$fechaevento','$descripcion','".$grabador."','$dat','$horario','$centrocostos','$empresausuaria','$correoempleado','$testigo','$cargotestigo','$telefonotestigo','$telefonojefei')";
         $conn->Execute($SQL);
         
     }

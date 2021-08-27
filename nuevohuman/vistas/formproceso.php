@@ -8,11 +8,31 @@ if(isset($_POST['validacion']) && $_POST['validacion']!=""){
   //var_export($_POST);
   
 }
+
+$litadoUsuarios = "";
+for($a=0; $a<count($listausuariosgenerales);$a++){
+  $selecteda ="";
+  if($listatemporales[0]['grabador']!="" && ($listausuariosgenerales[$a]['usuario']==$listatemporales[0]['grabador'])){
+    $selecteda ="selected='selected'";
+  } else if($_SESSION['usuario']==$listausuariosgenerales[$a]['usuario']){
+    $selecteda ="selected='selected'";
+  }
+  $litadoUsuarios.='<option value="'.$listausuariosgenerales[$a]['usuario'].'" '.$selecteda.'>'.$listausuariosgenerales[$a]['nombre'].'</option>';
+
+}
 ?>
 <br>
 <h5>Solicitud Proceso Disciplinario</h5><br>
 <form action="home.php?ctr=proceso&acc=guardarsolicitud" method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" id="id" value="<?php echo $listatemporales[0]['id_proceso']; ?>">
+<div class="form-group row">
+    <label for="jefe" class="col-4 col-form-label">Propietario Solicitud</label> 
+    <div class="col-8">
+    <select name="registry" id="registry" class="form-control">
+      <?php echo $litadoUsuarios; ?>
+    </select>
+    </div>
+  </div>
   <div class="form-group row">
     <label for="funcionario" class="col-4 col-form-label">Nombre Empleado</label> 
     <div class="col-8">

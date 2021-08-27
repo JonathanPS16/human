@@ -321,6 +321,11 @@
                     if($_GET['id']>0) {
                         $listatemporales=$objconsulta->obtenerProcesos($_GET['id'],"SI");
                     }
+                    $whera = "";
+                    if($_SESSION['id_perfil'] != "1" && $_SESSION['id_perfil'] != "4"){
+                        $whera = "and usuario = '".$_SESSION['usuario']."'";
+                    }
+                    $listausuariosgenerales=$objconsulta->listadousuariosper($whera);
                     include('vistas/formproceso.php');
                 break;
 
@@ -399,7 +404,7 @@
                             }
                         }
                     }
-                    $objconsulta->guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado,$testigo,$cargotestigo,$telefonotestigo,$telefonojefei);
+                    $objconsulta->guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado,$testigo,$cargotestigo,$telefonotestigo,$telefonojefei,$_POST['registry']);
                     $listatemporales = $objconsulta->ultimoproceso();
                     $idcreacion = $listatemporales[0]['id_proceso'];
                     $listatemporales=$objconsulta->notificarProcesos($idcreacion,$correojefe);
