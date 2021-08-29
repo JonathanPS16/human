@@ -232,7 +232,7 @@
                             }
                         }
                     }
-                    $listatemporales=$objconsulta->enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justificacion,$archivo,$horacita,$sedelugar,$modalidadcita);
+                    $listatemporales=$objconsulta->enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justificacion,$archivo,$horacita,$sedelugar,$modalidadcita,$_POST['infoextra']);
                     echo "<script>alert('Empleado Notificado Correctamente');
                         window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';
                         </script>";

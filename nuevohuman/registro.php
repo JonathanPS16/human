@@ -25,6 +25,26 @@ if(isset($_POST) && $_POST['vali']=='si')
   echo "<script>
   alert('Respuesta enviada correctamente');
   window.close();</script>";
+} else {
+    $objconsulta= new consultas();
+    $ret=$objconsulta->validarrellenado($_GET['id']);
+    if($ret=="T"){
+?>
+    <html>
+<title>Acceso Caducado</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body class="w3-container">
+<div class="w3-panel w3-pale-red w3-border">
+  <h3>Acceso Caducado</h3>
+  <p>El formulario Ya No Se Encuentra Disponible</p>
+</div>
+
+</body>
+</html>
+    <?php
+    die();
+    }
 }
 
 ?>
@@ -87,7 +107,7 @@ if(isset($_POST) && $_POST['vali']=='si')
 <article class="card-body mx-auto" style="max-width: 400px;">
 <img class="mb-4" src="img/logo_negro.jpg" alt="" width="228" height="72">
 	<br>
-	<h4 class="card-title mt-3 text-center">Aclaracion Proceso Disciplinario</h4><br>
+	<h4 class="card-title mt-3 text-center">Aclaración Proceso Disciplinario</h4><br>
   <form action="registro.php" method="post" enctype="multipart/form-data">
     <div class="form-group row">
     <label for="aclaracion" class="col-4 col-form-label">Aclaracion</label> 
@@ -104,7 +124,7 @@ if(isset($_POST) && $_POST['vali']=='si')
   <input type="hidden" name="id" id="id" value="<?php echo $_GET['id']; ?>">
   <input type="hidden" name="vali" value="si" id="vali">
   <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block">Enviar Aclaracion</button>
+        <button type="submit" class="btn btn-primary btn-block">Enviar Aclaración</button>
     </div>                                                              
 </form>
 </article>

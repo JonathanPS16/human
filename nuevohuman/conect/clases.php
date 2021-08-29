@@ -1830,7 +1830,7 @@ public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo){
 
 }
 
-public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justificacion,$archivo,$horacita,$sedelugar,$modalidadcita){
+public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justificacion,$archivo,$horacita,$sedelugar,$modalidadcita,$extradata){
     $conn = $this->conec();
     $nombre="";
     $consultas = "SELECT * from procesos where id_proceso=".$id;
@@ -1841,15 +1841,15 @@ public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justific
     
     }
     $titulo="Citacion Proceso"; 
-    if($modalidadcita=="Videollamada"){
+    if($modalidadcita=="Videollamada" || $modalidadcita=="presencial"){
         $dato ="en la dirección ".$sedelugar;
     } else {
-        $dato ="través de Video Conferencia por ".$sedelugar;
+        $dato ="través de  ".$sedelugar;
     }
     $mensaje = "Apreciado Empleado ".$nombre."<br><br>
     
     Le informamos que se le ha iniciado un proceso disciplinario, sobre un evento reportado por la Empresa Usuaria donde presta sus servicios, 
-    por lo cual usted deberá presentarse ".$dato.", para dar las explicaciones respectivas 
+    por lo cual usted deberá presentarse ".$dato." ".$extradata.", para dar las explicaciones respectivas 
     <br>
     Cualquier inquietud que tengo al respecto, la atenderemos a traves de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com  , areajuridica@humantalentsas.com.co 
     <br>
@@ -1859,7 +1859,7 @@ public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justific
     Human Talent SAS";
     $envio = $this->enviarcorreoadjuntos($correo,$archivo,$mensaje,$titulo);
     $fechahora = $fechacitacion. " ".$horacita;
-    $SQL ="UPDATE procesos  SET estado='E',fechacita='$fechahora',tipoproceso ='$tipo',justificacion='$justificacion',archivoenviado='$archivo',sedelugar='$sedelugar',modalidadcita='$modalidadcita'  WHERE id_proceso=".$id;
+    $SQL ="UPDATE procesos  SET extradata='$extradata',estado='E',fechacita='$fechahora',tipoproceso ='$tipo',justificacion='$justificacion',archivoenviado='$archivo',sedelugar='$sedelugar',modalidadcita='$modalidadcita'  WHERE id_proceso=".$id;
     $conn->Execute($SQL);
 
 }
@@ -1924,8 +1924,22 @@ public function enviarsolicitudexplicacion($id,$correo,$fechacitacion,$tipo,$raz
 
 public function guardarrespuestaempleado($id,$aclaracion,$archivo){
     $conn = $this->conec();
-    $SQL ="UPDATE procesos  SET  estado='V',aclaracionempleado='$aclaracion',archivoacaraempleado ='$archivo' WHERE id_proceso=".$id;
+    $SQL ="UPDATE procesos  SET  estadoacla='T', estado='V',aclaracionempleado='$aclaracion',archivoacaraempleado ='$archivo' WHERE id_proceso=".$id;
     $conn->Execute($SQL);
+}
+
+public function validarrellenado($id)
+{
+    $conn = $this->conec();
+    $nombre="";
+    $consultas = "SELECT * from procesos where id_proceso=".$id;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $nombre  ="";
+    for($i= 0; $i<count($consultas); $i++) {
+        $nombre = $consultas[$i]['estadoacla'];
+    
+    }
+    return $nombre;
 }
 
 
