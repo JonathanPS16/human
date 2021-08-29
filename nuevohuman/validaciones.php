@@ -217,6 +217,7 @@
                     $modalidadcita=$_POST['modalidadcita'];
                     $tipo=$_POST['tipo'];
                     $archivo="";
+                    $nombre_archivo = date('YmdHms').$_FILES['archivo1']['name'];
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo1']['type'];
                         $tamano_archivo = $_FILES['archivo1']['size'];
@@ -232,6 +233,7 @@
                             }
                         }
                     }
+                    //die("archivosgenerales/".$nombre_archivo);
                     $listatemporales=$objconsulta->enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justificacion,$archivo,$horacita,$sedelugar,$modalidadcita,$_POST['infoextra']);
                     echo "<script>alert('Empleado Notificado Correctamente');
                         window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';

@@ -1,4 +1,4 @@
-<a  class="btn btn-primary" href="home.php?ctr=proceso&acc=formu&id=0">Nuevo Proceso</a>
+<a  class="btn btn-primary" href="home.php?ctr=proceso&acc=validinfo">Nuevo Proceso</a>
 <br><br><table class="table table-striped" id="tablagrid">
 	<thead>
 		<tr>
@@ -44,13 +44,13 @@
 		}
 		$archivos = "";
 		if($archivouno!=""){
-			$archivos .= "<a href ='archivosgenerales/".$archivouno."' target='_black'>Archivo Uno</a><br>";
+			$archivos .= "<a href ='archivosgenerales/".$archivouno."' target='_black'>Archivo Uno</a>&nbsp<br>&nbsp;";
 		}
 		if($archivodos!=""){
-			$archivos .= "<a href ='archivosgenerales/".$archivodos."' target='_black'>Archivo Dos</a><br>";
+			$archivos .= "<a href ='archivosgenerales/".$archivodos."' target='_black'>Archivo Dos</a><br>&nbsp";
 		}
 		if($archivotres!=""){
-			$archivos .= "<a href ='archivosgenerales/".$archivotres."' target='_black'>Archivo Tres</a><br>";
+			$archivos .= "<a href ='archivosgenerales/".$archivotres."' target='_black'>Archivo Tres</a><br>&nbsp";
 		}
 
 		if($archivoconclusionproceso!=""){
