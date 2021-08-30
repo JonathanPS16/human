@@ -587,7 +587,7 @@ public function obtenerProcesosGestAcci($id="",$propirtario=""){
 public function obtenerProcesosGestjur($id="",$propirtario=""){
     $conn = $this->conec();
     $dato=array();
-    $where  ="estado in ('V')";
+    $where  ="estado in ('V','TT')";
     if($id!=""){
         $where.=" and id_proceso = {$id}";
     }
@@ -1799,10 +1799,43 @@ public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$func
     $conn->Execute($SQL);
 } 
 
+public function guardarynotificarfinalproceso($id,$mensajeaa,$conclu){
+    $conn = $this->conec();
+    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    for($i= 0; $i<count($consultas); $i++) {
+      $correos = explode(",", $consultas[$i]['usuarios']);
+      for($j=0; $j<count($correos); $j++){
+          $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
+          $consultasresp= $conn->Execute($consultascorr)-> getRows();
+            
+          $mensaje  ="Apreciado Cliente<br><br>
+
+          Le informamos que la empresa usuaria $mensajeaa <br>
+          <br>Para enviar Notificaciones y validar puede acceder al siguiete <a href='https://humantalentsas.com/human/home.php?ctr=proceso&acc=formacla'></a><br>
+          Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
+          <br><br>
+          Cualquier inquietud que tengo al respecto, la atenderemos a traves de nuestro PBX 214 2011, o Celular 318 335 2194 - 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, nomina@humantalentsas.com, contabilidad@humantalentsas.com  
+          <br><br>
+          Cordialmente,
+          <br><br>
+          Área Servicio al Cliente 
+          <br>Human Talent SAS";
+            if($consultasresp[0]['correo']!=""){
+                $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+            }
+         
+      }
+
+    }
+    $SQL ="UPDATE procesos SET concluaprobadaf = '$mensajeaa' , estado ='TT' WHERE id_proceso=".$id;
+    $conn->Execute($SQL);
+} 
 
 
 
-public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo){
+
+public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo,$fechainicio,$fechafinalmedida){
     $conn = $this->conec();
     $nombre="";
     $consultas = "SELECT * from procesos where id_proceso=".$id;
@@ -1825,7 +1858,7 @@ public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo){
     $envio = $this->enviocorreo($correo, $mensaje);
 
 
-    $SQL ="UPDATE procesos  SET conclucionfinal = '$efecto',archivofinal='$nombre_archivo', estado='T' WHERE id_proceso=".$id;
+    $SQL ="UPDATE procesos  SET fechainimedida = '$fechainicio', fechafinmedida='$fechafinalmedida', conclucionfinal = '$efecto',archivofinal='$nombre_archivo', estado='T' WHERE id_proceso=".$id;
     $conn->Execute($SQL);
 
 }
@@ -1894,6 +1927,42 @@ public function guardarfinretiro($id,$correo,$archivo){
     }
     
     $SQL ="UPDATE renuncias  SET estado='T',correo='$correo',archivo ='$archivo' WHERE id_renuncia=".$id;
+    $conn->Execute($SQL);
+
+}
+
+public function guardarfindisciplinarionotifica($id,$correo,$mensajef){
+    $conn = $this->conec();
+    $titulo="Documento Retiro";
+    $nombre="";
+    $consultas = "SELECT * from procesos where id_proceso=".$id;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $nombre  ="";
+    for($i= 0; $i<count($consultas); $i++) {
+        $nombre = $consultas[$i]['nombrefuncionario'];
+    
+    } 
+    $mensaje = "Apreciado Señor (a) ".$nombre."<br><br>
+    Se le informa sobre la determinacion tomada en su proceso disciplinario<br>
+    ".$mensajef."
+    <br><br>
+    Cualquier inquietud que tengo al respecto, la atenderemos a través de nuestro PBX 214 2011, o Celular 318 335 2194 - 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, 
+    <br><br>
+    Cordialmente,
+    <br><br>
+    Área Servicio al Cliente 
+    <br>Human Talent SAS";
+    //var_dump(explode(";",$correo));
+    $explo =explode(";",$correo);
+    
+    for($i=0; $i<=count($explo);$i++)
+    {
+        if($explo[$i]!=""){
+            $envio = $this->enviocorreo($explo[$i],$mensaje, "Notificacion Gestion Proceso Disciplinario");
+        }    
+    }
+    
+    $SQL ="UPDATE procesos  SET estado='TN' WHERE id_proceso=".$id;
     $conn->Execute($SQL);
 
 }

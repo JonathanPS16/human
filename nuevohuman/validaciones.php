@@ -414,11 +414,55 @@
                         window.location.href = 'home.php?ctr=proceso&acc=formproceso';
                         </script>";
                 break;
+                case "guardarconclusionfinalvalidada":
+                    $conclu = $_POST['conclu'];
+                    $id = $_POST['id'];
+                    $efecto = $_POST['efecto'];
+                    $fechainimedida = $_POST['fechainimedida'];
+                    $fechafinmedida = $_POST['fechafinmedida'];
+                    
+                    
+                    if($conclu=="SI"){
+
+                        $mensaje = "Aprobó la conclusion de la siguiente manera.<br><br> Conclusion: $efecto <br>Fecha Inicio Medida: $fechainimedida<br>Fecha Fin Medida: $fechafinmedida";
+                    }else {
+                        $mensaje = "Rechazó la conclusion con los siguientes cambios.<br><br> Conclusion: $efecto <br>Fecha Inicio Medida: $fechainimedida<br>Fecha Fin Medida: $fechafinmedida";
+                    }
+                    $listatemporales=$objconsulta->guardarynotificarfinalproceso($id,$mensaje,$conclu);
+                    echo "<script>alert('Validacion Envidada Correctamente');
+                        window.location.href = 'home.php?ctr=proceso&acc=formproceso';
+                        </script>";
+
+                break;
+
+                case "guardarfinalprocesonotificaciones":
+                   // print_r($_POST);
+                    $correoenvio = "";
+                    if(isset($_POST['checkbox_0']) && $_POST['checkbox_0']>0){
+                        $correoenvio.=$_POST['correo'].";";
+                    }
+                    if(isset($_POST['checkbox_1']) && $_POST['checkbox_1']>0){
+                        $correoenvio.="servicioalcliente@humantalentsas.com".";";
+                    }
+                    if(isset($_POST['checkbox_2']) && $_POST['checkbox_2']>0){
+                        $correoenvio.="nomina@humantalentsas.com".";";
+                    }
+                    $mensajef = $_POST['menfinal'];
+                    $listatemporales=$objconsulta->guardarfindisciplinarionotifica($_POST['id'],$correo,$mensajef);
+                    echo "<script>alert('Notificaciones Enviadas Correctamente');
+                        window.location.href = 'home.php?ctr=proceso&acc=formacla';
+                        </script>";
+
+
+
+                break;
 
                 case "guardarfinalproceso":
                     $id = $_POST['id'];
                     $efecto = $_POST['efecto'];
                     $correo = $_POST['correo'];
+                    $fechainimedida = $_POST['fechainimedida'];
+                    $fechafinmedida = $_POST['fechafinmedida'];
                     $archivotres = "";
                     $nombre_archivo = date('Ymd').$_FILES['archivofirmado']['name'];
                     if($nombre_archivo!="") {
@@ -436,7 +480,7 @@
                             }
                         }
                     }
-                    $objconsulta->guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo);
+                    $objconsulta->guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo,$fechainimedida,$fechafinmedida);
                     echo "<script>alert('Proceso Terminado Correctamente');
                                 window.location.href = 'home.php?ctr=proceso&acc=formacla';
                                 </script>";

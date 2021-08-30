@@ -29,6 +29,7 @@ if($_GET['acc']=="formacla"){
 			<th>Archivos Adjuntos</th>
 			<th>Cita</th>
 			<th>Explicación</th>
+			<th>Validacion Conclusion</th>
 			<th>Estado Proceso</th>
 			<th>Accion</th>  
 		</tr>
@@ -48,7 +49,7 @@ if($_GET['acc']=="formacla"){
 		$archivouno=$listatemporales[$i]['archivouno'];
 		$archivodos=$listatemporales[$i]['archivodos'];
 		$archivotres=$listatemporales[$i]['archivotres'];
-		$correoempleado=$listatemporales[$i]['correoempleado'];
+		$correoempleado =$listatemporales[$i]['correoempleado'];
 		$conclucionentre=$listatemporales[$i]['conclucionentre'];
 		$aclaracionempleado=$listatemporales[$i]['aclaracionempleado'];
 		
@@ -370,6 +371,71 @@ $(".custom-file-input").on("change", function() {
 		$botonhojatres ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalena'.$id.'">
 	  Enviar Conclusion
 	</button>';	
+
+	$modalbotonhojatresa ='<div class="modal fade" id="exampleModalenaa'.$id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Notificacion Proceso Diciplinario</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<form class="form-horizontal" action="home.php?ctr=proceso&acc=guardarfinalprocesonotificaciones" method="post" enctype="multipart/form-data">
+			
+			<div class="form-group row">
+            <label for="presentarse" class="col-4 col-form-label">Correos Electronico (Separados por ;)</label> 
+            <div class="col-8">
+              <input id="correo" name="correo" placeholder="correo@electronico.com;correo2@electronico.com" type="text" class="form-control" >
+            </div>
+          </div> 
+			<div class="form-group row">
+			<label class="col-4 col-form-label">Enviar a</label> 
+			<div class="col-8">
+			  <div class="custom-controls-stacked">
+				<div class="custom-control custom-checkbox">
+				  <input name="checkbox_0" id="checkbox_0" type="checkbox" class="custom-control-input" value="1" checked="checked"> 
+				  <label for="checkbox_0" class="custom-control-label">Empleado</label>
+				</div>
+			  </div>
+			  <div class="custom-controls-stacked">
+				<div class="custom-control custom-checkbox">
+				  <input name="checkbox_1" id="checkbox_1" type="checkbox" class="custom-control-input" value="2" checked="checked"> 
+				  <label for="checkbox_1" class="custom-control-label">Servicio Cliente</label>
+				</div>
+			  </div>
+			  <div class="custom-controls-stacked">
+				<div class="custom-control custom-checkbox">
+				  <input name="checkbox_2" id="checkbox_2" type="checkbox" class="custom-control-input" value="3" checked="checked"> 
+				  <label for="checkbox_2" class="custom-control-label">Nomina</label>
+				</div>
+			  </div>
+			</div>
+		  </div> 
+
+		
+<bt><br><br>
+  <div class="form-group row">
+    <div class="offset-4 col-8">
+      <button name="submit" type="submit" class="btn btn-primary">Enviar Notificacion</button>
+    </div>
+  </div>
+  <input type ="hidden" name="correo" id ="correo" value="'.$correoempleado.'">
+			<input type ="hidden" name="id" id ="id" value="'.$id.'">
+			<input type ="hidden" name="menfinal" id ="menfinal" value="'.$listatemporales[$i]['concluaprobadaf'].'">
+			</form>
+	
+			
+		  </div>
+		  
+		</div>
+	  </div>
+	</div>
+	';
+		$botonhojatresa ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalenaa'.$id.'">
+	  Notificar Conclusion
+	</button>';	
 		/*
 	    $estadolb = '<a class="btn btn-primary" href = "home.php?ctr=proceso&acc=formu&id='.$id.'">Editar</a>';
 		if($estado == "C" && $archivos!=""){
@@ -416,6 +482,14 @@ $(".custom-file-input").on("change", function() {
 			$estadolb = $modalbotonhojatres.$botonhojatres;
 		}
 
+		if($estado =="TT"){
+			$modalbotonhoja ="";
+			$botonhoja = "";
+			$modalbotonhojaex="";
+			$botonhojaex = "";
+			$estadolb = $modalbotonhojatresa.$botonhojatresa;
+		}
+
 
 
 		$correo=$listatemporales[$i]['correo'];
@@ -437,6 +511,7 @@ $(".custom-file-input").on("change", function() {
 		<td>'.$archivos.'</td>
 		<td>'.$modalbotonhoja.$botonhoja.'</td>
 		<td>'.$modalbotonhojaex.$botonhojaex.'</td> 
+		<td>'.$listatemporales[$i]['concluaprobadaf'].'</td>
 		<td>'.$conclucionentre.'</td>
 		<td>'.$estadolb.'</td></tr>';
 	}
