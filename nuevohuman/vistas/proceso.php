@@ -1,3 +1,4 @@
+<h5>Mis Procesos Disciplinarios</h5>
 <a  class="btn btn-primary" href="home.php?ctr=proceso&acc=validinfo">Nuevo Proceso</a>
 <br><br><table class="table table-striped table-bordered" id="myTable">
 	<thead>

@@ -278,10 +278,15 @@ public function obtenerProcesos($id="",$propirtario=""){
     if($id!=""){
         $where.=" and id_proceso = {$id}";
     }
+    //print_r($_SESSION);
+    if($_SESSION['id_perfil']=="1" || $_SESSION['id_perfil']=="5" || $_SESSION['id_perfil']=="2"){
 
-    if($propirtario!=""){
-        $where.=" and grabador  = '{$_SESSION['usuario']}'";
+    } else {
+        if($propirtario!=""){
+            $where.=" and grabador  = '{$_SESSION['usuario']}'";
+        }
     }
+    
 
 
     $consultas = "SELECT * FROM procesos where ".$where;
