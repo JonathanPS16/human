@@ -320,11 +320,12 @@
                     include('vistas/validinfo.php');
                 break;
                 case "formu":
+                    //print_r($_SESSION);
                     if($_GET['id']>0) {
                         $listatemporales=$objconsulta->obtenerProcesos($_GET['id'],"SI");
                     }
                     $whera = "";
-                    if($_SESSION['id_perfil'] != "1" && $_SESSION['id_perfil'] != "4"){
+                    if($_SESSION['id_perfil'] != "1" && $_SESSION['id_perfil'] != "4" && $_SESSION['id_perfil'] != "2"){
                         $whera = "and usuario = '".$_SESSION['usuario']."'";
                     }
                     $listausuariosgenerales=$objconsulta->listadousuariosper($whera);
