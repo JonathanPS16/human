@@ -1663,7 +1663,7 @@
                     if($_POST['valor'] == 1) {
                         $objconsulta->guardarcarguearchivos("truncate table certificados");
                         $objconsulta->guardarcarguearchivos("ALTER TABLE certificados AUTO_INCREMENT = 1");
-                        $sql = "INSERT INTO certificados (id_empresapres,contrato,nombre_empleado,cedula,fecha_ingreso,fecha_retiro,genero,centro_costos,subcentro_costos,nombrempresa,nombrecargo,salarioactual,correoelectronico) 
+                        $sql = "INSERT INTO certificados (id_empresapres,contrato,nombre_empleado,cedula,fecha_ingreso,fecha_retiro,genero,centro_costos,subcentro_costos,nombrempresa,nombrecargo,salarioactual,correoelectronico,direccion,telefono,eps,caja,detalle1,detalle2,detalle3,detalle4,detalle5,nombrecontacto,telefonocontacto,fondopension,tiposangre) 
                         VALUES ";
                         $creado=0;
                         for ($row = 2; $row <= $highestRow; $row++){ 
@@ -1689,7 +1689,22 @@
                             $cargolaboral  = str_replace("'","",$sheet->getCell("J".$row)->getValue());
                             $sueldoactual  = str_replace("'","",$sheet->getCell("K".$row)->getValue());
                             $correoelectronico  = str_replace("'","",$sheet->getCell("L".$row)->getValue());
-                            $sql.="($idempresaprestadora,'$contrato','$nombreempleado','$cedula','$fechaini','$fechafinal','$genero','$centrocostos','$subcentrocostos','$nombreempresa','$cargolaboral','$sueldoactual','$correoelectronico'),";
+                            $direccion  = str_replace("'","",$sheet->getCell("M".$row)->getValue());
+                            $telefono  = str_replace("'","",$sheet->getCell("N".$row)->getValue());
+                            $eps  = str_replace("'","",$sheet->getCell("O".$row)->getValue());
+                            $caja  = str_replace("'","",$sheet->getCell("P".$row)->getValue());
+                            $detalleuno  = str_replace("'","",$sheet->getCell("Q".$row)->getValue());
+                            $detalledos  = str_replace("'","",$sheet->getCell("R".$row)->getValue());
+                            $detalletres  = str_replace("'","",$sheet->getCell("S".$row)->getValue());
+                            $detallecuatro  = str_replace("'","",$sheet->getCell("T".$row)->getValue());
+                            $detallecinco  = str_replace("'","",$sheet->getCell("U".$row)->getValue());
+                            $nombrecontacto  = str_replace("'","",$sheet->getCell("V".$row)->getValue());
+                            $telefonocontacto  = str_replace("'","",$sheet->getCell("W".$row)->getValue());
+                            $fondo  = str_replace("'","",$sheet->getCell("X".$row)->getValue());
+                            $gruposang  = str_replace("'","",$sheet->getCell("Y".$row)->getValue());
+                            
+
+                            $sql.="($idempresaprestadora,'$contrato','$nombreempleado','$cedula','$fechaini','$fechafinal','$genero','$centrocostos','$subcentrocostos','$nombreempresa','$cargolaboral','$sueldoactual','$correoelectronico','$direccion','$telefono','$eps','$caja','$detalleuno','$detalledos','$detalletres','$detallecuatro','$detallecinco','$nombrecontacto','$telefonocontacto','$fondo','$gruposang'),";
                             $creado++;
                             
                         }

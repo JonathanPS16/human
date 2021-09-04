@@ -1860,9 +1860,9 @@ public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo,$fechain
     <br><br>
     Área Jurídica  - 
     Human Talent SAS";
-    $envio = $this->enviocorreo($correo, $mensaje);
+   // $envio = $this->enviocorreo($correo, $mensaje);
 
-
+    
     $SQL ="UPDATE procesos  SET fechainimedida = '$fechainicio', fechafinmedida='$fechafinalmedida', conclucionfinal = '$efecto',archivofinal='$nombre_archivo', estado='T' WHERE id_proceso=".$id;
     $conn->Execute($SQL);
 
@@ -1991,7 +1991,7 @@ public function enviarsolicitudexplicacion($id,$correo,$fechacitacion,$tipo,$raz
     <br><br>
     Área Jurídica  - 
     Human Talent SAS";
-    $envio = $this->enviocorreo($correo, $mensaje);
+    $envio = $this->enviarcorreoadjuntos($correo,$archivo, $mensaje, "Solicitud Aclaracion");
     $SQL ="UPDATE procesos  SET estado='E',fechacita='$fechacitacion',tipoproceso ='$tipo',razon='$razonllamado',archivo='$archivo'  WHERE id_proceso=".$id;
     $conn->Execute($SQL);
 }

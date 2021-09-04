@@ -1,3 +1,74 @@
+
+<h5>Informacion General </h5>
+<div class="form-group">
+  <div class="col-md-8">
+    <a href="home.php?ctr=buscardorCarpetas&acc=buscador" class="btn btn-primary">Nueva Consulta</a>
+  </div>
+</div><br>
+<table class="table table-striped table-bordered">
+	<thead>
+		<tr>
+			<th>Contrato</th>
+			<th>Nombre Empleado</th>
+			<th>Cedula</th>
+			<th>Fcha Ingreso</th>
+			<th>Fecha Retiro</th>
+			<th>Genero</th>
+			<th>Nombre Empresa</th>
+			<th>Nombre Cargo</th>
+			<th>Correo Electronico</th>
+			<th>Direccion</th>
+			<th>Telefono</th>
+			<th>EPS</th>
+			<th>Caja</th>
+      <th>Detalle 1</th>
+      <th>Detalle 2</th>
+      <th>Detalle 3</th>
+      <th>Detalle 4</th>
+      <th>Detalle 5</th>
+      <th>Nombre Contacto</th>
+      <th>Telefono Contacto</th>
+      <th>Fondo Pension</th>
+      <th>Tipo Sangre</th>
+		</tr>
+	</thead>
+	<tbody>
+    <?php 
+    
+    for($i=0; $i<count($certificados);$i++){
+    ?>
+    <tr>
+      <td><?php echo $certificados[$i]['contrato'];?></td>
+      <td><?php echo $certificados[$i]['nombre_empleado'];?></td>
+      <td><?php echo $certificados[$i]['cedula'];?></td>
+      <td><?php echo $certificados[$i]['fecha_ingreso'];?></td>
+      <td><?php echo $certificados[$i]['fecha_retiro'];?></td>
+      <td><?php echo $certificados[$i]['genero'];?></td>
+      <td><?php echo $certificados[$i]['nombrempresa'];?></td>
+      <td><?php echo $certificados[$i]['nombrecargo'];?></td>
+      <td><?php echo $certificados[$i]['correoelectronico'];?></td>
+      <td><?php echo $certificados[$i]['direccion'];?></td>
+      <td><?php echo $certificados[$i]['telefono'];?></td>
+      <td><?php echo $certificados[$i]['eps'];?></td>
+      <td><?php echo $certificados[$i]['caja'];?></td>
+      <td><?php echo $certificados[$i]['detalle1'];?></td>
+      <td><?php echo $certificados[$i]['detalle2'];?></td>
+      <td><?php echo $certificados[$i]['detalle3'];?></td>
+      <td><?php echo $certificados[$i]['detalle4'];?></td>
+      <td><?php echo $certificados[$i]['detalle5'];?></td>
+      <td><?php echo $certificados[$i]['nombrecontacto'];?></td>
+      <td><?php echo $certificados[$i]['telefonocontacto'];?></td>
+      <td><?php echo $certificados[$i]['fondopension'];?></td>
+      <td><?php echo $certificados[$i]['tiposangre'];?></td>
+    </tr>
+    <?php
+    } 
+    
+    ?>
+</tbody>
+</table>
+
+
 <?php
 //print_r($_POST);
     $documento=$_POST['documento'];
@@ -43,7 +114,7 @@ $ruta='/home4/byvnilval/public_html/humantalentsas.com/contabilidad/carpetas_emp
             if ($dir = opendir($directorio)) {//Abrimos el directorio
                 
                 echo '<div class="lista-archivos">'; //Abrimos una lista HTML para mostrar los archivos
-                
+                echo '<table class="table table-striped table-bordered">';
                 while (($archivo = readdir($dir)) !== false){ //Comenzamos a leer archivo por archivo
                   $mostrar = true;
                   if($documento!=""){
@@ -64,12 +135,12 @@ $ruta='/home4/byvnilval/public_html/humantalentsas.com/contabilidad/carpetas_emp
                         
                         //echo "--".$nuevaRuta."<br>"; 
                         if (is_dir($nuevaRuta)) { //Si la ruta que creamos es un directorio entonces:
-                            echo '<b>Carpeta '.$archivo.'</b><br>'; //Imprimimos la ruta completa resaltandola en negrita
+                            echo '<br><h6>Documentos Carpeta '.$archivo.'</h6>'; //Imprimimos la ruta completa resaltandola en negrita
                             listFiles($directorio."/".$archivo,$rutadoc."/".$archivo);//Volvemos a llamar a este metodo para que explore ese directorio.
                             echo "<hr>";
                         } else { //si no es un directorio:
                             //echo 'Archivo: '.$archivo; //simplemente imprimimos el nombre del archivo actual
-                            echo "--<a  href=\"".$nuevaRuta2."\" target='_blank'>".'Archivo: '.$archivo."</a><br/>";
+                            echo "<tr><td><a  href=\"".$nuevaRuta2."\" target='_blank'>".'Archivo: '.$archivo."</a><br/></td></tr>";
                         }
                          //Cerramos el item actual y se inicia la llamada al siguiente archivo
                         
@@ -81,6 +152,7 @@ $ruta='/home4/byvnilval/public_html/humantalentsas.com/contabilidad/carpetas_emp
                 
                 closedir($dir);//Se cierra el archivo
             }
+            echo '</table>';
         }else{//Finaliza el If de la linea 12, si no es un directorio valido, muestra el siguiente mensaje
             echo '<div class="error-colaboradores">No Existe informaci&oacute;n relacionada al número de documento y contrato</div>'.'<br/><br/>';
         }
@@ -89,7 +161,7 @@ $ruta='/home4/byvnilval/public_html/humantalentsas.com/contabilidad/carpetas_emp
     //Llamamos a la función y le pasamos el nombre de nuestro directorio.
     listFiles($ruta,$rutadoc,$documento);
     ?>
-    <table class="table">
+    <table class="table table-striped table-bordered">
                 <thead>
                   <tr>
                     <th scope="col">Descripci&oacute;n Documento&nbsp;</th>
@@ -173,9 +245,3 @@ $ruta='/home4/byvnilval/public_html/humantalentsas.com/contabilidad/carpetas_emp
                   </tr>
                 </tbody>
               </table>
-<br><br><br>
-<div class="form-group">
-  <div class="col-md-8">
-    <a href="home.php?ctr=buscardorCarpetas&acc=buscador" class="btn btn-primary">Nueva Consulta</a>
-  </div>
-</div>
