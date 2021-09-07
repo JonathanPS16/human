@@ -159,6 +159,10 @@
         case "buscardorCarpetas":
             $acc = $_GET['acc'];
             switch ($acc) {
+                
+                case "buscadorempleados":
+                    include('vistas/vistaBuscadorCarpetaempleado.php');        
+                break;
                 case "buscador":
                     include('vistas/vistaBuscadorCarpeta.php');        
                 break;

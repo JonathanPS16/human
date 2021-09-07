@@ -1,11 +1,19 @@
 
-<h5>Informacion General </h5>
+<h5>Informacion General </h5><br>
 <div class="form-group">
   <div class="col-md-8">
-    <a href="home.php?ctr=buscardorCarpetas&acc=buscador" class="btn btn-primary">Nueva Consulta</a>
+    <?php 
+    if(isset($_GET['distinto']) && $_GET['distinto']=="S"){
+      $da ="buscadorempleados";
+    } else {
+      $da ="buscador";
+    }
+    ?>
+    <a href="home.php?ctr=buscardorCarpetas&acc=<?php echo $da;?>" class="btn btn-primary">Nueva Consulta</a>
   </div>
 </div><br>
-<table class="table table-striped table-bordered">
+<?php if(isset($_GET['distinto']) && $_GET['distinto']=="S"){
+  ?><table class="table table-striped table-bordered">
 	<thead>
 		<tr>
 			<th>Contrato</th>
@@ -70,6 +78,7 @@
 
 
 <?php
+} else {
 //print_r($_POST);
     $documento=$_POST['documento'];
     $contrato=$_POST['contrato'];
@@ -245,3 +254,6 @@ $ruta='/home4/byvnilval/public_html/humantalentsas.com/contabilidad/carpetas_emp
                   </tr>
                 </tbody>
               </table>
+<?php 
+}
+?>
