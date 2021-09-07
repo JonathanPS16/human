@@ -13,71 +13,29 @@
   </div>
 </div><br>
 <?php if(isset($_GET['distinto']) && $_GET['distinto']=="S"){
+  for($i=0; $i<count($certificados);$i++){
   ?><table class="table table-striped table-bordered">
-	<thead>
+
 		<tr>
-			<th>Contrato</th>
-			<th>Nombre Empleado</th>
-			<th>Cedula</th>
-			<th>Fcha Ingreso</th>
-			<th>Fecha Retiro</th>
-			<th>Genero</th>
-			<th>Nombre Empresa</th>
-			<th>Nombre Cargo</th>
-			<th>Correo Electronico</th>
-			<th>Direccion</th>
-			<th>Telefono</th>
-			<th>EPS</th>
-			<th>Caja</th>
-      <th>Detalle 1</th>
-      <th>Detalle 2</th>
-      <th>Detalle 3</th>
-      <th>Detalle 4</th>
-      <th>Detalle 5</th>
-      <th>Nombre Contacto</th>
-      <th>Telefono Contacto</th>
-      <th>Fondo Pension</th>
-      <th>Tipo Sangre</th>
-		</tr>
-	</thead>
-	<tbody>
-    <?php 
-    
-    for($i=0; $i<count($certificados);$i++){
-    ?>
-    <tr>
-      <td><?php echo $certificados[$i]['contrato'];?></td>
-      <td><?php echo $certificados[$i]['nombre_empleado'];?></td>
-      <td><?php echo $certificados[$i]['cedula'];?></td>
-      <td><?php echo $certificados[$i]['fecha_ingreso'];?></td>
-      <td><?php echo $certificados[$i]['fecha_retiro'];?></td>
-      <td><?php echo $certificados[$i]['genero'];?></td>
-      <td><?php echo $certificados[$i]['nombrempresa'];?></td>
-      <td><?php echo $certificados[$i]['nombrecargo'];?></td>
-      <td><?php echo $certificados[$i]['correoelectronico'];?></td>
-      <td><?php echo $certificados[$i]['direccion'];?></td>
-      <td><?php echo $certificados[$i]['telefono'];?></td>
-      <td><?php echo $certificados[$i]['eps'];?></td>
-      <td><?php echo $certificados[$i]['caja'];?></td>
-      <td><?php echo $certificados[$i]['detalle1'];?></td>
-      <td><?php echo $certificados[$i]['detalle2'];?></td>
-      <td><?php echo $certificados[$i]['detalle3'];?></td>
-      <td><?php echo $certificados[$i]['detalle4'];?></td>
-      <td><?php echo $certificados[$i]['detalle5'];?></td>
-      <td><?php echo $certificados[$i]['nombrecontacto'];?></td>
-      <td><?php echo $certificados[$i]['telefonocontacto'];?></td>
-      <td><?php echo $certificados[$i]['fondopension'];?></td>
-      <td><?php echo $certificados[$i]['tiposangre'];?></td>
-    </tr>
-    <?php
-    } 
-    
-    ?>
-</tbody>
+			<th>Contrato</th><td><?php echo $certificados[$i]['contrato'];?></td></tr>
+			<tr><th>Nombre Empleado</th><td><?php echo $certificados[$i]['nombre_empleado'];?></td></tr>
+      <tr>	<th>Cedula</th><td><?php echo $certificados[$i]['cedula'];?></td></tr>
+			<tr><th>Fecha Ingreso</th><td><?php echo $certificados[$i]['fecha_ingreso'];?></td></tr>
+			<tr><th>Genero</th><td><?php echo $certificados[$i]['genero'];?></td></tr>
+			<tr><th>Nombre Empresa</th><td><?php echo $certificados[$i]['nombrempresa'];?></td></tr>
+      <tr>	<th>Nombre Cargo</th><td><?php echo $certificados[$i]['nombrecargo'];?></td></tr>
+			<tr><th>Correo Electronico</th><td><?php echo $certificados[$i]['correoelectronico'];?></td></tr>
+      <tr>	<th>Direccion<td><?php echo $certificados[$i]['direccion'];?></td></tr>
+      <tr>	<th>Telefono</th></th><td><?php echo $certificados[$i]['telefono'];?></td></tr>
+		  <tr><th>EPS<td><?php echo $certificados[$i]['eps'];?></td></tr>
+      <tr>	<th>Caja</th><td><?php echo $certificados[$i]['caja'];?></td></tr>
+      <tr> <th>Nombre Contacto</th></th><td><?php echo $certificados[$i]['nombrecontacto'];?></td></tr>
+      <tr><th>Telefono Contacto</th><td><?php echo $certificados[$i]['telefonocontacto'];?></td></tr>
+      <tr><th>Fondo Pension</th><td><?php echo $certificados[$i]['fondopension'];?></td></tr>
+      <tr> <th>Tipo Sangre</th><td><?php echo $certificados[$i]['tiposangre'];?></td></tr>
 </table>
-
-
 <?php
+}
 } else {
 //print_r($_POST);
     $documento=$_POST['documento'];
