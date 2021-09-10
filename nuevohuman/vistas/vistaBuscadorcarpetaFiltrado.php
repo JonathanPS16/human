@@ -17,22 +17,32 @@
   ?><table class="table table-striped table-bordered">
 
 		<tr>
-			<th>Contrato</th><td><?php echo $certificados[$i]['contrato'];?></td></tr>
-			<tr><th>Nombre Empleado</th><td><?php echo $certificados[$i]['nombre_empleado'];?></td></tr>
-      <tr>	<th>Cedula</th><td><?php echo $certificados[$i]['cedula'];?></td></tr>
-			<tr><th>Fecha Ingreso</th><td><?php echo $certificados[$i]['fecha_ingreso'];?></td></tr>
-			<tr><th>Genero</th><td><?php echo $certificados[$i]['genero'];?></td></tr>
-			<tr><th>Nombre Empresa</th><td><?php echo $certificados[$i]['nombrempresa'];?></td></tr>
-      <tr>	<th>Nombre Cargo</th><td><?php echo $certificados[$i]['nombrecargo'];?></td></tr>
-			<tr><th>Correo Electronico</th><td><?php echo $certificados[$i]['correoelectronico'];?></td></tr>
-      <tr>	<th>Direccion<td><?php echo $certificados[$i]['direccion'];?></td></tr>
-      <tr>	<th>Telefono</th></th><td><?php echo $certificados[$i]['telefono'];?></td></tr>
-		  <tr><th>EPS<td><?php echo $certificados[$i]['eps'];?></td></tr>
-      <tr>	<th>Caja</th><td><?php echo $certificados[$i]['caja'];?></td></tr>
-      <tr> <th>Nombre Contacto</th></th><td><?php echo $certificados[$i]['nombrecontacto'];?></td></tr>
-      <tr><th>Telefono Contacto</th><td><?php echo $certificados[$i]['telefonocontacto'];?></td></tr>
-      <tr><th>Fondo Pension</th><td><?php echo $certificados[$i]['fondopension'];?></td></tr>
-      <tr> <th>Tipo Sangre</th><td><?php echo $certificados[$i]['tiposangre'];?></td></tr>
+			<th>Contrato</th><td><?php echo $certificados[$i]['contrato'];?></td>
+		  <th>Nombre Empleado</th><td><?php echo $certificados[$i]['nombre_empleado'];?></td>
+    </tr>
+      <tr>	<th>Cedula</th><td><?php echo $certificados[$i]['cedula'];?></td>
+		<th>Fecha Ingreso</th><td><?php echo $certificados[$i]['fecha_ingreso'];?></td>
+  </tr>
+			<tr><th>Genero</th><td><?php echo $certificados[$i]['genero'];?></td>
+			<th>Nombre Empresa</th><td><?php echo $certificados[$i]['nombrempresa'];?></td>
+    </tr>
+      <tr>	<th>Nombre Cargo</th><td><?php echo $certificados[$i]['nombrecargo'];?></td>
+		<th>Correo Electronico</th><td><?php echo $certificados[$i]['correoelectronico'];?></td>
+  </tr>
+      <tr>	<th>Direccion<td><?php echo $certificados[$i]['direccion'];?></td>
+      	<th>Telefono</th></th><td><?php echo $certificados[$i]['telefono'];?></td>
+      </tr>
+		  <tr><th>EPS<td><?php echo $certificados[$i]['eps'];?></td>
+       <th>Tipo Sangre</th><td><?php echo $certificados[$i]['tiposangre'];?></td>
+      </tr>
+      <tr>	<th>Caja de Compensación</th><td><?php echo $certificados[$i]['caja'];?></td>
+      <th>Fondo Pension</th><td><?php echo $certificados[$i]['fondopension'];?></td>
+    </tr>
+      <tr> <th>Nombre Contacto</th></th><td><?php echo $certificados[$i]['nombrecontacto'];?></td>
+      <th>Telefono Contacto</th><td><?php echo $certificados[$i]['telefonocontacto'];?></td>
+    </tr>
+      
+      
 </table>
 <?php
 }

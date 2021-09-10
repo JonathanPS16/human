@@ -355,6 +355,7 @@
                     $cargotestigo = $_POST['cargotestigo'];
                     $telefonotestigo = $_POST['telefonotestigo'];
                     $telefonojefei = $_POST['telefonojefei'];
+                    $correotestigo = $_POST['correotestigo'];
 
 
                     
@@ -411,7 +412,7 @@
                             }
                         }
                     }
-                    $objconsulta->guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado,$testigo,$cargotestigo,$telefonotestigo,$telefonojefei,$_POST['registry']);
+                    $objconsulta->guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado,$testigo,$cargotestigo,$telefonotestigo,$telefonojefei,$_POST['registry'],$correotestigo);
                     $listatemporales = $objconsulta->ultimoproceso();
                     $idcreacion = $listatemporales[0]['id_proceso'];
                     $listatemporales=$objconsulta->notificarProcesos($idcreacion,$correojefe);
@@ -1238,7 +1239,7 @@
                         </td>
                         <td>
                         <form id="'.$i.'" action="home.php?ctr=proceso&acc=formu&id=0" method="post">
-                        <input type="hidden" name="validacion" id="validacion" value="'.$listado[$i]['nombre_empleado'].'|'.$listado[$i]['cedula'].'|'.$listado[$i]['correoelectronico'].'|'.$listado[$i]['a'].'|'.$listado[$i]['nombrecargo'].'">
+                        <input type="hidden" name="validacion" id="validacion" value="'.$listado[$i]['nombre_empleado'].'|'.$listado[$i]['cedula'].'|'.$listado[$i]['correoelectronico'].'|'.$listado[$i]['a'].'|'.$listado[$i]['nombrecargo'].'|'.$listado[$i]['telefono'].'">
                         <button name="button" id="button" type="submit" class="btn btn-primary">Solicitar Proceso Disciplinario</button>
                         </form>
                         </td>
@@ -1841,6 +1842,9 @@
                     echo '<button name="fff" type="button" onclick="volvercarega()" class="btn btn-primary">Terminar</button></center>';
                     if ($creado>0) {
                       $listatemporales=$objconsulta->guardarcarguearchivos($sql);
+                      if($_POST['valor'] == 1) {
+                        $objconsulta->guardarcarguearchivos("update certificados INNER JOIN generaldatosempresas on certificados.id_empresapres= generaldatosempresas.id_empresapres and certificados.centro_costos=generaldatosempresas.centrocosto set certificados.nombrempresa = generaldatosempresas.empresausuaria");
+                      }
                     } 
                 
                     

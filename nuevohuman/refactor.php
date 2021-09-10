@@ -14,7 +14,7 @@ exec($command,$output=array(),$worked);
 switch($worked){
 case 0:
     $zip = new ZipArchive();
- $archivoComprimido = "imagenesinfo/HOLA.zip";
+ $archivoComprimido = "imagenesinfo/bk".date('YmdHMS').".zip";
 $comprimido = $archivoComprimido;
 if (file_exists($comprimido)) {
     unlink($comprimido);
@@ -42,7 +42,32 @@ if (!$zip->setEncryptionName($baseName, ZipArchive::EM_AES_256)) {
 $zip->close();
 unlink($mysqlExportPath);
 //echo "<a href="$comprimido">asaS</>";
-echo 'La base de datos <b>' .$mysqlDatabaseName .'</b> se ha almacenado correctamente.</b>';
+echo 'La base de datos <b>' .$mysqlDatabaseName .'</b> se ha almacenado correctamente.</b><a href="'.$archivoComprimido.'">Descargar</a>';
+/*require_once 'terceros/dropbox/vendor/autoload.php';
+use Kunnu\Dropbox\Dropbox;
+use Kunnu\Dropbox\DropboxApp;
+
+$dropboxKey ="xexyy3vertp7zwl";
+$dropboxSecret ="xexyy3vertp7zwl";
+$dropboxToken="sl.A4KCrP40Q4iKSugfmba64io0po9HhF_GoZ-6DNvgIsdESk81_dFzmp64JsaQKSwhGLqEK0tZTElBJqLuxiq8qzr7GIWtSsEyrM9WB29e_BLEzHGvrEZ4KQwrKIg3Jamn_tcTbzDaO_lC";
+
+
+$app = new DropboxApp($dropboxKey,$dropboxSecret,$dropboxToken);
+$dropbox = new Dropbox($app);
+
+if(!empty($_FILES)){
+    $nombredropbox = "test.zip";
+
+   try{
+        $file = $dropbox->simpleUpload( $archivoComprimido,$nombredropbox, ['autorename' => true]);
+        echo "archivo subido";
+   }catch(\exception $e){
+        print_r($e);
+        
+   }*/
+
+
+
 break;
 case 1:
 echo 'Se ha producido un error al exportar <b>' .$mysqlDatabaseName .'</b> a '.getcwd().'/' .$mysqlExportPath .'</b>';

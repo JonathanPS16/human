@@ -74,6 +74,21 @@ for($a=0; $a<count($listausuariosgenerales);$a++){
       ?>" required="required" class="form-control" placeholder="Cedula" readonly="readonly">
     </div>
   </div>
+  <div class="form-group row">
+    <label for="cedula" class="col-4 col-form-label">Telefono</label> 
+    <div class="col-8">
+      <input id="telefono" name="telefono" type="text" value ="<?php 
+      
+
+      if(isset($_POST['validacion']) && $_POST['validacion']!=""){
+        echo $explode[5];
+      } else {
+        echo $listatemporales[0]['cedula']; 
+      }
+      
+      ?>" required="required" class="form-control" placeholder="Telefono" readonly="readonly">
+    </div>
+  </div>
 <div class="form-group row">
     <label for="correoempleado" class="col-4 col-form-label">Correo</label> 
     <div class="col-8">
@@ -135,6 +150,12 @@ for($a=0; $a<count($listausuariosgenerales);$a++){
     </div>
   </div>
   <div class="form-group row">
+    <label for="correotestigo" class="col-4 col-form-label">Correo Testigo</label> 
+    <div class="col-8">
+      <input id="correotestigo" name="correotestigo" type="text" required="required" value ="<?php echo $listatemporales[0]['correotestigo']; ?>" class="form-control" placeholder="Correo Testigo">
+    </div>
+  </div>
+  <div class="form-group row">
     <label for="telefonotestigo" class="col-4 col-form-label">Telefono Testigo</label> 
     <div class="col-8">
       <input id="telefonotestigo" name="telefonotestigo" type="text" required="required" value ="<?php echo $listatemporales[0]['telefonotestigo']; ?>" class="form-control" placeholder="Telefono Testigo">
@@ -165,9 +186,11 @@ for($a=0; $a<count($listausuariosgenerales);$a++){
       <input id="fechaevento" name="fechaevento" type="date" class="form-control" required="required" value ="<?php echo $listatemporales[0]['fechaevento']; ?>" placeholder="yyyy-mm-dd">
     </div>
   </div>
+  
   <div class="form-group row">
     <label for="descripcion" class="col-4 col-form-label">Descripcion suceso</label> 
     <div class="col-8">
+    <p style="font-weight: bold;"><strong>Describa el Suceso Detalladamente Incluyendo Datos Concretos como Fecha, Hora, Area, ect.</strong></p>
       <textarea id="descripcion" name="descripcion" cols="40" rows="5" class="form-control" required="required"><?php echo $listatemporales[0]['descripcion']; ?></textarea>
     </div>
   </div> 

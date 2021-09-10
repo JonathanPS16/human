@@ -178,7 +178,7 @@ public function obtenerCertificadosCedula($numero){
     inner join centrocostos on centrocostos.centrocosto=certificados.centro_costos 
     and certificados.id_empresapres=centrocostos.id_empresapres
     inner join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres 
-    where certificados.cedula='$numero' ".$where;
+    where certificados.fecha_retiro='' and certificados.cedula='$numero' ".$where;
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
@@ -1015,7 +1015,7 @@ public function guardarprocesoAccidente($id,$funcionario,$cargo,$cedula,$lugartr
 
 
 
-public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado,$testigo,$cargotestigo,$telefonotestigo,$telefonojefei,$grabador) {
+public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$jefe,$fechaevento,$descripcion,$correojefe,$archivouno,$archivodos,$archivotres,$horario,$centrocostos,$empresausuaria,$correoempleado,$testigo,$cargotestigo,$telefonotestigo,$telefonojefei,$grabador,$correotestigo) {
     $dat=date('Y-m-d H:i:s');
     $conn = $this->conec();
     $insertararchivos1  ="";
@@ -1048,11 +1048,11 @@ public function guardarproceso($id,$funcionario,$cargo,$cedula,$lugartrabajo,$je
 
     if($id>0){
         $SQL ="UPDATE procesos SET ".$updtaarchivos1.$updtaarchivos2.$updtaarchivos3."nombrefuncionario='$funcionario', cargo ='$cargo',cedula ='$cedula',lugartrabajo ='$lugartrabajo',jefeinmediato='$jefe',coreojefe ='$correojefe',telefonojefei='$telefonojefei',
-         	fechaevento ='$fechaevento',descripcion  ='$descripcion',horario='$horario',centrocostos='$centrocostos',empresausuaria='$empresausuaria',correoempleado='$correoempleado',testigo= '$testigo',cargotestigo='$cargotestigo',telefonotestigo='$telefonotestigo' where id_proceso=$id";
+         	fechaevento ='$fechaevento',correotestigo = '$correotestigo', descripcion  ='$descripcion',horario='$horario',centrocostos='$centrocostos',empresausuaria='$empresausuaria',correoempleado='$correoempleado',testigo= '$testigo',cargotestigo='$cargotestigo',telefonotestigo='$telefonotestigo' where id_proceso=$id";
         $conn->Execute($SQL);
 
     } else {
-        $SQL ="INSERT INTO  procesos (".$insertararchivos1.$insertararchivos2.$insertararchivos3."nombrefuncionario,cargo,cedula,lugartrabajo,jefeinmediato,coreojefe,fechaevento,descripcion,grabador,fechagrab,horario,centrocostos,empresausuaria,correoempleado,testigo,cargotestigo,telefonotestigo,telefonojefei) VALUES (".$val1.$val2.$val3."'$funcionario','$cargo','$cedula','$lugartrabajo','$jefe','$correojefe',
+        $SQL ="INSERT INTO  procesos (".$insertararchivos1.$insertararchivos2.$insertararchivos3."nombrefuncionario,correotestigo,cargo,cedula,lugartrabajo,jefeinmediato,coreojefe,fechaevento,descripcion,grabador,fechagrab,horario,centrocostos,empresausuaria,correoempleado,testigo,cargotestigo,telefonotestigo,telefonojefei) VALUES (".$val1.$val2.$val3."'$funcionario','$correotestigo','$cargo','$cedula','$lugartrabajo','$jefe','$correojefe',
         '$fechaevento','$descripcion','".$grabador."','$dat','$horario','$centrocostos','$empresausuaria','$correoempleado','$testigo','$cargotestigo','$telefonotestigo','$telefonojefei')";
         $conn->Execute($SQL);
         
