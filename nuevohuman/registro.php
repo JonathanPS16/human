@@ -24,7 +24,7 @@ if(isset($_POST) && $_POST['vali']=='si')
   $ret=$objconsulta->guardarrespuestaempleado($_POST['id'],$_POST['aclaracion'],$archivo);
   echo "<script>
   alert('Respuesta enviada correctamente');
-  window.close();</script>";
+  window.location.href = 'https://humantalentsas.com';</script>";
 } else {
     $objconsulta= new consultas();
     $ret=$objconsulta->validarrellenado($_GET['id']);

@@ -38,7 +38,7 @@ if($_GET['acc']=="formacla"){
 	<?php 
 	$val = 0;
 	for($i=0; $i<count($listatemporales);$i++){
-
+		$estadolb ="";
 		$val ++;
 		$conteoreq = 0;
 		$nombrefuncionario=$listatemporales[$i]['nombrefuncionario'];
@@ -215,7 +215,7 @@ if($_GET['acc']=="formacla"){
       <button name="submit" type="submit" class="btn btn-primary">Enviar Solicitud</button>
     </div>
   </div>
-			
+		</form>	
 		  </div>
 		  
 		</div>
@@ -436,6 +436,42 @@ $(".custom-file-input").on("change", function() {
 		$botonhojatresa ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalenaa'.$id.'">
 	  Notificar Conclusion
 	</button>';	
+
+	$modalbotonhojacierre ='<div class="modal fade" id="hojacierreaa'.$id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Cerrar Proceso</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+			<div class="modal-body">
+				<form class="form-horizontal" id="cierre"'.$id.'" action="home.php?ctr=proceso&acc=cierreprematuro" method="post" enctype="multipart/form-data">
+			
+					<div class="form-group row">
+						<label for="entrevista" class="col-4 col-form-label">Razón Cierre </label> 
+						<div class="col-8">
+							<textarea id="entrevista" name="entrevista" cols="40" rows="5" class="form-control" required="required"></textarea>
+						</div>
+					</div>
+					<input type ="hidden" name="id" id ="id" value="'.$id.'">
+					<div class="form-group row">
+						<div class="offset-4 col-8">
+							<button name="submit" type="submit" class="btn btn-primary">Cerrar Proceso</button>
+						</div>
+					</div>
+				</form>
+		
+			</div>
+		  
+		</div>
+	  </div>
+	</div>
+	';
+		$botoncierre ='<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#hojacierreaa'.$id.'">
+	  Cerrar Proceso
+	</button>';	
 		/*
 	    $estadolb = '<a class="btn btn-primary" href = "home.php?ctr=proceso&acc=formu&id='.$id.'">Editar</a>';
 		if($estado == "C" && $archivos!=""){
@@ -454,22 +490,27 @@ $(".custom-file-input").on("change", function() {
 		}*/
 
 		if($estado =="N"){
-			//$estadolb = $modalbotonhoja.$botonhoja;
+			
+			$estadolb = $modalbotonhojacierre.$botoncierre;
 			$conclucionentre="Sin Definir";
 		}
 
 		if($estado =="E"){
 			$modalbotonhoja ="";
-			$botonhoja = "";
 			$modalbotonhojaex="";
-			$botonhojaex = "";
+			$botonhojaex="";
+			$botonhoja = "";
+			
 			if($tipoproceso=="solicitud") {
 				$conclucionentre="Esperando ".$inforproceso;
 				$estadolb = $modalbotonhojados.$botonhojados;
+				$botonhojaex = "Fecha Limite:".$listatemporales[$i]['fechacita']."<br>Razón:".$listatemporales[$i]['razon'];
 
 			} else {
 				$estadolb = $modalbotonhojadose.$botonhojadose;
 				$conclucionentre="Esperando ".$inforproceso;
+				$botonhoja = "Citado Entrevista <br>Modalidad:".$listatemporales[$i]['modalidadcita']."<br>Lugar Citación:".$listatemporales[$i]['sedelugar']."<br>Lugra O link:".$listatemporales[$i]['extradata'];
+			
 			}
 			
 		}
@@ -477,8 +518,15 @@ $(".custom-file-input").on("change", function() {
 		if($estado =="V"){
 			$modalbotonhoja ="";
 			$botonhoja = "";
+			
 			$modalbotonhojaex="";
 			$botonhojaex = "";
+			if($tipoproceso=="solicitud") {
+				$botonhojaex = "Respuesta empleado:".$listatemporales[$i]['aclaracionempleado'];
+			}else {
+				$botonhoja = "Conclusion Entrevista<br>".$listatemporales[$i]['conclucionentre'];
+			}
+			$conclucionentre = "Pendiente Envio Conclusion";
 			$estadolb = $modalbotonhojatres.$botonhojatres;
 		}
 
@@ -487,6 +535,12 @@ $(".custom-file-input").on("change", function() {
 			$botonhoja = "";
 			$modalbotonhojaex="";
 			$botonhojaex = "";
+			if($tipoproceso=="solicitud") {
+				$botonhojaex = "Respuesta empleado:".$listatemporales[$i]['aclaracionempleado'];
+			}else {
+				$botonhoja = "Conclusion Entrevista<br>".$listatemporales[$i]['conclucionentre'];
+			}
+			$conclucionentre = "Por Notificar";
 			$estadolb = $modalbotonhojatresa.$botonhojatresa;
 		}
 
@@ -496,7 +550,7 @@ $(".custom-file-input").on("change", function() {
 		echo  '<tr>
 		<td>'.$val.'</td>
 		<td>'.$nombrefuncionario.'</td>
-		<td>'.$listatemporales[$i]['correo'].'</td>
+		<td>'.$listatemporales[$i]['correoempleado'].'</td>
 		<td>'.$cargo.'</td>
 		<td>'.$cedula.'</td>
 		<td>'.$listatemporales[$i]['lugartrabajo'].'</td>

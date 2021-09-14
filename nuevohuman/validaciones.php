@@ -441,6 +441,16 @@
 
                 break;
 
+                case "guardarinformacionextrasoli":
+                    $id = $_POST['id'];
+                    $efecto = $_POST['efecto'];
+                    $listatemporales=$objconsulta->editaraclaraciondisciplinariop($id,$efecto);
+                    echo "<script>alert('Validacion Envidada Correctamente');
+                        window.location.href = 'home.php?ctr=proceso&acc=formproceso';
+                        </script>";
+
+                break;
+
                 case "guardarfinalprocesonotificaciones":
                    // print_r($_POST);
                     $correoenvio = "";
@@ -462,6 +472,13 @@
 
 
                 break;
+
+                case "cierreprematuro":
+                     $listatemporales=$objconsulta->cierrepremaruto($_POST['id'],$_POST['entrevista']);
+                     echo "<script>alert('Cierre Realizado Correctamente');
+                         window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';
+                         </script>";
+                 break;
 
                 case "guardarfinalproceso":
                     $id = $_POST['id'];
