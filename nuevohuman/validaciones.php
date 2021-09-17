@@ -480,6 +480,13 @@
                          </script>";
                  break;
 
+                 case "solicitarinfoextra":
+                    $listatemporales=$objconsulta->solicitudampliacioninformacionp($_GET['id']);
+                    echo "<script>alert('Solicitud Realizada Correctamente');
+                        window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';
+                        </script>";
+                break;
+
                 case "guardarfinalproceso":
                     $id = $_POST['id'];
                     $efecto = $_POST['efecto'];

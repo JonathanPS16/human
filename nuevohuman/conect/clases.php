@@ -1839,7 +1839,25 @@ public function guardarynotificarfinalproceso($id,$mensajeaa,$conclu){
 
 public function editaraclaraciondisciplinariop($id,$efecto){
     $conn = $this->conec();
-    /*$consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
+
+    $consultas = "SELECT procesos.*,usuarios.correo,usuarios.nombre from procesos INNER JOIN usuarios on procesos.grabador=usuarios.usuario where procesos.id_proceso=".$id;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $nombre  ="";
+    $nombreEmpresausuaria  ="";
+    $consecutivo  ="";
+    $nombreempleado  ="";
+    $correoextra  ="";
+    for($i= 0; $i<count($consultas); $i++) {
+        $nombre = $consultas[$i]['nombre'];
+        $nombreEmpresausuaria = $consultas[$i]['empresausuaria'];
+        $consecutivo  =$consultas[$i]['id_proceso'];
+        $nombreempleado  =$consultas[$i]['nombrefuncionario'];
+        $correoextra  =$consultas[$i]['correo'];
+        
+    
+    } 
+
+    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
     $consultas= $conn->Execute($consultas)-> getRows();
     for($i= 0; $i<count($consultas); $i++) {
       $correos = explode(",", $consultas[$i]['usuarios']);
@@ -1847,14 +1865,10 @@ public function editaraclaraciondisciplinariop($id,$efecto){
           $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
           $consultasresp= $conn->Execute($consultascorr)-> getRows();
             
-          $mensaje  ="Apreciado Cliente<br><br>
-
-          Le informamos que la empresa usuaria $mensajeaa <br>
-          <br>Para enviar Notificaciones y validar puede acceder al siguiete <a href='https://humantalentsas.com/human/home.php?ctr=proceso&acc=formacla'></a><br>
-          Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
-          <br><br>
-          Cualquier inquietud que tengo al respecto, la atenderemos a traves de nuestro PBX 214 2011, o Celular 318 335 2194 - 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, nomina@humantalentsas.com, contabilidad@humantalentsas.com  
-          <br><br>
+          $mensaje  ="Apreciada Área Jurídica y Área Servicio al Cliente 
+<br><br>
+          Le informamos que la Empresa Usuaria $nombreEmpresausuaria, usuario $nombre ha realizado la ampliación del suceso del proceso disciplinario, con consecutivo No. $consecutivo, para el empleado en misión $nombreempleado.
+<br><br>
           Cordialmente,
           <br><br>
           Área Servicio al Cliente 
@@ -1865,7 +1879,7 @@ public function editaraclaraciondisciplinariop($id,$efecto){
          
       }
 
-    }*/
+    }
     $SQL ="UPDATE procesos SET descripcion = '$efecto' , estado ='N' WHERE id_proceso=".$id;
     $conn->Execute($SQL);
 } 
@@ -2007,38 +2021,119 @@ public function guardarfindisciplinarionotifica($id,$correo,$mensajef){
 
 public function cierrepremaruto($id,$razon){
     $conn = $this->conec();
-   /* $titulo="Documento Retiro";
+    $titulo="Notificación Cierre Proceso Disciplinario";
     $nombre="";
-    $consultas = "SELECT * from procesos where id_proceso=".$id;
+    $consultas = "SELECT procesos.*,usuarios.correo,usuarios.nombre from procesos INNER JOIN usuarios on procesos.grabador=usuarios.usuario where procesos.id_proceso=".$id;
     $consultas= $conn->Execute($consultas)-> getRows();
     $nombre  ="";
+    $nombreEmpresausuaria  ="";
+    $consecutivo  ="";
+    $nombreempleado  ="";
+    $correoextra  ="";
     for($i= 0; $i<count($consultas); $i++) {
-        $nombre = $consultas[$i]['nombrefuncionario'];
+        $nombre = $consultas[$i]['nombre'];
+        $nombreEmpresausuaria = $consultas[$i]['empresausuaria'];
+        $consecutivo  =$consultas[$i]['id_proceso'];
+        $nombreempleado  =$consultas[$i]['nombrefuncionario'];
+        $correoextra  =$consultas[$i]['correo'];
+        
     
     } 
-    $mensaje = "Apreciado Señor (a) ".$nombre."<br><br>
-    Se le informa sobre la determinacion tomada en su proceso disciplinario<br>
-    ".$mensajef."
-    <br><br>
-    Cualquier inquietud que tengo al respecto, la atenderemos a través de nuestro PBX 214 2011, o Celular 318 335 2194 - 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, 
-    <br><br>
-    Cordialmente,
-    <br><br>
-    Área Servicio al Cliente 
-    <br>Human Talent SAS";
-    //var_dump(explode(";",$correo));
-    $explo =explode(";",$correo);
-    
-    for($i=0; $i<=count($explo);$i++)
-    {
-        if($explo[$i]!=""){
-            $envio = $this->enviocorreo($explo[$i],$mensaje, "Notificacion Gestion Proceso Disciplinario");
-        }    
+    $mensaje = "Señor Usuario $nombre<br>
+Apreciado Cliente  $nombreEmpresausuaria<br><br>
+
+En relación con su solicitud del proceso disciplinario, con consecutivo No. $consecutivo, para el empleado en misión $nombreempleado; queremos informarle que una vez efectuado el análisis respectivo dicha solicitud no es procedente teniendo en cuenta las siguientes consideraciones 
+<br><br>
+Consideraciones: $razon
+<br><br>
+Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, areajuridica@humantalentsas.com.co
+<br><br>
+Cordialmente,
+<br>
+Área Jurídica<br>
+Human Talent SAS 
+";
+
+
+$envio = $this->enviocorreo($correoextra, $mensaje);
+    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    for($i= 0; $i<count($consultas); $i++) {
+    $correos = explode(",", $consultas[$i]['usuarios']);
+        for($j=0; $j<count($correos); $j++){
+            $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
+            $consultasresp= $conn->Execute($consultascorr)-> getRows();
+                if($consultasresp[0]['correo']!=""){
+                    $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+                }
+            
+        }
     }
-    */
     $SQL ="UPDATE procesos  SET estado='TN', conclucionfinal ='$razon' WHERE id_proceso=".$id;
     $conn->Execute($SQL);
+}
 
+public function solicitudampliacioninformacionp($id){
+    $conn = $this->conec();
+    $titulo="Notificación Cierre Proceso Disciplinario";
+    $nombre="";
+    $consultas = "SELECT procesos.*,usuarios.correo,usuarios.nombre from procesos INNER JOIN usuarios on procesos.grabador=usuarios.usuario where procesos.id_proceso=".$id;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $nombre  ="";
+    $nombreEmpresausuaria  ="";
+    $consecutivo  ="";
+    $nombreempleado  ="";
+    $correoextra  ="";
+    for($i= 0; $i<count($consultas); $i++) {
+        $nombre = $consultas[$i]['nombre'];
+        $nombreEmpresausuaria = $consultas[$i]['empresausuaria'];
+        $consecutivo  =$consultas[$i]['id_proceso'];
+        $nombreempleado  =$consultas[$i]['nombrefuncionario'];
+        $correoextra  =$consultas[$i]['correo'];
+        
+    
+    } 
+    $mensaje = "Señor Usuario $nombre<br>
+Apreciado Cliente  $nombreEmpresausuaria<br><br>
+
+En relación con su solicitud del proceso disciplinario, con consecutivo No. $consecutivo, para el empleado en misión $nombreempleado; queremos solicitarle su colaboración para que nos amplié en detalle la descripción del proceso; lo anterior con el objetivo de analizar con mayor profundidad este proceso disciplinario. 
+<br><br>
+Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, areajuridica@humantalentsas.com.co
+<br><br>
+Cordialmente,
+<br>
+Área Jurídica<br>
+Human Talent SAS 
+";
+
+
+$envio = $this->enviocorreo($correoextra, $mensaje);
+/*$mensaje = "Apreciada Área Jurídica y Área Servicio al Cliente <br><br>
+Apreciado Cliente  $nombreEmpresausuaria<br><br>
+
+Le informamos que la Empresa Usuaria $nombreEmpresausuaria, usuario $nombre ha realizado la ampliación del suceso del proceso disciplinario, con consecutivo No. ( Incluir No. de consecutivo), para el empleado en misión (Incluir el nombre del Empleado).
+<br><br>
+Cordialmente,
+<br>
+Área Jurídica<br>
+Human Talent SAS 
+";
+
+    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    for($i= 0; $i<count($consultas); $i++) {
+    $correos = explode(",", $consultas[$i]['usuarios']);
+        for($j=0; $j<count($correos); $j++){
+            $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
+            $consultasresp= $conn->Execute($consultascorr)-> getRows();
+                if($consultasresp[0]['correo']!=""){
+                    $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+                }
+            
+        }
+    }*/
+    $SQL ="UPDATE procesos  SET estado='NA' WHERE id_proceso=".$id;
+    $conn->Execute($SQL);
 }
 
 public function enviarsolicitudexplicacion($id,$correo,$fechacitacion,$tipo,$razonllamado,$archivo){
@@ -2546,7 +2641,7 @@ public function enviarCorreoReq($ide,$req){
   public function enviocorreo($correo,$mensaje,$asunto="Notificacion Gestion Human")
   {
     $titulo2 = $asunto;
-    $cuerpo2 = "<p>Señor Usuario <br />".$mensaje."<br><br>Para su Seguimiento y/o Gestion <br /><br><br>
+    $cuerpo2 = "<p>".$mensaje."<br><br>Para su Seguimiento y/o Gestion <br /><br><br>
                   &copy; ".date('Y')." humantalentsas.com - Todos los derechos reservados </p>";
     $maildos = new PHPMailer();
     $maildos->IsSMTP();

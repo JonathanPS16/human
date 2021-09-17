@@ -490,8 +490,11 @@ $(".custom-file-input").on("change", function() {
 		}*/
 
 		if($estado =="N"){
+			$botonexplicacion ='<br><br><a class="btn btn-warning" href="home.php?ctr=proceso&acc=solicitarinfoextra&id='.$id.'">
+	  Solicitar Ampliacion
+	</a>';
+			$estadolb = $modalbotonhojacierre.$botoncierre.$botonexplicacion;
 			
-			$estadolb = $modalbotonhojacierre.$botoncierre;
 			$conclucionentre="Sin Definir";
 		}
 
