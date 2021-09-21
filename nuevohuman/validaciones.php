@@ -511,7 +511,7 @@
                         }
                     }
                     $objconsulta->guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo,$fechainimedida,$fechafinmedida);
-                    echo "<script>alert('Proceso Terminado Correctamente');
+                    echo "<script>alert('Proceso Validado Correctamente');
                                 window.location.href = 'home.php?ctr=proceso&acc=formacla';
                                 </script>";
                 break;

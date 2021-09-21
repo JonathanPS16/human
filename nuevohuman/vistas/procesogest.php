@@ -57,6 +57,7 @@ if($_GET['acc']=="formacla"){
 		$tipoproceso=$listatemporales[$i]['tipoproceso'];
 		$archivoconclusionproceso=$listatemporales[$i]['archivoconclusionproceso'];
 		$archivoacaraempleado=$listatemporales[$i]['archivoacaraempleado'];
+		$archivoconclusionproceso=$listatemporales[$i]['archivoconclusionproceso'];
 
 		if($aclaracionempleado!=""){
 			$conclucionentre=$aclaracionempleado;
@@ -82,6 +83,10 @@ if($_GET['acc']=="formacla"){
 
 		if($archivoacaraempleado!=""){
 			$archivos .= "<a href ='archivosgenerales/".$archivoacaraempleado."' target='_black' class='btn btn-primary'>Adjunto Empleado</a><br><br>";
+		}
+
+		if($archivoconclusionproceso!=""){
+			$archivos .= "<a href ='archivosgenerales/".$archivoconclusionproceso."' target='_black' class='btn btn-primary'>Acta Descargos</a><br><br>";
 		}
 
 		
@@ -285,10 +290,20 @@ if($_GET['acc']=="formacla"){
       <textarea id="entrevista" name="entrevista" cols="40" rows="5" class="form-control" required="required"></textarea>
     </div>
   </div> <br><br>
-  <div class="custom-file">
-    <input type="file" class="custom-file-input" id="archivofirmado" name="archivofirmado" required="required">
-    <label class="custom-file-label" for="archivo3">Adjuntar Documento</label>
-  </div><br><br>
+  <div class="form-group row">
+    <label class="col-4 col-form-label" for="archivofirmado">Adjuntar Documento</label> 
+    <div class="col-8">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <i class="fa fa-cloud-upload"></i>
+          </div>
+        </div> 
+        <input id="archivofirmado" name="archivofirmado" required="required" type="file" class="form-control">
+      </div>
+    </div>
+  </div> 
+ 
   <div class="form-group row">
     <div class="offset-4 col-8">
       <button name="submit" type="submit" class="btn btn-primary">Guardar Diligencia</button>
@@ -312,7 +327,7 @@ if($_GET['acc']=="formacla"){
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Conclusion Proceso Diciplinario</h5>
+			<h5 class="modal-title" id="exampleModalLabel">Conclusion Proceso Disciplinario</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
@@ -322,30 +337,26 @@ if($_GET['acc']=="formacla"){
 			<input type ="hidden" name="correo" id ="correo" value="'.$correoempleado.'">
 			<input type ="hidden" name="id" id ="id" value="'.$id.'">
 			<div class="form-group row">
-    <label for="efecto" class="col-4 col-form-label">Efecto Diciplinario</label> 
+    <label for="efecto" class="col-4 col-form-label">Efecto Disciplinario</label> 
     <div class="col-8">
       <textarea id="efecto" name="efecto" cols="40" rows="5" required="required" class="form-control"></textarea>
     </div>
   </div> 
 
-  <div class="form-group row">
-    <label for="fechainimedida" class="col-4 col-form-label">Fecha Inicio Medida</label> 
+  
+<div class="form-group row">
+    <label class="col-4 col-form-label" for="archivofirmado">Archivo Firmado</label> 
     <div class="col-8">
-      <input id="fechainimedida" name="fechainimedida" type="date" class="form-control">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="fechafinmedida" class="col-4 col-form-label">Fecha Final Medida</label> 
-    <div class="col-8">
-      <input id="fechafinmedida" name="fechafinmedida" type="date" class="form-control">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <i class="fa fa-cloud-upload"></i>
+          </div>
+        </div> 
+        <input id="archivofirmado" name="archivofirmado" type="file" class="form-control">
+      </div>
     </div>
   </div> 
-  
-  <div class="custom-file">
-    <input type="file" class="custom-file-input" id="archivofirmado" name="archivofirmado" required="required">
-    <label class="custom-file-label" for="archivo3">Archivo Firmado</label>
-  </div>
-<bt><br><br>
   <div class="form-group row">
     <div class="offset-4 col-8">
       <button name="submit" type="submit" class="btn btn-primary">Enviar Conclusion</button>

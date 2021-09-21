@@ -173,12 +173,17 @@ public function obtenerCertificadosCedula($numero){
     }
     $conn = $this->conec();
     $dato=array();
+    $activo = "";
+    if($_GET['distinto']=="S")
+    {
+        $activo = "and certificados.fecha_retiro='' ";
+    }
     //$consultas = "SELECT contrato,nombre_empleado,cedula,fecha_ingreso,fecha_retiro,genero,centro_costos,subcentro_costos,nombrempresa,nombrecargo,salarioactual,correoelectronico FROM certificados where cedula='$numero' ".$where;
     $consultas = "SELECT certificados.* FROM certificados
     inner join centrocostos on centrocostos.centrocosto=certificados.centro_costos 
     and certificados.id_empresapres=centrocostos.id_empresapres
     inner join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres 
-    where certificados.fecha_retiro='' and certificados.cedula='$numero' ".$where;
+    where 1=1 $activo and certificados.cedula='$numero' ".$where;
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
@@ -1890,16 +1895,19 @@ public function editaraclaraciondisciplinariop($id,$efecto){
 public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo,$fechainicio,$fechafinalmedida){
     $conn = $this->conec();
     $nombre="";
-    $consultas = "SELECT * from procesos where id_proceso=".$id;
+    $consultas = "SELECT * FROM procesos inner join usuarios on usuarios.usuario=procesos.grabador where id_proceso=".$id;
     $consultas= $conn->Execute($consultas)-> getRows();
     $nombre  ="";
+    $correousua  ="";
     for($i= 0; $i<count($consultas); $i++) {
-        $nombre = $consultas[$i]['nombrefuncionario'];
+        $nombre = $consultas[$i]['nombre'];
+        $correousua  = $consultas[$i]['correo'];
     
     }
-    $mensaje ="Apreciado Empleado ".$nombre."<br><br>
 
-    En relación con el proceso disciplinario que se le adelanta a Usted y una vez surtido el debido proceso de acuerdo con lo establecido por la Compañía, a continuación le informamos la decisión tomada.
+    $mensaje ="Apreciado Empresa ".$nombre."<br><br>
+
+    En relación con el proceso disciplinario No $id se a enviado la conclucion para su validacion puede acceder dando click en el siguiente <a href='https://humantalentsas.com/human/home.php?ctr=proceso&acc=formproceso'>Link</a>
     <br>
     Cualquier inquietud que tengo al respecto, la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com  , areajuridica@humantalentsas.com.co 
     <br>
@@ -1907,9 +1915,30 @@ public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo,$fechain
     <br><br>
     Área Jurídica  - 
     Human Talent SAS";
-   // $envio = $this->enviocorreo($correo, $mensaje);
+    $envio = $this->enviocorreo($correousua, $mensaje);
 
-    
+    $mensaje ="Apreciada Área Jurídica y Área Servicio al Cliente <br><br>
+
+    Se a enviado la conclusion del proceso disciplinario con No $id <br>
+    Cordialmente,
+    <br><br>
+    Área Jurídica  - 
+    Human Talent SAS";
+
+    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    for($i= 0; $i<count($consultas); $i++) {
+    $correos = explode(",", $consultas[$i]['usuarios']);
+        for($j=0; $j<count($correos); $j++){
+            $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
+            $consultasresp= $conn->Execute($consultascorr)-> getRows();
+                if($consultasresp[0]['correo']!=""){
+                    $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+                }
+            
+        }
+    }
+
     $SQL ="UPDATE procesos  SET fechainimedida = '$fechainicio', fechafinmedida='$fechafinalmedida', conclucionfinal = '$efecto',archivofinal='$nombre_archivo', estado='T' WHERE id_proceso=".$id;
     $conn->Execute($SQL);
 
@@ -2192,6 +2221,43 @@ public function enviarcitacionprocesoAcci($id,$nombre_archivo){
 
 public function enviarconclucionproceso($id,$entrevista,$archivodos){
     $conn = $this->conec();
+
+    $consultas = "SELECT * from procesos where id_proceso=".$id;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $correoempleado  ="";
+    $coreojefe = "";
+    $correotestigo = "";
+    $mensaje = "Apreciado Empleado <br><br>
+    <a href='https://humantalentsas.com/human/apruebaenvio.php?id=$id'>Confirmacion Recibido</a>
+    
+    Cualquier inquietud que tengo al respecto, la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com  , areajuridica@humantalentsas.com.co 
+    <br>
+    Cordialmente,
+    <br><br>
+    Área Jurídica  - 
+    Human Talent SAS";
+    //$envio = $this->enviarcorreoadjuntos($correo,$archivo, $mensaje, "Solicitud Aclaracion");
+    for($i=0; $i<count($consultas); $i++) {
+        $correoempleado = $consultas[$i]['correoempleado'];
+        $coreojefe = $consultas[$i]['coreojefe'];
+        $correotestigo = $consultas[$i]['correotestigo'];
+    }
+
+    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $correosenviar = $coreojefe.",".$correotestigo.",";
+    for($i= 0; $i<count($consultas); $i++) {
+    $correos = explode(",", $consultas[$i]['usuarios']);
+        for($j=0; $j<count($correos); $j++){
+            $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
+            $consultasresp= $conn->Execute($consultascorr)-> getRows();
+                if($consultasresp[0]['correo']!=""){
+                    $correosenviar.=$consultasresp[0]['correo'].",";
+                }
+            
+        }
+    }
+   $this->enviarcorreoadjuntos($correoempleado,$archivodos,$mensaje,"Acta",$correosenviar);
     $SQL ="UPDATE procesos  SET estado='V',conclucionentre='$entrevista',archivoconclusionproceso='$archivodos'  WHERE id_proceso=".$id;
     $conn->Execute($SQL);
 }
@@ -2449,7 +2515,7 @@ public function enviarcorreocentromedico($id,$archivoexa,$nombrepersona){
 
 }
 
-public function enviarcorreoadjuntos($correo,$documento,$mensaje,$titulo){
+public function enviarcorreoadjuntos($correo,$documento,$mensaje,$titulo="Notificacion Human",$copias = ""){
     $maildos = new PHPMailer();
     $maildos->IsSMTP();
     $maildos->SMTPAuth = true;
@@ -2460,6 +2526,19 @@ public function enviarcorreoadjuntos($correo,$documento,$mensaje,$titulo){
     $maildos->Port = Port; // Puerto de conexión al servidor de envio. 
     $maildos->SetFrom(correocor, mensajecorr);
     $maildos->AddAddress($correo, "Usuario");
+    $datos = explode(",", $copias);
+    //var_dump($datos);
+    //die($datos);
+    for($j=0; $j<count($datos);$j++){
+        $correos = $datos[$j];
+        if($correos!=""){
+            //$mail->addCC($correos);
+           // $mail->AddCustomHeader( "X-Confirm-Reading-To: ".$correos );
+            //$mail->AddCustomHeader( "Return-receipt-to: ".$correos );
+            //echo $correos;
+        }
+    }
+
     $archivoexa = "archivosgenerales/".$documento;
     $maildos->AddAttachment($archivoexa,$documento);
     $maildos->Subject = utf8_decode($titulo); // Este es el titulo del email. 

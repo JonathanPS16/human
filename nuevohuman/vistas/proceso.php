@@ -94,7 +94,7 @@
 		  <div class="modal-body">
 		  <form class="form-horizontal" action="home.php?ctr=proceso&acc=guardarconclusionfinalvalidada" method="post" enctype="multipart/form-data">
 		  <input type ="hidden" name="id" id ="id" value="'.$id.'">
-		  <p>Conclusion Envidada : '.$listatemporales[$i]['conclucionfinal']."<br>Fecha Inicio Medida: ".$listatemporales[$i]['fechainimedida']."<br>Fecha Fin Medida: ".$listatemporales[$i]['fechafinmedida'].'</p>
+		  <p>Conclusion Envidada : '.$listatemporales[$i]['conclucionfinal'].'</p>
 		  <div class="form-group row">
     <label for="conclu" class="col-4 col-form-label">La Conclusion es Correcta?</label> 
     <div class="col-8">
