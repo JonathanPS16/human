@@ -81,9 +81,7 @@ if($_GET['acc']=="formacla"){
 			$archivos .= "<a href ='archivosgenerales/".$archivoconclusionproceso."' target='_black' class='btn btn-primary'>Adjunto Proceso</a><br><br>";
 		}
 
-		if($archivoacaraempleado!=""){
-			$archivos .= "<a href ='archivosgenerales/".$archivoacaraempleado."' target='_black' class='btn btn-primary'>Adjunto Empleado</a><br><br>";
-		}
+		
 
 		if($archivoconclusionproceso!=""){
 			$archivos .= "<a href ='archivosgenerales/".$archivoconclusionproceso."' target='_black' class='btn btn-primary'>Acta Descargos</a><br><br>";
@@ -337,7 +335,7 @@ if($_GET['acc']=="formacla"){
 			<input type ="hidden" name="correo" id ="correo" value="'.$correoempleado.'">
 			<input type ="hidden" name="id" id ="id" value="'.$id.'">
 			<div class="form-group row">
-    <label for="efecto" class="col-4 col-form-label">Efecto Disciplinario</label> 
+    <label for="efecto" class="col-4 col-form-label">Conclusión Preliminar</label> 
     <div class="col-8">
       <textarea id="efecto" name="efecto" cols="40" rows="5" required="required" class="form-control"></textarea>
     </div>
@@ -348,6 +346,7 @@ if($_GET['acc']=="formacla"){
     <label class="col-4 col-form-label" for="archivofirmado">Archivo Firmado</label> 
     <div class="col-8">
       <div class="input-group">
+	  <p>En el archivo adjunto encontrará el modelo de la decision propuesta del proceso</p>
         <div class="input-group-prepend">
           <div class="input-group-text">
             <i class="fa fa-cloud-upload"></i>
@@ -387,7 +386,7 @@ $(".custom-file-input").on("change", function() {
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Notificacion Proceso Diciplinario</h5>
+			<h5 class="modal-title" id="exampleModalLabel">Notificacion Proceso Disciplinario</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
@@ -419,11 +418,30 @@ $(".custom-file-input").on("change", function() {
 			  <div class="custom-controls-stacked">
 				<div class="custom-control custom-checkbox">
 				  <input name="checkbox_2" id="checkbox_2" type="checkbox" class="custom-control-input" value="3" checked="checked"> 
-				  <label for="checkbox_2" class="custom-control-label">Nomina</label>
+				  <label for="checkbox_2" class="custom-control-label">Jefe Inmediato</label>
+				</div>
+			  </div>
+			  <div class="custom-controls-stacked">
+				<div class="custom-control custom-checkbox">
+				  <input name="checkbox_3" id="checkbox_3" type="checkbox" class="custom-control-input" value="3" checked="checked"> 
+				  <label for="checkbox_3" class="custom-control-label">Empresa Usuaria</label>
 				</div>
 			  </div>
 			</div>
 		  </div> 
+		  <div class="form-group row">
+    <label class="col-4 col-form-label" for="archivofirmado">Archivo Firmado</label> 
+    <div class="col-8">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <i class="fa fa-cloud-upload"></i>
+          </div>
+        </div> 
+        <input id="archivofirmado" name="archivofirmado" type="file" class="form-control">
+      </div>
+    </div>
+  </div> 
 
 		
 <bt><br><br>
@@ -433,6 +451,8 @@ $(".custom-file-input").on("change", function() {
     </div>
   </div>
   <input type ="hidden" name="correo" id ="correo" value="'.$correoempleado.'">
+  <input type ="hidden" name="correojefe" id ="correo" value="'.$listatemporales[$i]['coreojefe'].'">
+  <input type ="hidden" name="correoempresau" id ="correoempresau" value="'.$listatemporales[$i]['correo'].'">
 			<input type ="hidden" name="id" id ="id" value="'.$id.'">
 			<input type ="hidden" name="menfinal" id ="menfinal" value="'.$listatemporales[$i]['concluaprobadaf'].'">
 			</form>
@@ -551,6 +571,9 @@ $(".custom-file-input").on("change", function() {
 			$botonhojaex = "";
 			if($tipoproceso=="solicitud") {
 				$botonhojaex = "Respuesta empleado:".$listatemporales[$i]['aclaracionempleado'];
+				if($archivoacaraempleado!=""){
+					$botonhojaex .= "<br><br><a href ='archivosgenerales/".$archivoacaraempleado."' target='_black' class='btn btn-primary'>Adjunto Empleado</a><br><br>";
+				}
 			}else {
 				$botonhoja = "Conclusion Entrevista<br>".$listatemporales[$i]['conclucionentre'];
 			}

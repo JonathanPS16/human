@@ -461,10 +461,31 @@
                         $correoenvio.="servicioalcliente@humantalentsas.com".";";
                     }
                     if(isset($_POST['checkbox_2']) && $_POST['checkbox_2']>0){
-                        $correoenvio.="nomina@humantalentsas.com".";";
+                        $correoenvio.=$_POST['correojefe'].";";
+                    }
+
+                    if(isset($_POST['checkbox_3']) && $_POST['checkbox_3']>0){
+                        $correoenvio.=$_POST['correoempresau'].";";
                     }
                     $mensajef = $_POST['menfinal'];
-                    $listatemporales=$objconsulta->guardarfindisciplinarionotifica($_POST['id'],$correo,$mensajef);
+                    $archivouno = "";
+                    $nombre_archivo = date('YmdHms').$_FILES['archivofirmado']['name'];
+                    if($nombre_archivo!="") {
+                        $tipo_archivo = $_FILES['archivofirmado']['type'];
+                        $tamano_archivo = $_FILES['archivofirmado']['size'];
+                        $mensaje = "";    
+                        //compruebo si las características del archivo son las que deseo
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+                            $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
+                        }else{
+                            if (move_uploaded_file($_FILES['archivofirmado']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $archivouno =$nombre_archivo;
+                            }else{
+                                $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
+                            }
+                        }
+                    }
+                    $listatemporales=$objconsulta->guardarfindisciplinarionotifica($_POST['id'],$correo,$mensajef,$archivouno);
                     echo "<script>alert('Notificaciones Enviadas Correctamente');
                         window.location.href = 'home.php?ctr=proceso&acc=formacla';
                         </script>";

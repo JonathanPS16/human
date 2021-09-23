@@ -28,6 +28,8 @@ if(isset($_POST) && $_POST['vali']=='si')
 } else {
     $objconsulta= new consultas();
     $ret=$objconsulta->validarrellenado($_GET['id']);
+    $archivoenviado=$objconsulta->validararchivoexplicacion($_GET['id']);
+    
     if($ret=="T"){
 ?>
     <html>
@@ -64,12 +66,9 @@ if(isset($_POST) && $_POST['vali']=='si')
 <link href="https://getbootstrap.com/docs/4.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <!-- Favicons -->
-<link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-<link rel="icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+
 <link rel="manifest" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/manifest.json">
 <link rel="mask-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
-<link rel="icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/favicon.ico">
 <meta name="msapplication-config" content="https://getbootstrap.com/docs/4.4/assets/img/favicons/browserconfig.xml">
 <meta name="theme-color" content="#563d7c">
 
@@ -108,6 +107,7 @@ if(isset($_POST) && $_POST['vali']=='si')
 <img class="mb-4" src="img/logo_negro.jpg" alt="" width="228" height="72">
 	<br>
 	<h4 class="card-title mt-3 text-center">Aclaración Proceso Disciplinario</h4><br>
+  <p style="text-align: justify; text-justify: inter-word;">En el archivo anexo encontrará el  cuestionario sobre el evento reportado; el cual Usted deberá dar respuesta a cada una de las preguntas relacionadas en dicho documento y proceder a enviar sus aclaraciones y soportes que considere pertinentes.<br><a href="archivosgenerales/<?php echo $archivoenviado; ?>" target="_black">Archivo Anexo</a></p>
   <form action="registro.php" method="post" enctype="multipart/form-data">
     <div class="form-group row">
     <label for="aclaracion" class="col-4 col-form-label">Aclaracion</label> 
