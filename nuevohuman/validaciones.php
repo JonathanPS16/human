@@ -3311,7 +3311,7 @@ catch(com_exception $e)
                     if($_POST['tipo'] == "S"){
                         $tipo = "S";
                     }
-                    $listadoreq=$objconsulta->citarcandidato($id_per,$id_req,$fechahora,$lugarentre,$tipocita,$tipo);
+                    $listadoreq=$objconsulta->citarcandidato($id_per,$id_req,$fechahora,$lugarentre,$tipocita,$tipo,$fecha,$hora);
 
                     echo "<script>alert('Candidato Citado Correctamente ');
                     window.location.href = 'home.php?ctr=requisicion&acc=verreqcan&id={$id_req}';

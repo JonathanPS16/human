@@ -911,9 +911,7 @@ public function guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingr
 
     $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
       //echo $consultas;
-      $mensaje = "
-      Señor Usuario<br>
-        Apreciada Área de Selección<br><br>
+      $mensaje = "Apreciada Área de Selección<br><br>
 
         Le informamos que la empresa  $nombreempresas, Usuario $nombreem, ha Solicitado Contratación Directa del candidato $nombre, para lo cual hemos asignado el proceso de selección con el consecutivo No. $idreq
         <br><br>
@@ -922,8 +920,7 @@ public function guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingr
         Para visualizar dar click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$idreq}'><strong>AQUI</strong></a>
         <br><br>
         Cordialmente,<br>
-        Human Talent SAS<br><br>
-        Para su Seguimiento y/o Gestión";
+        Human Talent SAS<br>";
       $consultas= $conn->Execute($consultas)-> getRows();
       for($i= 0; $i<count($consultas); $i++) {
         $correos = explode(",", $consultas[$i]['correosselecccion']);
@@ -1565,11 +1562,15 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
             Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
 
 
-            $consultas = "SELECT * FROM req WHERE id= ".$idreq;
+            $consultas = "SELECT req.*,usuarios.nombre,empresasterporales.nombretemporal from req INNER JOIN usuarios on usuarios.usuario= req.clientesol inner join empresasterporales on empresasterporales.id_temporal=req.empresaclientet where req.id= ".$idreq;
             $consultas = $conn->Execute($consultas)-> getRows();
             $carfo = "";
+            $carfoa = "";
+            $carfob = "";
             for($i= 0; $i<count($consultas); $i++) {
                 $carfo = $consultas[0]['cargo'];
+                $carfoa = $consultas[0]['nombre'];
+                $carfob = $consultas[0]['nombretemporal'];
             }
             $labe ="Registro Candidato";
             /*
@@ -1578,11 +1579,13 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
             $mensaje = "Se a creado  una nueva requisision con el identificador {$req} Para su Gestión de candidatos<br><br>
             Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$req}'><strong>AQUI</strong></a><br><br>
             Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";*/
-            $mesaje = "Apreciado Cliente<br><br>
-            Le informamos que para su requerimiento para el cargo ".$carfo.",se ha sido enviado un candidato para su Gestión.
-            <br>
+            $mesaje = "Señor Usuario $carfoa
+            Apreciado Cliente  $carfob
+            <br><br>
+            Le informamos que para su requerimiento para el cargo ".$carfo.", se ha sido enviado un candidato para su Gestión.
+            <br><br>
             Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
-            <br>
+            <br><br>
             Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=verreqcan&id={$idreq}'>Aqui</a>
             <br>
             <br>
@@ -1596,11 +1599,15 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
             break;
         case "NUEVAREQ":
 
-            $consultas = "SELECT * FROM req WHERE id= ".$idreq;
+            $consultas = "SELECT req.*,usuarios.nombre,empresasterporales.nombretemporal from req INNER JOIN usuarios on usuarios.usuario= req.clientesol inner join empresasterporales on empresasterporales.id_temporal=req.empresaclientet where req.id= ".$idreq;
             $consultas = $conn->Execute($consultas)-> getRows();
             $carfo = "";
+            $carfoa = "";
+            $carfoc = "";
             for($i= 0; $i<count($consultas); $i++) {
                 $carfo = $consultas[0]['cargo'];
+                $carfoa = $consultas[0]['nombre'];
+                $carfoc = $consultas[0]['nombretemporal'];
             }
             /*
             $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
@@ -1608,11 +1615,12 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
             $mensaje = "Se a creado  una nueva requisision con el identificador {$req} Para su Gestión de candidatos<br><br>
             Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$req}'><strong>AQUI</strong></a><br><br>
             Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";*/
-            $mesaje = "Apreciado Cliente<br><br>
+            $mesaje = "Señor Usuario $carfoa<br>
+            Apreciado Cliente $carfoc<br><br>
             Le informamos que su requerimiento para el cargo ".$carfo.", ha sido recibido y se le ha generado el consecutivo ".$idreq.".;  estaremos procediendo de manera inmediata a dar tramite a su solicitud.
-            <br>
+            <br><br>
             Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
-            <br>
+            <br><br>
             Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=verreqcan&id={$idreq}'>Aqui</a>
             <br>
             <br>
@@ -1648,26 +1656,24 @@ public function actualizarformatos($idper,$idreq,$orden,$documentos,$hv)
 
 public function correopsico($id_req,$tipomen) {
     $conn = $this->conec();
-    $consultas = "SELECT empresaclientet,clientesol,cargo  FROM req WHERE  id=".$id_req;
+    $consultas = "SELECT req.*,usuarios.nombre,usuarios.correo,empresasterporales.nombretemporal from req INNER JOIN usuarios on usuarios.usuario= req.clientesol inner join empresasterporales on empresasterporales.id_temporal=req.empresaclientet where req.id=".$id_req;
     
     $consultas= $conn->Execute($consultas)-> getRows();
     $clientesol = "";
     $ide = "";
     $cargo = "";
+    $nombreclie = "";
+    $correocli = "";
+    $empresat = "";
     for($i= 0; $i<count($consultas); $i++) {
         $ide  =$consultas[$i]['empresaclientet'];
         $clientesol = $consultas[$i]['clientesol'];
         $cargo =  $consultas[$i]['cargo'];
-    }
-
-    $consultas = "SELECT nombre,correo  FROM usuarios WHERE  usuario='".$clientesol."'";
-    $consultas= $conn->Execute($consultas)-> getRows();
-    $nombreclie = "";
-    $correocli = "";
-    for($i= 0; $i<count($consultas); $i++) {
         $nombreclie  =$consultas[$i]['nombre'];
         $correocli  =$consultas[$i]['correo'];
+        $empresat  =$consultas[$i]['nombretemporal'];
     }
+
     $mensaje ="";
     switch ($tipomen) {
         case "APROBADO":
@@ -1677,20 +1683,20 @@ public function correopsico($id_req,$tipomen) {
             Cordialmente,<br>Human Talent SAS
             ";
 
-            $mensajedos = "Apreciado Cliente ".$nombreclie."<br>
-            <br>
+            $mensajedos = "Señor Usuario  $nombreclie<br>
+            Apreciado Cliente $empresat<br><br>
+
             Le informamos que Usted ha aprobado el candidato con el  consecutivo ".$id_req.",  para el cargo ".$cargo.",.; por lo anterior le agradecemos ingresar a nuestro pagina web, www.humantalentsas.com y diligenciar la información correspondiente a las condiciones de contratación para que el sistema  genere la respectiva Orden de Ingreso del Candidato.
             <br><br>
             Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
             <br>
             Cualquier inquietud  al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com . 
             <br><br>
-            <br>
             Para Completar Orden puede dar clic <a href='".DIRWEB."home.php?ctr=requisicion&acc=verreqcan&id={$id_req}'>Aqui</a>
-            <br>
+            <br><br>
             Cordialmente,
-            <br>
-            Área de Selección
+            <br><br>
+            Área de Selección<br>
             <br>Human Talent SAS
             ";
             $this->enviocorreo($correocli, $mensajedos, "Aprobacion Candidato");
@@ -1972,6 +1978,20 @@ public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justific
     Área Jurídica  - 
     Human Talent SAS";
     $envio = $this->enviarcorreoadjuntos($correo,$archivo,$mensaje,$titulo);
+
+    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    for($i= 0; $i<count($consultas); $i++) {
+    $correos = explode(",", $consultas[$i]['usuarios']);
+        for($j=0; $j<count($correos); $j++){
+            $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
+            $consultasresp= $conn->Execute($consultascorr)-> getRows();
+                if($consultasresp[0]['correo']!=""){
+                    $envio = $this->enviarcorreoadjuntos($consultasresp[0]['correo'],$archivo,"Copia de Correo <br>".$mensaje,"Copia de Correo Citacion");
+                    //$envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+                }            
+        }
+    }
     $fechahora = $fechacitacion. " ".$horacita;
     $SQL ="UPDATE procesos  SET extradata='$extradata',estado='E',fechacita='$fechahora',tipoproceso ='$tipo',justificacion='$justificacion',archivoenviado='$archivo',sedelugar='$sedelugar',modalidadcita='$modalidadcita'  WHERE id_proceso=".$id;
     $conn->Execute($SQL);
@@ -2349,64 +2369,82 @@ public function enviarconclucionprocesoAcci($id,$diasinca,$obserini,$obser,$obse
 }
 
 
-public function citarcandidato($id_per,$id_req,$fechahora,$lugar,$tipocita,$tipo)
+public function citarcandidato($id_per,$id_req,$fechahora,$lugar,$tipocita,$tipo,$fecha,$hora)
 {
     $conn = $this->conec();
-    $consultas = "SELECT correo,nombre  FROM req_candidatos WHERE  id=".$id_per;
+    $consultas = "SELECT correo,nombre,presentarse  FROM req_candidatos WHERE  id=".$id_per;
 
     $consultas= $conn->Execute($consultas)-> getRows();
     $correo = "";
     $nombre = "";
+    $prese = "";
     for($i= 0; $i<count($consultas); $i++) {
         $correo  =$consultas[$i]['correo'];
         $nombre  =$consultas[$i]['nombre'];
+        $prese  =$consultas[$i]['presentarse'];
     }
 
-    $consultas = "SELECT empresaclientet,cargo,clientesol  FROM req WHERE  id=".$id_req;
+    $consultas = "SELECT req.*,usuarios.nombre,empresasterporales.nombretemporal from req INNER JOIN usuarios on usuarios.usuario= req.clientesol inner join empresasterporales on empresasterporales.id_temporal=req.empresaclientet where req. id=".$id_req;
     $consultas= $conn->Execute($consultas)-> getRows();
     $ide = "";
     $cargo = "";
     $clientesol = "";
+    $nombresol = "";
+    $nombreempresa = "";
     for($i= 0; $i<count($consultas); $i++) {
         $ide  =$consultas[$i]['empresaclientet'];
         $cargo  =$consultas[$i]['cargo'];
         $clientesol  =$consultas[$i]['clientesol'];
+        $nombresol  =$consultas[$i]['nombre'];
+        $nombreempresa  =$consultas[$i]['nombretemporal'];
     }
 
-    $consultas = "SELECT nombre  FROM usuarios WHERE  usuario='".$clientesol."'";
-    $consultas= $conn->Execute($consultas)-> getRows();
-    $nombresol = "";
-    for($i= 0; $i<count($consultas); $i++) {
-        $nombresol  =$consultas[$i]['nombre'];
-    }
     $mensaje = "
-    Apreciado ".$nombre."
-    <br><br>
-    Le informamos que dentro del proceso de selección para el cargo ".$cargo.",  Usted ha sido citado para el día ".$fechahora." en la metodologia ".$tipocita.",  en las instalaciones de la  empresa  ".$lugar." , por favor presentar a XXXXX nombre de la persona XXXXXXXX, 
-    <br>
-    Cualquier inquietud  al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com . 
-    <br><br>
-    Cordialmente,
-    <br><br>
-    Área de Selección<br>
-    Human Talent SAS";
+    Apreciado(a) ".$nombre."
+<br><br>
+Le informamos que dentro del proceso de selección para el cargo ".$cargo.", en la empresa Usuaria $nombreempresa ;  Usted ha sido citado para tener una entrevista programada para la siguiente fecha: 
+<br><br>
+- Fecha			 $fecha<br>
+- Hora			 $hora <br>
+- Metodología		 ".$tipocita."  . <br>
+- Dirección o Link	 $lugar<br>
+- Presentarse a		 $prese<br><br>  
+
+Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com .
+<br><br>
+Cordialmente,
+<br>
+Área de Selección<br>
+Human Talent SAS<br>
+
+Para su Seguimiento y/o Gestión";
     $envio = $this->enviocorreo($correo, $mensaje,"Citacion");
     $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
       //echo $consultas;
-      $mensaje = "Apreciado Cliente ".$nombresol."
+      $mensaje = "Señor Usuario   $nombresol<br>
+      Apreciado Cliente  $nombreempresa<br><br>
+      
+      Le informamos que dentro del proceso de selección para el cargo ".$cargo.", según consecutivo No. $id_req se ha citado al candidato ".$nombre.", de acuerdo con sus indicaciones,  para entrevista en la  siguiente fecha: 
+      
         <br><br>
-      Le informamos que dentro del proceso de selección para el cargo ".$cargo.", se ha citado al candidato ".$nombre.",  según el consecutivo ".$id_req.", para el día ".$fechahora.", en la metodologia ".$tipocita." en lugar ".$lugar.",  según sus indicaciones .
-      <br>
-      Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
-      <br>
-      Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a>
-      <br>
-      Cualquier inquietud  al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+        - Fecha			 $fecha<br>
+        - Hora			 $hora <br>
+        - Metodología		 ".$tipocita."  . <br>
+        - Dirección o Link	 $lugar<br>
+        - Entrevistador 		 $prese<br><br>  
+      
+      Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web www.humantalentsas.com ingresando con su usuario y clave.
       <br><br>
-      Cordialmente,
+      Para visualizar dar click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a>
+      <br>
+      Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com .
+      <br><br>Cordialmente,
       <br><br>
       Área de Selección<br>
-      Human Talent SAS";
+      Human Talent SAS
+      <br><br>
+      Para su Seguimiento y/o Gestión
+      ";
       $consultas= $conn->Execute($consultas)-> getRows();
       for($i= 0; $i<count($consultas); $i++) {
         $correos = explode(",", $consultas[$i]['correosselecccion']);
@@ -2491,11 +2529,14 @@ public function archivosatrasformar($idper,$idreq){
 public function enviardocumentacion($idper,$idreq){
 
     $conn = $this->conec();
-    $consultas = "SELECT  req_candidatos.hvhuman, req_candidatos.docdocumen,req_candidatos.lugar,req.cargo,req_candidatos.correo,req_candidatos.ordeningreso,req_candidatos.apertura,req_candidatos.examenesar,req_candidatos.nombre  FROM req_candidatos inner join req on req.id = req_candidatos.id_requisision WHERE  req_candidatos.id=".$idper;
+    $consultas = "SELECT empresasterporales.nombretemporal,req_candidatos.hvhuman, req_candidatos.docdocumen,req_candidatos.lugar,req.cargo,req_candidatos.correo,req_candidatos.ordeningreso,req_candidatos.apertura,req_candidatos.examenesar,req_candidatos.nombre  FROM req_candidatos inner join req on req.id = req_candidatos.id_requisision 
+     INNER JOIN empresasterporales on empresasterporales.id_temporal=req.empresaclientet
+     WHERE  req_candidatos.id=".$idper;
     $consultas= $conn->Execute($consultas)-> getRows();
     $correo = "";
     $nombre ="";
     $cargo ="";
+    $nombretemporal ="";
     //$ordeningreso = "archivosgenerales/";
     $docdocumen = "archivosgenerales/";
     $hvhuman = "archivosgenerales/";
@@ -2503,7 +2544,7 @@ public function enviardocumentacion($idper,$idreq){
     $archivoexa =  "archivosgenerales/";
     for($i= 0; $i<count($consultas); $i++) {
         $correo  =$consultas[$i]['correo'];
-        $correo  =$consultas[$i]['correo'];
+        $nombretemporal  =$consultas[$i]['nombretemporal'];
         //$ordeningreso  =$consultas[$i]['ordeningreso'];
         $archivoaper.=$consultas[$i]['apertura'];
         $hvhuman.=$consultas[$i]['hvhuman'];
@@ -2513,13 +2554,13 @@ public function enviardocumentacion($idper,$idreq){
         } else {
             $archivoexa.= $consultas[$i]['examenesar'];
             //echo $consultas[$i]['lugar']."--".$consultas[$i]['examenesar']."----".$consultas[$i]['nombre'];
-            $this->enviarcorreocentromedico($consultas[$i]['lugar'],$consultas[$i]['examenesar'],$consultas[$i]['nombre']);
+            $this->enviarcorreocentromedico($consultas[$i]['lugar'],$consultas[$i]['examenesar'],$consultas[$i]['nombre'],$nombretemporal);
         }
         $nombre.= $consultas[$i]['nombre'];
         $cargo.= $consultas[$i]['cargo'];
     }
-    $titulo2 = "Documentacion de Contratacion";
-    $cuerpo2 = "Apreciado ".$nombre."<br><br>
+    $titulo2 = "Notificación envío de Documentos";
+    $cuerpo2 = "Apreciado(a) ".$nombre."<br><br>
 
     Dando continuidad al proceso de contratación para el cargo ".$cargo." , le estamos enviado los formatos que Usted debe diligenciar y la documentación que debe reunir y que es requerida para dar tramite a la contracción, tanto los formatos debidamente diligenciados como la documentación solicitada puede ser entregada en nuestra  oficina o remitirla  a los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com 
     <br><br>
@@ -2543,12 +2584,14 @@ public function enviardocumentacion($idper,$idreq){
     $maildos->Password = Password; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
     $maildos->Port = Port; // Puerto de conexión al servidor de envio. 
     $maildos->SetFrom(correocor, mensajecorr);
+    $maildos->Subject = utf8_decode($titulo2); // Este es el titulo del email. 
     /*$maildos->Host = "smtp.zoho.com"; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
     $maildos->Username = "info@formalsi.com"; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
     $maildos->Password = "2019FormalSiMarzo*"; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
     $maildos->Port = 465; // Puerto de conexión al servidor de envio. 
     $maildos->SetFrom('info@formalsi.com', 'Humantalentsas');*/
     $maildos->AddAddress($correo, "Usuario");
+    
     //$maildos->AddAttachment($ordeningreso,"ordeningreso.docx");
     $maildos->AddAttachment($hvhuman,"hojavidahuman.docx");
     $maildos->AddAttachment($docdocumen,"documentacion.docx");
@@ -2556,7 +2599,6 @@ public function enviardocumentacion($idper,$idreq){
         $maildos->AddAttachment($archivoexa,"ordenexamenes.pdf");
     }
     $maildos->AddAttachment($archivoaper,"aperturacuenta.pdf");
-    $maildos->Subject = utf8_decode($titulo2); // Este es el titulo del email. 
     $maildos->MsgHTML(utf8_decode($cuerpo2));
     $maildos->Send();
 
@@ -2565,20 +2607,21 @@ public function enviardocumentacion($idper,$idreq){
 
 }
 
-public function enviarcorreocentromedico($id,$archivoexa,$nombrepersona){
+public function enviarcorreocentromedico($id,$archivoexa,$nombrepersona,$nombreempresa=""){
     $conn = $this->conec();
     $consultas = "SELECT * from  laboratorios where id=".$id;
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     //var_dump($consultas);
     $correolaboratorio = $consultas[0]['correo'];
+    $nombrelaboratorio = $consultas[0]['nombrelaboratorio'];
     if($correolaboratorio!="") {
         $datosa = explode("|", $correolaboratorio);
         for($i=0;$i<count($datosa);$i++) {
             if($datosa[$i]!=""){
                 $titulo="Envio Colaborador Para Examenes";
-                $mensaje="Apreciados señores Laboratorio Clinico:<br><br>
-                Para su conocimiento y Gestión respectiva, en el archivo anexo encontraran la autorización correspondiente para lque le sean realizado los examenes medicos a a nuestro colaborador  $nombrepersona<br><br>Cualquier inquietud  al respecto, con gusto, la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com, servicioalcliente@humantalentsas.com
+                $mensaje="Apreciados señores Laboratorio Clínico: ".$nombrelaboratorio."<br><br>
+                Para su conocimiento y Gestión respectiva, en el archivo anexo encontraran la autorización correspondiente para que le sean realizado los exámenes médicos a nuestro colaborador  $nombrepersona, de nuestra empresa Usuaria $nombreempresa<br><br>Cualquier inquietud  al respecto, con gusto, la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com, servicioalcliente@humantalentsas.com
                 <br><br>
                 Cordialmente,
                 <br><br>
@@ -2672,7 +2715,8 @@ public function rechazarcandidato($id_per,$id_req,$rechazo,$observacion)
       //echo $consultas;
       $mensaje = "Apreciada Área de Selección <br>
         <br>
-      Le informamos  que la empresa ".$nombreem.", ha rechazado el candidato ".$nombre.", del proceso de selección con consecutivo ".$id_req.",  por el motivo ".$rechazo." observaciones ".$observacion." <br>
+      Le informamos  que la empresa ".$nombreem.", ha rechazado el candidato ".$nombre.", del proceso de selección con consecutivo ".$id_req.", por las siguientes consideraciones: <br><br> 
+      - Motivo ".$rechazo."<br> - Observaciones ".$observacion." <br><br>
       Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
       <br><br>
       Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a>
@@ -2704,11 +2748,15 @@ public function rechazarcandidato($id_per,$id_req,$rechazo,$observacion)
 
 public function enviarCorreoReq($ide,$req){
       $conn = $this->conec();
-      $consultas = "SELECT * FROM req WHERE id= ".$req;
+      $consultas = "SELECT req.*,usuarios.nombre,empresasterporales.nombretemporal from req INNER JOIN usuarios on usuarios.usuario= req.clientesol inner join empresasterporales on empresasterporales.id_temporal=req.empresaclientet where req.id= ".$req;
       $consultas = $conn->Execute($consultas)-> getRows();
       $carfo = "";
+      $carfoa = "";
+      $carfoc = "";
       for($i= 0; $i<count($consultas); $i++) {
         $carfo = $consultas[0]['cargo'];
+        $carfoa = $consultas[0]['nombre'];
+        $carfoc = $consultas[0]['nombretemporal'];
       }
       //echo $req;
       /*
@@ -2717,11 +2765,12 @@ public function enviarCorreoReq($ide,$req){
       $mensaje = "Se a creado  una nueva requisision con el identificador {$req} Para su Gestión de candidatos<br><br>
       Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$req}'><strong>AQUI</strong></a><br><br>
       Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";*/
-      $mensaje = "Apreciado Cliente<br><br>
+      $mensaje = "Señor Usuario $carfoa<br>
+      Apreciado Cliente $carfoc<br><br>
       Le informamos que su requerimiento para el cargo ".$carfo.", ha sido recibido y se le ha generado el consecutivo ".$req.".;  estaremos procediendo de manera inmediata a dar tramite a su solicitud.
       <br>
       Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
-      <br>
+      <br><br>
       Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$req}'>Aqui</a>
       <br>
       <br>
@@ -2811,13 +2860,13 @@ public function enviarCorreoReq($ide,$req){
     $maildos->Password = Password; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
     $maildos->Port = Port; // Puerto de conexión al servidor de envio. 
     $maildos->SetFrom(correocor, mensajecorr);
+    $maildos->Subject = utf8_decode($titulo2); // Este es el titulo del email. 
     /*$maildos->Host = "smtp.zoho.com"; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
     $maildos->Username = "info@formalsi.com"; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
     $maildos->Password = "2019FormalSiMarzo*"; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
     $maildos->Port = 465; // Puerto de conexión al servidor de envio. 
     $maildos->SetFrom('info@formalsi.com', 'Humantalentsas');*/
     $maildos->AddAddress($correo, "Usuario");
-    $maildos->Subject = utf8_decode($titulo2); // Este es el titulo del email. 
     $maildos->MsgHTML(utf8_decode($cuerpo2));
     $maildos->Send(); // Envía el correo
   }
