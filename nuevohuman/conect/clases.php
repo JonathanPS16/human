@@ -33,15 +33,17 @@ public function consultarempleado($usuario,$clave){
 
         $consultas = $result-> getRows();
         $correo = "";
+        $nombreempleado = "";
         foreach ($consultas as $key => $arreglo) { 
             $correo = $arreglo["correoelectronico"];  
+            $nombreempleado = $arreglo["nombre_empleado"];
         }
         $result= $conn->Execute("SELECT * from  empledos_ingreso WHERE  documento ='{$usuario}'");
         $recordCount = $result->recordCount();
         if($recordCount == 0) {
             $result= $conn->Execute("INSERT INTO empledos_ingreso(documento,correo,clave,estado) values ('$usuario','$correo','$clave','P')");
             $asunto = "Activacion de Cuenta";
-            $mensaje="Apreciado Colaborador<br><br>
+            $mensaje="Apreciado $nombreempleado<br><br>
             Con el propósito de agilizar y optimizar los tiempo de respuesta a sus requerimientos, ponemos a su disposición nuestras soluciones de tecnología, para que Usted pueda consultar,  generar y descargar la información correspondiente con nuestra relación laboral. Para activar su cuenta por favor hacer click en el siguiente <a href='".DIRWEB."validate.php?data=".base64_encode($usuario)."'><strong>link de activacion</strong></a><br><br>
             Esperamos que estas herramientas les genere mayor comodidad para la solución de sus requerimientos. Así mismo, si tiene cualquier inquietud adicional lo invitamos a contactar a nuestra área de servicio al cliente a través del correo servicioalcliente@humantalentsas.com o al teléfono  214 2011 o al celular 318 335 2194 - 315 612 9899
             <br><br>
@@ -927,7 +929,7 @@ public function guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingr
         for($j=0; $j<count($correos); $j++){
             $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
-            $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+            $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje, "Notificación Contratación Directa");
         }
 
       }
@@ -1386,11 +1388,16 @@ public function ajustarlaboratorio($id,$idreq,$laboratorio,$cadena,$orden,$apert
 public function notificarProcesos($id,$correojefe){
     $conn = $this->conec();
 
-    $consultas = "SELECT * from procesos where id_proceso=".$id;
+    $consultas = "SELECT procesos.*,usuarios.correo,usuarios.nombre from procesos INNER join usuarios on usuarios.usuario = procesos.grabado where procesos.id_proceso=".$id;
     $consultas= $conn->Execute($consultas)-> getRows();
     $nombre  ="";
+    $empresausua  ="";
+    $nombre  ="";
+    $nombreempresa = "";
     for($i= 0; $i<count($consultas); $i++) {
         $nombre = $consultas[$i]['nombrefuncionario'];
+        $empresausua = $consultas[$i]['nombre'];
+        $nombreempresa = $consultas[$i]['empresausuaria'];
     
     }
 
@@ -1402,10 +1409,11 @@ public function notificarProcesos($id,$correojefe){
           $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
           $consultasresp= $conn->Execute($consultascorr)-> getRows();
 
-          $mensaje  ="Apreciado Cliente
-            <br><br>
+          $mensaje  ="Señor Usuario   $empresausua<br>
+          Apreciado Cliente  $nombreempresa<br>
+            <br>
           Le informamos que hemos recibido su solicitud para efectuar proceso disciplinario al empleado en misión ".$nombre.", y se le ha generado el consecutivo ".$id.".;  estaremos procediendo de manera inmediata a dar tramite a su solicitud.<br>
-          <br><br>
+          <br>
           Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web www.humantalentsas.com ingresando con su usuario y clave.<br><br>
           Cualquier inquietud  al respecto, con gusto, la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los 
 correos servicioalcliente@humantalentsas.com , areajuridica@humantalentsas.com.co<br><br>
@@ -1572,7 +1580,7 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
                 $carfoa = $consultas[0]['nombre'];
                 $carfob = $consultas[0]['nombretemporal'];
             }
-            $labe ="Registro Candidato";
+            $labe ="Notificación envío candidato a Empresa Usuaria";
             /*
             $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
             //echo $consultas;
@@ -1609,6 +1617,7 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
                 $carfoa = $consultas[0]['nombre'];
                 $carfoc = $consultas[0]['nombretemporal'];
             }
+            $labe ="Notificación Requisición";
             /*
             $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
             //echo $consultas;
@@ -1677,12 +1686,7 @@ public function correopsico($id_req,$tipomen) {
     $mensaje ="";
     switch ($tipomen) {
         case "APROBADO":
-            $mensaje = "Buen Dia
-            <br>
-            Le informamos que el cliente ".$nombreclie." ha aprobado el candidato con el  consecutivo ".$id_req.",  para el cargo ".$cargo."<br><br>; 
-            Cordialmente,<br>Human Talent SAS
-            ";
-
+            
             $mensajedos = "Señor Usuario  $nombreclie<br>
             Apreciado Cliente $empresat<br><br>
 
@@ -1699,7 +1703,7 @@ public function correopsico($id_req,$tipomen) {
             Área de Selección<br>
             <br>Human Talent SAS
             ";
-            $this->enviocorreo($correocli, $mensajedos, "Aprobacion Candidato");
+            $this->enviocorreo($correocli, $mensajedos, "Notificación Aprobacion Candidato");
 
             break;
         case "NUEVAREQ":
@@ -1885,7 +1889,7 @@ public function editaraclaraciondisciplinariop($id,$efecto){
           Área Servicio al Cliente 
           <br>Human Talent SAS";
             if($consultasresp[0]['correo']!=""){
-                $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+                $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje ,"Notificación de Ampliación Evento Disciplinario Empleado por la Empresa Usuaria");
             }
          
       }
@@ -1956,11 +1960,13 @@ public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justific
     $consultas = "SELECT * from procesos where id_proceso=".$id;
     $consultas= $conn->Execute($consultas)-> getRows();
     $nombre  ="";
+    $empresausuaria = "";
     for($i= 0; $i<count($consultas); $i++) {
         $nombre = $consultas[$i]['nombrefuncionario'];
+        $empresausuaria = $consultas[$i]['empresausuaria']; 
     
     }
-    $titulo="Citacion Proceso"; 
+    $titulo="Notificación Citación Empleado"; 
     if($modalidadcita=="Videollamada" || $modalidadcita=="presencial"){
         $dato ="en la dirección ".$sedelugar;
     } else {
@@ -1968,15 +1974,19 @@ public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justific
     }
     $mensaje = "Apreciado Empleado ".$nombre."<br><br>
     
-    Le informamos que se le ha iniciado un proceso disciplinario, sobre un evento reportado por la Empresa Usuaria donde presta sus servicios, 
-    por lo cual usted deberá presentarse ".$dato." ".$extradata.", para dar las explicaciones respectivas 
-    <br>
-    Cualquier inquietud  al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com  , areajuridica@humantalentsas.com.co 
-    <br>
-    Cordialmente,
+    Le informamos que se le ha iniciado un proceso disciplinario, sobre un evento reportado por la Empresa Usuaria $empresausuaria donde presta sus servicios, por lo cual usted deberá asistir a la reunión de descargos para dar las explicaciones respectivas, programada en la siguiente fecha 
     <br><br>
-    Área Jurídica  - 
-    Human Talent SAS";
+    - Fecha  $fechacitacion <br>
+- Hora $horacita <br>
+- Metodología $modalidadcita .<br> 
+- Dirección o Link  $sedelugar <br>
+<br>
+Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, areajuridica@humantalentsas.com.co
+<br><br>
+Cordialmente,
+<br>
+Área Jurídica <br>
+Human Talent SAS ";
     $envio = $this->enviarcorreoadjuntos($correo,$archivo,$mensaje,$titulo);
 
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
@@ -2068,6 +2078,13 @@ public function guardarfindisciplinarionotifica($id,$correo,$mensajef, $archivo)
 
 }
 
+public function testeogeneral(){
+    $mensaje = "PRUEBA";
+    $envio = $this->enviarcorreoadjuntos("kptzmusic@gmail.com","20211005img20211005_16160739.pdf",$mensaje, "Notificación Cierre Proceso Disciplinario – No es Procedente");
+    $envio = $this->enviocorreo("kptzmusic@gmail.com", $mensaje,"Notificación Cierre Proceso Disciplinario – No es Procedente");
+    
+}
+
 public function cierrepremaruto($id,$razon){
     $conn = $this->conec();
     $titulo="Notificación Cierre Proceso Disciplinario";
@@ -2104,7 +2121,7 @@ Human Talent SAS
 ";
 
 
-$envio = $this->enviocorreo($correoextra, $mensaje);
+$envio = $this->enviocorreo($correoextra, $mensaje,"Notificación Cierre Proceso Disciplinario – No es Procedente  ");
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
     $consultas= $conn->Execute($consultas)-> getRows();
     for($i= 0; $i<count($consultas); $i++) {
@@ -2113,7 +2130,7 @@ $envio = $this->enviocorreo($correoextra, $mensaje);
             $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
                 if($consultasresp[0]['correo']!=""){
-                    $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+                    $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje, "Notificación Cierre Proceso Disciplinario – No es Procedente");
                 }
             
         }
@@ -2156,7 +2173,7 @@ Human Talent SAS
 ";
 
 
-$envio = $this->enviocorreo($correoextra, $mensaje);
+$envio = $this->enviocorreo($correoextra, $mensaje,"Notificación a Empresa Usuaria Ampliación Evento  Disciplinario Empleado");
 /*$mensaje = "Apreciada Área Jurídica y Área Servicio al Cliente <br><br>
 Apreciado Cliente  $nombreEmpresausuaria<br><br>
 
@@ -2192,15 +2209,18 @@ public function enviarsolicitudexplicacion($id,$correo,$fechacitacion,$tipo,$raz
     $consultas= $conn->Execute($consultas)-> getRows();
     $nombre  = "";
     $testigo  = "";
+    $empresau = "";
     $correocliente = "";
     for($i= 0; $i<count($consultas); $i++) {
         $nombre = $consultas[$i]['nombrefuncionario'];
         $testigo = $consultas[$i]['correotestigo'];
         $correocliente = $consultas[$i]['correo'];
+        $empresau = $consultas[$i]['empresausuaria'];
+        
     }
     $mensaje = "Apreciado Empleado ".$nombre."<br><br>
-    Le informamos que se le ha iniciado un proceso disciplinario, sobre un evento reportado por la Empresa Usuaria donde presta sus servicios, para que Usted pueda dar las respectivas explicaciones sobre dicho evento, Usted deberá ingresar al siguiente <a href='".DIRWEB."registro.php?id=$id' target='_black'>LINK</a>, y enviar dichas explicaciones a mas tardar el día ".$fechacitacion."<br> 
-    
+    Le informamos que se le ha iniciado un proceso disciplinario, sobre un evento reportado por la Empresa Usuaria $empresau donde presta sus servicios, En el archivo anexo encontrará el  cuestionario sobre el evento reportado; el cual Usted deberá dar respuesta a cada una de las preguntas relacionadas en dicho documento y proceder a enviar sus aclaraciones y soportes que considere pertinente ingresando al siguiente <a href='".DIRWEB."registro.php?id=$id' target='_black'>LINK</a>, a mas tardar el día ".$fechacitacion."<br> 
+    <br>
     Cualquier inquietud  al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com  , areajuridica@humantalentsas.com.co 
     <br>
     Cordialmente,
@@ -2209,17 +2229,17 @@ public function enviarsolicitudexplicacion($id,$correo,$fechacitacion,$tipo,$raz
     Human Talent SAS";
 
     $mensaje2 = "CORREO INFORMATIVO - COPIA DE CORREO ENVIADO AL EMPLEADO ".$nombre." <br><br><br>Apreciado Empleado ".$nombre."<br><br>
-    Le informamos que se le ha iniciado un proceso disciplinario, sobre un evento reportado por la Empresa Usuaria donde presta sus servicios, para que Usted pueda dar las respectivas explicaciones sobre dicho evento.<br> 
-    
+    Le informamos que se le ha iniciado un proceso disciplinario, sobre un evento reportado por la Empresa Usuaria $empresau donde presta sus servicios, En el archivo anexo encontrará el  cuestionario sobre el evento reportado; el cual Usted deberá dar respuesta a cada una de las preguntas relacionadas en dicho documento y proceder a enviar sus aclaraciones y soportes que considere pertinente ingresando al siguiente <a href='".DIRWEB."registro.php?id=$id' target='_black'>LINK</a>, a mas tardar el día ".$fechacitacion."<br> 
+    <br>
     Cualquier inquietud  al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com  , areajuridica@humantalentsas.com.co 
     <br>
     Cordialmente,
     <br><br>
     Área Jurídica  - 
     Human Talent SAS";
-    $envio = $this->enviarcorreoadjuntos($correo,$archivo, $mensaje, "Solicitud Aclaracion");
-    $envio = $this->enviarcorreoadjuntos($correocliente,$archivo, $mensaje2, "Solicitud Aclaracion Copia");
-    $envio = $this->enviarcorreoadjuntos($testigo,$archivo, $mensaje2, "Solicitud Aclaracion Copia");
+    $envio = $this->enviarcorreoadjuntos($correo,$archivo, $mensaje, "Solicitud Aclaración Empleado");
+    $envio = $this->enviarcorreoadjuntos($correocliente,$archivo, $mensaje2, "Solicitud Aclaración Empleado Copia");
+    $envio = $this->enviarcorreoadjuntos($testigo,$archivo, $mensaje2, "Solicitud Aclaración Empleado Copia");
 
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
     $consultas= $conn->Execute($consultas)-> getRows();
@@ -2234,7 +2254,6 @@ public function enviarsolicitudexplicacion($id,$correo,$fechacitacion,$tipo,$raz
             
         }
     }
-
 
     $SQL ="UPDATE procesos  SET estado='E',fechacita='$fechacitacion',tipoproceso ='$tipo',razon='$razonllamado',archivo='$archivo'  WHERE id_proceso=".$id;
     $conn->Execute($SQL);
@@ -2418,7 +2437,7 @@ Cordialmente,
 Human Talent SAS<br>
 
 Para su Seguimiento y/o Gestión";
-    $envio = $this->enviocorreo($correo, $mensaje,"Citacion");
+    $envio = $this->enviocorreo($correo, $mensaje,"Notificación citación entrevista Candidato");
     $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
       //echo $consultas;
       $mensaje = "Señor Usuario   $nombresol<br>
@@ -2453,7 +2472,7 @@ Para su Seguimiento y/o Gestión";
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
             if($consultasresp[0]['correo']!="")
             {
-                $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje,"Informacion sobre Citacion");
+                $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje,"Notificación citación entrevista Candidato");
             }
             
         }
@@ -2562,7 +2581,7 @@ public function enviardocumentacion($idper,$idreq){
     $titulo2 = "Notificación envío de Documentos";
     $cuerpo2 = "Apreciado(a) ".$nombre."<br><br>
 
-    Dando continuidad al proceso de contratación para el cargo ".$cargo." , le estamos enviado los formatos que Usted debe diligenciar y la documentación que debe reunir y que es requerida para dar tramite a la contracción, tanto los formatos debidamente diligenciados como la documentación solicitada puede ser entregada en nuestra  oficina o remitirla  a los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com 
+    Dando continuidad al proceso de contratación para el cargo ".$cargo." , en nuestra empresa Usuario ".$nombretemporal." ;le estamos enviado los formatos que Usted debe diligenciar y la documentación que debe reunir y que es requerida para dar tramite a la contracción, tanto los formatos debidamente diligenciados como la documentación solicitada puede ser entregada en nuestra  oficina o remitirla  a los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com 
     <br><br>
     Anexamos la orden de exámenes de ingreso,  para que Usted se realice dichos exámenes en el Laboratorio Clínico relacionado en dicha comunicación 
     <br><br>
@@ -2584,7 +2603,8 @@ public function enviardocumentacion($idper,$idreq){
     $maildos->Password = Password; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
     $maildos->Port = Port; // Puerto de conexión al servidor de envio. 
     $maildos->SetFrom(correocor, mensajecorr);
-    $maildos->Subject = utf8_decode($titulo2); // Este es el titulo del email. 
+    $asunto = "=?UTF-8?B?".base64_encode($titulo2)."=?=";
+    $maildos->Subject = utf8_decode($asunto); // Este es el titulo del email. 
     /*$maildos->Host = "smtp.zoho.com"; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
     $maildos->Username = "info@formalsi.com"; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
     $maildos->Password = "2019FormalSiMarzo*"; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
@@ -2619,7 +2639,7 @@ public function enviarcorreocentromedico($id,$archivoexa,$nombrepersona,$nombree
         $datosa = explode("|", $correolaboratorio);
         for($i=0;$i<count($datosa);$i++) {
             if($datosa[$i]!=""){
-                $titulo="Envio Colaborador Para Examenes";
+                $titulo="Notificación Carta a Laboratorio";
                 $mensaje="Apreciados señores Laboratorio Clínico: ".$nombrelaboratorio."<br><br>
                 Para su conocimiento y Gestión respectiva, en el archivo anexo encontraran la autorización correspondiente para que le sean realizado los exámenes médicos a nuestro colaborador  $nombrepersona, de nuestra empresa Usuaria $nombreempresa<br><br>Cualquier inquietud  al respecto, con gusto, la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com, servicioalcliente@humantalentsas.com
                 <br><br>
@@ -2648,6 +2668,8 @@ public function enviarcorreoadjuntos($correo,$documento,$mensaje,$titulo="Notifi
     $maildos->Password = Password; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
     $maildos->Port = Port; // Puerto de conexión al servidor de envio. 
     $maildos->SetFrom(correocor, mensajecorr);
+    $asunto = "=?UTF-8?B?".base64_encode($titulo)."=?=";
+    $maildos->Subject = utf8_decode($asunto); // Este es el titulo del email. 
     $maildos->AddAddress($correo, "Usuario");
     $datos = explode(",", $copias);
     //var_dump($datos);
@@ -2664,7 +2686,7 @@ public function enviarcorreoadjuntos($correo,$documento,$mensaje,$titulo="Notifi
 
     $archivoexa = "archivosgenerales/".$documento;
     $maildos->AddAttachment($archivoexa,$documento);
-    $maildos->Subject = utf8_decode($titulo); // Este es el titulo del email. 
+    
     $maildos->MsgHTML(utf8_decode($mensaje));
     $maildos->Send();
 }
@@ -2702,13 +2724,13 @@ public function rechazarcandidato($id_per,$id_req,$rechazo,$observacion)
     }
     $mensaje = "Apreciado ".$nombre."
     <br><br>
-    En relación con el proceso de selección para el cargo ".$cargo.",  queremos agradecerle su participación en este y es nuestro deber informarles que Usted no fue seleccionado para este cargo. 
-    <br>
+    En relación con el proceso de selección que estábamos adelantando para el cargo ".$cargo.",  queremos agradecerle su participación en este y le comunicamos como es nuestro deber que en dicha vacante fue seleccionado otro candidato. 
+    <br><br>
     Esperamos contar con su hoja de vida para próximos procesos de selección donde su perfil y experiencia se ajusten a las necesidades del cargo requerido.
-    <br>
+    <br><br>
     Cordialmente,
     <br><br><br>
-    Área de Selección<br><br>
+    Área de Selección<br>
     Human Talent SAS";
     $envio = $this->enviocorreo($correo, $mensaje, "Estado Proceso Seleccion");
     $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
@@ -2731,7 +2753,7 @@ public function rechazarcandidato($id_per,$id_req,$rechazo,$observacion)
             $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
             if($consultasresp[0]['correo']!=""){
-                $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+                $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje, "Notificación Rechazo Candidato");
             }
             
         }
@@ -2791,7 +2813,7 @@ public function enviarCorreoReq($ide,$req){
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
             if($consultasresp[0]['correo']!=""){
                 //echo "<br>HOLA=".$consultasresp[0]['correo'];
-                $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje, "Nueva Solictud Generada");
+                $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje, "Notificación Requisición");
             }
     
            }
@@ -2848,9 +2870,6 @@ public function enviarCorreoReq($ide,$req){
 
   public function enviocorreo($correo,$mensaje,$asunto="Notificacion Gestión Human")
   {
-    $titulo2 = $asunto;
-    $cuerpo2 = "<p>".$mensaje."<br><br>Para su Seguimiento y/o Gestión <br /><br><br>
-                  &copy; ".date('Y')." humantalentsas.com - Todos los derechos reservados </p>";
     $maildos = new PHPMailer();
     $maildos->IsSMTP();
     $maildos->SMTPAuth = true;
@@ -2860,15 +2879,11 @@ public function enviarCorreoReq($ide,$req){
     $maildos->Password = Password; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
     $maildos->Port = Port; // Puerto de conexión al servidor de envio. 
     $maildos->SetFrom(correocor, mensajecorr);
-    $maildos->Subject = utf8_decode($titulo2); // Este es el titulo del email. 
-    /*$maildos->Host = "smtp.zoho.com"; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
-    $maildos->Username = "info@formalsi.com"; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
-    $maildos->Password = "2019FormalSiMarzo*"; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
-    $maildos->Port = 465; // Puerto de conexión al servidor de envio. 
-    $maildos->SetFrom('info@formalsi.com', 'Humantalentsas');*/
+    $asunto = "=?UTF-8?B?".base64_encode($asunto)."=?=";
+    $maildos->Subject = $asunto;
     $maildos->AddAddress($correo, "Usuario");
-    $maildos->MsgHTML(utf8_decode($cuerpo2));
-    $maildos->Send(); // Envía el correo
+    $maildos->MsgHTML(utf8_decode($mensaje));
+    $maildos->Send();
   }
 }
 

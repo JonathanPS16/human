@@ -493,6 +493,9 @@
 
 
                 break;
+                case "hola":
+                        $listatemporales=$objconsulta->testeogeneral();
+                    break;
 
                 case "cierreprematuro":
                      $listatemporales=$objconsulta->cierrepremaruto($_POST['id'],$_POST['entrevista']);
