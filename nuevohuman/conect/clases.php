@@ -886,15 +886,17 @@ public function guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingr
     values ($idreq,$idreqcan)";
     $conn->Execute($SQL);
 
-    $consultas = "SELECT empresaclientet,cargo,clientesol  FROM req WHERE  id=".$idreq;
+    $consultas = "SELECT empresaclientet,cargo,clientesol,empresausuaria  FROM req inner join centrocostos  on centrocostos.id_centro=req.empresacliente and centrocostos.id_empresapres= req.empresaclientet WHERE  req.id=".$idreq;
     $consultas= $conn->Execute($consultas)-> getRows();
     $ide = "";
     $cargo = "";
     $clientesol = "";
+    $nombreempresas = "";
     for($i= 0; $i<count($consultas); $i++) {
         $ide  =$consultas[$i]['empresaclientet'];
         $cargo =$consultas[$i]['cargo'];
         $clientesol =$consultas[$i]['clientesol'];
+        $nombreempresas = $consultas[$i]['empresausuaria'];
     }
 
     $consultas = "SELECT nombre  FROM usuarios WHERE  usuario='".$clientesol."'";
@@ -903,14 +905,7 @@ public function guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingr
     for($i= 0; $i<count($consultas); $i++) {
         $nombreem  =$consultas[$i]['nombre'];
     }
-    $nombreempresas = "";
-    $consultasa = "SELECT nombretemporal FROM empresasterporales WHERE id_temporal= ".$ide;
-    $consultasa= $conn->Execute($consultasa)-> getRows();
-    for($i= 0; $i<count($consultasa); $i++) {
-        $nombreempresas  =$nombreempresas[$i]['nombretemporal'];
-    }
-
-
+    
     $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
       //echo $consultas;
       $mensaje = "Apreciada Área de Selección<br><br>
@@ -1385,19 +1380,23 @@ public function ajustarlaboratorio($id,$idreq,$laboratorio,$cadena,$orden,$apert
     $conn->Execute($SQL);
 }
 
-public function notificarProcesos($id,$correojefe){
+public function notificarProcesos($id,$correojefe=""){
     $conn = $this->conec();
 
-    $consultas = "SELECT procesos.*,usuarios.correo,usuarios.nombre from procesos INNER join usuarios on usuarios.usuario = procesos.grabado where procesos.id_proceso=".$id;
+    $consultas = "SELECT procesos.*,usuarios.correo,usuarios.nombre from procesos INNER join usuarios on usuarios.usuario = procesos.grabador where procesos.id_proceso=".$id;
     $consultas= $conn->Execute($consultas)-> getRows();
     $nombre  ="";
     $empresausua  ="";
     $nombre  ="";
     $nombreempresa = "";
+
     for($i= 0; $i<count($consultas); $i++) {
         $nombre = $consultas[$i]['nombrefuncionario'];
         $empresausua = $consultas[$i]['nombre'];
         $nombreempresa = $consultas[$i]['empresausuaria'];
+        if($correojefe == ""){
+            $correojefe = $consultas[$i]['coreojefe'];
+        }
     
     }
 
@@ -1570,7 +1569,9 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
             Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
 
 
-            $consultas = "SELECT req.*,usuarios.nombre,empresasterporales.nombretemporal from req INNER JOIN usuarios on usuarios.usuario= req.clientesol inner join empresasterporales on empresasterporales.id_temporal=req.empresaclientet where req.id= ".$idreq;
+            $consultas = "SELECT req.*,usuarios.nombre,centrocostos.empresausuaria as nombretemporal 
+            from req INNER JOIN usuarios on usuarios.usuario= req.clientesol 
+            INNER JOIN centrocostos on centrocostos.id_centro = req.empresacliente and centrocostos.id_empresapres= req.empresaclientet where req.id= ".$idreq;
             $consultas = $conn->Execute($consultas)-> getRows();
             $carfo = "";
             $carfoa = "";
@@ -1590,7 +1591,7 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
             $mesaje = "Señor Usuario $carfoa
             Apreciado Cliente  $carfob
             <br><br>
-            Le informamos que para su requerimiento para el cargo ".$carfo.", se ha sido enviado un candidato para su Gestión.
+            Le informamos que para su requerimiento para el cargo ".$carfo.", Ha sido enviado un candidato para su analisis y gestión.
             <br><br>
             Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
             <br><br>
@@ -1607,7 +1608,9 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
             break;
         case "NUEVAREQ":
 
-            $consultas = "SELECT req.*,usuarios.nombre,empresasterporales.nombretemporal from req INNER JOIN usuarios on usuarios.usuario= req.clientesol inner join empresasterporales on empresasterporales.id_temporal=req.empresaclientet where req.id= ".$idreq;
+            $consultas = "SELECT req.*,usuarios.nombre,centrocostos.empresausuaria as nombretemporal 
+            from req INNER JOIN usuarios on usuarios.usuario= req.clientesol 
+            inner join centrocostos  on centrocostos.id_centro=req.empresacliente and centrocostos.id_empresapres= req.empresaclientet where req.id= ".$idreq;
             $consultas = $conn->Execute($consultas)-> getRows();
             $carfo = "";
             $carfoa = "";
@@ -2403,7 +2406,9 @@ public function citarcandidato($id_per,$id_req,$fechahora,$lugar,$tipocita,$tipo
         $prese  =$consultas[$i]['presentarse'];
     }
 
-    $consultas = "SELECT req.*,usuarios.nombre,empresasterporales.nombretemporal from req INNER JOIN usuarios on usuarios.usuario= req.clientesol inner join empresasterporales on empresasterporales.id_temporal=req.empresaclientet where req. id=".$id_req;
+    $consultas = "SELECT req.*,usuarios.nombre,centrocostos.empresausuaria as nombretemporal 
+    from req INNER JOIN usuarios on usuarios.usuario= req.clientesol 
+    inner join centrocostos on centrocostos.id_centro=req.empresacliente and centrocostos.id_empresapres= req.empresaclientet where req. id=".$id_req;
     $consultas= $conn->Execute($consultas)-> getRows();
     $ide = "";
     $cargo = "";
@@ -2548,8 +2553,11 @@ public function archivosatrasformar($idper,$idreq){
 public function enviardocumentacion($idper,$idreq){
 
     $conn = $this->conec();
-    $consultas = "SELECT empresasterporales.nombretemporal,req_candidatos.hvhuman, req_candidatos.docdocumen,req_candidatos.lugar,req.cargo,req_candidatos.correo,req_candidatos.ordeningreso,req_candidatos.apertura,req_candidatos.examenesar,req_candidatos.nombre  FROM req_candidatos inner join req on req.id = req_candidatos.id_requisision 
-     INNER JOIN empresasterporales on empresasterporales.id_temporal=req.empresaclientet
+    $consultas = "SELECT centrocostos.empresausuaria  as nombretemporal,req_candidatos.hvhuman, 
+    req_candidatos.docdocumen,req_candidatos.lugar,req.cargo,req_candidatos.correo,req_candidatos.ordeningreso,
+    req_candidatos.apertura,req_candidatos.examenesar,req_candidatos.nombre  
+    FROM req_candidatos inner join req on req.id = req_candidatos.id_requisision 
+    inner join centrocostos on centrocostos.id_centro=req.empresacliente and centrocostos.id_empresapres= req.empresaclientet 
      WHERE  req_candidatos.id=".$idper;
     $consultas= $conn->Execute($consultas)-> getRows();
     $correo = "";
@@ -2639,7 +2647,7 @@ public function enviarcorreocentromedico($id,$archivoexa,$nombrepersona,$nombree
         $datosa = explode("|", $correolaboratorio);
         for($i=0;$i<count($datosa);$i++) {
             if($datosa[$i]!=""){
-                $titulo="Notificación Carta a Laboratorio";
+                $titulo="Notificación Carta Autorización Exámanes de Laboratorio";
                 $mensaje="Apreciados señores Laboratorio Clínico: ".$nombrelaboratorio."<br><br>
                 Para su conocimiento y Gestión respectiva, en el archivo anexo encontraran la autorización correspondiente para que le sean realizado los exámenes médicos a nuestro colaborador  $nombrepersona, de nuestra empresa Usuaria $nombreempresa<br><br>Cualquier inquietud  al respecto, con gusto, la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com, servicioalcliente@humantalentsas.com
                 <br><br>
@@ -2770,7 +2778,9 @@ public function rechazarcandidato($id_per,$id_req,$rechazo,$observacion)
 
 public function enviarCorreoReq($ide,$req){
       $conn = $this->conec();
-      $consultas = "SELECT req.*,usuarios.nombre,empresasterporales.nombretemporal from req INNER JOIN usuarios on usuarios.usuario= req.clientesol inner join empresasterporales on empresasterporales.id_temporal=req.empresaclientet where req.id= ".$req;
+      $consultas = "SELECT req.*,usuarios.nombre,centrocostos.empresausuaria as nombretemporal 
+      from req INNER JOIN usuarios on usuarios.usuario= req.clientesol 
+      inner join centrocostos  on centrocostos.id_centro=req.empresacliente and centrocostos.id_empresapres= req.empresaclientet  where req.id= ".$req;
       $consultas = $conn->Execute($consultas)-> getRows();
       $carfo = "";
       $carfoa = "";
