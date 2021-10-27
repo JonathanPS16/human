@@ -611,6 +611,7 @@
                     $templateProcessor2->setValue('aniorenuncia', $fecharegire[0]);
                     $templateProcessor2->setValue('diainicio', $fecharegi[0]);
                     $templateProcessor2->setValue('mesinicio', $fecharegi[1]);
+                    $templateProcessor2->setValue('mesinicioletra', $datosdia[$fecharegi[1]]);
                     $templateProcessor2->setValue('anioinicio', $fecharegi[2]);
                     $templateProcessor2->setValue('empresasecundaria', $_POST['empresausuaria']);
                     $templateProcessor2->saveAs('archivosgenerales/'.$docdocumen);
@@ -2348,7 +2349,7 @@ catch(com_exception $e)
                     $pdf->Image('img/CABECERA.png' , 0 ,0, 210 , 38);
                     $pdf->Ln(30);
                     //$pdf->SetFont('Arial', '', 10);
-                    $pdf->Multicell(0,7,utf8_decode('Bogotá'),0,'L');
+                    $pdf->Multicell(0,7,utf8_decode('Bogotá '.date("d/m/Y")),0,'L');
                     $pdf->Ln(8);
                     $pdf->Multicell(0,7,utf8_decode('Señores'),0,'L');
                    // $pdf->SetFont('Arial', 'B', 10);
@@ -2371,7 +2372,7 @@ catch(com_exception $e)
                     //$pdf->SetFont('Arial', 'B', 10);
                     $pdf->Multicell(0,7,utf8_decode('Nombre '.$listadoreqpers[0]['nombre'].''),0,'L');
                     $pdf->Multicell(0,7,utf8_decode('Cedula '.$listadoreqpers[0]['cedula'].''),0,'L');
-                    $pdf->Multicell(0,7,utf8_decode('Empresa Usuaria  '.$listadoreqpers[0]['nombretemporal'].''),0,'L');
+                    $pdf->Multicell(0,7,utf8_decode('Empresa Usuaria  '.$listadoreqpers[0]['empresausuaria'].''),0,'L');
                     $pdf->Multicell(0,7,utf8_decode('Cargo '.$listadoreqpers[0]['cargo'].''),0,'L');
                     $pdf->Multicell(0,7,utf8_decode('Ciudad donde Laborará  '.$listadoreqpers[0]['ciudadlaboral'].''),0,'L');
                     $pdf->SetFont('Arial', '', 8);

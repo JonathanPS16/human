@@ -203,7 +203,7 @@ public function consultarempleadosreap($numero){
     inner join centrocostos on centrocostos.centrocosto=certificados.centro_costos 
     and certificados.id_empresapres=centrocostos.id_empresapres
     inner join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres 
-    where certificados.cedula like '%$numero%' ".$where;
+    where certificados.fecha_retiro ='' and  certificados.cedula like '%$numero%' ".$where;
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
@@ -2626,7 +2626,7 @@ public function enviardocumentacion($idper,$idreq){
     if($archivoexa!=""){
         $maildos->AddAttachment($archivoexa,"ordenexamenes.pdf");
     }
-    $maildos->AddAttachment($archivoaper,"aperturacuenta.pdf");
+    //$maildos->AddAttachment($archivoaper,"aperturacuenta.pdf");
     $maildos->MsgHTML(utf8_decode($cuerpo2));
     $maildos->Send();
 
