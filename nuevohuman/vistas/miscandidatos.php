@@ -268,7 +268,7 @@ $modalbotoncitados ='<div class="modal fade" id="exampleModalhvaa'.$idper.'" tab
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Conclusion Entrevista '.$listadoreqcrea[0]['cargo'].'</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Conclusión Entrevista '.$listadoreqcrea[0]['cargo'].'</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -319,10 +319,10 @@ $modalbotoncitados ='<div class="modal fade" id="exampleModalhvaa'.$idper.'" tab
     </div>
     ';
     if($listadoreq[$i]['citanum']=="S"){
-        $botoncitaconclu ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalcitaconclu'.$idper.'"> Conclusion Cita
+        $botoncitaconclu ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalcitaconclu'.$idper.'"> Conclusión Cita
         '.$listadoreq[$i]['fechacitados'].'</button>';
     }else {
-      $botoncitaconclu ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalcitaconclu'.$idper.'"> Conclusion Cita
+      $botoncitaconclu ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalcitaconclu'.$idper.'"> Conclusión Cita
         '.$fechacitan.'</button>';
     }
 

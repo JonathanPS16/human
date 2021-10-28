@@ -430,9 +430,9 @@
                     
                     if($conclu=="SI"){
 
-                        $mensaje = "Aprobó la conclusion de la siguiente manera.<br><br> Conclusion: $efecto <br>Fecha Inicio Medida: $fechainimedida<br>Fecha Fin Medida: $fechafinmedida";
+                        $mensaje = "Aprobó la Conclusión de la siguiente manera.<br><br> Conclusión: $efecto <br>Fecha Inicio Medida: $fechainimedida<br>Fecha Fin Medida: $fechafinmedida";
                     }else {
-                        $mensaje = "Rechazó la conclusion con los siguientes cambios.<br><br> Conclusion: $efecto <br>Fecha Inicio Medida: $fechainimedida<br>Fecha Fin Medida: $fechafinmedida";
+                        $mensaje = "Rechazó la Conclusión con los siguientes cambios.<br><br> Conclusión: $efecto <br>Fecha Inicio Medida: $fechainimedida<br>Fecha Fin Medida: $fechafinmedida";
                     }
                     $listatemporales=$objconsulta->guardarynotificarfinalproceso($id,$mensaje,$conclu);
                     echo "<script>alert('Validacion Envidada Correctamente');

@@ -417,7 +417,7 @@ $solicitarexpl = "";
 	</div>
 	';
 		$botonhojadose ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalen'.$id.'">
-	  Conclusion Entrevista
+		Conclusión Entrevista
 	</button>';
 
 
@@ -425,7 +425,7 @@ $solicitarexpl = "";
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Conclusion Proceso Diciplinario</h5>
+			<h5 class="modal-title" id="exampleModalLabel">Conclusión Proceso Disciplinario</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
@@ -435,7 +435,7 @@ $solicitarexpl = "";
 			<input type ="hidden" name="correo" id ="correo" value="'.$correoempleado.'">
 			<input type ="hidden" name="id" id ="id" value="'.$id.'">
 			<div class="form-group row">
-    <label for="efecto" class="col-4 col-form-label">Efecto Diciplinario</label> 
+    <label for="efecto" class="col-4 col-form-label">Efecto Disciplinario</label> 
     <div class="col-8">
       <textarea id="efecto" name="efecto" cols="40" rows="5" required="required" class="form-control"></textarea>
     </div>

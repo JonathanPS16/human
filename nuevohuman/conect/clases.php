@@ -1898,7 +1898,7 @@ public function editaraclaraciondisciplinariop($id,$efecto){
       }
 
     }
-    $SQL ="UPDATE procesos SET descripcion = '$efecto' , estado ='N' WHERE id_proceso=".$id;
+    $SQL ="UPDATE procesos SET descripcion = '$efecto' , estado ='N',explicacionextrat = 'S'  WHERE id_proceso=".$id;
     $conn->Execute($SQL);
 } 
 
@@ -1928,11 +1928,11 @@ public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo,$fechain
     <br><br>
     Área Jurídica  - 
     Human Talent SAS";
-    $envio = $this->enviocorreo($correousua, $mensaje);
+    $envio = $this->enviarcorreoadjuntos($correousua, $nombre_archivo, $mensaje, "Notificacion Envio Conclusión Preliminar");
 
     $mensaje ="Apreciada Área Jurídica y Área Servicio al Cliente <br><br>
 
-    Se a enviado la conclusion del proceso disciplinario con No $id <br>
+    Se a enviado la Conclusión preliminar del proceso disciplinario con No $id <br>
     Cordialmente,
     <br><br>
     Área Jurídica  - 
@@ -1946,7 +1946,7 @@ public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo,$fechain
             $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
                 if($consultasresp[0]['correo']!=""){
-                    $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+                    $envio = $this->enviarcorreoadjuntos($consultasresp[0]['correo'],$nombre_archivo, $mensaje, "Notificacion Envio Conclusión Preliminar");
                 }
             
         }
@@ -2187,7 +2187,7 @@ Cordialmente,
 Área Jurídica<br>
 Human Talent SAS 
 ";
-
+*/
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
     $consultas= $conn->Execute($consultas)-> getRows();
     for($i= 0; $i<count($consultas); $i++) {
@@ -2196,11 +2196,11 @@ Human Talent SAS
             $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
                 if($consultasresp[0]['correo']!=""){
-                    $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+                    $envio = $this->enviocorreo($consultasresp[0]['correo'], "COPIA DEL MENSAJE ".$mensaje, "Copia Notificación a Empresa Usuaria Ampliación Evento  Disciplinario Empleado");
                 }
             
         }
-    }*/
+    }
     $SQL ="UPDATE procesos  SET estado='NA' WHERE id_proceso=".$id;
     $conn->Execute($SQL);
 }
@@ -2252,7 +2252,7 @@ public function enviarsolicitudexplicacion($id,$correo,$fechacitacion,$tipo,$raz
             $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
                 if($consultasresp[0]['correo']!=""){
-                    $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+                    $envio = $this->enviarcorreoadjuntos($consultasresp[0]['correo'],$archivo, $mensaje, "Solicitud Aclaración Empleado");
                 }
             
         }
@@ -2295,7 +2295,7 @@ public function guardarrespuestaempleado($id,$aclaracion,$archivo){
             $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
                 if($consultasresp[0]['correo']!=""){
-                    $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+                    $envio = $this->enviarcorreoadjuntos($consultasresp[0]['correo'],$archivo,$mensaje, "Notificacion Envio Aclaracion por Parte del Empleado");
                 }
             
         }
