@@ -397,7 +397,7 @@ $(".custom-file-input").on("change", function() {
 			<div class="form-group row">
             <label for="presentarse" class="col-4 col-form-label">Correos Electronico (Separados por ;)</label> 
             <div class="col-8">
-              <input id="correo" name="correo" placeholder="correo@electronico.com;correo2@electronico.com" type="text" class="form-control" >
+              <input id="correoextra" name="correoextra" placeholder="correo@electronico.com;correo2@electronico.com" type="text" class="form-control" >
             </div>
           </div> 
 			<div class="form-group row">

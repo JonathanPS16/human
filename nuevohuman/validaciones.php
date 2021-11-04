@@ -430,11 +430,11 @@
                     
                     if($conclu=="SI"){
 
-                        $mensaje = "Aprobó la Conclusión de la siguiente manera.<br><br> Conclusión: $efecto <br>Fecha Inicio Medida: $fechainimedida<br>Fecha Fin Medida: $fechafinmedida";
+                        $mensaje = "Aprobó la Conclusión de la siguiente manera.<br><br> Conclusión: $efecto <br>Fecha Inicio Medida: $fechainimedida";
                     }else {
-                        $mensaje = "Rechazó la Conclusión con los siguientes cambios.<br><br> Conclusión: $efecto <br>Fecha Inicio Medida: $fechainimedida<br>Fecha Fin Medida: $fechafinmedida";
+                        $mensaje = "Rechazó la Conclusión con los siguientes cambios.<br><br> Conclusión: $efecto <br>Fecha Inicio Medida: $fechainimedida";
                     }
-                    $listatemporales=$objconsulta->guardarynotificarfinalproceso($id,$mensaje,$conclu);
+                    $listatemporales=$objconsulta->guardarynotificarfinalproceso($id,$mensaje,$conclu, $efecto, $fechainimedida);
                     echo "<script>alert('Validacion Envidada Correctamente');
                         window.location.href = 'home.php?ctr=proceso&acc=formproceso';
                         </script>";
@@ -452,8 +452,7 @@
                 break;
 
                 case "guardarfinalprocesonotificaciones":
-                   // print_r($_POST);
-                    $correoenvio = "";
+                    $correoenvio = $_POST['correoextra'].";";
                     if(isset($_POST['checkbox_0']) && $_POST['checkbox_0']>0){
                         $correoenvio.=$_POST['correo'].";";
                     }
@@ -485,7 +484,7 @@
                             }
                         }
                     }
-                    $listatemporales=$objconsulta->guardarfindisciplinarionotifica($_POST['id'],$correo,$mensajef,$archivouno);
+                    $listatemporales=$objconsulta->guardarfindisciplinarionotifica($_POST['id'],$correoenvio,$mensajef,$archivouno);
                     echo "<script>alert('Notificaciones Enviadas Correctamente');
                         window.location.href = 'home.php?ctr=proceso&acc=formacla';
                         </script>";
