@@ -214,6 +214,50 @@ if($_GET['ctr']=="admon" && ($_GET['acc']=="listadoextras" || $_GET['acc']=="reg
             }
             });
         }
+        function validainfoextra(id,tipo)
+        {
+            $("#formfechainicial"+id).hide();
+            $("#formfechafinal"+id).hide();
+            $("#formfechareintegro"+id).hide();
+            $("#formguardar"+id).hide();
+
+    
+            if(tipo=="Sanción"){
+                $("#formguardar"+id).show();
+                $("#formfechainicial"+id).show();
+                $("#formfechafinal"+id).show();
+                $("#formfechareintegro"+id).show();
+            }
+
+            if(tipo=="Cerrado sin Acción" || tipo=="Cerrado sin Acción" || tipo=="Llamado de Atención"){
+                $("#formguardar"+id).show();
+            }
+
+            if(tipo=="Terminación Contrato Justa Causa"){
+                $("#formguardar"+id).show();
+                $("#formfechainicial"+id).show();
+            }
+
+
+
+            //var id = $("#empresaclientet").val();
+
+
+            /*
+            var id = $("#empresaclientet").val();
+
+            var validaeu = $("#validaeu").val();
+
+            
+            $.ajax({
+            type: "POST",
+            url: "home.php?ctr=admon&acc=listadoextras",
+            data: 'id=' + id+'&pres='+validaeu,
+            success: function(datos) {
+                $('#empresacliente').html(datos);
+            }
+            });*/
+        }
 
         $( "#filtrador #button").click(function() {
             $('#listausuarios').empty();

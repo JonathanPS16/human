@@ -77,16 +77,11 @@ if($_GET['acc']=="formacla"){
 			$archivos .= "<a href ='archivosgenerales/".$archivotres."' target='_black' class='btn btn-primary'>Archivo Tres</a><br><br>";
 		}
 
-		if($archivoconclusionproceso!=""){
-			$archivos .= "<a href ='archivosgenerales/".$archivoconclusionproceso."' target='_black' class='btn btn-primary'>Adjunto Proceso</a><br><br>";
-		}
+		
 
 		
 
-		if($archivoconclusionproceso!=""){
-			$archivos .= "<a href ='archivosgenerales/".$archivoconclusionproceso."' target='_black' class='btn btn-primary'>Acta Descargos</a><br><br>";
-		}
-
+		
 		
 
 		
@@ -144,7 +139,7 @@ if($_GET['acc']=="formacla"){
       <select id="modalidadcita" name="modalidadcita" class="custom-select" required="required">
 	  <option value="presencial">Presencial</option>
 	  <option value="Videollamada">Videoteleconferencia</option>
-	  <option value="Cuestionario">Cuestionario</option>
+	  <option value="Teleconferencia">Teleconferencia</option>
 	  <option value="Otro">Otro</option>
       </select>
     </div>
@@ -393,7 +388,36 @@ $(".custom-file-input").on("change", function() {
 		  </div>
 		  <div class="modal-body">
 			<form class="form-horizontal" action="home.php?ctr=proceso&acc=guardarfinalprocesonotificaciones" method="post" enctype="multipart/form-data">
-			
+			<div class="form-group row">
+				<label for="tipificacion" class="col-4 col-form-label">Tipificación</label> 
+				<div class="col-8">
+				<select id="tipificacion" name="tipificacion" class="custom-select" onchange="validainfoextra('.$id.',this.value);">
+					<option value="0">Seleccione</option>
+					<option value="Cerrado sin Acción">Cerrado sin Acción</option>
+					<option value="Llamado de Atención">Llamado de Atención</option>
+					<option value="Sanción">Sanción</option>
+					<option value="Terminación Contrato Justa Causa">Terminación Contrato Justa Causa</option>
+				</select>
+				</div>
+			</div>
+			<div class="form-group row" id="formfechainicial'.$id.'" style="display:none;">
+				<label for="fechainicial" class="col-4 col-form-label">Fecha Inicial</label> 
+				<div class="col-8">
+				<input id="fechainicial" name="fechainicial" type="date" class="form-control">
+				</div>
+			</div>
+			<div class="form-group row" id="formfechafinal'.$id.'" style="display:none;">
+				<label for="fechafinal" class="col-4 col-form-label">Fecha Final</label> 
+				<div class="col-8">
+				<input id="fechafinal" name="fechafinal" type="date" class="form-control">
+				</div>
+			</div>
+			<div class="form-group row" id="formfechareintegro'.$id.'" style="display:none;">
+				<label for="fechareintegro" class="col-4 col-form-label">Fecha Reintegro</label> 
+				<div class="col-8">
+				<input id="fechareintegro" name="fechareintegro" type="date" class="form-control">
+				</div>
+			</div>
 			<div class="form-group row">
             <label for="presentarse" class="col-4 col-form-label">Correos Electronico (Separados por ;)</label> 
             <div class="col-8">
@@ -427,6 +451,18 @@ $(".custom-file-input").on("change", function() {
 				  <label for="checkbox_3" class="custom-control-label">Empresa Usuaria</label>
 				</div>
 			  </div>
+			  <div class="custom-controls-stacked">
+				<div class="custom-control custom-checkbox">
+				  <input name="checkbox_4" id="checkbox_4" type="checkbox" class="custom-control-input" value="3" checked="checked"> 
+				  <label for="checkbox_4" class="custom-control-label">Nomina</label>
+				</div>
+			  </div>
+			  <div class="custom-controls-stacked">
+				<div class="custom-control custom-checkbox">
+				  <input name="checkbox_5" id="checkbox_5" type="checkbox" class="custom-control-input" value="3" checked="checked"> 
+				  <label for="checkbox_5" class="custom-control-label">Contabilidad</label>
+				</div>
+			  </div>
 			</div>
 		  </div> 
 		  <div class="form-group row">
@@ -446,7 +482,7 @@ $(".custom-file-input").on("change", function() {
 		
 <bt><br><br>
   <div class="form-group row">
-    <div class="offset-4 col-8">
+    <div class="offset-4 col-8" style="display:none;" id="formguardar'.$id.'">
       <button name="submit" type="submit" class="btn btn-primary">Enviar Notificacion</button>
     </div>
   </div>
@@ -553,7 +589,10 @@ $(".custom-file-input").on("change", function() {
 				$estadolb = $modalbotonhojadose.$botonhojadose;
 				$conclucionentre="Esperando ".$inforproceso;
 				$botonhoja = "Citado Entrevista <br>Modalidad:".$listatemporales[$i]['modalidadcita']."<br>Lugar Citación:".$listatemporales[$i]['sedelugar']."<br>Lugra O link:".$listatemporales[$i]['extradata'];
-			
+				if($archivoconclusionproceso!=""){
+					$botonhoja .= "<br><br><a href ='archivosgenerales/".$archivoconclusionproceso."' target='_black' class='btn btn-primary'>Acta Descargos</a><br><br>";
+				}
+		
 			}
 			
 		}
@@ -567,7 +606,11 @@ $(".custom-file-input").on("change", function() {
 			if($tipoproceso=="solicitud") {
 				$botonhojaex = "Respuesta empleado:".$listatemporales[$i]['aclaracionempleado']."<br><br><a href ='archivosgenerales/".$listatemporales[$i]['archivo']."' target='_black' class='btn btn-primary'>Solicitud Explicación</a>"."<br><br><a href ='archivosgenerales/".$archivoacaraempleado."' target='_black' class='btn btn-primary'>Respuesta Explicación</a><br>";
 			}else {
+				
 				$botonhoja = "Conclusión Entrevista<br>".$listatemporales[$i]['conclucionentre'];
+				if($archivoconclusionproceso!=""){
+					$botonhoja .= "<br><br><a href ='archivosgenerales/".$archivoconclusionproceso."' target='_black' class='btn btn-primary'>Adjunto Proceso</a><br><br>";
+				}
 			}
 			$conclucionentre = "Pendiente Envio Conclusión";
 			$estadolb = $modalbotonhojatres.$botonhojatres;

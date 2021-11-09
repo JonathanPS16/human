@@ -1983,9 +1983,14 @@ public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justific
     $consultas= $conn->Execute($consultas)-> getRows();
     $nombre  ="";
     $empresausuaria = "";
+    $correoJefe = "";
+    $correotestigo = "";
     for($i= 0; $i<count($consultas); $i++) {
         $nombre = $consultas[$i]['nombrefuncionario'];
         $empresausuaria = $consultas[$i]['empresausuaria']; 
+        $correoJefe = $consultas[$i]['coreojefe']; 
+        $correotestigo = $consultas[$i]['correotestigo']; 
+
     
     }
     $titulo="Notificación Citación Empleado"; 
@@ -2024,6 +2029,9 @@ Human Talent SAS ";
                 }            
         }
     }
+    $this->enviarcorreoadjuntos($correoJefe ,$archivo,"Copia de Correo <br>".$mensaje,"Copia de Correo Citacion");
+    $this->enviarcorreoadjuntos($correotestigo ,$archivo,"Copia de Correo <br>".$mensaje,"Copia de Correo Citacion");
+
     $fechahora = $fechacitacion. " ".$horacita;
     $SQL ="UPDATE procesos  SET extradata='$extradata',estado='E',fechacita='$fechahora',tipoproceso ='$tipo',justificacion='$justificacion',archivoenviado='$archivo',sedelugar='$sedelugar',modalidadcita='$modalidadcita'  WHERE id_proceso=".$id;
     $conn->Execute($SQL);
@@ -2064,7 +2072,7 @@ public function guardarfinretiro($id,$correo,$archivo){
 
 }
 
-public function guardarfindisciplinarionotifica($id,$correo,$mensajef, $archivo){
+public function guardarfindisciplinarionotifica($id,$correo,$mensajef, $archivo,$fechai,$fechaf,$fechar,$tipificacion){
     $conn = $this->conec();
     $titulo="Documento Retiro";
     $nombre="";
@@ -2096,7 +2104,7 @@ public function guardarfindisciplinarionotifica($id,$correo,$mensajef, $archivo)
             $this->enviarcorreoadjuntos($explo[$i],$archivo,$mensaje, "Notificacion Gestion Proceso Disciplinario");
         }    
     }
-    $SQL ="UPDATE procesos  SET estado='TN', archivofinald ='$archivo' WHERE id_proceso=".$id;
+    $SQL ="UPDATE procesos  SET estado='TN', archivofinald ='$archivo',tipifechai='$fechai', tipifechaf='$fechaf', tipifechar='$fechar', tipificacion= '$tipificacion' WHERE id_proceso=".$id;
     $conn->Execute($SQL);
 
 }
@@ -2369,37 +2377,45 @@ public function enviarconclucionproceso($id,$entrevista,$archivodos){
     $correoempleado  ="";
     $coreojefe = "";
     $correotestigo = "";
-    $mensaje = "Apreciado Empleado <br><br>
-    <a href='https://humantalentsas.com/human/apruebaenvio.php?id=$id'>Confirmacion Recibido</a>
-    
-    Cualquier inquietud  al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com  , areajuridica@humantalentsas.com.co 
-    <br>
-    Cordialmente,
-    <br><br>
-    Área Jurídica  - 
-    Human Talent SAS";
+    $nombreEmpleado = "";
+    $nombreTestigo = "";
+    $fechaTestigo = "";
     //$envio = $this->enviarcorreoadjuntos($correo,$archivo, $mensaje, "Solicitud Aclaracion");
     for($i=0; $i<count($consultas); $i++) {
         $correoempleado = $consultas[$i]['correoempleado'];
         $coreojefe = $consultas[$i]['coreojefe'];
         $correotestigo = $consultas[$i]['correotestigo'];
+        $nombreEmpleado = $consultas[$i]['nombrefuncionario'];
+        $nombreTestigo = $consultas[$i]['testigo'];
+        $fechaTestigo = $consultas[$i]['fechaevento'];
     }
+
+    $mensaje = "Apreciado(a) $nombreEmpleado<br>
+Apreciado(a) Testigo(a) $nombreTestigo<br><br>
+
+En relación con el proceso disciplinario que se le adelanta y de acuerdo con la reunión de descargos realizada el día $fechaTestigo en el archivo anexo encontrará el acta de la diligencia efectuada, y en la que participó como testigo el señor(a) $nombreTestigo; agradecemos a usted dar la confirmación de recibido y de aceptación de este documento dando click el siguiente <a href='https://humantalentsas.com/human/apruebaenvio.php?id=$id'>Link</a>.
+<br>
+Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los areajuridica@humantalentsas.com.co,  servicioalcliente@humantalentsas.com.co. 
+<br><br
+Cordialmente,
+<br>
+Área Jurídica - Human Talent SAS";
 
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
     $consultas= $conn->Execute($consultas)-> getRows();
-    $correosenviar = $coreojefe.",".$correotestigo.",";
+    $this->enviarcorreoadjuntos($coreojefe,$archivodos,$mensaje,"Correo Notificación Confirmación de Recibido Diligencia de Descargo por parte del Empleado");
+    $this->enviarcorreoadjuntos($correotestigo,$archivodos,$mensaje,"Correo Notificación Confirmación de Recibido Diligencia de Descargo por parte del Empleado");
     for($i= 0; $i<count($consultas); $i++) {
     $correos = explode(",", $consultas[$i]['usuarios']);
         for($j=0; $j<count($correos); $j++){
             $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
                 if($consultasresp[0]['correo']!=""){
-                    $correosenviar.=$consultasresp[0]['correo'].",";
+                    $this->enviarcorreoadjuntos($consultasresp[0]['correo'],$archivodos,$mensaje,"Correo Notificación Confirmación de Recibido Diligencia de Descargo por parte del Empleado");
                 }
-            
         }
     }
-   $this->enviarcorreoadjuntos($correoempleado,$archivodos,$mensaje,"Acta",$correosenviar);
+   $this->enviarcorreoadjuntos($correoempleado,$archivodos,$mensaje,"Correo Notificación Confirmación de Recibido Diligencia de Descargo por parte del Empleado");
     $SQL ="UPDATE procesos  SET estado='V',conclucionentre='$entrevista',archivoconclusionproceso='$archivodos'  WHERE id_proceso=".$id;
     $conn->Execute($SQL);
 }

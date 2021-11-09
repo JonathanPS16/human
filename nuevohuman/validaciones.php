@@ -452,6 +452,11 @@
                 break;
 
                 case "guardarfinalprocesonotificaciones":
+                   
+                    $fechai = $_POST['fechainicial'];
+                    $fechaf = $_POST['fechafinal'];
+                    $fechar = $_POST['fechareintegro'];
+                    $tipificacion = $_POST['tipificacion'];
                     $correoenvio = $_POST['correoextra'].";";
                     if(isset($_POST['checkbox_0']) && $_POST['checkbox_0']>0){
                         $correoenvio.=$_POST['correo'].";";
@@ -465,6 +470,12 @@
 
                     if(isset($_POST['checkbox_3']) && $_POST['checkbox_3']>0){
                         $correoenvio.=$_POST['correoempresau'].";";
+                    }
+                    if(isset($_POST['checkbox_4']) && $_POST['checkbox_4']>0){
+                        $correoenvio.="nomina@humantalentsas.com".";";
+                    }
+                    if(isset($_POST['checkbox_5']) && $_POST['checkbox_5']>0){
+                        $correoenvio.="contabilidad@humantalentsas.com".";";
                     }
                     $mensajef = $_POST['menfinal'];
                     $archivouno = "";
@@ -484,7 +495,7 @@
                             }
                         }
                     }
-                    $listatemporales=$objconsulta->guardarfindisciplinarionotifica($_POST['id'],$correoenvio,$mensajef,$archivouno);
+                    $listatemporales=$objconsulta->guardarfindisciplinarionotifica($_POST['id'],$correoenvio,$mensajef,$archivouno,$fechai,$fechaf,$fechar,$tipificacion);
                     echo "<script>alert('Notificaciones Enviadas Correctamente');
                         window.location.href = 'home.php?ctr=proceso&acc=formacla';
                         </script>";
