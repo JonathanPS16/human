@@ -8,7 +8,7 @@ die();
 } 
 require_once('conect/clases.php');
 
-if($_GET['ctr']=="admon" && ($_GET['acc']=="listadoextras" || $_GET['acc']=="registrosmas"))
+if($_GET['ctr']=="admon" && ($_GET['acc']=="listadoextras" || $_GET['acc']=="registrosmas" || $_GET['acc']=="registrosmasretiro"))
 {
     include('validaciones.php');
     die();
@@ -265,6 +265,19 @@ if($_GET['ctr']=="admon" && ($_GET['acc']=="listadoextras" || $_GET['acc']=="reg
             $.ajax({
             type: "POST",
             url: "home.php?ctr=admon&acc=registrosmas",
+            data: 'id=' + datos,
+            success: function(datos) {
+                $('#listausuarios').html(datos);
+              
+            }
+            });
+        });
+        $( "#filtradorretiro #button").click(function() {
+            $('#listausuarios').empty();
+            var datos = $( "#filtradorretiro #cedula").val();
+            $.ajax({
+            type: "POST",
+            url: "home.php?ctr=admon&acc=registrosmasretiro",
             data: 'id=' + datos,
             success: function(datos) {
                 $('#listausuarios').html(datos);

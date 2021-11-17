@@ -209,6 +209,24 @@ public function consultarempleadosreap($numero){
     return $consultas;
 }
 
+public function consultarempleadosreapretiros($numero){
+    /* $where = "";
+     if(isset($_SESSION['centrocostos']) && $_SESSION['centrocostos']!="" && $_SESSION['id_perfil']!=1){
+        $where.="AND centrocostos.id_centro in(".$_SESSION['centrocostos'].")";
+     }*/
+     $conn = $this->conec();
+     $dato=array();
+     //$consultas = "SELECT contrato,nombre_empleado,cedula,fecha_ingreso,fecha_retiro,genero,centro_costos,subcentro_costos,nombrempresa,nombrecargo,salarioactual,correoelectronico FROM certificados where cedula='$numero' ".$where;
+     $consultas = "SELECT certificados.*,centrocostos.empresausuaria as a,empresasterporales.nombretemporal FROM certificados
+     inner join centrocostos on centrocostos.centrocosto=certificados.centro_costos 
+     and certificados.id_empresapres=centrocostos.id_empresapres
+     inner join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres 
+     where certificados.fecha_retiro ='' and  certificados.cedula like '%$numero%' ".$where;
+     //echo $consultas;
+     $consultas= $conn->Execute($consultas)-> getRows();
+     return $consultas;
+ }
+
 
 public function selectperfilesusuario(){
     $conn = $this->conec();

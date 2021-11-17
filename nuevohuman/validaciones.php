@@ -655,9 +655,14 @@
                 break;
                 
                 case "formretiro":
-                    $listatemporales=$objconsulta->obtenerProcesosAccidentes("","SI");
+                    //$listatemporales=$objconsulta->obtenerProcesosAccidentes("","SI");
                     include('vistas/formretiro.php');
                 break;
+
+                case "formretirofilter":
+                    //$listatemporales=$objconsulta->obtenerProcesosAccidentes("","SI");
+                    include('vistas/validinforetiro.php');
+                break;    
                 case "guardarsolicitud":
                     $archivouno = "";
                     $nombre_archivo = date('YmdHms').$_FILES['archivo1']['name'];
@@ -1300,6 +1305,71 @@
                         <form id="'.$i.'" action="home.php?ctr=proceso&acc=formu&id=0" method="post">
                         <input type="hidden" name="validacion" id="validacion" value="'.$listado[$i]['nombre_empleado'].'|'.$listado[$i]['cedula'].'|'.$listado[$i]['correoelectronico'].'|'.$listado[$i]['a'].'|'.$listado[$i]['nombrecargo'].'|'.$listado[$i]['telefono'].'">
                         <button name="button" id="button" type="submit" class="btn btn-primary">Solicitar Proceso Disciplinario</button>
+                        </form>
+                        </td>
+                        </tr>
+                        
+                        ';
+                    }
+                    echo '
+                    </tbody>
+                    </table>';
+                    /*$listado=$objconsulta->listadeempresassuarias($_POST['id']);
+                    echo "<option value=''>Seleccione</option>";
+                    for($i=0; $i<count($listado);$i++){
+                        $id = $listado[$i]['id_centro'];
+                        $name = $listado[$i]['empresausuaria'];
+                        $selected ="";
+                        if($_POST['pres']!="" && $_POST['pres']==$id){
+                            $selected ='selected="selected"';
+                        }
+                        echo "<option value='$id' $selected>$name</option>";
+                    }*/
+
+                    //echo "adasdsadsadsadsadsadas";
+                break;
+
+                case "registrosmasretiro":
+                    echo '<h4>Registros Encontrados</h4>
+                    <table class="table table-striped table-bordered" id="myTable">
+                    <thead>
+                    <tr>
+                    <th>Nombre
+                    </th>
+                    <th>Cedula
+                    </th>
+                    <th>Correo
+                    </th>
+                    <th>Centro de Costos
+                    </th>
+                    <th>Cargo
+                    </th>
+                    <th>Seleccionar
+                    </th>
+                    </tr>
+                    </thead>
+                    <tbody>';
+                    $texto = preg_replace('([^0-9])', '', $_POST['id']);
+                    //echo $texto;
+                    $listado=$objconsulta->consultarempleadosreapretiros($texto);
+                    //var_export($listado);
+                    for($i=0; $i<count($listado);$i++){
+                        echo '
+                        <tr>
+                        <td>'.$listado[$i]['nombre_empleado'].'
+                        </td>
+                        <td>'.$listado[$i]['cedula'].'
+                        </td>
+                        <td>'.$listado[$i]['correoelectronico'].'
+                        </td>
+                        <td>'.$listado[$i]['a'].'
+                        </td>
+                        <td>'.preg_replace('([^a-zA-Z ])', '', $listado[$i]['nombrecargo']).'
+                        </td>
+                        <td>
+                        <form id="'.$i.'" action="home.php?ctr=retiro&acc=formretiro" method="post">
+                        <input type="hidden" name="validacion" id="validacion" value="'.$listado[$i]['nombre_empleado'].'|'.$listado[$i]['cedula'].'|'.$listado[$i]['correoelectronico'].'|'.$listado[$i]['a'].'|'.$listado[$i]['nombrecargo'].'|'.$listado[$i]['telefono'].'|'.$listado[$i]['a'].'|'.$listado[$i]['nombretemporal'].'|'.$listado[$i]['direccion'].'">
+                        <button name="button" id="button" type="submit" class="btn btn-primary">Solicitar Proceso Retiro</button>
                         </form>
                         </td>
                         </tr>
