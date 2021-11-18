@@ -699,9 +699,8 @@
                             }
                         }
                     }
-
-
-                    $listatemporales=$objconsulta->guardarretiro($archivouno,$archivodos,$_POST['retiro'],$_POST['fecharetiro'],$_POST['funcionario'],$_POST['cedula'],$_POST['observaciones']);
+                    
+                    $listatemporales=$objconsulta->guardarretiro($archivouno,$archivodos,$_POST['retiro'],$_POST['fecharetiro'],$_POST['funcionario'],$_POST['cedula'],$_POST['observaciones'],$_POST['correo'],$_POST['celular'],$_POST['direccion'],$_POST['cargo'],$_POST['empresausuaria'],$_POST['centrocostos'],$_POST['fechanotificacion']);
                     echo "<script>alert('Retiro Cargado Correctamente');
                         window.location.href = 'home.php?ctr=retiro&acc=listadoret';
                         </script>";

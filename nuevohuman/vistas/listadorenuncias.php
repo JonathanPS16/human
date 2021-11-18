@@ -13,10 +13,16 @@ if($mios=="S"){
 		<tr>
 			<th>ID</th>
 			<th>Motivo</th>
+			<th>Fecha Solicitud</th>
 			<th>Fecha Retiro</th>
+			<th>Fecha Notificación</th>
 			<th>Nombre</th>
 			<th>Cedula</th>
+			<th>Empresa Usuaria</th>
+			<th>Incapacidades</th>
+			<th>Accidentes</th>
 			<th>Observaciones</th>
+			<th>Envio de Carta</th>
 			<th>Paz y Salvo</th>
 			<th>Renuncia</th>
 			<th>Carta Enviada</th>
@@ -134,8 +140,24 @@ for($i=0; $i<count($listatemporales);$i++){
     $botonextra ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalextra'.$id.'">
   Gestionar Retiro
 </button>';	
-$boton ='<a href="archivosgenerales/'.$paz.'" target="_black" class="btn btn-primary">Paz y salvo</a><br>';
-$botondos ='<a href="archivosgenerales/'.$renuncia.'" target="_black" class="btn btn-primary">Renuncia</a>';
+$stylepaz ="btn btn-primary";
+$stylerenuncia ="btn btn-primary";
+if($paz==""){
+	$stylepaz ="btn btn-warning";
+}
+
+if($renuncia==""){
+	$stylerenuncia ="btn btn-warning";
+}
+
+
+$boton ='<a href="archivosgenerales/'.$paz.'" target="_black" class="'.$stylepaz.'">Paz y salvo</a><br>';
+$botondos ='<a href="archivosgenerales/'.$renuncia.'" target="_black" class="'.$stylerenuncia.'">Renuncia</a>';
+
+
+
+
+
 $archivocorreoenviadocarta = "No Enviado";
 if($estado=='T'){
 	$modalbotonextra ="";
@@ -173,13 +195,36 @@ if($correo!=""){
 
 }
 
+$hoy = strtotime(date('Y-m-d'));
+$fechanot = strtotime($listatemporales[$i]['fechanotificacion']);
+
+$style = "color:green";
+if($hoy>strtotime($fechanot)){
+	$style = "color:red";
+}
+
+
+$fechaenvio = "Sin Envio";
+if($listatemporales[$i]['enviocorreot']!="")
+{
+	$fechaenvio = $listatemporales[$i]['enviocorreot'];
+}
+
+
+
     echo "<tr>
     		<td>".$id."</td>
 			<td>".$motivo."</td>
+			<td>".$listatemporales[$i]['fechasolicitud']."</td>
 			<td>".$fecharetiro."</td>
+			<td style='".$style."'>".$listatemporales[$i]['fechanotificacion']."</td>
 			<td>".$nombre."</td>
 			<td>".$cedula."</td>
+			<td>".$listatemporales[$i]['nombretemporal']."</td>
+			<td>".$listatemporales[$i]['conteoincapa']."</td>
+			<td>".$listatemporales[$i]['conteoaccientes']."</td>
 			<td>".$observaciones."</td>
+			<td>".$fechaenvio."</td>
 			<td>".$boton."</td>
 			<td>".$botondos."</td>
 			<td>".$archivocorreoenviadocarta."</td>

@@ -289,9 +289,9 @@ public function obtenerretiros($estado=""){
     $dato=array();
 
     $consultas = "
-    select renuncias.*,certificados.correoelectronico as correoregi,certificados.fecha_ingreso as fi,certificados.genero as gene,certificados.nombre_empleado as ne,certificados.contrato,certificados.nombrecargo,centrocostos.empresausuaria,empresasterporales.nombretemporal from renuncias INNER JOIN certificados on certificados.cedula=renuncias.cedula inner JOIN centrocostos on centrocostos.centrocosto=certificados.centro_costos inner JOIN empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres 
+    select (select count(*) from accidentes where accidentes.cedula=renuncias.cedula) as conteoaccientes,(select count(*) from incapacidadescargue where incapacidadescargue.cedula=renuncias.cedula) as conteoincapa, renuncias.*,certificados.correoelectronico as correoregi,certificados.fecha_ingreso as fi,certificados.genero as gene,certificados.nombre_empleado as ne,certificados.contrato,certificados.nombrecargo,centrocostos.empresausuaria,empresasterporales.nombretemporal from renuncias inner join certificados on certificados.cedula=renuncias.cedula INNER JOIN empresasterporales on certificados.id_empresapres=empresasterporales.id_temporal INNER JOIN centrocostos on centrocostos.centrocosto=certificados.centro_costos and centrocostos.id_empresapres=empresasterporales.id_temporal
      where 1=1 ".$estado;
-   // echo $consultas;
+    //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas; 
 }
@@ -1809,7 +1809,7 @@ public function notificarProcesosAccidente($id){
 } 
 
 
-public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$funcionario,$cedula,$observaciones){
+public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$funcionario,$cedula,$observaciones, $correo,$celular,$direccion,$cargo,$empresausuaria,$centrocostos,$fechanotificacion){
     $conn = $this->conec();
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'retiro'";
     $consultas= $conn->Execute($consultas)-> getRows();
@@ -1831,12 +1831,14 @@ public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$func
           <br><br>
           Área Servicio al Cliente 
           <br>Human Talent SAS";
-
-          $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+            if($consultasresp[0]['correo']!=""){
+                $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+            }
+         
       }
 
     }
-    $SQL ="INSERT INTO renuncias (renuncia,paz,motivo,fecharetiro,nombre,cedula,observaciones) values('$archivouno','$archivodos','$retiro','$fecharetiro','$funcionario','$cedula','$observaciones')";
+    $SQL ="INSERT INTO renuncias (renuncia,paz,motivo,fecharetiro,nombre,cedula,observaciones,correoempleado,celularempleado,direccionempleado,cargoempleado,empresausuaria,centrocostos,fechanotificacion) values('$archivouno','$archivodos','$retiro','$fecharetiro','$funcionario','$cedula','$observaciones','$correo', '$celular','$direccion','$cargo','$empresausuaria','$centrocostos','$fechanotificacion')";
     $conn->Execute($SQL);
 } 
 
@@ -2084,8 +2086,8 @@ public function guardarfinretiro($id,$correo,$archivo){
             $envio = $this->enviarcorreoadjuntos($explo[$i],$archivo,$mensaje,$titulo);
         }    
     }
-    
-    $SQL ="UPDATE renuncias  SET estado='T',correo='$correo',archivo ='$archivo' WHERE id_renuncia=".$id;
+    $hoy = date('Y-m-d');
+    $SQL ="UPDATE renuncias  SET estado='T',correo='$correo',archivo ='$archivo', enviocorreot = '$hoy' WHERE id_renuncia=".$id;
     $conn->Execute($SQL);
 
 }

@@ -1,4 +1,4 @@
-<?php print_r($_POST);
+<?php //print_r($_POST);
 $datos= explode("|", $_POST['validacion']);
 //var_dump($datos[0]);
 ?>
