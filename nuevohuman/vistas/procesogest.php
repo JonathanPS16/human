@@ -30,6 +30,7 @@ if($_GET['acc']=="formacla"){
 			<th>Cita&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 			<th>Explicación</th>
 			<th>Validacion Conclusión</th>
+			<th>Confirmación Recibido Descargos</th>
 			<th>Estado Proceso</th>
 			<th>Accion</th>  
 		</tr>
@@ -205,7 +206,7 @@ if($_GET['acc']=="formacla"){
   <div class="form-group row">
     <label for="archivo" class="col-4 col-form-label">Archivo Adjunto</label> 
     <div class="col-8">
-      <input id="archivo" name="archivo" type="file" class="form-control" >
+      <input id="archivo" name="archivo" type="file" class="form-control" required="required">
     </div>
   </div> 
   <div class="form-group row">
@@ -636,6 +637,14 @@ $(".custom-file-input").on("change", function() {
 
 
 		$correo=$listatemporales[$i]['correo'];
+		$explode = explode("|", $listatemporales[$i]['validacionrecibido']);
+		$correosveri = "";
+		for($jaja=0; $jaja<=count($explode); $jaja++){
+			if($explode[$jaja]!=""){
+				$correosveri.=$explode[$jaja]."<br>";
+			}
+			
+		}
 		echo  '<tr>
 		<td>'.$val.'</td>
 		<td>'.$nombrefuncionario.'</td>
@@ -655,6 +664,7 @@ $(".custom-file-input").on("change", function() {
 		<td>'.$modalbotonhoja.$botonhoja.'</td>
 		<td>'.$modalbotonhojaex.$botonhojaex.'</td> 
 		<td>'.$listatemporales[$i]['concluaprobadaf'].'</td>
+		<td>'.$correosveri.'</td>
 		<td>'.$conclucionentre.'</td>
 		<td>'.$estadolb.'</td></tr>';
 	}

@@ -244,6 +244,23 @@ public function selectexternos(){
     return $consultas;   
 }
 
+public function consultavalidadosproceso($id){
+    $conn = $this->conec();
+    $dato=array();
+    $consultas = "SELECT validacionrecibido FROM procesos where procesos.id_proceso=".$id;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;     
+}
+
+public function guardarconfirmacioncorreo($id, $campo){
+    $conn = $this->conec();
+    $dato=array();
+    $consultas = "update procesos set validacionrecibido='$campo' where procesos.id_proceso=".$id;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;     
+}
+
+
 public function listaempresasgeneral($idcentros){
     $conn = $this->conec();
     $dato=array();
@@ -2026,7 +2043,7 @@ public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justific
     - Fecha  $fechacitacion <br>
 - Hora $horacita <br>
 - Metodología $modalidadcita .<br> 
-- Dirección o Link  $sedelugar <br>
+- Dirección o Link  $sedelugar  $extradata  <br>
 <br>
 Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, areajuridica@humantalentsas.com.co
 <br><br>
