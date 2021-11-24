@@ -3384,17 +3384,19 @@ catch(com_exception $e)
 
                 case 'citar':
                     $fechahora=$_POST['fechahora'];
+                    $fecha = $fechahora;
                     $hora=$_POST['hora'];
                     $fechahora = $fechahora." , a las ".$hora;
                     $id_req=$_POST['id_req'];
                     $id_per=$_POST['id_per'];
                     $lugarentre=$_POST['lugarentre'];
                     $tipocita=$_POST['tipocita'];
+                    $presentarsea = $_POST['presentarsea'];
                     $tipo = "N";
                     if($_POST['tipo'] == "S"){
                         $tipo = "S";
                     }
-                    $listadoreq=$objconsulta->citarcandidato($id_per,$id_req,$fechahora,$lugarentre,$tipocita,$tipo,$fecha,$hora);
+                    $listadoreq=$objconsulta->citarcandidato($id_per,$id_req,$fechahora,$lugarentre,$tipocita,$tipo,$fecha,$hora,$presentarsea);
 
                     echo "<script>alert('Candidato Citado Correctamente ');
                     window.location.href = 'home.php?ctr=requisicion&acc=verreqcan&id={$id_req}';

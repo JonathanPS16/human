@@ -100,6 +100,13 @@ for($i=0; $i<count($listadoreq);$i++){
           <input id="lugarentre" name="lugarentre" placeholder="Lugar o Link de Entrevista" type="text" class="form-control" required="required">
         </div>
       </div> 
+
+      <div class="form-group row">
+        <label for="presentarsea" class="col-4 col-form-label">Entrevistador</label> 
+        <div class="col-8">
+          <input id="presentarsea" name="presentarsea" placeholder="Entrevistador" type="text" class="form-control" required="required">
+        </div>
+      </div> 
       <div class="form-group row">
         <div class="offset-4 col-8">
           <input type="hidden" name="id_req" id="id_req" value="'.$idreq.'">

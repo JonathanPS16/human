@@ -203,7 +203,7 @@ public function consultarempleadosreap($numero){
     inner join centrocostos on centrocostos.centrocosto=certificados.centro_costos 
     and certificados.id_empresapres=centrocostos.id_empresapres
     inner join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres 
-    where certificados.fecha_retiro ='' and  certificados.cedula like '%$numero%' ".$where;
+    where certificados.fecha_retiro ='' and  certificados.cedula = '$numero' ".$where;
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
@@ -221,7 +221,7 @@ public function consultarempleadosreapretiros($numero){
      inner join centrocostos on centrocostos.centrocosto=certificados.centro_costos 
      and certificados.id_empresapres=centrocostos.id_empresapres
      inner join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres 
-     where certificados.fecha_retiro ='' and  certificados.cedula like '%$numero%' ".$where;
+     where certificados.fecha_retiro ='' and  certificados.cedula ='$numero' ".$where;
      //echo $consultas;
      $consultas= $conn->Execute($consultas)-> getRows();
      return $consultas;
@@ -2427,20 +2427,33 @@ public function enviarconclucionproceso($id,$entrevista,$archivodos){
         $fechaTestigo = $consultas[$i]['fechaevento'];
     }
 
+    
+
+    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $basejefe = base64_encode(base64_encode($coreojefe));
+    $basetestigo = base64_encode(base64_encode($correotestigo));
     $mensaje = "Apreciado(a) $nombreEmpleado<br>
 Apreciado(a) Testigo(a) $nombreTestigo<br><br>
 
-En relación con el proceso disciplinario que se le adelanta y de acuerdo con la reunión de descargos realizada el día $fechaTestigo en el archivo anexo encontrará el acta de la diligencia efectuada, y en la que participó como testigo el señor(a) $nombreTestigo; agradecemos a usted dar la confirmación de recibido y de aceptación de este documento dando click el siguiente <a href='https://humantalentsas.com/human/apruebaenvio.php?id=$id'>Link</a>.
+En relación con el proceso disciplinario que se le adelanta y de acuerdo con la reunión de descargos realizada el día $fechaTestigo en el archivo anexo encontrará el acta de la diligencia efectuada, y en la que participó como testigo el señor(a) $nombreTestigo; agradecemos a usted dar la confirmación de recibido y de aceptación de este documento dando click el siguiente <a href='https://humantalentsas.com/human/apruebaenvio.php?id=$id&validate=$basejefe'>Link</a>.
 <br>
 Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los areajuridica@humantalentsas.com.co,  servicioalcliente@humantalentsas.com.co. 
 <br><br
 Cordialmente,
 <br>
 Área Jurídica - Human Talent SAS";
-
-    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
-    $consultas= $conn->Execute($consultas)-> getRows();
     $this->enviarcorreoadjuntos($coreojefe,$archivodos,$mensaje,"Correo Notificación Confirmación de Recibido Diligencia de Descargo por parte del Empleado");
+    $mensaje = "Apreciado(a) $nombreEmpleado<br>
+Apreciado(a) Testigo(a) $nombreTestigo<br><br>
+
+En relación con el proceso disciplinario que se le adelanta y de acuerdo con la reunión de descargos realizada el día $fechaTestigo en el archivo anexo encontrará el acta de la diligencia efectuada, y en la que participó como testigo el señor(a) $nombreTestigo; agradecemos a usted dar la confirmación de recibido y de aceptación de este documento dando click el siguiente <a href='https://humantalentsas.com/human/apruebaenvio.php?id=$id&validate=$basetestigo'>Link</a>.
+<br>
+Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los areajuridica@humantalentsas.com.co,  servicioalcliente@humantalentsas.com.co. 
+<br><br
+Cordialmente,
+<br>
+Área Jurídica - Human Talent SAS";
     $this->enviarcorreoadjuntos($correotestigo,$archivodos,$mensaje,"Correo Notificación Confirmación de Recibido Diligencia de Descargo por parte del Empleado");
     for($i= 0; $i<count($consultas); $i++) {
     $correos = explode(",", $consultas[$i]['usuarios']);
@@ -2448,10 +2461,35 @@ Cordialmente,
             $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
             $consultasresp= $conn->Execute($consultascorr)-> getRows();
                 if($consultasresp[0]['correo']!=""){
+
+                    $basevalidaex = base64_encode(base64_encode($consultasresp[0]['correo']));
+                    $mensaje = "Apreciado(a) $nombreEmpleado<br>
+                    Apreciado(a) Testigo(a) $nombreTestigo<br><br>
+                    
+                    En relación con el proceso disciplinario que se le adelanta y de acuerdo con la reunión de descargos realizada el día $fechaTestigo en el archivo anexo encontrará el acta de la diligencia efectuada, y en la que participó como testigo el señor(a) $nombreTestigo; agradecemos a usted dar la confirmación de recibido y de aceptación de este documento dando click el siguiente <a href='https://humantalentsas.com/human/apruebaenvio.php?id=$id&validate=$basevalidaex'>Link</a>.
+                    <br>
+                    Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los areajuridica@humantalentsas.com.co,  servicioalcliente@humantalentsas.com.co. 
+                    <br><br
+                    Cordialmente,
+                    <br>
+                    Área Jurídica - Human Talent SAS";
+
                     $this->enviarcorreoadjuntos($consultasresp[0]['correo'],$archivodos,$mensaje,"Correo Notificación Confirmación de Recibido Diligencia de Descargo por parte del Empleado");
                 }
         }
     }
+
+    $basevalidaexemple = base64_encode(base64_encode($correoempleado));
+                    $mensaje = "Apreciado(a) $nombreEmpleado<br>
+                    Apreciado(a) Testigo(a) $nombreTestigo<br><br>
+                    
+                    En relación con el proceso disciplinario que se le adelanta y de acuerdo con la reunión de descargos realizada el día $fechaTestigo en el archivo anexo encontrará el acta de la diligencia efectuada, y en la que participó como testigo el señor(a) $nombreTestigo; agradecemos a usted dar la confirmación de recibido y de aceptación de este documento dando click el siguiente <a href='https://humantalentsas.com/human/apruebaenvio.php?id=$id&validate=$basevalidaexemple'>Link</a>.
+                    <br>
+                    Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los areajuridica@humantalentsas.com.co,  servicioalcliente@humantalentsas.com.co. 
+                    <br><br
+                    Cordialmente,
+                    <br>
+                    Área Jurídica - Human Talent SAS";
    $this->enviarcorreoadjuntos($correoempleado,$archivodos,$mensaje,"Correo Notificación Confirmación de Recibido Diligencia de Descargo por parte del Empleado");
     $SQL ="UPDATE procesos  SET estado='V',conclucionentre='$entrevista',archivoconclusionproceso='$archivodos'  WHERE id_proceso=".$id;
     $conn->Execute($SQL);
@@ -2464,7 +2502,7 @@ public function enviarconclucionprocesoAcci($id,$diasinca,$obserini,$obser,$obse
 }
 
 
-public function citarcandidato($id_per,$id_req,$fechahora,$lugar,$tipocita,$tipo,$fecha,$hora)
+public function citarcandidato($id_per,$id_req,$fechahora,$lugar,$tipocita,$tipo,$fecha,$hora,$presenta)
 {
     $conn = $this->conec();
     $consultas = "SELECT correo,nombre,presentarse  FROM req_candidatos WHERE  id=".$id_per;
@@ -2505,7 +2543,7 @@ Le informamos que dentro del proceso de selección para el cargo ".$cargo.", en 
 - Hora			 $hora <br>
 - Metodología		 ".$tipocita."  . <br>
 - Dirección o Link	 $lugar<br>
-- Presentarse a		 $prese<br><br>  
+- Presentarse a		 $presenta<br><br>  
 
 Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com .
 <br><br>
@@ -2528,7 +2566,7 @@ Para su Seguimiento y/o Gestión";
         - Hora			 $hora <br>
         - Metodología		 ".$tipocita."  . <br>
         - Dirección o Link	 $lugar<br>
-        - Entrevistador 		 $prese<br><br>  
+        - Entrevistador 		 $presenta<br><br>  
       
       Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web www.humantalentsas.com ingresando con su usuario y clave.
       <br><br>
@@ -2559,7 +2597,7 @@ Para su Seguimiento y/o Gestión";
       if($tipo=="S") {
         $SQL ="UPDATE req_candidatos SET estado='P', fechacitados='$fechahora',lugarcitados ='$lugar',tipocitados = '$tipocita',citanum='S' WHERE id=".$id_per;
       } else {
-        $SQL ="UPDATE req_candidatos SET estado='P', fechacita='$fechahora',lugarcita ='$lugar',tipocita = '$tipocita',citanum='P' WHERE id=".$id_per;
+        $SQL ="UPDATE req_candidatos SET estado='P',presentarse='$presenta', fechacita='$fechahora',lugarcita ='$lugar',tipocita = '$tipocita',citanum='P' WHERE id=".$id_per;
       }
     $conn->Execute($SQL);
     
