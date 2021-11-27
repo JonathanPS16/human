@@ -556,25 +556,46 @@
             $acc = $_GET['acc'];
             switch ($acc) {
 
-                case "guardarenviar":
-                    /*$archivouno = "";
-                    $nombre_archivo = date('YmdHms').$_FILES['filebutton']['name'];
-                    if($nombre_archivo!="") {
-                        $tipo_archivo = $_FILES['filebutton']['type'];
-                        $tamano_archivo = $_FILES['filebutton']['size'];
+
+                case "guardarconsolidado":
+
+                    $valida = $_POST['archivoexiste'];
+                    $validacarga = "no";
+                    $sl = "update renuncias set cambiopagoadci ='".$_POST['cambiopagoadci']."',fechaentregacarpeta  ='".$_POST['fechaentregacarpeta']."', 
+                    pazysalvoconsol='".$_POST['pazysalvoconsol']."',recibocarpeta='".$_POST['recibocarpeta']."' ,checkpazysalvo ='".$_POST['checkpazysalvo']."',
+                    referliquidacion ='".$_POST['referliquidacion']."',envioliquiempleado  ='".$_POST['envioliquiempleado']."',fechapagoliqui  ='".$_POST['fechapagoliqui']."' ";
+                    $archivouno = "";
+
+                    $nombre_archivo = date('YmdHms').$_FILES['archivoliquidacion']['name'];
+                    if($_FILES['archivoliquidacion']['name']!="") {
+                        $tipo_archivo = $_FILES['archivoliquidacion']['type'];
+                        $tamano_archivo = $_FILES['archivoliquidacion']['size'];
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
                             $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
                         }else{
-                            if (move_uploaded_file($_FILES['filebutton']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                            if (move_uploaded_file($_FILES['archivoliquidacion']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
                                 $archivouno =$nombre_archivo;
+                                $validacarga = "si";
+                                $sl.= ",archivoliquidacion= 'nombre_archivo'";
                             }else{
                                 $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
                             }
                         }
+                    } 
+                    if($_POST['envioliquiempleado'] =="Si" && ($validacarga == "si" || ($validacarga=="no" && $valida=="S"))){
+                        //envio de correo 
                     }
-                    OMAR ACA*/
+
+                    $sl.=" where id_renuncia=".$_POST['id'];
+                    $listatemporales=$objconsulta->guardarcarguearchivos($sl);
+                    echo "<script>alert('Guardado Correctamente');
+                        window.location.href = 'home.php?ctr=retiro&acc=controlre';
+                        </script>";
+                break;
+                case "guardarenviar":
+                    
                     $correo = $_POST['correo'];
                     $id = $_POST['id'];
                     $datosdia = array(
@@ -652,6 +673,11 @@
                     $mios = "S";
                     $listatemporales = $objconsulta->obtenerretiros(" AND renuncias.estado in ('T','C')");
                     include('vistas/listadorenuncias.php');
+                break;
+
+                case "controlre":
+                    $listatemporales = $objconsulta->obtenerretiroscontrol(" AND renuncias.estado in ('T','C')");
+                    include('vistas/listadorenunciascontrol.php');
                 break;
                 
                 case "formretiro":

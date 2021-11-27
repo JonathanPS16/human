@@ -313,6 +313,18 @@ public function obtenerretiros($estado=""){
     return $consultas; 
 }
 
+public function obtenerretiroscontrol($estado=""){
+    $conn = $this->conec();
+    $dato=array();
+
+    $consultas = "select * from renuncias ";
+    //echo $consultas;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas; 
+}
+
+
+
 public function obtenerProcesos($id="",$propirtario=""){
     $conn = $this->conec();
     $dato=array();
