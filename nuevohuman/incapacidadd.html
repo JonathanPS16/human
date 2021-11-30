@@ -1,0 +1,38 @@
+<html>
+   <head>
+      <title>jQuery CDN</title>
+      <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>       
+<script>      $(document).ready(function(){
+        function getdate(){
+               var today = new Date();
+           var h = today.getHours();
+           var m = today.getMinutes();
+           var s = today.getSeconds();
+            if(s<10){
+                s = "0"+s;
+            }
+            if (m < 10) {
+               m = "0" + m;
+           }
+           $.ajax({
+     type: 'POST',  // Envío con método POST
+     url: 'https://humantalentsas.com/human/refactor.php', 
+     async : true, // Fichero destino (el PHP que trata los datos)
+     data: {  } // Datos que se envían
+     }).done(function( msg ) {  // Función que se ejecuta si todo ha ido bien
+      $("#consola").html(msg);  // Escribimos en el div consola el mensaje devuelto
+     }).fail(function (jqXHR, textStatus, errorThrown){ // Función que se ejecuta si algo ha ido mal
+     // Mostramos en consola el mensaje con el error que se ha producido
+     $("#consola").html("The following error occured: "+ textStatus +" "+ errorThrown); 
+    });
+
+           $("h1").text(h+" : "+m+" : "+s);
+            setTimeout(function(){getdate()}, 14400000);
+           }
+        
+           getdate();
+   });
+</script>
+<h2 style="color: red;">NO CERRAR </h2>
+  <div id="consola"></div>
+</html>

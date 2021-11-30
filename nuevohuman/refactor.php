@@ -14,7 +14,7 @@ exec($command,$output=array(),$worked);
 switch($worked){
 case 0:
     $zip = new ZipArchive();
- $archivoComprimido = "imagenesinfo/bk".date('YmdHMS').".zip";
+ $archivoComprimido = "imagenesinfo/bk".date('YmdHis').".zip";
 $comprimido = $archivoComprimido;
 if (file_exists($comprimido)) {
     unlink($comprimido);
