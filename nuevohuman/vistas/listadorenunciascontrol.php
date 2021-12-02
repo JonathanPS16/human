@@ -16,14 +16,16 @@ $label = "Control de Retiros";
 			<th>Fecha Retiro</th>
 			<th>Celular</th>
 			<th>Correo</th>
-			<th>Cambio Pago en Adci </th>
-			<th>Fecha Entrega Carpeta </th>
-			<th>Paz y Salvo </th>
-			<th>Check para Recibo de Carpeta</th>
-			<th>Check de Paz y Savo </th>
+			<th>Cambio Pago Adci </th>
+			<th>Entrega Carpeta</th>
+			<th>Paz y Salvo</th>
+			<th>Check Recibo Carpeta</th>
+			<th>Check Paz y Savo </th>
 			<th>No. Integración ADCI</th>
-			<th>Envio Liquidación al Empleado  </th>
-			<th>Fecha de Pago Liquidación </th>
+			<th>Envio Liquidación Empleado  </th>
+			<th>Archivo Liquidación</th>
+			<th>Liquidación Firmada </th>
+			<th>Pago Liquidación </th>
 			<th>Editar</th>
 		</tr>
 	</thead>
@@ -89,8 +91,19 @@ for($i=0; $i<count($listatemporales);$i++){
 	}else {
 		$selecenvioliquiempleadosi = "selected";
 		$selecenvioliquiempleadono = "";
+	
 	}
 
+
+
+
+if($listatemporales[$i]['liquidacionfirmada']!=""){
+	$listatemporales[$i]['liquidacionfirmada'] ="<a href ='archivosgenerales/".$listatemporales[$i]['liquidacionfirmada']."' target='_black' class='btn btn-primary'>Liquidación Firmada</a>";
+}
+
+if($listatemporales[$i]['archivoliquidacion']!=""){
+	$listatemporales[$i]['archivoliquidacion'] ="<a href ='archivosgenerales/".$listatemporales[$i]['archivoliquidacion']."' target='_black' class='btn btn-primary'>Archivo Liquidación</a>";
+}
 
 	$file = '';
 	$validaarchivo = 'N';
@@ -102,13 +115,14 @@ for($i=0; $i<count($listatemporales);$i++){
 		  <input id="archivoliquidacion" name="archivoliquidacion" type="file" class="form-control">
 		</div>
 	  </div>';
-	} else if(($listatemporales[$i]['envioliquiempleado']=="" || $listatemporales[$i]['envioliquiempleado'] =="N" ) && $listatemporales[$i]['archivoliquidacion']!=""){
+	} else if(($listatemporales[$i]['envioliquiempleado']=="" || $listatemporales[$i]['envioliquiempleado'] =="No" ) && $listatemporales[$i]['archivoliquidacion']!=""){
 		$validaarchivo ="S";
 		$file = '
 		<div class="form-group row">
 		<label for="envioliquiempleado" class="col-4 col-form-label">Envio Liquidación al Empleado</label> 
 		<div class="col-8">
 		<select id="envioliquiempleado" name="envioliquiempleado" class="custom-select">
+		<option value="">Seleccione</option>
         <option value="No" '.$selecenvioliquiempleadono.'>No</option>
         <option value="Si" '.$selecenvioliquiempleadosi.'>Si</option>
       </select>
@@ -121,7 +135,7 @@ for($i=0; $i<count($listatemporales);$i++){
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Editar Información</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Editar Información '.$listatemporales[$i]['cedula'].' '.$listatemporales[$i]['nombre'].'</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -145,6 +159,7 @@ for($i=0; $i<count($listatemporales);$i++){
     <label for="pazysalvoconsol" class="col-4 col-form-label">Paz y Salvo</label> 
     <div class="col-8">
       <select id="pazysalvoconsol" name="pazysalvoconsol" class="custom-select">
+	  <option value="">Seleccione</option>
         <option value="No" '.$selepazysalvoconsolno.'>No</option>
         <option value="Si" '.$selepazysalvoconsolsi.'>Si</option>
       </select>
@@ -154,6 +169,7 @@ for($i=0; $i<count($listatemporales);$i++){
     <label for="recibocarpeta" class="col-4 col-form-label">Check Recibido Carpeta</label> 
     <div class="col-8">
       <select id="recibocarpeta" name="recibocarpeta" class="custom-select">
+	  <option value="">Seleccione</option>
         <option value="No" '.$seleprecibocarpetano.'>No</option>
         <option value="Si" '.$seleprecibocarpetasi.'>Si</option>
       </select>
@@ -163,6 +179,7 @@ for($i=0; $i<count($listatemporales);$i++){
     <label for="checkpazysalvo" class="col-4 col-form-label">Check Paz y salvo</label> 
     <div class="col-8">
       <select id="checkpazysalvo" name="checkpazysalvo" class="custom-select">
+	  <option value="">Seleccione</option>
         <option value="No" '.$selecheckpazysalvono.'>No</option>
         <option value="Si" '.$selecheckpazysalvosi.'>Si</option>
       </select>
@@ -171,20 +188,21 @@ for($i=0; $i<count($listatemporales);$i++){
   <div class="form-group row">
     <label for="referliquidacion" class="col-4 col-form-label">No. Integración ADCI</label> 
     <div class="col-8">
-      <input id="referliquidacion" name="referliquidacion" type="text" class="form-control">
+      <input id="referliquidacion" name="referliquidacion" type="text" class="form-control" value="'.$listatemporales[$i]['referliquidacion'].'">
     </div>
   </div>
   '.$file.'
   <div class="form-group row">
     <label for="fechapagoliqui" class="col-4 col-form-label">Fecha de Pago Liquidación</label> 
     <div class="col-8">
-      <input id="fechapagoliqui" name="fechapagoliqui" type="date" class="form-control">
+      <input id="fechapagoliqui" name="fechapagoliqui" type="date" class="form-control" value ="'.$listatemporales[$i]['fechapagoliqui'].'">
     </div>
   </div> 
-		
+  
       <input id="id" name="id" type="hidden" value="'.$id.'">	
 	  <input id="correoempleado" name="correoempleado" type="hidden" value="'.$listatemporales[$i]['correoempleado'].'">
-	  <input id="archivoexiste" name="archivoexiste" type="hidden" value="'.$validaarchivo.'">		
+	  <input id="archivoexiste" name="archivoexiste" type="hidden" value="'.$listatemporales[$i]['archivoliquidacion'].'">
+	  <input id="nombre" name="nombre" type="hidden" value="'.$nombre.'">		
 	  
 	  
 		<!-- Button -->
@@ -209,6 +227,10 @@ for($i=0; $i<count($listatemporales);$i++){
   Editar
 </button>';	
 
+if($listatemporales[$i]['fechapagoliqui']!=""){
+	$modalbotonextra="";
+	$botonextra="Proceso Cerrado";
+}
 
     echo "<tr>
     		<td>".$id."</td>
@@ -225,7 +247,9 @@ for($i=0; $i<count($listatemporales);$i++){
 			<td>".$listatemporales[$i]['recibocarpeta']."</td>
 			<td>".$listatemporales[$i]['checkpazysalvo']."</td>
 			<td>".$listatemporales[$i]['referliquidacion']."</td>
-			<td>".$listatemporales[$i]['envioliquiempleado']."</td>
+			<td>".$listatemporales[$i]['envioliquiempleado']." ".$listatemporales[$i]['fechaarchivoliquidacion']."</td>
+			<td>".$listatemporales[$i]['archivoliquidacion']."</td>
+			<td>".$listatemporales[$i]['liquidacionfirmada']."</td>
 			<td>".$listatemporales[$i]['fechapagoliqui']."</td>
     		<td>".$modalbotonextra.$botonextra."</td>
     </tr>";

@@ -217,7 +217,8 @@ public function consultarempleadosreapretiros($numero){
      $conn = $this->conec();
      $dato=array();
      //$consultas = "SELECT contrato,nombre_empleado,cedula,fecha_ingreso,fecha_retiro,genero,centro_costos,subcentro_costos,nombrempresa,nombrecargo,salarioactual,correoelectronico FROM certificados where cedula='$numero' ".$where;
-     $consultas = "SELECT certificados.*,centrocostos.empresausuaria as a,empresasterporales.nombretemporal FROM certificados
+     $consultas = "SELECT certificados.*,centrocostos.empresausuaria as a,empresasterporales.nombretemporal FROM certificados 
+      LEFT join renuncias on renuncias.cedula= certificados.cedula and renuncias.cedula is null 
      inner join centrocostos on centrocostos.centrocosto=certificados.centro_costos 
      and certificados.id_empresapres=centrocostos.id_empresapres
      inner join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres 
@@ -1426,7 +1427,22 @@ public function ajustarlaboratorio($id,$idreq,$laboratorio,$cadena,$orden,$apert
     $SQL ="UPDATE req_candidatos SET hvhuman = '$archivohv', docdocumen = '$docdocumentos', examenes='$cadena',lugar='$laboratorio',ordeningreso='$orden',apertura='$apertura',examenesar='$examenesar' WHERE id=".$id;
     $conn->Execute($SQL);
 }
+public function enviarcorreoliquidacion($correo,$nombre,$nombre_archivo,$asunto,$id){
+    $mensaje  ="Apreciado(a) $nombre<br><br>
 
+    En el archivo anexo encontrará la respectiva liquidación final de su contrato laboral, le agradecemos firmarla y remitirla a esta dependencia; para lo cual podrá realizarlo ingresando al siguiente <a href='".DIRWEB."liquidaciones.php?id=$id' target='_black'>LINK</a> adjuntado dicho documento debidamente firmado para proceder a efectuar el pago a su cuenta de nómina correspondiente.  
+    <br><br>
+    Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 601 214 2011, o Celular 318 335 2194 o en los correos  nomina@humantalentsas.com o servicioalcliente@humantalentsas.com  
+    <br><br>
+    Cordialmente,
+    <br><br>
+    Área de Nómina <br>
+    Human Talent SAS";
+          $this->enviarcorreoadjuntos($correo, $nombre_archivo, $mensaje, $asunto);
+          $this->enviarcorreoadjuntos("nomina@humantalentsas.com", $nombre_archivo, $mensaje, "COPIA INFORMATIVA ".$asunto);
+          $this->enviarcorreoadjuntos("servicioalcliente@humantalentsas.com", $nombre_archivo, $mensaje, "COPIA INFORMATIVA ".$asunto);
+          $this->enviarcorreoadjuntos("contabilidad@humantalentsas.com", $nombre_archivo, $mensaje, "COPIA INFORMATIVA ".$asunto);
+}
 public function notificarProcesos($id,$correojefe=""){
     $conn = $this->conec();
 
@@ -2381,6 +2397,12 @@ public function guardarrespuestaempleado($id,$aclaracion,$archivo){
     $conn->Execute($SQL);
 }
 
+public function guardarliqquidacionusuario($id,$archivo){
+    $conn = $this->conec();
+    $SQL ="UPDATE renuncias  SET  estadoliqui='T' ,liquidacionfirmada ='$archivo' WHERE id_renuncia=".$id;
+    $conn->Execute($SQL);
+}
+
 public function validarrellenado($id)
 {
     $conn = $this->conec();
@@ -2395,6 +2417,20 @@ public function validarrellenado($id)
     return $nombre;
 }
 
+public function validarrellenadorenuncias($id)
+{
+    $conn = $this->conec();
+    $nombre="";
+    $consultas = "SELECT * from renuncias where id_renuncia=".$id;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $nombre  ="";
+    for($i= 0; $i<count($consultas); $i++) {
+        $nombre = $consultas[$i]['estadoliqui'];
+    
+    }
+    return $nombre;
+}
+
 public function validararchivoexplicacion($id)
 {
     $conn = $this->conec();
@@ -2404,6 +2440,20 @@ public function validararchivoexplicacion($id)
     $nombre  ="";
     for($i= 0; $i<count($consultas); $i++) {
         $nombre = $consultas[$i]['archivo'];
+    
+    }
+    return $nombre;
+}
+
+public function validararchivoliquidacion($id)
+{
+    $conn = $this->conec();
+    $nombre="";
+    $consultas = "SELECT * from renuncias where id_renuncia=".$id;
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $nombre  ="";
+    for($i= 0; $i<count($consultas); $i++) {
+        $nombre = $consultas[$i]['archivoliquidacion'];
     
     }
     return $nombre;

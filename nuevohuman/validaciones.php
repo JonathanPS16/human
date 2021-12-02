@@ -567,6 +567,7 @@
                     $archivouno = "";
 
                     $nombre_archivo = date('YmdHms').$_FILES['archivoliquidacion']['name'];
+                    $filena =$valida;
                     if($_FILES['archivoliquidacion']['name']!="") {
                         $tipo_archivo = $_FILES['archivoliquidacion']['type'];
                         $tamano_archivo = $_FILES['archivoliquidacion']['size'];
@@ -578,14 +579,19 @@
                             if (move_uploaded_file($_FILES['archivoliquidacion']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
                                 $archivouno =$nombre_archivo;
                                 $validacarga = "si";
-                                $sl.= ",archivoliquidacion= 'nombre_archivo'";
+                                $sl.= ",archivoliquidacion= '$nombre_archivo'";
+                                $filena = $nombre_archivo;
                             }else{
                                 $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
                             }
                         }
                     } 
-                    if($_POST['envioliquiempleado'] =="Si" && ($validacarga == "si" || ($validacarga=="no" && $valida=="S"))){
+                    if($_POST['envioliquiempleado'] =="Si" && ($validacarga == "si" || ($validacarga=="no" && $valida!=""))){
                         //envio de correo 
+                        if(trim($_POST['correoempleado'])!=""){
+                            $sl.= ",fechaarchivoliquidacion = now()";
+                            $objconsulta->enviarcorreoliquidacion($_POST['correoempleado'],$_POST['nombre'],$filena, "Liquidacion Final Contrato Laboral para Firma",$_POST['id']);
+                        }
                     }
 
                     $sl.=" where id_renuncia=".$_POST['id'];
