@@ -135,7 +135,7 @@ if($listatemporales[$i]['archivoliquidacion']!=""){
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Editar Información '.$listatemporales[$i]['cedula'].' '.$listatemporales[$i]['nombre'].'</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Editar Información<br>Nombre:'.$listatemporales[$i]['nombre'].'<br>Cedula:'.$listatemporales[$i]['cedula'].'</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -168,11 +168,7 @@ if($listatemporales[$i]['archivoliquidacion']!=""){
   <div class="form-group row">
     <label for="recibocarpeta" class="col-4 col-form-label">Check Recibido Carpeta</label> 
     <div class="col-8">
-      <select id="recibocarpeta" name="recibocarpeta" class="custom-select">
-	  <option value="">Seleccione</option>
-        <option value="No" '.$seleprecibocarpetano.'>No</option>
-        <option value="Si" '.$seleprecibocarpetasi.'>Si</option>
-      </select>
+	  <input id="recibocarpeta" name="recibocarpeta" type="date" class="form-control" value ="'.$listatemporales[$i]['recibocarpeta'].'">
     </div>
   </div>
   <div class="form-group row">
@@ -236,7 +232,7 @@ if($listatemporales[$i]['fechapagoliqui']!=""){
     		<td>".$id."</td>
 			<td>".$listatemporales[$i]['cedula']."</td>
 			<td>".$listatemporales[$i]['nombre']."</td>
-			<td>".$listatemporales[$i]['empresausuaria']."</td>
+			<td>".$listatemporales[$i]['centrocostos']."</td>
 			<td>".$listatemporales[$i]['fechasolicitud']."</td>
 			<td>".$fecharetiro."</td>
 			<td>".$listatemporales[$i]['celularempleado']."</td>
