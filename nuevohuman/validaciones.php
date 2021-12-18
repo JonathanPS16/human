@@ -1783,6 +1783,11 @@
                     $listatemporalesa=$objconsulta->obteneTemporalesform();
                     include('vistas/archivosmasivos.php');
                 break;
+                case "retiros":
+                    $tipo = $_GET['tp'];
+                    $listatemporalesa=$objconsulta->obteneTemporalesform();
+                    include('vistas/archivosmasivosretiros.php');
+                break;
                 case "read":
                     //ini_set("memory_limit", '2048M');
                     ini_set('memory_limit', '2G');
@@ -1814,6 +1819,9 @@
                     }
                     echo "<script>function volvercarega(){
                         window.location.href = 'home.php?ctr=carguemasivo&acc=certificados&tp=".$_POST['valor']."';
+                    }</script>";
+                    echo "<script>function volvercaregac(){
+                        window.location.href = 'home.php?ctr=carguemasivo&acc=retiros&tp=".$_POST['valor']."';
                     }</script>";
                     $archivofail = "logscargue/".$nombre_archivo."_LOG.txt";
                     $file = fopen($archivofail, "w+");
@@ -1868,9 +1876,10 @@
                             $fondo  = str_replace("'","",$sheet->getCell("X".$row)->getValue());
                             $gruposang  = str_replace("'","",$sheet->getCell("Y".$row)->getValue());
                             
-
-                            $sql.="($idempresaprestadora,'$contrato','$nombreempleado','$cedula','$fechaini','$fechafinal','$genero','$centrocostos','$subcentrocostos','$nombreempresa','$cargolaboral','$sueldoactual','$correoelectronico','$direccion','$telefono','$eps','$caja','$detalleuno','$detalledos','$detalletres','$detallecuatro','$detallecinco','$nombrecontacto','$telefonocontacto','$fondo','$gruposang'),";
-                            $creado++;
+                            if($cedula!=""){
+                                $sql.="($idempresaprestadora,'$contrato','$nombreempleado','$cedula','$fechaini','$fechafinal','$genero','$centrocostos','$subcentrocostos','$nombreempresa','$cargolaboral','$sueldoactual','$correoelectronico','$direccion','$telefono','$eps','$caja','$detalleuno','$detalledos','$detalletres','$detallecuatro','$detallecinco','$nombrecontacto','$telefonocontacto','$fondo','$gruposang'),";
+                                $creado++;
+                            }
                             
                         }
                     }
@@ -1992,6 +2001,66 @@
                         }
                     }
 
+                    if($_POST['valor'] == 4) {
+                        $sql = "INSERT INTO ingresos_ret_2017 (id_empresaper,TIPODEDOCUMENTO,CEDULA,PRIMERAPELLIDO,SEGUNDOAPELLIDO,PRIMERNOMBRE,SEGUNDONOMBRE,DIRECCION,CODIGODEPARTAMENTO,CODIGOMUNICIPIO,CODIGOPAIS,CORREOELECTRONICO,FECHAINICIAL,FECHAFINAL,
+                        FECHAEXPEDICION,DEPARTAMENTORETENCION,MUNICIPIORETENCION,NUMERORETENCION,PAGOSSALARIOSOECLESISTICOS,PAGOSHONORARIOS,PAGOSSERVICIOS,PAGOSCOMISIONES,PAGOSPRESTACIONES,PAGOSVIATICOS,PAGOSREPRESENTACION,PAGOSCOOPERATIVO,OTROSPAGOS,CESANTIASPERIODO,
+                        PENSIONES,TOTALBRUTOS,APORTESSALUD,APORTESPENSIONESRAIS,APORTESVOLUNTARIOSPENSIONES,APORTESACUENTASAFC,RETENCIONFUENTETRABAJOPENSIONES,PERSONASACARGO,fecha_cargue) 
+                        VALUES ";
+                        $creado=0;
+                        for ($row = 2; $row <= $highestRow; $row++){ 
+                            $num++;
+                            $cedula  = str_replace("'","",$sheet->getCell("A".$row)->getValue());
+                            $motivo  = str_replace("'","",$sheet->getCell("B".$row)->getValue());
+                            $fecharetiro  = str_replace("'","",$sheet->getCell("C".$row)->getValue());
+                            $fecharetiro = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fecharetiro));
+                            $fecharetiro = date("Y-m-d",strtotime($fecharetiro."+ 1 days"));
+                            $fechanotificacion  = str_replace("'","",$sheet->getCell("D".$row)->getValue());
+
+                            $fechanotificacion = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fechanotificacion));
+                            $fechanotificacion = date("Y-m-d",strtotime($fechanotificacion."+ 1 days"));
+                            $observaciones  = str_replace("'","",$sheet->getCell("E".$row)->getValue());
+                            $sql.="($idempresaprestadora,'$TIPODEDOCUMENTO','$CEDULA','$PRIMERAPELLIDO','$SEGUNDOAPELLIDO','$PRIMERNOMBRE','$SEGUNDONOMBRE','$DIRECCION','$CODIGODEPARTAMENTO','$CODIGOMUNICIPIO','$CODIGOPAIS','$CORREOELECTRONICO','$FECHAINICIAL','$FECHAFINAL'
+                            ,'$FECHAEXPEDICION','$DEPARTAMENTORETENCION','$MUNICIPIORETENCION','$NUMERORETENCION','$PAGOSSALARIOSOECLESISTICOS','$PAGOSHONORARIOS','$PAGOSSERVICIOS','$PAGOSCOMISIONES','$PAGOSPRESTACIONES','$PAGOSVIATICOS','$PAGOSREPRESENTACION','$PAGOSCOOPERATIVO','$OTROSPAGOS','$CESANTIASPERIODO'
+                            ,'$PENSIONES','$TOTALBRUTOS','$APORTESSALUD','$APORTESPENSIONESRAIS','$APORTESVOLUNTARIOSPENSIONES','$APORTESACUENTASAFC','$RETENCIONFUENTETRABAJOPENSIONES','$PERSONASACARGO','$fecha_cargue'),";
+                            
+                            if($cedula!=""){
+                                $listadopre=$objconsulta->consultarempleadosreapretiroscedula($cedula);
+                                if(count($listadopre)>0){
+                                    $listado=$objconsulta->consultarempleadosreapretiros($cedula);
+                                    //echo count($listado);
+                                    if(count($listado)>0){
+                                        $nombretemporal = $listado[0]['nombretemporal'];
+                                        $nombreempresausuaria = $listado[0]['a'];
+                                        $nombre_empleado = $listado[0]['nombre_empleado'];
+                                        $correoelectronico = $listado[0]['correoelectronico'];
+                                        $telefono = $listado[0]['telefono'];
+                                        $direccion = $listado[0]['direccion'];
+                                        $cargo = $listado[0]['nombrecargo'];
+                                        
+
+                                        //echo "$motivo,$fecharetiro,$nombre_empleado,$cedula,$observaciones,$correoelectronico,$telefono,$direccion,$cargo,$nombretemporal,$nombreempresausuaria ,$fechanotificacion,'Masivo'";
+                                        $listatemporales=$objconsulta->guardarretiro("","",$motivo,$fecharetiro,$nombre_empleado,$cedula,$observaciones,$correoelectronico,$telefono,$direccion,$cargo,$nombretemporal,$nombreempresausuaria ,$fechanotificacion,'Masivo');
+                                        //var_dump($listado);
+                                        //echo "<hr>";
+                                        $creado++;
+                                    } else {
+                                        fwrite($file, "EN LA LINEA ". $num." = Documento ". $cedula." Retirado o en proceso de retiro" . PHP_EOL);
+
+                                    }
+                                } else {
+                                    fwrite($file, "EN LA LINEA ". $num." = Documento ". $cedula." No se encuentra en certificaciones" . PHP_EOL);
+                                }
+                            }
+                            
+                            
+
+                            
+
+                            
+                            
+                        }
+                    }
+
                     $sql = substr($sql, 0, -1);
 
 
@@ -1999,7 +2068,14 @@
                     //die();
                     fclose($file);
                     echo "<center><h3>Se Ingresaron ".$creado." Registro(s) de ".$num." en Total</h3><br>";
-                    echo '<button name="fff" type="button" onclick="volvercarega()" class="btn btn-primary">Terminar</button></center>';
+                    
+                    if($_POST['valor'] == 4){
+                        $creado = 0;
+                        echo '<center><a href="'.$archivofail.'" target="_black">Descargar Archivo Errores</a><br><br><button name="fff" type="button" onclick="volvercaregac()" class="btn btn-primary">Terminar</button></center>';
+                       
+                    } else {
+                        echo '<button name="fff" type="button" onclick="volvercarega()" class="btn btn-primary">Terminar</button></center>';
+                    }
                     if ($creado>0) {
                       $listatemporales=$objconsulta->guardarcarguearchivos($sql);
                       if($_POST['valor'] == 1) {
@@ -2037,6 +2113,12 @@
                         
                     }
                     include('vistas/reque.php');
+                break;
+
+                case "gestioncontratacion":
+                    $listatemporales=$objconsulta->obtenerdatacontratacion();
+                    
+                    include('vistas/listacontratacion.php');
                 break;
 
                 case "procesodirecto":

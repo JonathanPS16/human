@@ -217,13 +217,22 @@ public function consultarempleadosreapretiros($numero){
      $conn = $this->conec();
      $dato=array();
      //$consultas = "SELECT contrato,nombre_empleado,cedula,fecha_ingreso,fecha_retiro,genero,centro_costos,subcentro_costos,nombrempresa,nombrecargo,salarioactual,correoelectronico FROM certificados where cedula='$numero' ".$where;
-     $consultas = "SELECT certificados.*,centrocostos.empresausuaria as a,empresasterporales.nombretemporal FROM certificados 
-      LEFT join renuncias on renuncias.cedula= certificados.cedula and renuncias.cedula is null 
-     inner join centrocostos on centrocostos.centrocosto=certificados.centro_costos 
-     and certificados.id_empresapres=centrocostos.id_empresapres
+     $consultas = "SELECT certificados.*,centrocostos.empresausuaria as a,empresasterporales.nombretemporal 
+     FROM certificados 
+     inner join centrocostos on centrocostos.centrocosto=certificados.centro_costos and certificados.id_empresapres=centrocostos.id_empresapres 
      inner join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres 
-     where certificados.fecha_retiro ='' and  certificados.cedula ='$numero' ".$where;
-     //echo $consultas;
+     where certificados.fecha_retiro ='' and certificados.cedula ='$numero' 
+     and (SELECT COUNT(*) from renuncias WHERE renuncias.cedula= certificados.cedula)=0";
+     //echo $consultas."<br>";
+     $consultas= $conn->Execute($consultas)-> getRows();
+     return $consultas;
+ }
+
+ public function consultarempleadosreapretiroscedula($numero){
+    
+     $conn = $this->conec();
+     $dato=array();
+     $consultas = "SELECT * from certificados where cedula='$numero'";
      $consultas= $conn->Execute($consultas)-> getRows();
      return $consultas;
  }
@@ -1253,6 +1262,13 @@ public function obteneMisRes($ide=0,$mis=""){
     return $consultas;
 }
 
+public function obtenerdatacontratacion(){
+    $conn = $this->conec();
+    $consultas = "select req_candidatos.id as idcand,centrocostos.empresausuaria as nombreempresausu,empresasterporales.nombretemporal,req.*, req_candidatos.* from req INNER join empresasterporales on empresasterporales.id_temporal=req.empresaclientet inner JOIN centrocostos on centrocostos.id_centro=req.empresacliente and centrocostos.id_empresapres=empresasterporales.id_temporal inner join req_candidatos on req_candidatos.id_requisision=req.id and req_candidatos.ordeningreso!='' where 1=1 ORDER BY req.id DESC ";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;
+}
+
 
 public function obteneMisRescreadas($id){
     //echo $ide;
@@ -1861,7 +1877,7 @@ public function notificarProcesosAccidente($id){
 } 
 
 
-public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$funcionario,$cedula,$observaciones, $correo,$celular,$direccion,$cargo,$empresausuaria,$centrocostos,$fechanotificacion){
+public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$funcionario,$cedula,$observaciones, $correo,$celular,$direccion,$cargo,$empresausuaria,$centrocostos,$fechanotificacion,$tipocrea = "ambiente"){
     $conn = $this->conec();
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'retiro'";
     $consultas= $conn->Execute($consultas)-> getRows();
@@ -1884,13 +1900,13 @@ public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$func
           Área Servicio al Cliente 
           <br>Human Talent SAS";
             if($consultasresp[0]['correo']!=""){
-                $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
+               $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
             }
          
       }
 
     }
-    $SQL ="INSERT INTO renuncias (renuncia,paz,motivo,fecharetiro,nombre,cedula,observaciones,correoempleado,celularempleado,direccionempleado,cargoempleado,empresausuaria,centrocostos,fechanotificacion) values('$archivouno','$archivodos','$retiro','$fecharetiro','$funcionario','$cedula','$observaciones','$correo', '$celular','$direccion','$cargo','$empresausuaria','$centrocostos','$fechanotificacion')";
+    $SQL ="INSERT INTO renuncias (modocreacion,renuncia,paz,motivo,fecharetiro,nombre,cedula,observaciones,correoempleado,celularempleado,direccionempleado,cargoempleado,empresausuaria,centrocostos,fechanotificacion) values('$tipocrea','$archivouno','$archivodos','$retiro','$fecharetiro','$funcionario','$cedula','$observaciones','$correo', '$celular','$direccion','$cargo','$empresausuaria','$centrocostos','$fechanotificacion')";
     $conn->Execute($SQL);
 } 
 
