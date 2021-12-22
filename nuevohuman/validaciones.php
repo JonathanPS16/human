@@ -2222,6 +2222,118 @@
                     //include('vistas/reque.php');
                 break;
 
+
+                case "gestionarcontratacion":
+                    $fechaarl=$_POST['fechaarl'];
+                    $fechaeps = $_POST['fechaeps'];
+                    $fechacompensa = $_POST['fechacompensa'];
+                    $fechafondo = $_POST['fechafondo'];
+                    $id = $_POST['id'];
+                    $where = "";
+                    
+
+                    if($fechaarl!=""){
+                        $where .= "fechaarl='$fechaarl',";
+                    }
+
+                    if($fechaeps!=""){
+                        $where .= "fechaeps='$fechaeps',";
+                    }
+
+                    if($fechacompensa!=""){
+                        $where .= "fechacompensa='$fechacompensa',";
+                    }
+
+                    if($fechafondo!=""){
+                        $where .= "fechafondo='$fechafondo',";
+                    }
+
+                    if ($_FILES['contrato']['tmp_name']!="") {
+                        $nombre_archivo = date('Ymd').$_FILES['contrato']['name'];
+                        $tipo_archivo = $_FILES['contrato']['type'];
+                        $tamano_archivo = $_FILES['contrato']['size'];
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+                        }else{
+                            if (move_uploaded_file($_FILES['contrato']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $where.="contratocontratacion='$nombre_archivo',"; 
+                            }
+                        }
+
+                    }
+                    if ($_FILES['archivoarl']['tmp_name']!="") {
+                        $nombre_archivo = date('Ymd').$_FILES['archivoarl']['name'];
+                        $tipo_archivo = $_FILES['archivoarl']['type'];
+                        $tamano_archivo = $_FILES['archivoarl']['size'];
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+                        }else{
+                            if (move_uploaded_file($_FILES['archivoarl']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $where.="archivoarl='$nombre_archivo',"; 
+                            }
+                        }
+                    }
+
+                    if ($_FILES['archivoeps']['tmp_name']!="") {
+                        $nombre_archivo = date('Ymd').$_FILES['archivoeps']['name'];
+                        $tipo_archivo = $_FILES['archivoeps']['type'];
+                        $tamano_archivo = $_FILES['archivoeps']['size'];
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+                        }else{
+                            if (move_uploaded_file($_FILES['archivoeps']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $where.="archivoeps='$nombre_archivo',"; 
+                            }
+                        }
+                    }
+
+                    if ($_FILES['archivocompensa']['tmp_name']!="") {
+                        $nombre_archivo = date('Ymd').$_FILES['archivocompensa']['name'];
+                        $tipo_archivo = $_FILES['archivocompensa']['type'];
+                        $tamano_archivo = $_FILES['archivocompensa']['size'];
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+                        }else{
+                            if (move_uploaded_file($_FILES['archivocompensa']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $where.="archivocompensa='$nombre_archivo',"; 
+                            }
+                        }
+                    }
+
+                    if ($_FILES['archivofondo']['tmp_name']!="") {
+                        $nombre_archivo = date('Ymd').$_FILES['archivofondo']['name'];
+                        $tipo_archivo = $_FILES['archivofondo']['type'];
+                        $tamano_archivo = $_FILES['archivofondo']['size'];
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+                        }else{
+                            if (move_uploaded_file($_FILES['archivofondo']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $where.="archivofondo='$nombre_archivo',"; 
+                            }
+                        }
+                    }
+
+                    if ($_FILES['archivobenediciarios']['tmp_name']!="") {
+                        $nombre_archivo = date('Ymd').$_FILES['archivobenediciarios']['name'];
+                        $tipo_archivo = $_FILES['archivobenediciarios']['type'];
+                        $tamano_archivo = $_FILES['archivobenediciarios']['size'];
+                        if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+                        }else{
+                            if (move_uploaded_file($_FILES['archivobenediciarios']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
+                                $where.="archivobenediciarios='$nombre_archivo,'"; 
+                            }
+                        }
+                    }
+
+                    if($where!=""){
+                        $where = substr($where, 0, -1);
+                        $sql =  "update req_candidatos set $where where id=".$id;
+                        $objconsulta->guardarcarguearchivos($sql);
+                    }
+                    
+                    echo "<script>alert('Registro Actualizado Correctamente');
+                        window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
+                        </script>";
+                break;
+
+
+
+
                 case "guardarotro":
                     $nombre_archivo = "f".date('Ymd').$_FILES['filebutton']['name'];
                     $tipo_archivo = $_FILES['filebutton']['type'];

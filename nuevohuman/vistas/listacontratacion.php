@@ -12,13 +12,16 @@
 			<th>Sueldo</th>
 			<th>Empresa Usuaria</th>
 			<th>Orden de Ingreso</th>
-			<th>Accidentes</th>
-			<th>Observaciones</th>
-			<th>Envio de Carta</th>
-			<th>Paz y Salvo</th>
-			<th>Renuncia</th>
-			<th>Carta Enviada</th>
-			<th>Correo Enviados</th>
+			<th>Contrato</th>
+			<th>Fecha ARL</th>
+			<th>Archivo ARL</th>
+			<th>Fecha EPS</th>
+			<th>Archivo EPS</th>
+			<th>Fecha Caja de Compensación</th>
+			<th>Archivo Caja de Compensación</th>
+      <th>Fecha Fondo Pensiones</th>
+			<th>Archivo Fondo Pensiones</th>
+      <th>Archivo Beneficiarios</th>
 			<th>Estado</th>
 		</tr>
 	</thead>
@@ -49,8 +52,53 @@ for($i=0; $i<count($listatemporales);$i++){
 	$renunciada = $listatemporales[$i]['fecharetiro'];
 	$contrato = $listatemporales[$i]['contrato'];
 	
+	if($listatemporales[$i]['contratocontratacion']!=""){
+    $listatemporales[$i]['contratocontratacion'] = '<a href="archivosgenerales/'.$listatemporales[$i]['contratocontratacion'].'" target="_black" class="btn btn-primary">Contrato</a>';
+  } else {
+    $listatemporales[$i]['contratocontratacion'] = "No  Aplica";
+  }
+
+  if($listatemporales[$i]['archivoarl']!=""){
+    $listatemporales[$i]['archivoarl'] = '<a href="archivosgenerales/'.$listatemporales[$i]['archivoarl'].'" target="_black" class="btn btn-primary">Archivo Arl</a>';
+  } else {
+    $listatemporales[$i]['archivoarl'] = "No  Aplica";
+  }
+
+  if($listatemporales[$i]['archivoeps']!=""){
+    $listatemporales[$i]['archivoeps'] = '<a href="archivosgenerales/'.$listatemporales[$i]['archivoeps'].'" target="_black" class="btn btn-primary">Archivo Eps</a>';
+  } else {
+    $listatemporales[$i]['archivoeps'] = "No  Aplica";
+  }
+
+
+  if($listatemporales[$i]['archivocompensa']!=""){
+    $listatemporales[$i]['archivocompensa'] = '<a href="archivosgenerales/'.$listatemporales[$i]['archivocompensa'].'" target="_black" class="btn btn-primary">Archivo Caja Compensación</a>';
+  } else {
+    $listatemporales[$i]['archivocompensa'] = "No  Aplica";
+  }
+
+
+  if($listatemporales[$i]['archivofondo']!=""){
+    $listatemporales[$i]['archivofondo'] = '<a href="archivosgenerales/'.$listatemporales[$i]['archivofondo'].'" target="_black" class="btn btn-primary">Archivo Fondo</a>';
+  } else {
+    $listatemporales[$i]['archivofondo'] = "No  Aplica";
+  }
+
+  if($listatemporales[$i]['archivobenediciarios']!=""){
+    $listatemporales[$i]['archivobenediciarios'] = '<a href="archivosgenerales/'.$listatemporales[$i]['archivobenediciarios'].'" target="_black" class="btn btn-primary">Archivo Beneficiarios</a>';
+  } else {
+    $listatemporales[$i]['archivobenediciarios'] = "No  Aplica";
+  }
 	
-	
+  
+  
+  
+  
+
+  
+
+
+
 
 	
 
@@ -237,9 +285,9 @@ $modalbotonextra ='<div class="modal fade" id="exampleModalextra'.$id.'" tabinde
     </div>
   </div>
   <div class="form-group row">
-    <label for="Fecha EPS" class="col-4 col-form-label">Fecha EPS</label> 
+    <label for="fechaeps" class="col-4 col-form-label">Fecha EPS</label> 
     <div class="col-8">
-      <input id="Fecha EPS" name="Fecha EPS" type="date" class="form-control">
+      <input id="fechaeps" name="fechaeps" type="date" class="form-control">
     </div>
   </div>
   <div class="form-group row">
@@ -312,14 +360,17 @@ $modalbotonextra ='<div class="modal fade" id="exampleModalextra'.$id.'" tabinde
 			<td>".$listatemporales[$i]['fechareqcargo']."</td>
 			<td>".$listatemporales[$i]['salariorh']."</td>
 			<td>".$listatemporales[$i]['nombreempresausu']."</td>
-			<td>".$ordeningreso."</td>
-			<td>".$listatemporales[$i]['conteoaccientes']."</td>
-			<td>".$ordeningreso."</td>
-			<td>".$fechaenvio."</td>
-			<td>".$boton."</td>
-			<td>".$botondos."</td>
-			<td>".$archivocorreoenviadocarta."</td>
-			<td>".$correolbl."</td>
+      <td>".$ordeningreso."</td>
+			<td>".$listatemporales[$i]['contratocontratacion']."</td>
+      <td>".$listatemporales[$i]['fechaarl']."</td>
+			<td>".$listatemporales[$i]['archivoarl']."</td>
+      <td>".$listatemporales[$i]['fechaeps']."</td>
+			<td>".$listatemporales[$i]['archivoeps']."</td>
+      <td>".$listatemporales[$i]['fechacompensa']."</td>
+			<td>".$listatemporales[$i]['archivocompensa']."</td>
+      <td>".$listatemporales[$i]['fechafondo']."</td>
+			<td>".$listatemporales[$i]['archivofondo']."</td>
+			<td>".$listatemporales[$i]['archivobenediciarios']."</td>
     		<td>".$modalbotonextra.$botonextra."</td>
     </tr>";
   }
