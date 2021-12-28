@@ -252,6 +252,29 @@ if($listatemporales[$i]['enviocorreot']!="")
 
 $ordeningreso ='<a href="archivosgenerales/'.$listatemporales[$i]['ordeningreso'].'" target="_black" class="btn btn-primary">Orden Ingreso</a><br>';
 
+$contratocode = '<div class="form-group row">
+<label for="contrato" class="col-4 col-form-label">Contrato</label> 
+<div class="col-8">
+  <input id="contrato" name="contrato" type="file" class="form-control">
+</div>
+</div>';
+
+$fechaarlcode = '<div class="form-group row">
+<label for="fechaarl" class="col-4 col-form-label">Fecha ARL</label> 
+<div class="col-8">
+  <input id="fechaarl" name="fechaarl" type="date" class="form-control">
+</div>
+</div>';
+
+if($listatemporales[$i]['contratocontratacion']!="No Aplica"){
+  $contratocode = "";
+}
+
+if($listatemporales[$i]['fechaarl']!=""){
+  $fechaarlcode = "";
+}
+
+
 
 
 $modalbotonextra ='<div class="modal fade" id="exampleModalextra'.$id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -266,18 +289,8 @@ $modalbotonextra ='<div class="modal fade" id="exampleModalextra'.$id.'" tabinde
       <div class="modal-body">
         <form class="form-horizontal" action="home.php?ctr=requisicion&acc=gestionarcontratacion" method="post" enctype="multipart/form-data">
 		<fieldset>
-		<div class="form-group row">
-    <label for="contrato" class="col-4 col-form-label">Contrato</label> 
-    <div class="col-8">
-      <input id="contrato" name="contrato" type="file" class="form-control">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="fechaarl" class="col-4 col-form-label">Fecha ARL</label> 
-    <div class="col-8">
-      <input id="fechaarl" name="fechaarl" type="date" class="form-control">
-    </div>
-  </div>
+		'.$contratocode.$fechaarlcode.'
+  
   <div class="form-group row">
     <label for="archivoarl" class="col-4 col-form-label">Archivo ARL</label> 
     <div class="col-8">
