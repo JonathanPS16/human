@@ -51,46 +51,57 @@ for($i=0; $i<count($listatemporales);$i++){
 	$ne =$listatemporales[$i]['ne'];
 	$renunciada = $listatemporales[$i]['fecharetiro'];
 	$contrato = $listatemporales[$i]['contrato'];
+
+  $archivosenvio = "";
+
+  if($listatemporales[$i]['contratocontratacion']!="" && $listatemporales[$i]['archivoarl']!="" && $listatemporales[$i]['archivoeps']!="" && $listatemporales[$i]['archivocompensa']!="" && $listatemporales[$i]['archivofondo']!="" )
+  {
+    $concatena = $listatemporales[$i]['correo']."|".$listatemporales[$i]['nombre']."|".$listatemporales[$i]['contratocontratacion']."|".$listatemporales[$i]['archivoarl']."|".$listatemporales[$i]['archivoeps']."|".$listatemporales[$i]['archivocompensa']."|".$listatemporales[$i]['archivofondo'];
+    $archivosenvio = '<a href="home.php?ctr=requisicion&acc=enviarcorreodocumentacion&valida='.base64_encode($concatena).'" class="btn btn-secondary">Enviar Documentos</a><br><br>';
+  }
+  
 	
 	if($listatemporales[$i]['contratocontratacion']!=""){
     $listatemporales[$i]['contratocontratacion'] = '<a href="archivosgenerales/'.$listatemporales[$i]['contratocontratacion'].'" target="_black" class="btn btn-primary">Contrato</a>';
   } else {
-    $listatemporales[$i]['contratocontratacion'] = "No  Aplica";
+    $listatemporales[$i]['contratocontratacion'] = "No Aplica";
   }
 
   if($listatemporales[$i]['archivoarl']!=""){
     $listatemporales[$i]['archivoarl'] = '<a href="archivosgenerales/'.$listatemporales[$i]['archivoarl'].'" target="_black" class="btn btn-primary">Archivo Arl</a>';
   } else {
-    $listatemporales[$i]['archivoarl'] = "No  Aplica";
+    $listatemporales[$i]['archivoarl'] = "No Aplica";
   }
 
   if($listatemporales[$i]['archivoeps']!=""){
     $listatemporales[$i]['archivoeps'] = '<a href="archivosgenerales/'.$listatemporales[$i]['archivoeps'].'" target="_black" class="btn btn-primary">Archivo Eps</a>';
   } else {
-    $listatemporales[$i]['archivoeps'] = "No  Aplica";
+    $listatemporales[$i]['archivoeps'] = "No Aplica";
   }
 
 
   if($listatemporales[$i]['archivocompensa']!=""){
     $listatemporales[$i]['archivocompensa'] = '<a href="archivosgenerales/'.$listatemporales[$i]['archivocompensa'].'" target="_black" class="btn btn-primary">Archivo Caja Compensación</a>';
   } else {
-    $listatemporales[$i]['archivocompensa'] = "No  Aplica";
+    $listatemporales[$i]['archivocompensa'] = "No Aplica";
   }
 
 
   if($listatemporales[$i]['archivofondo']!=""){
     $listatemporales[$i]['archivofondo'] = '<a href="archivosgenerales/'.$listatemporales[$i]['archivofondo'].'" target="_black" class="btn btn-primary">Archivo Fondo</a>';
   } else {
-    $listatemporales[$i]['archivofondo'] = "No  Aplica";
+    $listatemporales[$i]['archivofondo'] = "No Aplica";
   }
-
+  $nobene = "";
   if($listatemporales[$i]['archivobenediciarios']!=""){
+    $nobene = "S";
     $listatemporales[$i]['archivobenediciarios'] = '<a href="archivosgenerales/'.$listatemporales[$i]['archivobenediciarios'].'" target="_black" class="btn btn-primary">Archivo Beneficiarios</a>';
   } else {
-    $listatemporales[$i]['archivobenediciarios'] = "No  Aplica";
+
+    $registros = $listatemporales[$i]['correo']."|".$listatemporales[$i]['nombre'];
+    $listatemporales[$i]['archivobenediciarios'] = '<a href="home.php?ctr=requisicion&acc=enviarcorreobeneficiario&valida='.base64_encode($registros).'" class="btn btn-secondary">Solicitar Documento</a>';
   }
 	
-  
   
   
   
@@ -264,6 +275,65 @@ if($listatemporales[$i]['contratocontratacion']!="No Aplica"){
 }
 
 
+$archivoarlcode = '<div class="form-group row">
+<label for="archivoarl" class="col-4 col-form-label">Archivo ARL</label> 
+<div class="col-8">
+  <input id="archivoarl" name="archivoarl" type="file" class="form-control">
+</div>
+</div>';
+
+if($listatemporales[$i]['archivoarl']!="No Aplica"){
+  $archivoarlcode = "";
+}
+
+
+$archivoepscode = '<div class="form-group row">
+<label for="archivoeps" class="col-4 col-form-label">Archivo EPS</label> 
+<div class="col-8">
+  <input id="archivoeps" name="archivoeps" type="file" class="form-control">
+</div>
+</div>';
+
+if($listatemporales[$i]['archivoeps']!="No Aplica"){
+  $archivoepscode = "";
+}
+
+$archivocompensacode = '<div class="form-group row">
+<label for="archivocompensa" class="col-4 col-form-label">Archivo Caja de Compensación</label> 
+<div class="col-8">
+  <input id="archivocompensa" name="archivocompensa" type="file" class="form-control">
+</div>
+</div>';
+
+if($listatemporales[$i]['archivocompensa']!="No Aplica"){
+  $archivocompensacode = "";
+}
+
+
+$archivofondocode = '<div class="form-group row">
+<label for="archivofondo" class="col-4 col-form-label">Archivo Fondo Pensiones</label> 
+<div class="col-8">
+  <input id="archivofondo" name="archivofondo" type="file" class="form-control">
+</div>
+</div>';
+
+if($listatemporales[$i]['archivofondo']!="No Aplica"){
+  $archivofondocode = "";
+}
+
+
+$archivobenecode = '<div class="form-group row">
+<label for="archivobenediciarios" class="col-4 col-form-label">Archivo Beneficiarios</label> 
+<div class="col-8">
+  <input id="archivobenediciarios" name="archivobenediciarios" type="file" class="form-control">
+</div>
+</div>';
+
+if($nobene=='S'){
+  $archivobenecode = "";
+}
+
+
 $fechaarlcode = '<div class="form-group row">
 <label for="fechaarl" class="col-4 col-form-label">Fecha ARL</label> 
 <div class="col-8">
@@ -274,10 +344,34 @@ $fechaarlcode = '<div class="form-group row">
 if($listatemporales[$i]['fechaarl']!=""){
   $fechaarlcode = "";
 }
+$fechaepscode = '<div class="form-group row">
+<label for="fechaeps" class="col-4 col-form-label">Fecha EPS</label> 
+<div class="col-8">
+  <input id="fechaeps" name="fechaeps" type="date" class="form-control">
+</div>
+</div>';
 
-
-
-
+if ($listatemporales[$i]['fechaeps']!=""){
+  $fechaepscode = "";
+}
+$fechacompensacode = '<div class="form-group row">
+<label for="fechacompensa" class="col-4 col-form-label">Fecha Caja de Compensación</label> 
+<div class="col-8">
+  <input id="fechacompensa" name="fechacompensa" type="date" class="form-control">
+</div>
+</div>';
+if ($listatemporales[$i]['fechacompensa']!=""){
+  $fechacompensacode = "";
+}
+$fechafondocode = '<div class="form-group row">
+<label for="fechafondo" class="col-4 col-form-label">Fecha Fondo Pensiones</label> 
+<div class="col-8">
+  <input id="fechafondo" name="fechafondo" type="date" class="form-control">
+</div>
+</div>';
+if ($listatemporales[$i]['fechafondo']!=""){
+  $fechafondocode = "";
+}
 
 
 $modalbotonextra ='<div class="modal fade" id="exampleModalextra'.$id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -292,65 +386,8 @@ $modalbotonextra ='<div class="modal fade" id="exampleModalextra'.$id.'" tabinde
       <div class="modal-body">
         <form class="form-horizontal" action="home.php?ctr=requisicion&acc=gestionarcontratacion" method="post" enctype="multipart/form-data">
 		<fieldset>
-		'.$contratocode.$fechaarlcode.'
+		'.$contratocode.$fechaarlcode.$archivoarlcode.$fechaepscode.$archivoepscode.$fechacompensacode.$archivocompensacode.$fechafondocode.$archivofondocode.$archivobenecode.'
   
-  <div class="form-group row">
-    <label for="archivoarl" class="col-4 col-form-label">Archivo ARL</label> 
-    <div class="col-8">
-      <input id="archivoarl" name="archivoarl" type="file" class="form-control">
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <label for="fechaeps" class="col-4 col-form-label">Fecha EPS</label> 
-    <div class="col-8">
-      <input id="fechaeps" name="fechaeps" type="date" class="form-control">
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <label for="archivoeps" class="col-4 col-form-label">Archivo EPS</label> 
-    <div class="col-8">
-      <input id="archivoeps" name="archivoeps" type="file" class="form-control">
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <label for="fechacompensa" class="col-4 col-form-label">Fecha Caja de Compensación</label> 
-    <div class="col-8">
-      <input id="fechacompensa" name="fechacompensa" type="date" class="form-control">
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <label for="archivocompensa" class="col-4 col-form-label">Archivo Caja de Compensación</label> 
-    <div class="col-8">
-      <input id="archivocompensa" name="archivocompensa" type="file" class="form-control">
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <label for="fechafondo" class="col-4 col-form-label">Fecha Fondo Pensiones</label> 
-    <div class="col-8">
-      <input id="fechafondo" name="fechafondo" type="date" class="form-control">
-    </div>
-  </div>
-
-
-  <div class="form-group row">
-    <label for="archivofondo" class="col-4 col-form-label">Archivo Fondo Pensiones</label> 
-    <div class="col-8">
-      <input id="archivofondo" name="archivofondo" type="file" class="form-control">
-    </div>
-  </div>
-
-
-  <div class="form-group row">
-    <label for="archivobenediciarios" class="col-4 col-form-label">Archivo Beneficiarios</label> 
-    <div class="col-8">
-      <input id="archivobenediciarios" name="archivobenediciarios" type="file" class="form-control">
-    </div>
-  </div> 
 		
       <input id="id" name="id" type="hidden" value="'.$id.'">
 	 
@@ -396,7 +433,7 @@ $modalbotonextra ='<div class="modal fade" id="exampleModalextra'.$id.'" tabinde
       <td>".$listatemporales[$i]['fechafondo']."</td>
 			<td>".$listatemporales[$i]['archivofondo']."</td>
 			<td>".$listatemporales[$i]['archivobenediciarios']."</td>
-    		<td>".$modalbotonextra.$botonextra."</td>
+    		<td>".$archivosenvio.$modalbotonextra.$botonextra."</td>
     </tr>";
   }
 

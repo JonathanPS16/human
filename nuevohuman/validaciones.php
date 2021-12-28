@@ -619,7 +619,7 @@
                         "12"=>"Diciembre"
                     );
                     require_once 'vendor/autoload.php';
-                    $docdocumen = "cartagene".$id.date('Ymds').".docx";
+                    $docdocumen = "carta".$id.rand(1,20)."".date('Ymds').".docx";
                     $phpWord2 = new \PhpOffice\PhpWord\PhpWord();
                     if($_POST['motivo']=="terminacion"){
                         $templateProcessor2 = new \PhpOffice\PhpWord\TemplateProcessor('plantillas/terminacioncontrato.docx');
@@ -669,6 +669,76 @@
                     echo "<script>alert('Retiro Cargado Correctamente');
                         window.location.href = 'home.php?ctr=retiro&acc=listaretiros';
                         </script>";
+                    
+                break;
+
+                case "guardarenviarCP":
+                    
+                    $correo = $_GET['correo'];
+                    $id = $_GET['id'];
+                    $datosdia = array(
+                        "01"=>"Enero",
+                        "02"=>"Febrero",
+                        "03"=>"Marzo",
+                        "04"=>"Abril",
+                        "05"=>"Mayo",
+                        "06"=>"Junio",
+                        "07"=>"Julio",
+                        "08"=>"Agosto",
+                        "09"=>"Septiembre",
+                        "10"=>"Octubre",
+                        "11"=>"Noviembre",
+                        "12"=>"Diciembre"
+                    );
+                    require_once 'vendor/autoload.php';
+                    $docdocumen = "cartagene".$id.date('Ymds').".docx";
+                    $phpWord2 = new \PhpOffice\PhpWord\PhpWord();
+                    if($_GET['motivo']=="terminacion"){
+                        $templateProcessor2 = new \PhpOffice\PhpWord\TemplateProcessor('plantillas/terminacioncontrato.docx');
+                    } else {
+                        $templateProcessor2 = new \PhpOffice\PhpWord\TemplateProcessor('plantillas/aceptacionrenuncia.docx');
+                    
+                    }
+                    $fechareg =  explode("-",substr($_POST['fechasoli'], 0, 10));
+                    
+                    $fecharegi =  explode("/",$_POST['fechai']);
+
+                    $fecharegire =  explode("-",$_POST['renuncia']);
+
+                    $templateProcessor2->setValue('dia', date("d"));
+                    $templateProcessor2->setValue('mes', $datosdia[date("m")]);
+                    $templateProcessor2->setValue('anio', date("Y"));
+                    $templateProcessor2->setValue('nombreempleado', $_GET['ne']);
+                    $templateProcessor2->setValue('cedula', $_POST['cedula']);
+                    $templateProcessor2->setValue('empresageneral', $_POST['nombretemporal']);
+                    $templateProcessor2->setValue('contrato', $_POST['contrato']);
+                    $templateProcessor2->setValue('diarecibido', $fechareg[2]);
+                    $templateProcessor2->setValue('mesrecibido', $datosdia[$fechareg[1]]);
+                    $templateProcessor2->setValue('aniorecibido', $fechareg[0]);
+                    $templateProcessor2->setValue('diarenuncia', $fecharegire[2]);
+                    $templateProcessor2->setValue('mesrenuncia', $datosdia[$fecharegire[1]]);
+                    $templateProcessor2->setValue('aniorenuncia', $fecharegire[0]);
+                    $templateProcessor2->setValue('diainicio', $fecharegi[0]);
+                    $templateProcessor2->setValue('mesinicio', $fecharegi[1]);
+                    $templateProcessor2->setValue('mesinicioletra', $datosdia[$fecharegi[1]]);
+                    $templateProcessor2->setValue('anioinicio', $fecharegi[2]);
+                    $templateProcessor2->setValue('empresasecundaria', $_POST['empresausuaria']);
+                    $templateProcessor2->saveAs('archivosgenerales/'.$docdocumen);
+                    echo "<a href='archivosgenerales/$docdocumen'>Descargar</a>";
+                    $correo = $_POST['correo'];
+                    $id = $_POST['id'];
+                    $correoenvio = "";
+                    if(isset($_POST['checkbox_0']) && $_POST['checkbox_0']>0){
+                        $correoenvio.=$_POST['correoempleado'].";";
+                    }
+                    if(isset($_POST['checkbox_1']) && $_POST['checkbox_1']>0){
+                        $correoenvio.="servicioalcliente@humantalentsas.com".";";
+                    }
+                    if(isset($_POST['checkbox_2']) && $_POST['checkbox_2']>0){
+                        $correoenvio.="nomina@humantalentsas.com".";";
+                    }
+                    $correo = $_POST['correo'].";".$correoenvio; 
+                    
                     
                 break;
                 case "listaretiros":
@@ -2121,6 +2191,57 @@
                     include('vistas/listacontratacion.php');
                 break;
 
+                case "enviarcorreobeneficiario":
+                    $info = base64_decode($_GET['valida']);
+                   // echo $info;
+                    $info = explode("|",$info);
+                    $correo = $info[0];
+                    $nombre = $info[1];
+
+                    //echo  $correo."-".$nombre;
+                    $mensaje = "Apreciado ".$nombre."
+                    <br><br>
+                    Solicitamos nos haga llegar la documentación de sus beneficiarios para efectos de afiliación. 
+                    <br><br>
+                    Cordialmente,
+                    <br><br><br>
+                    Área de Selección<br>
+                    Human Talent SAS";
+                    $listatemporales=$objconsulta->enviocorreo($correo,$mensaje,"Notificacion Documentos Beneficiarios");
+
+                    echo "<script>alert('Correo Enviado Correctamente');
+                    window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
+                    </script>";
+                break;
+
+                case "enviarcorreodocumentacion":
+                    $info = base64_decode($_GET['valida']);
+                    //echo $info;
+                    $info = explode("|",$info);
+                    $correo = $info[0];
+                    $nombre = $info[1];
+                    $contrato = $info[2];
+                    $arl = $info[3];
+                    $eps = $info[4];
+                    $caja = $info[5];
+                    $fondo = $info[6];
+                    //echo "Fondo= $fondo";
+                    $documentos = $contrato."|".$arl."|".$eps."|".$caja."|".$fondo;
+                    //echo  $correo."-".$nombre;
+                    $mensaje = "Apreciado ".$nombre."
+                    <br><br>
+                    Se adjuntan documentos en base a contratación. 
+                    <br><br>
+                    Cordialmente,
+                    <br><br><br>
+                    Área de Selección<br>
+                    Human Talent SAS";
+                    $listatemporales=$objconsulta->enviarcorreoadjuntosdinamico($correo,$documentos,$mensaje,"Documentación Contratación");
+                    echo "<script>alert('Correo Enviado Correctamente');
+                    window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
+                    </script>";
+                break;
+
                 case "procesodirecto":
                     $datoempre = "Human";
                     $listatemporales=$objconsulta->obteneTemporales($datoempre);                   
@@ -2312,14 +2433,15 @@
                         $nombre_archivo = date('Ymd').$_FILES['archivobenediciarios']['name'];
                         $tipo_archivo = $_FILES['archivobenediciarios']['type'];
                         $tamano_archivo = $_FILES['archivobenediciarios']['size'];
+                        
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
+
                         }else{
                             if (move_uploaded_file($_FILES['archivobenediciarios']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
-                                $where.="archivobenediciarios='$nombre_archivo,'"; 
+                                $where.="archivobenediciarios='$nombre_archivo',"; 
                             }
                         }
                     }
-
                     if($where!=""){
                         $where = substr($where, 0, -1);
                         $sql =  "update req_candidatos set $where where id=".$id;

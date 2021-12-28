@@ -2879,6 +2879,34 @@ public function enviarcorreoadjuntos($correo,$documento,$mensaje,$titulo="Notifi
     $maildos->Send();
 }
 
+public function enviarcorreoadjuntosdinamico($correo,$documentos,$mensaje,$titulo="Notificacion Human"){
+   // echo $documentos;
+    $maildos = new PHPMailer();
+    $maildos->IsSMTP();
+    $maildos->SMTPAuth = true;
+    $maildos->SMTPSecure = "ssl"; 
+    $maildos->Host = Host; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
+    $maildos->Username = Username; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
+    $maildos->Password = Password; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
+    $maildos->Port = Port; // Puerto de conexión al servidor de envio. 
+    $maildos->SetFrom(correocor, mensajecorr);
+    $asunto = "=?UTF-8?B?".base64_encode($titulo)."=?=";
+    $maildos->Subject = utf8_decode($asunto); // Este es el titulo del email. 
+    $maildos->AddAddress($correo, "Usuario");
+
+    $explode = explode("|",$documentos);
+    //var_dump($explode);
+    for($i = 0 ; $i<count($explode); $i++){
+        if($explode[$i]!=""){
+            $docname=$explode[$i];
+            $archivoexa = "archivosgenerales/".$explode[$i];
+            $maildos->AddAttachment($archivoexa,$docname);
+        }
+    }
+    $maildos->MsgHTML(utf8_decode($mensaje));
+    $maildos->Send();
+}
+
 public function rechazarcandidato($id_per,$id_req,$rechazo,$observacion)
 {
     $conn = $this->conec();
