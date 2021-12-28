@@ -259,6 +259,11 @@ $contratocode = '<div class="form-group row">
 </div>
 </div>';
 
+if($listatemporales[$i]['contratocontratacion']!="No Aplica"){
+  $contratocode = "";
+}
+
+
 $fechaarlcode = '<div class="form-group row">
 <label for="fechaarl" class="col-4 col-form-label">Fecha ARL</label> 
 <div class="col-8">
@@ -266,13 +271,11 @@ $fechaarlcode = '<div class="form-group row">
 </div>
 </div>';
 
-if($listatemporales[$i]['contratocontratacion']!="No Aplica"){
-  $contratocode = "";
-}
-
 if($listatemporales[$i]['fechaarl']!=""){
   $fechaarlcode = "";
 }
+
+
 
 
 
@@ -297,42 +300,51 @@ $modalbotonextra ='<div class="modal fade" id="exampleModalextra'.$id.'" tabinde
       <input id="archivoarl" name="archivoarl" type="file" class="form-control">
     </div>
   </div>
+
   <div class="form-group row">
     <label for="fechaeps" class="col-4 col-form-label">Fecha EPS</label> 
     <div class="col-8">
       <input id="fechaeps" name="fechaeps" type="date" class="form-control">
     </div>
   </div>
+
   <div class="form-group row">
     <label for="archivoeps" class="col-4 col-form-label">Archivo EPS</label> 
     <div class="col-8">
       <input id="archivoeps" name="archivoeps" type="file" class="form-control">
     </div>
   </div>
+
   <div class="form-group row">
     <label for="fechacompensa" class="col-4 col-form-label">Fecha Caja de Compensación</label> 
     <div class="col-8">
       <input id="fechacompensa" name="fechacompensa" type="date" class="form-control">
     </div>
   </div>
+
   <div class="form-group row">
     <label for="archivocompensa" class="col-4 col-form-label">Archivo Caja de Compensación</label> 
     <div class="col-8">
       <input id="archivocompensa" name="archivocompensa" type="file" class="form-control">
     </div>
   </div>
+
   <div class="form-group row">
     <label for="fechafondo" class="col-4 col-form-label">Fecha Fondo Pensiones</label> 
     <div class="col-8">
       <input id="fechafondo" name="fechafondo" type="date" class="form-control">
     </div>
   </div>
+
+
   <div class="form-group row">
     <label for="archivofondo" class="col-4 col-form-label">Archivo Fondo Pensiones</label> 
     <div class="col-8">
       <input id="archivofondo" name="archivofondo" type="file" class="form-control">
     </div>
   </div>
+
+
   <div class="form-group row">
     <label for="archivobenediciarios" class="col-4 col-form-label">Archivo Beneficiarios</label> 
     <div class="col-8">
