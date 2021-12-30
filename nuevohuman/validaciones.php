@@ -2191,6 +2191,12 @@
                     include('vistas/listacontratacion.php');
                 break;
 
+                case "gestioncontratacioncheck":
+                    $listatemporales=$objconsulta->obtenerdatacontratacion("restr");
+                    
+                    include('vistas/listacontratacioncheck.php');
+                break;
+
                 case "enviarcorreobeneficiario":
                     $info = base64_decode($_GET['valida']);
                    // echo $info;
@@ -2453,7 +2459,15 @@
                         </script>";
                 break;
 
-
+                case "gestionarchecks":
+                    $id = $_POST['id'];
+                        $sql =  "update req_candidatos set afiliaciones = '".$_POST['afiliaciones']."', contratocheck = '".$_POST['contratocheck']."', ordencheck = '".$_POST['ordencheck']."', sueldocheck='".$_POST['sueldocheck']."', wp ='".$_POST['wp']."' $where where id=".$id;
+                        $objconsulta->guardarcarguearchivos($sql);
+                    echo "<script>alert('Registro Actualizado Correctamente');
+                        window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacioncheck';
+                        </script>";  
+                    
+                break;
 
 
                 case "guardarotro":
@@ -2616,6 +2630,113 @@ catch(com_exception $e)
 <?php
                  
                 
+                break;
+
+                case "hola":
+                    //echo "HOLA";
+                    require('vistas/fpdf.php');
+                   
+// extend class
+class KodePDF extends FPDF {
+    protected $fontName = 'Arial';
+
+    function renderTitle($text) {
+        $this->SetTextColor(0, 0, 0);
+        $this->SetFont($this->fontName, 'B', 12);
+        $this->Cell(0, 7, utf8_decode($text), 0, 1, C);
+    }
+    function Header()
+    {
+        $this->Image('CABECERA.png',0,0,210);
+        // Line break
+        $this->Ln(20);
+    }
+
+    function renderSubTitle($text) {
+        $this->SetFont($this->fontName, 'B', 12);
+        $this->Cell(0, 7, utf8_decode($text), 0, 1);
+    }
+
+    function renderText($text) {
+        $this->SetFont($this->fontName, '', 12);
+        $this->MultiCell(0, 7, utf8_decode($text), 0, 1);
+    }
+}
+/*
+// create document
+$pdf = new KodePDF();
+$pdf->SetMargins(20.175, 0, 15.175, 0);
+$pdf->AddPage();
+
+// config document
+$pdf->SetTitle('Documento Human');
+$pdf->SetAuthor('Omar Bonilla');
+
+$pdf->SetCreator('FPDF Maker');
+
+// add title
+$pdf->renderTitle('TERMINACIÓN DE');
+$pdf->renderTitle('CONTRATO POR OBRA Y/O');
+$pdf->renderTitle(' LABOR');
+$pdf->ln();
+$pdf->ln();
+$pdf->renderText('Bogotá D.C, ${dia} de ${mes} del ${anio}');
+$pdf->ln();
+$pdf->renderSubTitle('SEÑOR(A)');
+$pdf->renderSubTitle('${nombreempleado}');
+$pdf->renderText('Cedula: ${cedula}');
+$pdf->renderText('${empresageneral}  ');
+$pdf->ln();
+$pdf->renderText('Apreciado señor(a)  ${nombreempleado}');
+$pdf->ln();
+$pdf->renderText('Por medio de la presente le informamos que damos por terminado el contrato de Trabajo por obra y/o labor, suscrito el día ${diainicio} de ${mesinicioletra} del ${anioinicio} como trabajador en misión de la empresa ${empresasecundaria}  como último día laborado el día ${diarenuncia} de ${mesrenuncia} del ${aniorenuncia} de acuerdo al artículo 61 del Código Sustantivo del trabajo numeral 1 literal D, modificado por la Ley 50 de 1990 artículo 5, modificado por el artículo 6 del Decreto ley 2351 de 1965.');
+$pdf->ln();
+$pdf->renderText('De igual forma, nos permitimos indicar que el pago de las acreencias laborales será consignado a su cuenta bancaria en la cual se ha venido realizando la cancelación del salario de forma habitual durante la relación laboral. Por otra parte, se le informa que tendrá un término de cinco (5) días, con posterioridad a su desvinculación, para la realización de su examen médico de egreso.');
+$pdf->ln();
+$pdf->renderText('Le agradecemos la obra y la labor desempeñada y le deseamos éxitos en sus futuras actividades.');
+$pdf->ln();
+$pdf->renderText('Cordialmente,');
+//$pdf->renderSubTitle('Ejemplo básico');
+//$pdf->renderText('Como ejemplo básico crearemos un documento PDF en donde sólo imprimiremos un texto:');
+$pdf->Image('FirmaTerminacion.png', null, null, 100);
+// output file
+$pdf->Output(F, 'fpdf-advanced.pdf');
+*/
+$pdf2 = new KodePDF();
+$pdf2->SetMargins(20.175, 0, 15.175, 0);
+$pdf2->AddPage();
+
+// config document
+$pdf2->SetTitle('Documento Human');
+$pdf2->SetAuthor('Omar Bonilla');
+
+$pdf2->SetCreator('FPDF Maker');
+
+// add title
+$pdf2->ln(40);
+$pdf2->renderText('Bogotá D.C, ${dia} de ${mes} del ${anio}');
+$pdf2->ln();
+$pdf2->renderSubTitle('Señor(a)');
+$pdf2->renderSubTitle('${nombreempleado}');
+$pdf2->renderSubTitle('Cedula: ${cedula}');
+$pdf2->renderText('${empresageneral}.');
+$pdf2->renderText('CONTRATO: ${contrato}.');
+$pdf2->ln();
+$pdf2->renderText('Respetado señor (a): ${nombreempleado}');
+$pdf2->ln();
+$pdf2->renderText('Por medio del presente escrito, me permito comunicarle que de conformidad con la carta recibida el ${diarecibido} de ${mesrecibido} del ${aniorecibido}, ha sido aceptada su renuncia, en donde se afirma que su último día laborado es el día ${diarenuncia} de ${mesrenuncia} del  ${aniorenuncia}.');
+$pdf2->ln();
+$pdf2->renderText('Acorde con lo anterior, está a su disposición la liquidación de sus prestaciones sociales y la orden para el examen médico de retiro.');
+$pdf2->ln();
+$pdf2->renderText('Le deseamos éxito en sus actividades futuras.');
+$pdf2->ln();
+$pdf2->renderText('Cordialmente,');
+//$pdf->renderSubTitle('Ejemplo básico');
+//$pdf->renderText('Como ejemplo básico crearemos un documento PDF en donde sólo imprimiremos un texto:');
+$pdf2->Image('FirmaTerminacion.png', null, null, 100);
+// output file
+$pdf2->Output(F, 'fpdf-advanced2.pdf');
+echo '<a href="fpdf-advanced2.pdf">a</a>';
                 break;
                 
                 case "ordenmedica":

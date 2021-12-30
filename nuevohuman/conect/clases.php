@@ -1262,9 +1262,13 @@ public function obteneMisRes($ide=0,$mis=""){
     return $consultas;
 }
 
-public function obtenerdatacontratacion(){
+public function obtenerdatacontratacion($res = ""){
+    $where = "";
+    if($res!=""){
+        $where = "AND fechaarl!='' AND fechaeps!='' AND fechacompensa !='' AND fechafondo!='' ";
+    }
     $conn = $this->conec();
-    $consultas = "select req_candidatos.id as idcand,centrocostos.empresausuaria as nombreempresausu,empresasterporales.nombretemporal,req.*, req_candidatos.* from req INNER join empresasterporales on empresasterporales.id_temporal=req.empresaclientet inner JOIN centrocostos on centrocostos.id_centro=req.empresacliente and centrocostos.id_empresapres=empresasterporales.id_temporal inner join req_candidatos on req_candidatos.id_requisision=req.id and req_candidatos.ordeningreso!='' where 1=1 ORDER BY req.id DESC ";
+    $consultas = "select req_candidatos.id as idcand,centrocostos.empresausuaria as nombreempresausu,empresasterporales.nombretemporal,req.*, req_candidatos.* from req INNER join empresasterporales on empresasterporales.id_temporal=req.empresaclientet inner JOIN centrocostos on centrocostos.id_centro=req.empresacliente and centrocostos.id_empresapres=empresasterporales.id_temporal inner join req_candidatos on req_candidatos.id_requisision=req.id and req_candidatos.ordeningreso!='' where 1=1 $where ORDER BY req.id DESC ";
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;
 }
