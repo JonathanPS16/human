@@ -601,7 +601,32 @@
                         </script>";
                 break;
                 case "guardarenviar":
+                    require('vistas/fpdf.php');
+                    class KodePDF extends FPDF {
+                        protected $fontName = 'Arial';
                     
+                        function renderTitle($text) {
+                            $this->SetTextColor(0, 0, 0);
+                            $this->SetFont($this->fontName, 'B', 12);
+                            $this->Cell(0, 7, utf8_decode($text), 0, 1, C);
+                        }
+                        function Header()
+                        {
+                            $this->Image('CABECERA.png',0,0,210);
+                            // Line break
+                            $this->Ln(20);
+                        }
+                    
+                        function renderSubTitle($text) {
+                            $this->SetFont($this->fontName, 'B', 12);
+                            $this->Cell(0, 7, utf8_decode($text), 0, 1);
+                        }
+                    
+                        function renderText($text) {
+                            $this->SetFont($this->fontName, '', 12);
+                            $this->MultiCell(0, 7, utf8_decode($text), 0, 1);
+                        }
+                    }
                     $correo = $_POST['correo'];
                     $id = $_POST['id'];
                     $datosdia = array(
@@ -618,40 +643,84 @@
                         "11"=>"Noviembre",
                         "12"=>"Diciembre"
                     );
-                    require_once 'vendor/autoload.php';
-                    $docdocumen = "carta".$id.rand(1,20)."".date('Ymds').".docx";
-                    $phpWord2 = new \PhpOffice\PhpWord\PhpWord();
-                    if($_POST['motivo']=="terminacion"){
-                        $templateProcessor2 = new \PhpOffice\PhpWord\TemplateProcessor('plantillas/terminacioncontrato.docx');
-                    } else {
-                        $templateProcessor2 = new \PhpOffice\PhpWord\TemplateProcessor('plantillas/aceptacionrenuncia.docx');
-                    
-                    }
+                    $docdocumen = "carta".$id.rand(1,20)."".date('Ymds').".pdf";
                     $fechareg =  explode("-",substr($_POST['fechasoli'], 0, 10));
-                    
                     $fecharegi =  explode("/",$_POST['fechai']);
-
                     $fecharegire =  explode("-",$_POST['renuncia']);
+                    if($_POST['motivo']=="terminacion"){
+                        // create document
+                        $pdf = new KodePDF();
+                        $pdf->SetMargins(20.175, 0, 15.175, 0);
+                        $pdf->AddPage();
 
-                    $templateProcessor2->setValue('dia', date("d"));
-                    $templateProcessor2->setValue('mes', $datosdia[date("m")]);
-                    $templateProcessor2->setValue('anio', date("Y"));
-                    $templateProcessor2->setValue('nombreempleado', $_POST['ne']);
-                    $templateProcessor2->setValue('cedula', $_POST['cedula']);
-                    $templateProcessor2->setValue('empresageneral', $_POST['nombretemporal']);
-                    $templateProcessor2->setValue('contrato', $_POST['contrato']);
-                    $templateProcessor2->setValue('diarecibido', $fechareg[2]);
-                    $templateProcessor2->setValue('mesrecibido', $datosdia[$fechareg[1]]);
-                    $templateProcessor2->setValue('aniorecibido', $fechareg[0]);
-                    $templateProcessor2->setValue('diarenuncia', $fecharegire[2]);
-                    $templateProcessor2->setValue('mesrenuncia', $datosdia[$fecharegire[1]]);
-                    $templateProcessor2->setValue('aniorenuncia', $fecharegire[0]);
-                    $templateProcessor2->setValue('diainicio', $fecharegi[0]);
-                    $templateProcessor2->setValue('mesinicio', $fecharegi[1]);
-                    $templateProcessor2->setValue('mesinicioletra', $datosdia[$fecharegi[1]]);
-                    $templateProcessor2->setValue('anioinicio', $fecharegi[2]);
-                    $templateProcessor2->setValue('empresasecundaria', $_POST['empresausuaria']);
-                    $templateProcessor2->saveAs('archivosgenerales/'.$docdocumen);
+                        // config document
+                        $pdf->SetTitle('Documento Human');
+                        $pdf->SetAuthor('Omar Bonilla');
+
+                        $pdf->SetCreator('FPDF Maker');
+
+                        // add title
+                        $pdf->renderTitle('TERMINACIÓN DE');
+                        $pdf->renderTitle('CONTRATO POR OBRA Y/O');
+                        $pdf->renderTitle(' LABOR');
+                        $pdf->ln();
+                        $pdf->ln();
+                        $pdf->renderText('Bogotá D.C, '.date("d").' de '.$datosdia[date("m")].' del '.date("Y"));
+                        $pdf->ln();
+                        $pdf->renderSubTitle('SEÑOR(A)');
+                        $pdf->renderSubTitle($_POST['ne']);
+                        $pdf->renderText('Cedula: '.$_POST['cedula']);
+                        $pdf->renderText($_POST['nombretemporal']);
+                        $pdf->ln();
+                        $pdf->renderText('Apreciado señor(a) '.$_POST['ne']);
+                        $pdf->ln();
+                        $pdf->renderText('Por medio de la presente le informamos que damos por terminado el contrato de Trabajo por obra y/o labor, suscrito el día '.$fecharegi[0].' de '.$datosdia[$fecharegi[1]].' del '.$fecharegi[2].' como trabajador en misión de la empresa '.$_POST['empresausuaria'].'  como último día laborado el día '.$fecharegire[2].' de '.$datosdia[$fecharegire[1]].' del '.$fecharegire[0].' de acuerdo al artículo 61 del Código Sustantivo del trabajo numeral 1 literal D, modificado por la Ley 50 de 1990 artículo 5, modificado por el artículo 6 del Decreto ley 2351 de 1965.');
+                        $pdf->ln();
+                        $pdf->renderText('De igual forma, nos permitimos indicar que el pago de las acreencias laborales será consignado a su cuenta bancaria en la cual se ha venido realizando la cancelación del salario de forma habitual durante la relación laboral. Por otra parte, se le informa que tendrá un término de cinco (5) días, con posterioridad a su desvinculación, para la realización de su examen médico de egreso.');
+                        $pdf->ln();
+                        $pdf->renderText('Le agradecemos la obra y la labor desempeñada y le deseamos éxitos en sus futuras actividades.');
+                        $pdf->ln();
+                        $pdf->renderText('Cordialmente,');
+                        //$pdf->renderSubTitle('Ejemplo básico');
+                        //$pdf->renderText('Como ejemplo básico crearemos un documento PDF en donde sólo imprimiremos un texto:');
+                        $pdf->Image('FirmaTerminacion.png', null, null, 100);
+                        $pdf->Output(F, 'archivosgenerales/'.$docdocumen);
+                    } else {
+                        $pdf2 = new KodePDF();
+                        $pdf2->SetMargins(20.175, 0, 15.175, 0);
+                        $pdf2->AddPage();
+
+                        // config document
+                        $pdf2->SetTitle('Documento Human');
+                        $pdf2->SetAuthor('Omar Bonilla');
+
+                        $pdf2->SetCreator('FPDF Maker');
+
+                        // add title
+                        $pdf2->ln(40);
+                        $pdf2->renderText('Bogotá D.C, '.date("d").' de '.$datosdia[date("m")].' del '.date("Y"));
+                        $pdf2->ln();
+                        $pdf2->renderSubTitle('Señor(a)');
+                        $pdf2->renderSubTitle($_POST['ne']);
+                        $pdf2->renderSubTitle('Cedula: '.$_POST['cedula']);
+                        $pdf2->renderText($_POST['nombretemporal']);
+                        $pdf2->renderText('CONTRATO: '.$_POST['contrato']);
+                        $pdf2->ln();
+                        $pdf2->renderText('Respetado señor (a): '.$_POST['ne']);
+                        $pdf2->ln();
+                        $pdf2->renderText('Por medio del presente escrito, me permito comunicarle que de conformidad con la carta recibida el '.$fechareg[2].' de '.$datosdia[$fechareg[1]].' del '.$fechareg[0].', ha sido aceptada su renuncia, en donde se afirma que su último día laborado es el día '.$fecharegire[2].' de '.$datosdia[$fecharegire[1]].' del  '.$fecharegire[0].'.');
+                        $pdf2->ln();
+                        $pdf2->renderText('Acorde con lo anterior, está a su disposición la liquidación de sus prestaciones sociales y la orden para el examen médico de retiro.');
+                        $pdf2->ln();
+                        $pdf2->renderText('Le deseamos éxito en sus actividades futuras.');
+                        $pdf2->ln();
+                        $pdf2->renderText('Cordialmente,');
+                        //$pdf->renderSubTitle('Ejemplo básico');
+                        //$pdf->renderText('Como ejemplo básico crearemos un documento PDF en donde sólo imprimiremos un texto:');
+                        $pdf2->Image('FirmaTerminacion.png', null, null, 100);
+                        // output file
+                        $pdf2->Output(F, 'archivosgenerales/'.$docdocumen);
+                    }
                     $correo = $_POST['correo'];
                     $id = $_POST['id'];
                     $correoenvio = "";
@@ -669,7 +738,6 @@
                     echo "<script>alert('Retiro Cargado Correctamente');
                         window.location.href = 'home.php?ctr=retiro&acc=listaretiros';
                         </script>";
-                    
                 break;
 
                 case "guardarenviarCP":
@@ -1853,6 +1921,26 @@
                     $listatemporalesa=$objconsulta->obteneTemporalesform();
                     include('vistas/archivosmasivos.php');
                 break;
+
+                case "contrataciondirecta":
+                    $datoempre = "Human";
+                    $listatemporales=$objconsulta->obteneTemporales($datoempre);                   
+                    $listausuariosgenerales=$objconsulta->listadousuariosper();
+                    $listatemporalesusuarias=$objconsulta->obteneTemporalesUsarias($datoempre);
+                    /*$id = 0;
+                    $mireq=array();
+                    $ide=$_GET['id'];
+                    $datoempre = "Human";
+                    $listatemporales=$objconsulta->obteneTemporales($datoempre);
+                    $listatemporalesusuarias=$objconsulta->obteneTemporalesUsarias($datoempre);
+                    if($ide>0){
+                        $id=$_GET['id'];
+                        $mireq=$objconsulta->obteneRes($id);
+                        
+                    }*/
+                    include('vistas/requedirectamasivo.php');
+                break;
+
                 case "retiros":
                     $tipo = $_GET['tp'];
                     $listatemporalesa=$objconsulta->obteneTemporalesform();
@@ -1892,6 +1980,9 @@
                     }</script>";
                     echo "<script>function volvercaregac(){
                         window.location.href = 'home.php?ctr=carguemasivo&acc=retiros&tp=".$_POST['valor']."';
+                    }</script>";
+                    echo "<script>function volvercaregacdirect(){
+                        window.location.href = 'home.php?ctr=carguemasivo&acc=contrataciondirecta';
                     }</script>";
                     $archivofail = "logscargue/".$nombre_archivo."_LOG.txt";
                     $file = fopen($archivofail, "w+");
@@ -2131,6 +2222,59 @@
                         }
                     }
 
+                    if($_POST['valor'] == 5) {
+                        $sql = "-";
+                        $creado=0;
+                        for ($row = 2; $row <= $highestRow; $row++){ 
+                            $num++;
+                            $nombre  = str_replace("'","",$sheet->getCell("A".$row)->getValue());
+                            $cedula  = str_replace("'","",$sheet->getCell("B".$row)->getValue());
+                            $numerocontacto  = str_replace("'","",$sheet->getCell("C".$row)->getValue());
+                            $fechaingreso  = str_replace("'","",$sheet->getCell("D".$row)->getValue());
+                            $fechaingreso = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fechaingreso));
+                            $fechaingreso = date("Y-m-d",strtotime($fechaingreso."+ 1 days"));
+                            $correo  = str_replace("'","",$sheet->getCell("E".$row)->getValue());
+                            $cargo  = str_replace("'","",$sheet->getCell("F".$row)->getValue());
+                            $salario  = str_replace("'","",$sheet->getCell("G".$row)->getValue());
+                            $tasaarl  = str_replace("'","",$sheet->getCell("H".$row)->getValue());
+                            $jornadalaboral  = str_replace("'","",$sheet->getCell("I".$row)->getValue());
+                            $ciudadlaboral  = str_replace("'","",$sheet->getCell("J".$row)->getValue());
+                            $presentarsea  = str_replace("'","",$sheet->getCell("K".$row)->getValue());
+                            $centrocostosor  = str_replace("'","",$sheet->getCell("L".$row)->getValue());
+                            $centrosucursal  = str_replace("'","",$sheet->getCell("M".$row)->getValue());
+                            $funcionarioaut  = str_replace("'","",$sheet->getCell("N".$row)->getValue());
+                            $cargofuncionarioaut  = str_replace("'","",$sheet->getCell("O".$row)->getValue());
+                            $opbservacioncontratacion  = str_replace("'","",$sheet->getCell("P".$row)->getValue());
+                            $funcionarioautorizath  = str_replace("'","",$sheet->getCell("Q".$row)->getValue());
+                            $cargofuncionarioth  = str_replace("'","",$sheet->getCell("R".$row)->getValue());
+                            $fechaautoriza  = str_replace("'","",$sheet->getCell("S".$row)->getValue());
+                            $fechaautoriza = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fechaautoriza));
+                            $fechaautoriza = date("Y-m-d",strtotime($fechaautoriza."+ 1 days"));
+
+                            if($cedula!=""){
+
+                                $registry = $_POST['registry'];
+                                $empresaclientet = $_POST['empresaclientet'];
+                                $empresacliente = $_POST['empresacliente'];
+                                $nombre_archivo = "";
+                                $objconsulta->guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingreso,$correo,$cargo,$salario,$tasaarl,$jornadalaboral,$ciudadlaboral,$presentarsea,$nombre_archivo,
+                                $empresacliente,$empresaclientet,$centrocostosor,$centrosucursal,$funcionarioaut,$cargofuncionarioaut,$opbservacioncontratacion,
+                                $funcionarioautorizath,$cargofuncionarioth,$fechaautoriza,$firmaautoriza,$registry);        
+                                $creado++;                                   
+                            } else {
+                                fwrite($file, "EN LA LINEA ". $num." = Documento ". $cedula." No Relacionado" . PHP_EOL);
+                            }
+                            
+                            
+                            
+
+                            
+
+                            
+                            
+                        }
+                    }
+
                     $sql = substr($sql, 0, -1);
 
 
@@ -2143,6 +2287,9 @@
                         $creado = 0;
                         echo '<center><a href="'.$archivofail.'" target="_black">Descargar Archivo Errores</a><br><br><button name="fff" type="button" onclick="volvercaregac()" class="btn btn-primary">Terminar</button></center>';
                        
+                    } else if($_POST['valor'] == 5){
+                        $creado = 0;
+                        echo '<center><a href="'.$archivofail.'" target="_black">Descargar Archivo Errores</a><br><br><button name="fff" type="button" onclick="volvercaregacdirect()" class="btn btn-primary">Terminar</button></center>';
                     } else {
                         echo '<button name="fff" type="button" onclick="volvercarega()" class="btn btn-primary">Terminar</button></center>';
                     }
