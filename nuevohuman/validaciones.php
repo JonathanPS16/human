@@ -647,6 +647,8 @@
                     $fechareg =  explode("-",substr($_POST['fechasoli'], 0, 10));
                     $fecharegi =  explode("/",$_POST['fechai']);
                     $fecharegire =  explode("-",$_POST['renuncia']);
+
+                    
                     if($_POST['motivo']=="terminacion"){
                         // create document
                         $pdf = new KodePDF();
@@ -687,7 +689,7 @@
                         $pdf->Output(F, 'archivosgenerales/'.$docdocumen);
                     } else {
                         $pdf2 = new KodePDF();
-                        $pdf2->SetMargins(20.175, 0, 15.175, 0);
+                        $pdf2->SetMargins(25.175, 0, 18.175, 0);
                         $pdf2->AddPage();
 
                         // config document
@@ -2172,9 +2174,12 @@
                             $num++;
                             $cedula  = str_replace("'","",$sheet->getCell("A".$row)->getValue());
                             $motivo  = str_replace("'","",$sheet->getCell("B".$row)->getValue());
+                            $motivo = "terminacion";
                             $fecharetiro  = str_replace("'","",$sheet->getCell("C".$row)->getValue());
                             $fecharetiro = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fecharetiro));
                             $fecharetiro = date("Y-m-d",strtotime($fecharetiro."+ 1 days"));
+                            //echo $sheet->getCell("C".$row)->getValue()."<br>";
+                            //die($fecharetiro);
                             $fechanotificacion  = str_replace("'","",$sheet->getCell("D".$row)->getValue());
 
                             $fechanotificacion = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fechanotificacion));
