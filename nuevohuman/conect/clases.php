@@ -147,7 +147,7 @@ public function menulateral(){
     $perfil = $_SESSION['id_perfil'];
     $conn = $this->conec();
     $dato=array();
-    $consultas= $conn->Execute("SELECT * from menus where padre=0")-> getRows();
+    $consultas= $conn->Execute("SELECT * from menus where padre=0 order by ordenamiento asc")-> getRows();
     foreach ($consultas as $key => $arreglo) { 
         $menu        = $arreglo["menu"];
         $id        = $arreglo["id"];
@@ -613,7 +613,7 @@ public function valdiaryguardareditar($llave,$correo,$pefil,$centrocostos){
 
 public function selectmenus(){
     $conn = $this->conec();
-    $consultas = "SELECT * FROM menus where padre !=0";
+    $consultas = "SELECT *,(select ordenamiento from menus a where a.id=menus.padre) as b FROM menus where padre !=0 order by b,ordenamiento ASC";
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     
