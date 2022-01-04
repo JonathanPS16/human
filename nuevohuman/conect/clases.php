@@ -555,7 +555,7 @@ public function guardarperfiles($insert,$id){
     $SQL ="delete from relmenuper WHERE id_perfil=".$id;
     $conn->Execute($SQL);
     $consultas = "INSERT INTO relmenuper (id_perfil,id_menu) VALUES $insert";
-    $consultas= $conn->Execute($consultas)-> getRows();
+    $consultas= $conn->Execute($consultas);
     return $consultas;
 }
 
