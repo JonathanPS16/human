@@ -791,7 +791,7 @@ public function listadeempresassuarias($id){
 public function guardarempresaprestadora($nombre,$descipcion){
     $conn = $this->conec();
     $consultas = "INSERT INTO empresasterporales (nombretemporal,descripcion) values ('$nombre','$descipcion')";
-    $consultas= $conn->Execute($consultas)-> getRows();
+    $consultas= $conn->Execute($consultas);
     return $consultas;
 }
 
