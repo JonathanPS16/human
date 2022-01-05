@@ -798,9 +798,9 @@ public function guardarempresaprestadora($nombre,$descipcion){
 public function guardarempresacentrocostos($nombre,$empresa,$descipcion,$codigo,$nit){
     $conn = $this->conec();
     $consultas = "INSERT INTO centrocostos (nit,centrocosto,empresausuaria,id_empresapres,descripcion) values ('$nit','$codigo','$nombre',$empresa,'$descipcion')";
-    $consultas= $conn->Execute($consultas)-> getRows();
+    $consultas= $conn->Execute($consultas);
     $consultas = "update usuarios set centrocostos = (SELECT GROUP_CONCAT(centrocostos.id_centro) FROM centrocostos) where idrol in(1,2,3,4,5,6,9)";
-    $consultas= $conn->Execute($consultas)-> getRows();
+    $consultas= $conn->Execute($consultas);
     
     return $consultas;
 }
