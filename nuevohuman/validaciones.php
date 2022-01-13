@@ -561,7 +561,7 @@
 
                     $valida = $_POST['archivoexiste'];
                     $validacarga = "no";
-                    $sl = "update renuncias set cambiopagoadci ='".$_POST['cambiopagoadci']."',fechaentregacarpeta  ='".$_POST['fechaentregacarpeta']."', 
+                    $sl = "update renuncias set cambiopagoadci ='',fechaentregacarpeta  ='".$_POST['fechaentregacarpeta']."', 
                     pazysalvoconsol='".$_POST['pazysalvoconsol']."',recibocarpeta='".$_POST['recibocarpeta']."' ,checkpazysalvo ='".$_POST['checkpazysalvo']."',
                     referliquidacion ='".$_POST['referliquidacion']."',envioliquiempleado  ='".$_POST['envioliquiempleado']."',fechapagoliqui  ='".$_POST['fechapagoliqui']."' ";
                     $archivouno = "";

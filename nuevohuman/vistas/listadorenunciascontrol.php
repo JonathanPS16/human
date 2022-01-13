@@ -16,7 +16,6 @@ $label = "Control de Retiros";
 			<th>Fecha Retiro</th>
 			<th>Celular</th>
 			<th>Correo</th>
-			<th>Cambio Pago Adci </th>
 			<th>Entrega Carpeta</th>
 			<th>Paz y Salvo</th>
 			<th>Check Recibo Carpeta</th>
@@ -143,12 +142,6 @@ if($listatemporales[$i]['archivoliquidacion']!=""){
       <div class="modal-body">
         <form class="form-horizontal" action="home.php?ctr=retiro&acc=guardarconsolidado" method="post" enctype="multipart/form-data">
 		<fieldset>
-		<div class="form-group row">
-    <label for="cambiopagoadci" class="col-4 col-form-label">Cambio Pago en Adci</label> 
-    <div class="col-8">
-      <input id="cambiopagoadci" name="cambiopagoadci" type="date" class="form-control" value="'.$listatemporales[$i]['cambiopagoadci'].'">
-    </div>
-  </div>
   <div class="form-group row">
     <label for="fechaentregacarpeta" class="col-4 col-form-label">Fecha Entrega Carpeta</label> 
     <div class="col-8">
@@ -237,7 +230,6 @@ if($listatemporales[$i]['fechapagoliqui']!=""){
 			<td>".$fecharetiro."</td>
 			<td>".$listatemporales[$i]['celularempleado']."</td>
 			<td>".$listatemporales[$i]['correoempleado']."</td>
-			<td>".$listatemporales[$i]['cambiopagoadci']."</td>
 			<td>".$listatemporales[$i]['fechaentregacarpeta']."</td>
 			<td>".$listatemporales[$i]['pazysalvoconsol']."</td>
 			<td>".$listatemporales[$i]['recibocarpeta']."</td>
