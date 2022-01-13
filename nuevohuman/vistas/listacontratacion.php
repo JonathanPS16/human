@@ -270,9 +270,6 @@ $contratocode = '<div class="form-group row">
 </div>
 </div>';
 
-if($listatemporales[$i]['contratocontratacion']!="No Aplica"){
-  $contratocode = "";
-}
 
 
 $archivoarlcode = '<div class="form-group row">
@@ -282,9 +279,7 @@ $archivoarlcode = '<div class="form-group row">
 </div>
 </div>';
 
-if($listatemporales[$i]['archivoarl']!="No Aplica"){
-  $archivoarlcode = "";
-}
+
 
 
 $archivoepscode = '<div class="form-group row">
@@ -305,9 +300,6 @@ $archivocompensacode = '<div class="form-group row">
 </div>
 </div>';
 
-if($listatemporales[$i]['archivocompensa']!="No Aplica"){
-  $archivocompensacode = "";
-}
 
 
 $archivofondocode = '<div class="form-group row">
@@ -317,9 +309,6 @@ $archivofondocode = '<div class="form-group row">
 </div>
 </div>';
 
-if($listatemporales[$i]['archivofondo']!="No Aplica"){
-  $archivofondocode = "";
-}
 
 
 $archivobenecode = '<div class="form-group row">
@@ -329,9 +318,7 @@ $archivobenecode = '<div class="form-group row">
 </div>
 </div>';
 
-if($nobene=='S'){
-  $archivobenecode = "";
-}
+
 
 
 $fechaarlcode = '<div class="form-group row">
