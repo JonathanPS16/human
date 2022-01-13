@@ -2342,6 +2342,11 @@
                     
                     include('vistas/listacontratacion.php');
                 break;
+                case "gestioncontratacionmis":
+                    $listatemporales=$objconsulta->obtenerdatacontratacion();
+                    
+                    include('vistas/listacontratacionmis.php');
+                break;
 
                 case "gestioncontratacioncheck":
                     $listatemporales=$objconsulta->obtenerdatacontratacion("restr");
