@@ -3026,20 +3026,7 @@ public function enviarCorreoReq($ide,$req){
       Área de Selección<br>
       Human Talent SAS";
       //echo $mensaje;
-      $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
-      $consultas= $conn->Execute($consultas)-> getRows();
-      for($i= 0; $i<count($consultas); $i++) {
-        $correos = explode(",", $consultas[$i]['correosselecccion']);
-        for($j=0; $j<count($correos); $j++){
-            $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
-            $consultasresp= $conn->Execute($consultascorr)-> getRows();
-            if($consultasresp[0]['correo']!=""){
-                //echo "<br>HOLA=".$consultasresp[0]['correo'];
-                $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje, "Notificación Requisición");
-            }
     
-           }
-      }
 
       $this->enviarcorreoClienteGen($req,"NUEVAREQ");
 
