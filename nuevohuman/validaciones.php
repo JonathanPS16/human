@@ -222,6 +222,7 @@
                     $tipo=$_POST['tipo'];
                     $archivo="";
                     $nombre_archivo = date('YmdHms').$_FILES['archivo1']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo1']['type'];
                         $tamano_archivo = $_FILES['archivo1']['size'];
@@ -251,6 +252,7 @@
                     $razonllamado=$_POST['razonllamado'];
                     $tipo=$_POST['tipo'];
                     $nombre_archivo = date('YmdHms').$_FILES['archivo']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     $archivo="";
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo']['type'];
@@ -279,6 +281,7 @@
                     $entrevista= $_POST['entrevista'];
                     $archivodos ="";
                     $nombre_archivo = date('YmdHms').$_FILES['archivofirmado']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivofirmado']['type'];
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
@@ -362,6 +365,7 @@
 
                     $archivouno = "";
                     $nombre_archivo = date('YmdHms').$_FILES['archivo1']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo1']['type'];
                         $tamano_archivo = $_FILES['archivo1']['size'];
@@ -380,6 +384,7 @@
                     $archivodos = "";
 
                     $nombre_archivo = date('YmdHms').$_FILES['archivo2']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo2']['type'];
                         $tamano_archivo = $_FILES['archivo2']['size'];
@@ -397,6 +402,7 @@
                     }
                     $archivotres = "";
                     $nombre_archivo = date('YmdHms').$_FILES['archivo3']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo3']['type'];
                         $tamano_archivo = $_FILES['archivo3']['size'];
@@ -480,6 +486,7 @@
                     $mensajef = $_POST['menfinal'];
                     $archivouno = "";
                     $nombre_archivo = date('YmdHms').$_FILES['archivofirmado']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivofirmado']['type'];
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
@@ -529,6 +536,7 @@
                     $fechafinmedida = $_POST['fechafinmedida'];
                     $archivotres = "";
                     $nombre_archivo = date('Ymd').$_FILES['archivofirmado']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivofirmado']['type'];
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
@@ -567,6 +575,7 @@
                     $archivouno = "";
 
                     $nombre_archivo = date('YmdHms').$_FILES['archivoliquidacion']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     $filena =$valida;
                     if($_FILES['archivoliquidacion']['name']!="") {
                         $tipo_archivo = $_FILES['archivoliquidacion']['type'];
@@ -838,6 +847,7 @@
                 case "guardarsolicitud":
                     $archivouno = "";
                     $nombre_archivo = date('YmdHms').$_FILES['archivo1']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo1']['type'];
                         $tamano_archivo = $_FILES['archivo1']['size'];
@@ -856,6 +866,7 @@
                     $archivodos = "";
 
                     $nombre_archivo = date('YmdHms').$_FILES['archivo2']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo2']['type'];
                         $tamano_archivo = $_FILES['archivo2']['size'];
@@ -888,6 +899,7 @@
                 case "guardarincap":
                     $archivo = "";
                     $nombre_archivo = date('YmdHms').$_FILES['archivo']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo']['type'];
                         $tamano_archivo = $_FILES['archivo']['size'];
@@ -1004,6 +1016,7 @@
                     require_once 'PHPExcel/Classes/PHPExcel.php';
                     $archivouno = "";
                     $nombre_archivo = date('YmdHms').$_FILES['archivo']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     $tipo_archivo = $_FILES['archivo']['type'];
                     $tamano_archivo = $_FILES['archivo']['size'];
                     $mensaje = ""; 
@@ -1131,6 +1144,7 @@
                 case "guardartranscrip":
                     $archivouno="";
                     $nombre_archivo = date('YmdHms').$_FILES['archivoincapacidad']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivoincapacidad']['type'];
                         $tamano_archivo = $_FILES['archivoincapacidad']['size'];
@@ -1148,6 +1162,7 @@
                     }
                     $archivodos="";
                     $nombre_archivo = date('YmdHms').$_FILES['archivotranscri']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivotranscri']['type'];
                         $tamano_archivo = $_FILES['archivotranscri']['size'];
@@ -1192,6 +1207,7 @@
                 case "guardarcreit":
                     $archivodos = "";
                     $nombre_archivo = date('YmdHms').$_FILES['imagen']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['imagen']['type'];
                         $tamano_archivo = $_FILES['imagen']['size'];
@@ -1261,6 +1277,7 @@
 
                     $id =$_POST['id'];
                     $nombre_archivo = date('Ymd').$_FILES['archivo3']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo3']['type'];
                         $tamano_archivo = $_FILES['archivo3']['size'];
@@ -1382,6 +1399,7 @@
                     $correo = $_POST['correo'];
                     $archivotres = "";
                     $nombre_archivo = date('Ymd').$_FILES['archivofirmado']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivofirmado']['type'];
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
@@ -1810,6 +1828,7 @@
 
                     $id =$_POST['id'];
                     $nombre_archivo = date('Ymd').$_FILES['archivo3']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo3']['type'];
                         $tamano_archivo = $_FILES['archivo3']['size'];
@@ -1890,6 +1909,7 @@
                     $correo = $_POST['correo'];
                     $archivotres = "";
                     $nombre_archivo = date('Ymd').$_FILES['archivofirmado']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivofirmado']['type'];
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
@@ -1955,6 +1975,7 @@
                     require_once 'PHPExcel/Classes/PHPExcel.php';
                     $archivouno = "";
                     $nombre_archivo = date('YmdHms').$_FILES['archivo']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     $tipo_archivo = $_FILES['archivo']['type'];
                     $tamano_archivo = $_FILES['archivo']['size'];
                     $mensaje = "";    
@@ -2426,6 +2447,7 @@
 
                 case "savefirecta":
                     $nombre_archivo = date('Ymd').$_FILES['archivo']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     $tipo_archivo = $_FILES['archivo']['type'];
                     $tamano_archivo = $_FILES['archivo']['size'];
                     //compruebo si las características del archivo son las que deseo
@@ -2486,6 +2508,7 @@
                 break;
                 case "guardarPrueba":
                     $nombre_archivo = date('Ymd').$_FILES['filebutton']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     $tipo_archivo = $_FILES['filebutton']['type'];
                     $tamano_archivo = $_FILES['filebutton']['size'];
                     $mensaje = "";    
@@ -2534,6 +2557,7 @@
 
                     if ($_FILES['contrato']['tmp_name']!="") {
                         $nombre_archivo = date('Ymd').$_FILES['contrato']['name'];
+                        $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                         $tipo_archivo = $_FILES['contrato']['type'];
                         $tamano_archivo = $_FILES['contrato']['size'];
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -2546,6 +2570,7 @@
                     }
                     if ($_FILES['archivoarl']['tmp_name']!="") {
                         $nombre_archivo = date('Ymd').$_FILES['archivoarl']['name'];
+                        $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                         $tipo_archivo = $_FILES['archivoarl']['type'];
                         $tamano_archivo = $_FILES['archivoarl']['size'];
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -2558,6 +2583,7 @@
 
                     if ($_FILES['archivoeps']['tmp_name']!="") {
                         $nombre_archivo = date('Ymd').$_FILES['archivoeps']['name'];
+                        $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                         $tipo_archivo = $_FILES['archivoeps']['type'];
                         $tamano_archivo = $_FILES['archivoeps']['size'];
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -2570,6 +2596,7 @@
 
                     if ($_FILES['archivocompensa']['tmp_name']!="") {
                         $nombre_archivo = date('Ymd').$_FILES['archivocompensa']['name'];
+                        $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                         $tipo_archivo = $_FILES['archivocompensa']['type'];
                         $tamano_archivo = $_FILES['archivocompensa']['size'];
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -2582,6 +2609,7 @@
 
                     if ($_FILES['archivofondo']['tmp_name']!="") {
                         $nombre_archivo = date('Ymd').$_FILES['archivofondo']['name'];
+                        $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                         $tipo_archivo = $_FILES['archivofondo']['type'];
                         $tamano_archivo = $_FILES['archivofondo']['size'];
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -2594,12 +2622,14 @@
 
                     if ($_FILES['archivobenediciarios']['tmp_name']!="") {
                         $nombre_archivo = date('Ymd').$_FILES['archivobenediciarios']['name'];
+                        $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                         $tipo_archivo = $_FILES['archivobenediciarios']['type'];
                         $tamano_archivo = $_FILES['archivobenediciarios']['size'];
                         
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
 
                         }else{
+
                             if (move_uploaded_file($_FILES['archivobenediciarios']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
                                 $where.="archivobenediciarios='$nombre_archivo',"; 
                             }
@@ -2629,6 +2659,7 @@
 
                 case "guardarotro":
                     $nombre_archivo = "f".date('Ymd').$_FILES['filebutton']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     $tipo_archivo = $_FILES['filebutton']['type'];
                     $tamano_archivo = $_FILES['filebutton']['size'];
                     $mensaje = "";    
@@ -2657,6 +2688,7 @@
 
                 case "guardarhv":
                     $nombre_archivo = date('Ymd').$_FILES['filebutton']['name'];
+                    $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     $tipo_archivo = $_FILES['filebutton']['type'];
                     $tamano_archivo = $_FILES['filebutton']['size'];
                     $mensaje = "";    
