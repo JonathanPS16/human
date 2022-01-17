@@ -154,7 +154,7 @@ if($_GET['acc']=="formacla"){
 	</div>
 
   <div class="form-group row">
-    <label for="archivo1" class="col-4 col-form-label">Archivo</label> 
+    <label for="archivo1" class="col-4 col-form-label">Archivo  Max(2 Mb)</label> 
     <div class="col-8">
       <input id="archivo1" name="archivo1" type="file" class="form-control" required="required">
     </div>
@@ -204,7 +204,7 @@ if($_GET['acc']=="formacla"){
     </div>
   </div>
   <div class="form-group row">
-    <label for="archivo" class="col-4 col-form-label">Archivo Adjunto</label> 
+    <label for="archivo" class="col-4 col-form-label">Archivo Adjunto  Max(2 Mb)</label> 
     <div class="col-8">
       <input id="archivo" name="archivo" type="file" class="form-control" required="required">
     </div>
@@ -285,7 +285,7 @@ if($_GET['acc']=="formacla"){
     </div>
   </div> <br><br>
   <div class="form-group row">
-    <label class="col-4 col-form-label" for="archivofirmado">Adjuntar Documento</label> 
+    <label class="col-4 col-form-label" for="archivofirmado">Adjuntar Documento  Max(2 Mb)</label> 
     <div class="col-8">
       <div class="input-group">
         <div class="input-group-prepend">
@@ -342,7 +342,7 @@ if($_GET['acc']=="formacla"){
     <label class="col-4 col-form-label" for="archivofirmado">Archivo Firmado</label> 
     <div class="col-8">
       <div class="input-group">
-	  <p>En el archivo adjunto encontrará el modelo de la decision propuesta del proceso</p>
+	  <p>En el archivo adjunto encontrará el modelo de la decision propuesta del proceso  Max(2 Mb)</p>
         <div class="input-group-prepend">
           <div class="input-group-text">
             <i class="fa fa-cloud-upload"></i>
@@ -467,7 +467,7 @@ $(".custom-file-input").on("change", function() {
 			</div>
 		  </div> 
 		  <div class="form-group row">
-    <label class="col-4 col-form-label" for="archivofirmado">Archivo Firmado</label> 
+    <label class="col-4 col-form-label" for="archivofirmado">Archivo Firmado  Max(2 Mb)</label> 
     <div class="col-8">
       <div class="input-group">
         <div class="input-group-prepend">

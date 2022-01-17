@@ -276,17 +276,17 @@ if($listatemporales[0]['id_accidente']==""){
 
   <div class="custom-file">
     <input type="file" class="custom-file-input" id="archivo1" name="archivo1">
-    <label class="custom-file-label" for="archivo1"> Primer Archivo </label>
+    <label class="custom-file-label" for="archivo1"> Primer Archivo  Max(2 Mb)</label>
   </div>
 
   <div class="custom-file">
     <input type="file" class="custom-file-input" id="archivo2" name="archivo2">
-    <label class="custom-file-label" for="archivo2">Segundo Archivo</label>
+    <label class="custom-file-label" for="archivo2">Segundo Archivo  Max(2 Mb)</label>
   </div>
 
   <div class="custom-file">
     <input type="file" class="custom-file-input" id="archivo3" name="archivo3">
-    <label class="custom-file-label" for="archivo3">Tercer Archivo</label>
+    <label class="custom-file-label" for="archivo3">Tercer Archivo  Max(2 Mb)</label>
   </div>
   <div class="form-group row">
     <div class="offset-4 col-8">

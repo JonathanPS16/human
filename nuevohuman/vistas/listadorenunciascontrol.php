@@ -109,7 +109,7 @@ if($listatemporales[$i]['archivoliquidacion']!=""){
 	if($listatemporales[$i]['archivoliquidacion']==""){
 
 		$file = '<div class="form-group row">
-		<label for="envioliquiempleado" class="col-4 col-form-label">Adjuntar Archio Liquidación</label> 
+		<label for="envioliquiempleado" class="col-4 col-form-label">Adjuntar Archio Liquidación  Max(2 Mb)</label> 
 		<div class="col-8">
 		  <input id="archivoliquidacion" name="archivoliquidacion" type="file" class="form-control">
 		</div>

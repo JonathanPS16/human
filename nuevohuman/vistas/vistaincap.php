@@ -66,7 +66,7 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="archivo" class="col-4 col-form-label">Archivo</label> 
+    <label for="archivo" class="col-4 col-form-label">Archivo  Max(2 Mb)</label> 
     <div class="col-8">
       <input id="archivo" name="archivo" placeholder="Archivo" type="file" class="form-control" required="required">
     </div>

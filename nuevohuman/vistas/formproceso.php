@@ -196,21 +196,21 @@ for($a=0; $a<count($listausuariosgenerales);$a++){
   </div> 
 
   <div class="form-group row">
-    <label for="text" class="col-4 col-form-label">Primer Archivo</label> 
+    <label for="text" class="col-4 col-form-label">Primer Archivo  Max(2 Mb)</label> 
     <div class="col-8">
     <input type="file" class="form-control" id="archivo1" name="archivo1">
     </div>
   </div>
 
   <div class="form-group row">
-    <label for="text" class="col-4 col-form-label">Segundo Archivo</label> 
+    <label for="text" class="col-4 col-form-label">Segundo Archivo  Max(2 Mb)</label> 
     <div class="col-8">
     <input type="file" class="form-control" id="archivo2" name="archivo2">
     </div>
   </div>
 
   <div class="form-group row">
-    <label for="text" class="col-4 col-form-label">Tercer Archivo</label> 
+    <label for="text" class="col-4 col-form-label">Tercer Archivo  Max(2 Mb)</label> 
     <div class="col-8">
     <input type="file" class="form-control" id="archivo3" name="archivo3">
     </div>

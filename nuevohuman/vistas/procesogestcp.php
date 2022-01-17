@@ -141,7 +141,7 @@
 	</div>
   
 	<div class="form-group row">
-	  <label for="archivo1" class="col-4 col-form-label">Archivo</label> 
+	  <label for="archivo1" class="col-4 col-form-label">Archivo  Max(2 Mb)</label> 
 	  <div class="col-8">
 		<input id="archivo1" name="archivo1" type="file" class="form-control" required="required">
 	  </div>
@@ -222,7 +222,7 @@
   </div> 
 
   <div class="form-group row">
-    <label for="archivo1" class="col-4 col-form-label">Archivo</label> 
+    <label for="archivo1" class="col-4 col-form-label">Archivo  Max(2 Mb)</label> 
     <div class="col-8">
       <input id="archivo1" name="archivo1" type="file" class="form-control" required="required">
     </div>
@@ -270,7 +270,7 @@ $solicitarexpl = "";
 </div>
 </div>
 <div class="form-group row">
-<label for="archivo" class="col-4 col-form-label">Archivo Adjunto</label> 
+<label for="archivo" class="col-4 col-form-label">Archivo Adjunto  Max(2 Mb)</label> 
 <div class="col-8">
  <input id="archivo" name="archivo" type="file" class="form-control" >
 </div>
@@ -318,7 +318,7 @@ $solicitarexpl = "";
     </div>
   </div>
   <div class="form-group row">
-    <label for="archivo" class="col-4 col-form-label">Archivo Adjunto</label> 
+    <label for="archivo" class="col-4 col-form-label">Archivo Adjunto  Max(2 Mb)</label> 
     <div class="col-8">
       <input id="archivo" name="archivo" type="file" class="form-control" >
     </div>
@@ -400,7 +400,7 @@ $solicitarexpl = "";
   </div> <br><br>
   <div class="custom-file">
     <input type="file" class="custom-file-input" id="archivofirmado" name="archivofirmado" required="required">
-    <label class="custom-file-label" for="archivo3">Adjuntar Documento</label>
+    <label class="custom-file-label" for="archivo3">Adjuntar Documento  Max(2 Mb)</label>
   </div><br><br>
   <div class="form-group row">
     <div class="offset-4 col-8">
@@ -456,7 +456,7 @@ $solicitarexpl = "";
   
   <div class="custom-file">
     <input type="file" class="custom-file-input" id="archivofirmado" name="archivofirmado" required="required">
-    <label class="custom-file-label" for="archivo3">Archivo Firmado</label>
+    <label class="custom-file-label" for="archivo3">Archivo Firmado  Max(2 Mb)</label>
   </div>
 <bt><br><br>
   <div class="form-group row">

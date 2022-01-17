@@ -229,7 +229,7 @@ for($a=0; $a<count($listausuariosgenerales);$a++){
   
 
   <div class="form-group row">
-    <label for="archivo" class="col-4 col-form-label">Hoja de Vida</label> 
+    <label for="archivo" class="col-4 col-form-label">Hoja de Vida  Max(2 Mb)</label> 
     <div class="col-8">
       <input id="archivo" name="archivo" placeholder="Hoja de Vida" type="file" class="form-control" required="required">
     </div>
