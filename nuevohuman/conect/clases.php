@@ -222,7 +222,7 @@ public function consultarempleadosreapretiros($numero){
      inner join centrocostos on centrocostos.centrocosto=certificados.centro_costos and certificados.id_empresapres=centrocostos.id_empresapres 
      inner join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres 
      where certificados.fecha_retiro ='' and certificados.cedula ='$numero' 
-     and (SELECT COUNT(*) from renuncias WHERE renuncias.cedula= certificados.cedula)=0";
+     and (SELECT COUNT(*) from renuncias WHERE renuncias.fecha_ingreso_cert=certificados.fecha_ingreso and renuncias.cedula= certificados.cedula and renuncias.visible='S')=0";
      //echo $consultas."<br>";
      $consultas= $conn->Execute($consultas)-> getRows();
      return $consultas;
@@ -236,6 +236,15 @@ public function consultarempleadosreapretiros($numero){
      $consultas= $conn->Execute($consultas)-> getRows();
      return $consultas;
  }
+
+ public function eliminarretiro($id){
+    
+    //$this->enviocorreo("quin", "Notificacion Cierre Retiro");
+    $conn = $this->conec();
+    $dato=array();
+    $consultas = "update renuncias set visible = 'N' WHERE id_renuncia =".$id;
+    $conn->Execute($consultas);
+}
 
 
 public function selectperfilesusuario(){
@@ -322,7 +331,7 @@ public function obtenerretiros($estado=""){
     $consultas = "SELECT id_renuncia,nombre,observaciones,motivo,paz,renuncia,fecharetiro,renuncias.cedula,estado,archivo,correo,empresausuaria,fechasolicitud,fecharetiro ,certificados.correoelectronico as correoregi from renuncias INNER join certificados on certificados.cedula=renuncias.cedula where renuncias.estado in ('T','C') ORDER BY `renuncias`.`id_renuncia` DESC ";
     $consultas = "SELECT id_renuncia,nombre,observaciones,motivo,paz,renuncia,fecharetiro,renuncias.cedula,estado,archivo,correo,empresausuaria,fechasolicitud,fecharetiro ,certificados.correoelectronico as correoregi,fechanotificacion from renuncias INNER join certificados on certificados.cedula=renuncias.cedula where renuncias.estado in ('T','C') ORDER BY `renuncias`.`id_renuncia` DESC ";
     $consultas = "SELECT id_renuncia,nombre,observaciones,motivo,paz,renuncia,fecharetiro,renuncias.cedula,estado,archivo,correo,empresausuaria,fechasolicitud,fecharetiro ,certificados.correoelectronico as correoregi,fechanotificacion, certificados.contrato,nombre_empleado as ne from renuncias INNER join certificados on certificados.cedula=renuncias.cedula where renuncias.estado in ('T','C') ORDER BY `renuncias`.`id_renuncia` DESC ";
-    $consultas = "SELECT (select count(*) from accidentes where accidentes.cedula=renuncias.cedula) as conteoaccientes,(select count(*) from incapacidadescargue where incapacidadescargue.cedula=renuncias.cedula) as conteoincapa,id_renuncia,nombre,observaciones,motivo,paz,renuncia,fecharetiro,renuncias.cedula,estado,archivo,correo,renuncias.centrocostos as nombretemporal,fechasolicitud,fecharetiro ,certificados.correoelectronico as correoregi,fechanotificacion, certificados.contrato,nombre_empleado as ne,certificados.fecha_ingreso as fi from renuncias INNER join certificados on certificados.cedula=renuncias.cedula where 1=1 $estado  ORDER BY `renuncias`.`id_renuncia` DESC ";
+    $consultas = "SELECT (select count(*) from accidentes where accidentes.cedula=renuncias.cedula) as conteoaccientes,(select count(*) from incapacidadescargue where incapacidadescargue.cedula=renuncias.cedula) as conteoincapa,id_renuncia,nombre,observaciones,motivo,paz,renuncia,fecharetiro,renuncias.cedula,estado,archivo,correo,renuncias.centrocostos as nombretemporal,fechasolicitud,fecharetiro ,certificados.correoelectronico as correoregi,fechanotificacion, certificados.contrato,nombre_empleado as ne,certificados.fecha_ingreso as fi ,visible from renuncias INNER join certificados on certificados.cedula=renuncias.cedula where 1=1 $estado  ORDER BY `renuncias`.`id_renuncia` DESC ";
     //$consultas = "SELECT (select count(*) from accidentes where accidentes.cedula=renuncias.cedula) as conteoaccientes,(select count(*) from incapacidadescargue where incapacidadescargue.cedula=renuncias.cedula) as conteoincapa,id_renuncia,nombre,observaciones,motivo,paz,renuncia,fecharetiro,renuncias.cedula,estado,archivo,correo,renuncias.centrocostos as empresausuaria,fechasolicitud,fecharetiro ,certificados.correoelectronico as correoregi,fechanotificacion, certificados.contrato,nombre_empleado as ne FROM centrocostos INNER join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres INNER JOIN certificados on certificados.id_empresapres= empresasterporales.id_temporal and certificados.centro_costos=centrocostos.centrocosto INNER JOIN renuncias on certificados.cedula=renuncias.cedula and renuncias.centrocostos = centrocostos.empresausuaria ";
     //$consultas = "select (select count(*) from accidentes where accidentes.cedula=renuncias.cedula) as conteoaccientes,(select count(*) from incapacidadescargue where incapacidadescargue.cedula=renuncias.cedula) as conteoincapa, renuncias.*,certificados.correoelectronico as correoregi,certificados.fecha_ingreso as fi,certificados.genero as gene,certificados.nombre_empleado as ne,certificados.contrato,certificados.nombrecargo,centrocostos.empresausuaria,empresasterporales.nombretemporal from renuncias inner join certificados on certificados.cedula=renuncias.cedula INNER JOIN empresasterporales on certificados.id_empresapres=empresasterporales.id_temporal INNER JOIN centrocostos on centrocostos.centrocosto=certificados.centro_costos and centrocostos.id_empresapres=empresasterporales.id_temporal where 1=1 AND renuncias.estado in ('T','C') order by id_renuncia DESC";
     //echo $consultas;
@@ -1366,13 +1375,6 @@ public function obtenerLaboratorios(){
       $conn = $this->conec();
       $dato=array();
       $where="";
-      if ($ide != 0) {
-        $where .=" and id_requisision= ".$ide;
-      } 
-      if($whereex!="")
-      {
-          $where .=" and ".$whereex;  
-      }
       $consultas = "SELECT * FROM laboratorios";
       //echo $consultas;
       $consultas= $conn->Execute($consultas)-> getRows();
@@ -1384,13 +1386,6 @@ public function obtenerLaboratorios(){
       $conn = $this->conec();
       $dato=array();
       $where="";
-      if ($ide != 0) {
-        $where .=" and id_requisision= ".$ide;
-      } 
-      if($whereex!="")
-      {
-          $where .=" and ".$whereex;  
-      }
       $consultas = "SELECT * FROM listaexamanesmedicos";
       //echo $consultas;
       $consultas= $conn->Execute($consultas)-> getRows();
@@ -1573,8 +1568,6 @@ public function cambiarperfilgene($usu,$perf){
     $conn = $this->conec();
     $sqlcaliTe = "UPDATE usuarios set idrol=$perf where id_usuario={$usu}";
     $conn->Execute($sqlcaliTe);
-    $SQL =$sql;
-    $conn->Execute($SQL);
 }
 
 public function cambiarclavept($perf,$usu,$per){
@@ -1594,8 +1587,6 @@ public function cambiarclavept($perf,$usu,$per){
 
     $sqlcaliTe = "UPDATE $tabla set $campo='{$perf}',restore =0 where $igual={$usu}";
     $conn->Execute($sqlcaliTe);
-    $SQL =$sql;
-    $conn->Execute($SQL);
 }
 
 public function restaurarclave($usu,$perf){
@@ -1603,8 +1594,6 @@ public function restaurarclave($usu,$perf){
     $conn = $this->conec();
     $sqlcaliTe = "UPDATE usuarios set pass='{$perf}' where id_usuario={$usu}";
     $conn->Execute($sqlcaliTe);
-    $SQL =$sql;
-    $conn->Execute($SQL);
 }
 
 public function eliminarusu($usu,$ext){
@@ -1621,23 +1610,15 @@ public function guardanotificausu($proceso,$accidentes,$retiro,$seleccion){
     $conn = $this->conec();
     $sqlcaliTe = "update notificaciones set  usuarios='$proceso' where grupo = 'diciplinario'";
     $conn->Execute($sqlcaliTe);
-    $SQL =$sql;
-    $conn->Execute($SQL);
     $conn = $this->conec();
     $sqlcaliTe = "update notificaciones set  usuarios='$accidentes' where grupo = 'accientes'";
     $conn->Execute($sqlcaliTe);
-    $SQL =$sql;
-    $conn->Execute($SQL);
     $conn = $this->conec();
     $sqlcaliTe = "update notificaciones set  usuarios='$retiro' where grupo = 'retiro'";
     $conn->Execute($sqlcaliTe);
-    $SQL =$sql;
-    $conn->Execute($SQL);
     $conn = $this->conec();
     $sqlcaliTe = "update empresasterporales set  correosselecccion='$seleccion'";
     $conn->Execute($sqlcaliTe);
-    $SQL =$sql;
-    $conn->Execute($SQL);
 }
 
 public function enviarcorreoClienteGen($idreq,$tipomen)
@@ -1800,7 +1781,7 @@ public function correopsico($id_req,$tipomen) {
 
             break;
         case "NUEVAREQ":
-            $mensaje = "Se creo su Requisicion con el #{$idreq} <br>
+            $mensaje = "Se creo su Requisicion con el #".$id_req." <br>
             Para visualizar de click <a href='".DIRWEB."home.php?ctr=requisicion&acc=verreqcan&id={$id_req}'><strong>AQUI</strong></a><br><br>
             Recuerde que para que el click sea valedero debe usted tener la sesion iniciada en el sistema <br><br>";
             break;
