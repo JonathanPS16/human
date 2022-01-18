@@ -824,6 +824,14 @@
                     $listatemporales = $objconsulta->obtenerretiros(" AND renuncias.estado = 'C'");
                     include('vistas/listadorenuncias.php');
                 break;
+
+                case "eliminarretiro":
+                    $id = $_GET['id'];
+                    $objconsulta->eliminarretiro($id);
+                    echo "<script>alert('Retiro Eliminado Correctamente');
+                        window.location.href = 'home.php?ctr=retiro&acc=listaretiros';
+                        </script>";
+                break;
                 case "listadoret":
                     $mios = "S";
                     $listatemporales = $objconsulta->obtenerretiros(" AND renuncias.estado in ('T','C')");
@@ -1533,6 +1541,8 @@
                     </th>
                     <th>Cargo
                     </th>
+                    <th>Fecha Ingreso
+                    </th>
                     <th>Seleccionar
                     </th>
                     </tr>
@@ -1554,6 +1564,8 @@
                         <td>'.$listado[$i]['a'].'
                         </td>
                         <td>'.preg_replace('([^a-zA-Z ])', '', $listado[$i]['nombrecargo']).'
+                        </td>
+                        <td>'.$listado[$i]['fecha_ingreso'].'
                         </td>
                         <td>
                         <form id="'.$i.'" action="home.php?ctr=retiro&acc=formretiro" method="post">

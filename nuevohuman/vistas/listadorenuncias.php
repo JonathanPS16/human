@@ -155,6 +155,9 @@ $boton ='<a href="archivosgenerales/'.$paz.'" target="_black" class="'.$stylepaz
 $botondos ='<a href="archivosgenerales/'.$renuncia.'" target="_black" class="'.$stylerenuncia.'">Renuncia</a>';
 
 
+$botoneliminacion ='<br><br><a href="home.php?ctr=retiro&acc=eliminarretiro&id='.$id.'" class="btn btn-danger" >Cancelar Solicitud</a>';
+
+
 
 
 
@@ -210,7 +213,11 @@ if($listatemporales[$i]['enviocorreot']!="")
 	$fechaenvio = $listatemporales[$i]['enviocorreot'];
 }
 
-
+if($listatemporales[$i]['visible']=="N"){
+	$modalbotonextra = "";
+	$botonextra = "";
+	$botoneliminacion = "Retiro Cancelado";
+}
 
     echo "<tr>
     		<td>".$id."</td>
@@ -229,7 +236,7 @@ if($listatemporales[$i]['enviocorreot']!="")
 			<td>".$botondos."</td>
 			<td>".$archivocorreoenviadocarta."</td>
 			<td>".$correolbl."</td>
-    		<td>".$modalbotonextra.$botonextra."</td>
+    		<td>".$modalbotonextra.$botonextra.$botoneliminacion."</td>
     </tr>";
   }
 
