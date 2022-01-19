@@ -41,6 +41,46 @@ if (!$zip->setEncryptionName($baseName, ZipArchive::EM_AES_256)) {
  
 $zip->close();
 unlink($mysqlExportPath);
+
+$thefolder = "imagenesinfo/";
+$array = array();
+if ($handler = opendir($thefolder)) {
+   while (false !== ($file = readdir($handler))) {
+           if($file!="." && $file !=".." && $file!=""){
+               //echo substr($file, 2, 8)."<br>"; 
+               $array[]=substr($file, 2, 8);
+           }
+           
+   }
+   closedir($handler);
+  
+}
+
+arsort($array);
+$datos = array_unique($array);
+$separado_por_comas = implode(",", $datos);
+$data = explode(",",$separado_por_comas);
+//var_dump($separado_por_comas);
+$datosn  = array($data[0], $data[1], $data[2], $data[3]);
+//var_dump($datosn);
+
+if ($handler = opendir($thefolder)) {
+   while (false !== ($file = readdir($handler))) {
+       $infoarr = "";
+           if($file!="." && $file !=".." && $file!=""){
+               //echo substr($file, 2, 8)."<br>"; 
+               $infoarr =substr($file, 2, 8);
+               if(!in_array($infoarr,$datosn)){
+                  // echo "Elimino $file unlink('$thefolder$file')<br>";
+                   unlink($thefolder.$file);
+               }
+
+           }
+           
+   }
+   closedir($handler);
+  
+}
 //echo "<a href="$comprimido">asaS</>";
 echo 'La base de datos <b>' .$mysqlDatabaseName .'</b> se ha almacenado correctamente.</b><a href="'.$archivoComprimido.'">Descargar</a>';
 /*require_once 'terceros/dropbox/vendor/autoload.php';

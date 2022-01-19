@@ -237,6 +237,18 @@ public function consultarempleadosreapretiros($numero){
      return $consultas;
  }
 
+public function tomarasignacion($id){
+    $conn = $this->conec();
+    $dato=array();
+    $datousuario = $_SESSION['usuario'];
+
+    $consultas = "SELECT * from usuarios where usuario='$datousuario'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    $grabador = $consultas[0]['nombre'];
+    $consultas = "update req set gestorasignado ='$grabador' where id = ".$id;
+    $conn->Execute($consultas);
+} 
+
  public function eliminarretiro($id){
     
     //$this->enviocorreo("quin", "Notificacion Cierre Retiro");

@@ -2735,6 +2735,14 @@
                     include('vistas/listadomisreq.php');
                 break;
 
+                case "tomargestion":
+                    $id = $_GET["id"];
+                    $listadoreq=$objconsulta->tomarasignacion($id);
+                    echo "<script>alert('Tomada Correctamente');
+                    window.location.href = 'home.php?ctr=requisicion&acc=milistadoReq';
+                    </script>";
+                break;
+
                 case "test":
                     /*
                     require_once 'vendor/autoload.php';
