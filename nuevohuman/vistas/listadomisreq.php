@@ -3,6 +3,7 @@
 	<thead>
 		<tr>
 			<th>ID</th>
+			<th>Gestor</th>
 			<th>Tipo Solicitud</th>
 			<th>Cargo</th>
 			<th>Fecha Solicitud</th>
@@ -328,8 +329,14 @@ for($i=0; $i<count($listadoreq);$i++){
 		$btnEditNota  ='<a  data-toggle="modal" class="btn btn-primary" data-target="#exampleModalnotaseg'.$id.'" style="color: white">Ver Detalle</a>';
 
 	$detallereg = "asdasdsa00";
+	$gestorint = $listadoreq[$i]['gestorasignado'];
+	if(trim($listadoreq[$i]['gestorasignado'])==""){
+		$gestorint ='<a href="home.php?ctr=requisicion&acc=tomargestion&id='.$id.'" class="btn btn-info" >Tomar Gestión</a>';
+	}
+	
     echo "<tr>
     		<td>".$id."</td>
+			<td>".$gestorint."</td>
 			<td>".$tiporeq."</td>
 			<td>".$cargo."</td>
 			<td>".$fechacreacion."</td>
