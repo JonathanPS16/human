@@ -245,7 +245,8 @@ public function tomarasignacion($id){
     $consultas = "SELECT * from usuarios where usuario='$datousuario'";
     $consultas= $conn->Execute($consultas)-> getRows();
     $grabador = $consultas[0]['nombre'];
-    $consultas = "update req set gestorasignado ='$grabador' where id = ".$id;
+    $now= date('Y-m-d');
+    $consultas = "update req set gestorasignado ='$grabador',fechatomado ='$now'  where id = ".$id;
     $conn->Execute($consultas);
 } 
 
