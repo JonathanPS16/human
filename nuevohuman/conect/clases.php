@@ -1875,7 +1875,7 @@ public function notificarProcesosAccidente($id){
 } 
 
 
-public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$funcionario,$cedula,$observaciones, $correo,$celular,$direccion,$cargo,$empresausuaria,$centrocostos,$fechanotificacion,$tipocrea = "ambiente",$fechaingreso){
+public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$funcionario,$cedula,$observaciones, $correo,$celular,$direccion,$cargo,$empresausuaria,$centrocostos,$fechanotificacion,$tipocrea,$fechaingreso){
     $conn = $this->conec();
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'retiro'";
     $consultas= $conn->Execute($consultas)-> getRows();
