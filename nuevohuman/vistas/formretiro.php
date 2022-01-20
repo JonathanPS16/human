@@ -1,6 +1,6 @@
 <?php //print_r($_POST);
 $datos= explode("|", $_POST['validacion']);
-//var_dump($datos[0]);
+//var_dump($datos);
 ?>
 <h5>Formulario de Retiro</h5><br>
 <form action="home.php?ctr=retiro&acc=guardarsolicitud" method="post" enctype="multipart/form-data">
@@ -98,6 +98,7 @@ $datos= explode("|", $_POST['validacion']);
     <input type="file" id="archivo2" name="archivo2" >
     </div>
   </div> 
+  <input type="hidden" name="fechaingreso" id="fechaingreso" value ="<?php echo $datos[9]; ?>">
   <div >
     <div class="offset-4 col-8">
       <button name="submit" type="submit" class="btn btn-primary">Guardar Retiro</button>
