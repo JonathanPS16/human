@@ -329,7 +329,7 @@ for($i=0; $i<count($listadoreq);$i++){
 		$btnEditNota  ='<a  data-toggle="modal" class="btn btn-primary" data-target="#exampleModalnotaseg'.$id.'" style="color: white">Ver Detalle</a>';
 
 	$detallereg = "asdasdsa00";
-	$gestorint = $listadoreq[$i]['gestorasignado'];
+	$gestorint = $listadoreq[$i]['gestorasignado'].$listadoreq[$i]['fechatomado'];
 	if(trim($listadoreq[$i]['gestorasignado'])==""){
 		$gestorint ='<a href="home.php?ctr=requisicion&acc=tomargestion&id='.$id.'" class="btn btn-info" >Tomar Gestión</a>';
 	}
