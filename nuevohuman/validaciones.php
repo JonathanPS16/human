@@ -947,7 +947,7 @@
                         }
                     }
                     
-                    $listatemporales=$objconsulta->guardarretiro($archivouno,$archivodos,$_POST['retiro'],$_POST['fecharetiro'],$_POST['funcionario'],$_POST['cedula'],$_POST['observaciones'],$_POST['correo'],$_POST['celular'],$_POST['direccion'],$_POST['cargo'],$_POST['empresausuaria'],$_POST['centrocostos'],$_POST['fechanotificacion']);
+                    $listatemporales=$objconsulta->guardarretiro($archivouno,$archivodos,$_POST['retiro'],$_POST['fecharetiro'],$_POST['funcionario'],$_POST['cedula'],$_POST['observaciones'],$_POST['correo'],$_POST['celular'],$_POST['direccion'],$_POST['cargo'],$_POST['empresausuaria'],$_POST['centrocostos'],$_POST['fechanotificacion'],"ambiente",$_POST['fechaingreso']);
                     echo "<script>alert('Retiro Cargado Correctamente');
                         window.location.href = 'home.php?ctr=retiro&acc=listadoret';
                         </script>";
@@ -1655,7 +1655,7 @@
                         </td>
                         <td>
                         <form id="'.$i.'" action="home.php?ctr=retiro&acc=formretiro" method="post">
-                        <input type="hidden" name="validacion" id="validacion" value="'.$listado[$i]['nombre_empleado'].'|'.$listado[$i]['cedula'].'|'.$listado[$i]['correoelectronico'].'|'.$listado[$i]['a'].'|'.$listado[$i]['nombrecargo'].'|'.$listado[$i]['telefono'].'|'.$listado[$i]['a'].'|'.$listado[$i]['nombretemporal'].'|'.$listado[$i]['direccion'].'">
+                        <input type="hidden" name="validacion" id="validacion" value="'.$listado[$i]['nombre_empleado'].'|'.$listado[$i]['cedula'].'|'.$listado[$i]['correoelectronico'].'|'.$listado[$i]['a'].'|'.$listado[$i]['nombrecargo'].'|'.$listado[$i]['telefono'].'|'.$listado[$i]['a'].'|'.$listado[$i]['nombretemporal'].'|'.$listado[$i]['direccion'].'|'.$listado[$i]['fecha_ingreso'].'">
                         <button name="button" id="button" type="submit" class="btn btn-primary">Solicitar Proceso Retiro</button>
                         </form>
                         </td>
@@ -2299,10 +2299,7 @@
                     }
 
                     if($_POST['valor'] == 4) {
-                        $sql = "INSERT INTO ingresos_ret_2017 (id_empresaper,TIPODEDOCUMENTO,CEDULA,PRIMERAPELLIDO,SEGUNDOAPELLIDO,PRIMERNOMBRE,SEGUNDONOMBRE,DIRECCION,CODIGODEPARTAMENTO,CODIGOMUNICIPIO,CODIGOPAIS,CORREOELECTRONICO,FECHAINICIAL,FECHAFINAL,
-                        FECHAEXPEDICION,DEPARTAMENTORETENCION,MUNICIPIORETENCION,NUMERORETENCION,PAGOSSALARIOSOECLESISTICOS,PAGOSHONORARIOS,PAGOSSERVICIOS,PAGOSCOMISIONES,PAGOSPRESTACIONES,PAGOSVIATICOS,PAGOSREPRESENTACION,PAGOSCOOPERATIVO,OTROSPAGOS,CESANTIASPERIODO,
-                        PENSIONES,TOTALBRUTOS,APORTESSALUD,APORTESPENSIONESRAIS,APORTESVOLUNTARIOSPENSIONES,APORTESACUENTASAFC,RETENCIONFUENTETRABAJOPENSIONES,PERSONASACARGO,fecha_cargue) 
-                        VALUES ";
+                        $sql = "";
                         $creado=0;
                         for ($row = 2; $row <= $highestRow; $row++){ 
                             $num++;
@@ -2319,9 +2316,6 @@
                             $fechanotificacion = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($fechanotificacion));
                             $fechanotificacion = date("Y-m-d",strtotime($fechanotificacion."+ 1 days"));
                             $observaciones  = str_replace("'","",$sheet->getCell("E".$row)->getValue());
-                            $sql.="($idempresaprestadora,'$TIPODEDOCUMENTO','$CEDULA','$PRIMERAPELLIDO','$SEGUNDOAPELLIDO','$PRIMERNOMBRE','$SEGUNDONOMBRE','$DIRECCION','$CODIGODEPARTAMENTO','$CODIGOMUNICIPIO','$CODIGOPAIS','$CORREOELECTRONICO','$FECHAINICIAL','$FECHAFINAL'
-                            ,'$FECHAEXPEDICION','$DEPARTAMENTORETENCION','$MUNICIPIORETENCION','$NUMERORETENCION','$PAGOSSALARIOSOECLESISTICOS','$PAGOSHONORARIOS','$PAGOSSERVICIOS','$PAGOSCOMISIONES','$PAGOSPRESTACIONES','$PAGOSVIATICOS','$PAGOSREPRESENTACION','$PAGOSCOOPERATIVO','$OTROSPAGOS','$CESANTIASPERIODO'
-                            ,'$PENSIONES','$TOTALBRUTOS','$APORTESSALUD','$APORTESPENSIONESRAIS','$APORTESVOLUNTARIOSPENSIONES','$APORTESACUENTASAFC','$RETENCIONFUENTETRABAJOPENSIONES','$PERSONASACARGO','$fecha_cargue'),";
                             
                             if($cedula!=""){
                                 $listadopre=$objconsulta->consultarempleadosreapretiroscedula($cedula);
@@ -2336,10 +2330,11 @@
                                         $telefono = $listado[0]['telefono'];
                                         $direccion = $listado[0]['direccion'];
                                         $cargo = $listado[0]['nombrecargo'];
+                                        $fecha_ingreso = $listado[0]['fecha_ingreso'];
                                         
 
                                         //echo "$motivo,$fecharetiro,$nombre_empleado,$cedula,$observaciones,$correoelectronico,$telefono,$direccion,$cargo,$nombretemporal,$nombreempresausuaria ,$fechanotificacion,'Masivo'";
-                                        $listatemporales=$objconsulta->guardarretiro("","",$motivo,$fecharetiro,$nombre_empleado,$cedula,$observaciones,$correoelectronico,$telefono,$direccion,$cargo,$nombretemporal,$nombreempresausuaria ,$fechanotificacion,'Masivo');
+                                        $listatemporales=$objconsulta->guardarretiro("","",$motivo,$fecharetiro,$nombre_empleado,$cedula,$observaciones,$correoelectronico,$telefono,$direccion,$cargo,$nombretemporal,$nombreempresausuaria ,$fechanotificacion,'Masivo',$fecha_ingreso);
                                         //var_dump($listado);
                                         //echo "<hr>";
                                         $creado++;

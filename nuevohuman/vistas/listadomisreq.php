@@ -4,6 +4,7 @@
 		<tr>
 			<th>ID</th>
 			<th>Gestor</th>
+			<th>Fecha Asignación</th>
 			<th>Tipo Solicitud</th>
 			<th>Cargo</th>
 			<th>Fecha Solicitud</th>
@@ -337,6 +338,7 @@ for($i=0; $i<count($listadoreq);$i++){
     echo "<tr>
     		<td>".$id."</td>
 			<td>".$gestorint."</td>
+			<td>".$listadoreq[$i]['fechatomado']."</td>
 			<td>".$tiporeq."</td>
 			<td>".$cargo."</td>
 			<td>".$fechacreacion."</td>

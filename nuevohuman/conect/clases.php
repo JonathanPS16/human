@@ -247,7 +247,8 @@ public function tomarasignacion($id){
     $consultas = "SELECT * from usuarios where usuario='$datousuario'";
     $consultas= $conn->Execute($consultas)-> getRows();
     $grabador = $consultas[0]['nombre'];
-    $consultas = "update req set gestorasignado ='$grabador' where id = ".$id;
+    $now= date('Y-m-d');
+    $consultas = "update req set gestorasignado ='$grabador',fechatomado ='$now'  where id = ".$id;
     $conn->Execute($consultas);
 } 
 
@@ -1876,7 +1877,7 @@ public function notificarProcesosAccidente($id){
 } 
 
 
-public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$funcionario,$cedula,$observaciones, $correo,$celular,$direccion,$cargo,$empresausuaria,$centrocostos,$fechanotificacion,$tipocrea = "ambiente"){
+public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$funcionario,$cedula,$observaciones, $correo,$celular,$direccion,$cargo,$empresausuaria,$centrocostos,$fechanotificacion,$tipocrea,$fechaingreso){
     $conn = $this->conec();
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'retiro'";
     $consultas= $conn->Execute($consultas)-> getRows();
@@ -1905,7 +1906,7 @@ public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$func
       }
 
     }
-    $SQL ="INSERT INTO renuncias (modocreacion,renuncia,paz,motivo,fecharetiro,nombre,cedula,observaciones,correoempleado,celularempleado,direccionempleado,cargoempleado,empresausuaria,centrocostos,fechanotificacion) values('$tipocrea','$archivouno','$archivodos','$retiro','$fecharetiro','$funcionario','$cedula','$observaciones','$correo', '$celular','$direccion','$cargo','$empresausuaria','$centrocostos','$fechanotificacion')";
+    $SQL ="INSERT INTO renuncias (fecha_ingreso_cert,modocreacion,renuncia,paz,motivo,fecharetiro,nombre,cedula,observaciones,correoempleado,celularempleado,direccionempleado,cargoempleado,empresausuaria,centrocostos,fechanotificacion) values('$fechaingreso','$tipocrea','$archivouno','$archivodos','$retiro','$fecharetiro','$funcionario','$cedula','$observaciones','$correo', '$celular','$direccion','$cargo','$empresausuaria','$centrocostos','$fechanotificacion')";
     $conn->Execute($SQL);
 } 
 
