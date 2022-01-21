@@ -7,6 +7,8 @@ define("Password", "Aplica2021HumanInfo*Zoho");
 define("Port", 465);
 define("correocor", "info@humantalentsas.com.co");
 define("mensajecorr", "Humantalentsas");
+define("maxfilesize", 2097152);
+define("maxfilesizelabel", "2 MB");
 require("phpmailer/class.phpmailer.php");
 class consultas {
 public function  consultarusuario($usuario,$clave) {
