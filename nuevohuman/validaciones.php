@@ -226,6 +226,11 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo1']['type'];
                         $tamano_archivo = $_FILES['archivo1']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';
+                                </script>";
+                        }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -257,6 +262,11 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo']['type'];
                         $tamano_archivo = $_FILES['archivo']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';
+                            </script>";
+                    }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -285,6 +295,12 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivofirmado']['type'];
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';
+                                </script>";
+
+                    }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -369,6 +385,11 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo1']['type'];
                         $tamano_archivo = $_FILES['archivo1']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=proceso&acc=formproceso';
+                                </script>";
+                    }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -388,6 +409,11 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo2']['type'];
                         $tamano_archivo = $_FILES['archivo2']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=proceso&acc=formproceso';
+                                </script>";
+                        }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -406,6 +432,11 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo3']['type'];
                         $tamano_archivo = $_FILES['archivo3']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=proceso&acc=formproceso';
+                                </script>";
+                        }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -490,6 +521,11 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivofirmado']['type'];
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=proceso&acc=formacla';
+                                </script>";
+                        }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -540,6 +576,11 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivofirmado']['type'];
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=proceso&acc=formacla';
+                            </script>";
+                        }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -580,6 +621,11 @@
                     if($_FILES['archivoliquidacion']['name']!="") {
                         $tipo_archivo = $_FILES['archivoliquidacion']['type'];
                         $tamano_archivo = $_FILES['archivoliquidacion']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=retiro&acc=controlre';
+                            </script>";
+                        }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -859,6 +905,11 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo1']['type'];
                         $tamano_archivo = $_FILES['archivo1']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=retiro&acc=listadoret';
+                            </script>";
+                        }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -878,6 +929,11 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo2']['type'];
                         $tamano_archivo = $_FILES['archivo2']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=retiro&acc=listadoret';
+                            </script>";
+                        }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -911,6 +967,11 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo']['type'];
                         $tamano_archivo = $_FILES['archivo']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=novedades&acc=incapacidades';
+                            </script>";
+                        }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -1156,6 +1217,11 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivoincapacidad']['type'];
                         $tamano_archivo = $_FILES['archivoincapacidad']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
+                            </script>";
+                        }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -1174,6 +1240,11 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivotranscri']['type'];
                         $tamano_archivo = $_FILES['archivotranscri']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
+                            </script>";
+                        }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -1219,6 +1290,11 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['imagen']['type'];
                         $tamano_archivo = $_FILES['imagen']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
+                            </script>";
+                        }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -1289,6 +1365,11 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo3']['type'];
                         $tamano_archivo = $_FILES['archivo3']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=accidentes&acc=formprocesogest';
+                            </script>";
+                        }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -1411,6 +1492,11 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivofirmado']['type'];
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=proceso&acc=formacla';
+                            </script>";
+                        }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -1844,6 +1930,11 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivo3']['type'];
                         $tamano_archivo = $_FILES['archivo3']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=accidentes&acc=formprocesogest';
+                            </script>";
+                        }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -1925,6 +2016,11 @@
                     if($nombre_archivo!="") {
                         $tipo_archivo = $_FILES['archivofirmado']['type'];
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=proceso&acc=formacla';
+                            </script>";
+                        }
                         $mensaje = "";    
                         //compruebo si las características del archivo son las que deseo
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -1990,6 +2086,11 @@
                     $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     $tipo_archivo = $_FILES['archivo']['type'];
                     $tamano_archivo = $_FILES['archivo']['size'];
+                    if($tamano_archivo>maxfilesize){
+                        echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                        window.location.href = 'home.php?ctr=carguemasivo&acc=certificados&tp=".$_POST['valor']."';
+                        </script>";
+                    }
                     $mensaje = "";    
                     $idempresaprestadora=$_POST['empresaprestadora'];
                     //compruebo si las características del archivo son las que deseo
@@ -2462,6 +2563,11 @@
                     $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     $tipo_archivo = $_FILES['archivo']['type'];
                     $tamano_archivo = $_FILES['archivo']['size'];
+                    if($tamano_archivo>maxfilesize){
+                        echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                        window.location.href = 'home.php?ctr=requisicion&acc=listadoReq';
+                        </script>";
+                    }
                     //compruebo si las características del archivo son las que deseo
                     if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
                         $mensaje = "La extensión o el tamaño de los archivos no es correcta. Se permiten archivos .gif .jpg .pdf .png ";
@@ -2523,6 +2629,11 @@
                     $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     $tipo_archivo = $_FILES['filebutton']['type'];
                     $tamano_archivo = $_FILES['filebutton']['size'];
+                    if($tamano_archivo>maxfilesize){
+                        echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                        window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$_POST['idreq']."';
+                        </script>";
+                    }
                     $mensaje = "";    
                     //compruebo si las características del archivo son las que deseo
                     if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -2572,6 +2683,11 @@
                         $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                         $tipo_archivo = $_FILES['contrato']['type'];
                         $tamano_archivo = $_FILES['contrato']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
+                            </script>";
+                        }
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
                         }else{
                             if (move_uploaded_file($_FILES['contrato']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
@@ -2585,6 +2701,11 @@
                         $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                         $tipo_archivo = $_FILES['archivoarl']['type'];
                         $tamano_archivo = $_FILES['archivoarl']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
+                            </script>";
+                        }
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
                         }else{
                             if (move_uploaded_file($_FILES['archivoarl']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
@@ -2598,6 +2719,11 @@
                         $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                         $tipo_archivo = $_FILES['archivoeps']['type'];
                         $tamano_archivo = $_FILES['archivoeps']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
+                            </script>";
+                        }
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
                         }else{
                             if (move_uploaded_file($_FILES['archivoeps']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
@@ -2611,6 +2737,11 @@
                         $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                         $tipo_archivo = $_FILES['archivocompensa']['type'];
                         $tamano_archivo = $_FILES['archivocompensa']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
+                            </script>";
+                        }
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
                         }else{
                             if (move_uploaded_file($_FILES['archivocompensa']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
@@ -2624,6 +2755,11 @@
                         $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                         $tipo_archivo = $_FILES['archivofondo']['type'];
                         $tamano_archivo = $_FILES['archivofondo']['size'];
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
+                            </script>";
+                        }
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
                         }else{
                             if (move_uploaded_file($_FILES['archivofondo']['tmp_name'],  "archivosgenerales/".$nombre_archivo)){
@@ -2637,7 +2773,11 @@
                         $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                         $tipo_archivo = $_FILES['archivobenediciarios']['type'];
                         $tamano_archivo = $_FILES['archivobenediciarios']['size'];
-                        
+                        if($tamano_archivo>maxfilesize){
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
+                            </script>";
+                        }
                         if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
 
                         }else{
@@ -2674,6 +2814,12 @@
                     $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     $tipo_archivo = $_FILES['filebutton']['type'];
                     $tamano_archivo = $_FILES['filebutton']['size'];
+                    if($tamano_archivo>maxfilesize){
+                        echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                        window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$_POST['idreq']."';
+                                </script>";
+
+                    }
                     $mensaje = "";    
                     //compruebo si las características del archivo son las que deseo
                     if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
@@ -2703,6 +2849,11 @@
                     $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     $tipo_archivo = $_FILES['filebutton']['type'];
                     $tamano_archivo = $_FILES['filebutton']['size'];
+                    if($tamano_archivo>maxfilesize){
+                        echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                        window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$_POST['idreq']."';
+                                </script>";
+                    }
                     $mensaje = "";    
                     //compruebo si las características del archivo son las que deseo
                     if (!((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "png") || strpos($tipo_archivo, "pdf")))) {
