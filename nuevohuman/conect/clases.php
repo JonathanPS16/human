@@ -3,7 +3,7 @@ session_start();
 define("DIRWEB", "https://".$_SERVER["HTTP_HOST"]."/human/");
 define("Host", "smtp.zoho.com");
 define("Username", "info@humantalentsas.com.co");
-define("Password", "Aplica2021HumanInfo*Zoho");
+define("Password", "2020%AplicativoHT%");
 define("Port", 465);
 define("correocor", "info@humantalentsas.com.co");
 define("mensajecorr", "Humantalentsas");
@@ -637,7 +637,7 @@ public function valdiaryguardareditar($llave,$correo,$pefil,$centrocostos){
 
 public function selectmenus(){
     $conn = $this->conec();
-    $consultas = "SELECT *,(select ordenamiento from menus a where a.id=menus.padre) as b FROM menus where padre !=0 order by b,ordenamiento ASC";
+    $consultas = "SELECT *,(select menu from menus a where a.id=menus.padre) as c,(select ordenamiento from menus a where a.id=menus.padre) as b FROM menus where padre !=0 order by b,ordenamiento ASC";
     //echo $consultas;
     $consultas= $conn->Execute($consultas)-> getRows();
     

@@ -35,13 +35,19 @@
 		$selecc=$listatemporales[$i]['selecc'].",";
 		$pos = strpos($selecc, ",");
 		$camposmenu = "";
-
+		$padre = "";
+		$padrelabel = "";
+		$scr = false;	
 		for($j=0; $j<count($listamenus);$j++) {
+			
+			
+			//echo $padre;
 			$idmen = $listamenus[$j]['id'];
 			
 			$menu = $listamenus[$j]['menu'];
 			
 			$pos = strpos($selecc, "$idmen,");
+
 			$datomenu = explode(",",$selecc);
 			//var_dump($datomenu);
 			$seldes ="";
@@ -51,6 +57,11 @@
 			} else {
 				$seldes ="selected";
 			}
+			if($padre!=$listamenus[$j]['c']){
+				$padre = $listamenus[$j]['c'];
+				$camposmenu.="<hr style='color:red'><strong>".$padre."</strong><hr>";	
+			} 		
+			
 		  $camposmenu.='<div class="form-group row">
 		  <label class="col-4 col-form-label" for="select">'.$menu.'</label> 
 		  <div class="col-8">
