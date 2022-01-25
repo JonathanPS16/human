@@ -3,7 +3,7 @@ session_start();
 define("DIRWEB", "https://".$_SERVER["HTTP_HOST"]."/human/");
 define("Host", "smtp.zoho.com");
 define("Username", "info@humantalentsas.com.co");
-define("Password", "2020%AplicativoHT%");
+define("Password", "Th2220%Server$");
 define("Port", 465);
 define("correocor", "info@humantalentsas.com.co");
 define("mensajecorr", "Humantalentsas");
@@ -301,6 +301,10 @@ public function selectexternos(){
     $consultas = "SELECT * FROM `empledos_ingreso`";
     $consultas= $conn->Execute($consultas)-> getRows();
     return $consultas;   
+}
+
+public function testcorreo(){
+    $this->enviocorreo("kptzmusic@gmail.com","TEst");
 }
 
 public function consultavalidadosproceso($id){
@@ -2818,6 +2822,7 @@ public function enviardocumentacion($idper,$idreq){
     Área de Selección<br>
     Human Talent SAS
     ";
+    $asunto = "=?UTF-8?B?".base64_encode($titulo2)."=?=";/*
     $maildos = new PHPMailer();
     $maildos->IsSMTP();
     $maildos->SMTPAuth = true;
@@ -2834,7 +2839,7 @@ public function enviardocumentacion($idper,$idreq){
     $maildos->Password = "2019FormalSiMarzo*"; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
     $maildos->Port = 465; // Puerto de conexión al servidor de envio. 
     $maildos->SetFrom('info@formalsi.com', 'Humantalentsas');*/
-    $maildos->AddAddress($correo, "Usuario");
+    /*$maildos->AddAddress($correo, "Usuario");
     
     //$maildos->AddAttachment($ordeningreso,"ordeningreso.docx");
     $maildos->AddAttachment($hvhuman,"hojavidahuman.docx");
@@ -2845,6 +2850,18 @@ public function enviardocumentacion($idper,$idreq){
     //$maildos->AddAttachment($archivoaper,"aperturacuenta.pdf");
     $maildos->MsgHTML(utf8_decode($cuerpo2));
     $maildos->Send();
+    $docs = $hvhuman."|".$docdocumen."|";
+    if($archivoexa!=""){
+        $docs.=$archivoexa."|";
+        $maildos->AddAttachment($archivoexa,"ordenexamenes.pdf");
+    }*/
+    $docs = $hvhuman."|".$docdocumen."|";
+    if($archivoexa!=""){
+        $docs.=$archivoexa."|";
+    }
+
+    $this->enviarcorreoadjuntosdinamico($correo,$docs,$cuerpo2,$asunto);
+    $this->enviarcorreoadjuntosdinamico("jorge.osorio@protección.com.co",$docs,$cuerpo2,$asunto);
 
     $SQL ="UPDATE req_candidatos SET estado='F' WHERE id=".$idper;
     $conn->Execute($SQL);

@@ -2404,6 +2404,10 @@
                     window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
                     </script>";
                 break;
+                case "testcorreo":
+                    $objconsulta->testcorreo();
+                    echo "Enviado";
+                    break;
 
                 case "enviarcorreodocumentacion":
                     $info = base64_decode($_GET['valida']);
