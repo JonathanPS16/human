@@ -334,7 +334,14 @@ for($i=0; $i<count($listadoreq);$i++){
 	if(trim($listadoreq[$i]['gestorasignado'])==""){
 		$gestorint ='<a href="home.php?ctr=requisicion&acc=tomargestion&id='.$id.'" class="btn btn-info" >Tomar Gestión</a>';
 	}
-	
+	$eliminar = "Registro Cancelado";
+	if($listadoreq[$i]['visible']!="N")
+	{
+		$eliminar = "<a href='home.php?ctr=requisicion&acc=listaCandidatos&id=".$id."' class='btn btn-primary'>Gestionar Solicitud</a><br><br><a href='home.php?ctr=requisicion&ges=2&acc=eliminarreq&id=".$id."' class='btn btn-danger'>Eliminar Solicitud</a>";
+	} else {
+		$gestorint = $listadoreq[$i]['gestorasignado'];
+	}
+
     echo "<tr>
     		<td>".$id."</td>
 			<td>".$gestorint."</td>
@@ -350,7 +357,7 @@ for($i=0; $i<count($listadoreq);$i++){
 			<td>".$ciudadlaboral."</td>
 			<td>".$estadogene."</td>
 			<td>".$modaleditnota.$btnEditNota."</td>
-    		<td><a href='home.php?ctr=requisicion&acc=listaCandidatos&id=".$id."' class='btn btn-primary'>Gestionar Solicitud</a></td>
+    		<td>".$eliminar."</td>
     </tr>";
   }
 

@@ -2738,6 +2738,8 @@
                     </script>";
                 break;
 
+                
+
                 case "test":
                     /*
                     require_once 'vendor/autoload.php';
@@ -4050,8 +4052,12 @@ echo '<a href="fpdf-advanced2.pdf">a</a>';
                 case 'eliminarreq':
                     $lastid=$_GET['id'];
                     $listadoreqcrea=$objconsulta->eliminarReq($lastid);
+                    $bandera = "listadoReq";
+                    if($_GET['ges']=2){
+                        $bandera = "milistadoReq";
+                    }
                     echo "<script>alert('Solicitud Eliminada Correctamente');
-                window.location.href = 'home.php?ctr=requisicion&acc=listadoReq';
+                window.location.href = 'home.php?ctr=requisicion&acc=".$bandera."';
                 </script>";
                 break;
 

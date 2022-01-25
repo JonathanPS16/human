@@ -50,9 +50,16 @@ for($i=0; $i<count($listadoreq);$i++){
 	if($estadogene == "Finalizado"){
 		$accion  = "<a class='btn btn-primary' href='home.php?ctr=requisicion&acc=verreqcan&id=".$id."'>Ver Candidatos</a>";
 	}
+	$eliminardata  = "<a class='btn btn-danger' href='home.php?ctr=requisicion&acc=eliminarreq&ges=1&id=".$id."'>Cancelar</a>";
+    
+	if($listadoreq[$i]['visible']=="N")
+	{
+		$accion = "Cancelado";
+		$eliminardata = "Registro Cancelado";
+		$estadogene = "Cancelado";
+	}
 
-	$eliminardata  = "<a class='btn btn-danger' href='home.php?ctr=requisicion&acc=eliminarreq&id=".$id."'>Cancelar</a>";
-    echo "<tr>
+	echo "<tr>
     		<td>".$id."</td>
 			<td>".$tiporeq."</td>
 			<td>".$cargo."</td>

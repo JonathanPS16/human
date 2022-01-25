@@ -252,11 +252,36 @@ public function tomarasignacion($id){
     $conn->Execute($consultas);
 } 
 
+
+
  public function eliminarretiro($id){
-    
-    //$this->enviocorreo("quin", "Notificacion Cierre Retiro");
     $conn = $this->conec();
-    $dato=array();
+    $valor = $this->obtenerretiros(" AND renuncias.estado = 'C'", "AND id_renuncia =$id");
+    $mensaje = "Apreciado  Usuario<br>
+    <br>
+    
+    Le informamos que en la fecha hemos recibido su solicitud de cancelación del proceso de retiro del empleado(a) ".$valor[0]['nombre']."; registrado en nuestra plataforma con el consecutivo No. ".$id."; estaremos procediendo a dar el tramite correspondiente a su solicitud.
+     <br><br>
+    Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web www.humantalentsas.com ingresando con su usuario y clave.
+    <br><br>
+    Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 601 214 2011, o Celular 318 335 2194 - 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, nomina@humantalentsas.com 
+     <br><br>
+    Cordialmente,
+    <br><br>
+    Área Servicio al Cliente <br>
+    Human Talent SAS
+    ";
+
+    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'retiro'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    for($i= 0; $i<count($consultas); $i++) {
+      $correos = explode(",", $consultas[$i]['usuarios']);
+      for($j=0; $j<count($correos); $j++){
+          $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
+          $consultasresp= $conn->Execute($consultascorr)-> getRows();
+          $this->enviocorreo($consultasresp[0]['correo'], $mensaje, "Notificación Cancelación Proceso Retiro Empleado");
+      }
+    }
     $consultas = "update renuncias set visible = 'N' WHERE id_renuncia =".$id;
     $conn->Execute($consultas);
 }
@@ -335,7 +360,7 @@ public function activarempleado($documento){
     return $consultas;   
 }
 
-public function obtenerretiros($estado=""){
+public function obtenerretiros($estado="",$ret = ""){
     $conn = $this->conec();
     $dato=array();
 
@@ -346,7 +371,7 @@ public function obtenerretiros($estado=""){
     $consultas = "SELECT id_renuncia,nombre,observaciones,motivo,paz,renuncia,fecharetiro,renuncias.cedula,estado,archivo,correo,empresausuaria,fechasolicitud,fecharetiro ,certificados.correoelectronico as correoregi from renuncias INNER join certificados on certificados.cedula=renuncias.cedula where renuncias.estado in ('T','C') ORDER BY `renuncias`.`id_renuncia` DESC ";
     $consultas = "SELECT id_renuncia,nombre,observaciones,motivo,paz,renuncia,fecharetiro,renuncias.cedula,estado,archivo,correo,empresausuaria,fechasolicitud,fecharetiro ,certificados.correoelectronico as correoregi,fechanotificacion from renuncias INNER join certificados on certificados.cedula=renuncias.cedula where renuncias.estado in ('T','C') ORDER BY `renuncias`.`id_renuncia` DESC ";
     $consultas = "SELECT id_renuncia,nombre,observaciones,motivo,paz,renuncia,fecharetiro,renuncias.cedula,estado,archivo,correo,empresausuaria,fechasolicitud,fecharetiro ,certificados.correoelectronico as correoregi,fechanotificacion, certificados.contrato,nombre_empleado as ne from renuncias INNER join certificados on certificados.cedula=renuncias.cedula where renuncias.estado in ('T','C') ORDER BY `renuncias`.`id_renuncia` DESC ";
-    $consultas = "SELECT (select count(*) from accidentes where accidentes.cedula=renuncias.cedula) as conteoaccientes,(select count(*) from incapacidadescargue where incapacidadescargue.cedula=renuncias.cedula) as conteoincapa,id_renuncia,nombre,observaciones,motivo,paz,renuncia,fecharetiro,renuncias.cedula,estado,archivo,correo,renuncias.centrocostos as nombretemporal,fechasolicitud,fecharetiro ,certificados.correoelectronico as correoregi,fechanotificacion, certificados.contrato,nombre_empleado as ne,certificados.fecha_ingreso as fi ,visible from renuncias INNER join certificados on certificados.cedula=renuncias.cedula where 1=1 $estado  ORDER BY `renuncias`.`id_renuncia` DESC ";
+    $consultas = "SELECT (select count(*) from accidentes where accidentes.cedula=renuncias.cedula) as conteoaccientes,(select count(*) from incapacidadescargue where incapacidadescargue.cedula=renuncias.cedula) as conteoincapa,id_renuncia,nombre,observaciones,motivo,paz,renuncia,fecharetiro,renuncias.cedula,estado,archivo,correo,renuncias.centrocostos as nombretemporal,fechasolicitud,fecharetiro ,certificados.correoelectronico as correoregi,fechanotificacion, certificados.contrato,nombre_empleado as ne,certificados.fecha_ingreso as fi ,visible from renuncias INNER join certificados on certificados.cedula=renuncias.cedula where 1=1 $estado $ret ORDER BY `renuncias`.`id_renuncia` DESC ";
     //$consultas = "SELECT (select count(*) from accidentes where accidentes.cedula=renuncias.cedula) as conteoaccientes,(select count(*) from incapacidadescargue where incapacidadescargue.cedula=renuncias.cedula) as conteoincapa,id_renuncia,nombre,observaciones,motivo,paz,renuncia,fecharetiro,renuncias.cedula,estado,archivo,correo,renuncias.centrocostos as empresausuaria,fechasolicitud,fecharetiro ,certificados.correoelectronico as correoregi,fechanotificacion, certificados.contrato,nombre_empleado as ne FROM centrocostos INNER join empresasterporales on empresasterporales.id_temporal=centrocostos.id_empresapres INNER JOIN certificados on certificados.id_empresapres= empresasterporales.id_temporal and certificados.centro_costos=centrocostos.centrocosto INNER JOIN renuncias on certificados.cedula=renuncias.cedula and renuncias.centrocostos = centrocostos.empresausuaria ";
     //$consultas = "select (select count(*) from accidentes where accidentes.cedula=renuncias.cedula) as conteoaccientes,(select count(*) from incapacidadescargue where incapacidadescargue.cedula=renuncias.cedula) as conteoincapa, renuncias.*,certificados.correoelectronico as correoregi,certificados.fecha_ingreso as fi,certificados.genero as gene,certificados.nombre_empleado as ne,certificados.contrato,certificados.nombrecargo,centrocostos.empresausuaria,empresasterporales.nombretemporal from renuncias inner join certificados on certificados.cedula=renuncias.cedula INNER JOIN empresasterporales on certificados.id_empresapres=empresasterporales.id_temporal INNER JOIN centrocostos on centrocostos.centrocosto=certificados.centro_costos and centrocostos.id_empresapres=empresasterporales.id_temporal where 1=1 AND renuncias.estado in ('T','C') order by id_renuncia DESC";
     //echo $consultas;
@@ -2705,13 +2730,10 @@ public function conclucioncitacitacionc($id_per,$id_req,$conclu,$fortalezaentre,
 
 public function eliminarReq($id)
 {
-    /*$conn = $this->conec();
-    $SQL ="delete from req_candidatos where id_requisision= ".$id;
-    //$conn->Execute($SQL);
-    $SQL ="delete from req where id= ".$id;
-    //$conn->Execute($SQL);
-    $SQL ="delete from entrevistas where id_req= ".$id;
-   // $conn->Execute($SQL);  */
+    $conn = $this->conec();
+    $SQL ="update req set visible = 'N' where id =".$id;
+    $conn->Execute($SQL);
+    
 }
 
 public function guardarinformacionyformato($nombreempresa,$nombrereferencia,$cargo,$telefono,$ultimocargo,$tiempodesemp,$motivoretiro,$conceptodesempeno,$fortalezas,$aspectosmejorar,$personascargo,$responsabilidad,$calidad,$manejot,$tomad,$agilidad,$actitudse,$manejoco,$adaptabilidad,$relacionesct,$relacionessuper,$observacionesgenerales,$referenciafinal,$volveriaa,$porquecontra,$lorecomienda,$porquelorecomienda,$personareferenciacion,$cargoguar,$fechareferenciacion,$idreq,$id_per)
