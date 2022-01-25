@@ -2505,6 +2505,10 @@
                     window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
                     </script>";
                 break;
+                case "testcorreo":
+                    $objconsulta->testcorreo();
+                    echo "Enviado";
+                    break;
 
                 case "enviarcorreodocumentacion":
                     $info = base64_decode($_GET['valida']);
@@ -2888,6 +2892,8 @@
                     window.location.href = 'home.php?ctr=requisicion&acc=milistadoReq';
                     </script>";
                 break;
+
+                
 
                 case "test":
                     /*
@@ -4201,8 +4207,12 @@ echo '<a href="fpdf-advanced2.pdf">a</a>';
                 case 'eliminarreq':
                     $lastid=$_GET['id'];
                     $listadoreqcrea=$objconsulta->eliminarReq($lastid);
+                    $bandera = "listadoReq";
+                    if($_GET['ges']=2){
+                        $bandera = "milistadoReq";
+                    }
                     echo "<script>alert('Solicitud Eliminada Correctamente');
-                window.location.href = 'home.php?ctr=requisicion&acc=listadoReq';
+                window.location.href = 'home.php?ctr=requisicion&acc=".$bandera."';
                 </script>";
                 break;
 
