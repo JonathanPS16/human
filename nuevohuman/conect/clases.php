@@ -1337,6 +1337,15 @@ public function obteneMisRescreadas($id){
       return $consultas;
   }
 
+  public function consultararchivosreqcan($id){
+    $conn = $this->conec();
+      
+      $consultas = "SELECT * FROM req_candidatos where id =".$id;
+      //echo $consultas;
+      $consultas= $conn->Execute($consultas)-> getRows();
+      return $consultas;  
+  }
+
   public function cerrarregistroaprobado($id,$req,$descripcion,$motivo)
   {
     $conn = $this->conec();
@@ -2787,10 +2796,10 @@ public function enviardocumentacion($idper,$idreq){
     $cargo ="";
     $nombretemporal ="";
     //$ordeningreso = "archivosgenerales/";
-    $docdocumen = "archivosgenerales/";
-    $hvhuman = "archivosgenerales/";
-    $archivoaper = "archivosgenerales/";
-    $archivoexa =  "archivosgenerales/";
+    $docdocumen = "";
+    $hvhuman = "";
+    $archivoaper = "";
+    $archivoexa =  "";
     for($i= 0; $i<count($consultas); $i++) {
         $correo  =$consultas[$i]['correo'];
         $nombretemporal  =$consultas[$i]['nombretemporal'];
@@ -2808,8 +2817,10 @@ public function enviardocumentacion($idper,$idreq){
         $nombre.= $consultas[$i]['nombre'];
         $cargo.= $consultas[$i]['cargo'];
     }
-    $titulo2 = "Notificación envío de Documentos";
-    $cuerpo2 = "Apreciado(a) ".$nombre."<br><br>
+
+
+    $titulo = "Notificación envío de Documentos";
+    $mensaje = "Apreciado(a) ".$nombre."<br><br>
 
     Dando continuidad al proceso de contratación para el cargo ".$cargo." , en nuestra empresa Usuario ".$nombretemporal." ;le estamos enviado los formatos que Usted debe diligenciar y la documentación que debe reunir y que es requerida para dar tramite a la contracción, tanto los formatos debidamente diligenciados como la documentación solicitada puede ser entregada en nuestra  oficina o remitirla  a los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com 
     <br><br>
@@ -2822,6 +2833,25 @@ public function enviardocumentacion($idper,$idreq){
     Área de Selección<br>
     Human Talent SAS
     ";
+
+    $docdocumen = "";
+    $hvhuman = "";
+    $archivoaper = "";
+    $archivoexa =  "";
+    $archivosgene = "";
+    if($docdocumen!=""){
+        $archivosgene.=$docdocumen."|";
+    }
+    if($hvhuman!=""){
+        $archivosgene.=$hvhuman."|";
+    }
+    if($archivoexa!=""){
+        $archivosgene.=$archivoexa."|";
+    }
+    
+    
+
+    /*
     $maildos = new PHPMailer();
     $maildos->IsSMTP();
     $maildos->SMTPAuth = true;
@@ -2833,13 +2863,7 @@ public function enviardocumentacion($idper,$idreq){
     $maildos->SetFrom(correocor, mensajecorr);
     $asunto = "=?UTF-8?B?".base64_encode($titulo2)."=?=";
     $maildos->Subject = utf8_decode($asunto); // Este es el titulo del email. 
-    /*$maildos->Host = "smtp.zoho.com"; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
-    $maildos->Username = "info@formalsi.com"; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
-    $maildos->Password = "2019FormalSiMarzo*"; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
-    $maildos->Port = 465; // Puerto de conexión al servidor de envio. 
-    $maildos->SetFrom('info@formalsi.com', 'Humantalentsas');*/
     $maildos->AddAddress($correo, "Usuario");
-    
     //$maildos->AddAttachment($ordeningreso,"ordeningreso.docx");
     $maildos->AddAttachment($hvhuman,"hojavidahuman.docx");
     $maildos->AddAttachment($docdocumen,"documentacion.docx");
@@ -2848,7 +2872,23 @@ public function enviardocumentacion($idper,$idreq){
     }
     //$maildos->AddAttachment($archivoaper,"aperturacuenta.pdf");
     $maildos->MsgHTML(utf8_decode($cuerpo2));
-    $maildos->Send();
+    $maildos->Send();*/
+    $this->enviarcorreoadjuntosdinamico($correo,$archivosgene,$mensaje,$titulo);
+    $this->enviarcorreoadjuntosdinamico("jorge.osorio@protección.com.co",$archivosgene,$mensaje,$titulo);
+
+    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    for($i= 0; $i<count($consultas); $i++) {
+      $correos = explode(",", $consultas[$i]['usuarios']);
+      for($j=0; $j<count($correos); $j++){
+          $consultascorr = "SELECT correo FROM usuarios WHERE id_usuario= ".$correos[$j];
+          $consultasresp= $conn->Execute($consultascorr)-> getRows();
+          if($consultasresp[0]['correo']!=""){
+            $this->enviarcorreoadjuntosdinamico($consultasresp[0]['correo'],$archivosgene,$mensaje,$titulo);
+          }
+      }
+    }
+
 
     $SQL ="UPDATE req_candidatos SET estado='F' WHERE id=".$idper;
     $conn->Execute($SQL);
@@ -2906,7 +2946,22 @@ public function enviarcorreoadjuntos($correo,$documento,$mensaje,$titulo="Notifi
 }
 
 public function enviarcorreoadjuntosdinamico($correo,$documentos,$mensaje,$titulo="Notificacion Human"){
-   // echo $documentos;
+  /* 
+    $explode = explode("|",$documentos);
+    //var_dump($explode);
+    for($i = 0 ; $i<count($explode); $i++){
+        if($explode[$i]!=""){
+            $docname=$explode[$i];
+            $archivoexa = "archivosgenerales/".$explode[$i];
+echo "<a href ='".$archivoexa."'>".$archivoexa."</a>";
+           // $maildos->AddAttachment($archivoexa,$explode[$i];);
+        }
+    }
+
+
+    
+    die();*/
+    // echo $documentos;
     $maildos = new PHPMailer();
     $maildos->IsSMTP();
     $maildos->SMTPAuth = true;
@@ -2919,17 +2974,16 @@ public function enviarcorreoadjuntosdinamico($correo,$documentos,$mensaje,$titul
     $asunto = "=?UTF-8?B?".base64_encode($titulo)."=?=";
     $maildos->Subject = utf8_decode($asunto); // Este es el titulo del email. 
     $maildos->AddAddress($correo, "Usuario");
-
+    $explode = "";
     $explode = explode("|",$documentos);
+    $maildos->MsgHTML(utf8_decode($mensaje));
     //var_dump($explode);
     for($i = 0 ; $i<count($explode); $i++){
         if($explode[$i]!=""){
-            $docname=$explode[$i];
-            $archivoexa = "archivosgenerales/".$explode[$i];
-            $maildos->AddAttachment($archivoexa,$docname);
+            //echo $explode[$i]."<br>";
+            $maildos->AddAttachment("archivosgenerales/".$explode[$i],$explode[$i]);
         }
     }
-    $maildos->MsgHTML(utf8_decode($mensaje));
     $maildos->Send();
 }
 
