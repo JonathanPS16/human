@@ -2511,6 +2511,49 @@
                     break;
 
                 case "enviarcorreodocumentacion":
+
+                    $id= $_POST['id'];
+                    $correo= $_POST['correo'];
+                    $datos = $objconsulta->consultararchivosreqcan($id);
+                    $documentos  = "";
+                    //var_export($datos);
+                    $ret = $_POST['retiro'];
+                    for($i = 0 ; $i<count($ret); $i++){
+                        //echo $ret[$i];
+                        if($ret[$i]=="contrato"){
+                            if($datos[0]['contratocontratacion']!="") {
+                                $documentos.=$datos[0]['contratocontratacion']."|";
+                            }
+                        }
+
+                        if($ret[$i]=="arl"){
+                            if($datos[0]['archivoarl']!="") {
+                                $documentos.=$datos[0]['archivoarl']."|";
+                            }
+                        }
+
+                        if($ret[$i]=="eps"){
+                            if($datos[0]['archivoeps']!="") {
+                                $documentos.=$datos[0]['archivoeps']."|";
+                            }
+                        }
+
+                        if($ret[$i]=="caja"){
+                            if($datos[0]['archivocompensa']!="") {
+                                $documentos.=$datos[0]['archivocompensa']."|";
+                            }
+                        }
+
+                        if($ret[$i]=="pensiones"){
+                            if($datos[0]['archivofondo']!="") {
+                                $documentos.=$datos[0]['archivofondo']."|";   
+                            }
+                        }
+
+                    }
+                   // echo $documentos;
+                    //echo $correo;
+                    /*
                     $info = base64_decode($_GET['valida']);
                     //echo $info;
                     $info = explode("|",$info);
@@ -2524,7 +2567,8 @@
                     //echo "Fondo= $fondo";
                     $documentos = $contrato."|".$arl."|".$eps."|".$caja."|".$fondo;
                     //echo  $correo."-".$nombre;
-                    $mensaje = "Apreciado ".$nombre."
+                    */
+                    $mensaje = "Apreciado ".$datos[0]['nombre']."
                     <br><br>
                     Se adjuntan documentos en base a contratación. 
                     <br><br>
@@ -2536,6 +2580,7 @@
                     echo "<script>alert('Correo Enviado Correctamente');
                     window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
                     </script>";
+                   
                 break;
 
                 case "procesodirecto":

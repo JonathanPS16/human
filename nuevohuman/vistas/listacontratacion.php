@@ -22,6 +22,7 @@
       <th>Fecha Fondo Pensiones</th>
 			<th>Archivo Fondo Pensiones</th>
       <th>Archivo Beneficiarios</th>
+      <th>Enviar Documentos</th>
 			<th>Estado</th>
 		</tr>
 	</thead>
@@ -57,7 +58,7 @@ for($i=0; $i<count($listatemporales);$i++){
   if($listatemporales[$i]['contratocontratacion']!="" && $listatemporales[$i]['archivoarl']!="" && $listatemporales[$i]['archivoeps']!="" && $listatemporales[$i]['archivocompensa']!="" && $listatemporales[$i]['archivofondo']!="" )
   {
     $concatena = $listatemporales[$i]['correo']."|".$listatemporales[$i]['nombre']."|".$listatemporales[$i]['contratocontratacion']."|".$listatemporales[$i]['archivoarl']."|".$listatemporales[$i]['archivoeps']."|".$listatemporales[$i]['archivocompensa']."|".$listatemporales[$i]['archivofondo'];
-    $archivosenvio = '<a href="home.php?ctr=requisicion&acc=enviarcorreodocumentacion&valida='.base64_encode($concatena).'" class="btn btn-secondary">Enviar Documentos</a><br><br>';
+    //$archivosenvio = '<a href="home.php?ctr=requisicion&acc=enviarcorreodocumentacion&valida='.base64_encode($concatena).'" class="btn btn-secondary">Enviar Documentos</a><br><br>';
   }
   
 	
@@ -400,6 +401,62 @@ $modalbotonextra ='<div class="modal fade" id="exampleModalextra'.$id.'" tabinde
     $botonextra ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalextra'.$id.'">
   Gestionar Contratación
 </button>';	
+
+$modalbotonenviarcorreo ='<div class="modal fade" id="exampleModalextraenvio'.$id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Enviar Documentos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="home.php?ctr=requisicion&acc=enviarcorreodocumentacion" method="post" enctype="multipart/form-data">
+		<fieldset>
+	
+    <!-- Button -->
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="guardar">Documentos a Enviar</label>
+		  <div class="col-md-4">
+      <select style="width: 100% !important;" class="selectpicker" data-live-search="true" name="retiro[]" multiple="multiple">
+          <option value="contrato">Contrato</option>
+          <option value="arl">ARL</option>
+          <option value="eps">EPS</option>
+          <option value="caja">Caja Compensación</option>
+          <option value="pensiones">Pensiones</option>
+      </select>
+		  </div>
+		</div>
+		
+      <input id="id" name="id" type="hidden" value="'.$id.'">
+      <input id="correo" name="correo" type="hidden" value="'.$listatemporales[$i]['correo'].'">
+      
+	 
+	  		    
+		<!-- Button -->
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="guardar"></label>
+		  <div class="col-md-4">
+		    <button id="guardar" name="guardar" class="btn btn-primary">Guardar</button>
+		  </div>
+		</div>
+
+		</fieldset>
+		</form>
+
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+';
+
+$botonextraenviarcorreo =$modalbotonenviarcorreo.'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalextraenvio'.$id.'">
+Enviar Documentos
+</button>';	
+
     echo "<tr>
     		<td>".$id."</td>
 			<td>".$listatemporales[$i]['nombre']."</td>
@@ -420,6 +477,7 @@ $modalbotonextra ='<div class="modal fade" id="exampleModalextra'.$id.'" tabinde
       <td>".$listatemporales[$i]['fechafondo']."</td>
 			<td>".$listatemporales[$i]['archivofondo']."</td>
 			<td>".$listatemporales[$i]['archivobenediciarios']."</td>
+      <td>".$botonextraenviarcorreo."</td>
     		<td>".$archivosenvio.$modalbotonextra.$botonextra."</td>
     </tr>";
   }

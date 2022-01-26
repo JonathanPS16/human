@@ -12,7 +12,7 @@ $datossele =  explode(",",$procesoreq[0]['correosselecccion']);
 <table class="table table-striped" id="tablagrid">
 		<tr>
 			<th>Proceso Disciplinario</th>
-			<th><select class="js-example-basic-multiple" name="disciplinario[]" multiple="multiple">
+			<th><select class="selectpicker" data-live-search="true" name="disciplinario[]" multiple="multiple">
 			<?php
 			for($i=0; $i<count($listatemporales);$i++){
 
@@ -33,7 +33,7 @@ $datossele =  explode(",",$procesoreq[0]['correosselecccion']);
 			</tr>
 		<tr>
 			<th>Proceso Accidentes</th>
-			<th><select class="js-example-basic-multiple" name="accidentes[]" multiple="multiple">
+			<th><select class="selectpicker" data-live-search="true" name="accidentes[]" multiple="multiple">
 			<?php
 			for($i=0; $i<count($listatemporales);$i++){
 
@@ -55,7 +55,7 @@ $datossele =  explode(",",$procesoreq[0]['correosselecccion']);
 
 			<tr>
 			<th>Proceso Selecccion</th>
-			<th><select class="js-example-basic-multiple" name="seleccion[]" multiple="multiple">
+			<th><select class="selectpicker" data-live-search="true" name="seleccion[]" multiple="multiple">
 			<?php
 			for($i=0; $i<count($listatemporales);$i++){
 
@@ -77,7 +77,7 @@ $datossele =  explode(",",$procesoreq[0]['correosselecccion']);
 			
 		<tr>
 			<th>Proceso Retiro</th>
-			<th><select class="js-example-basic-multiple" name="retiro[]" multiple="multiple">
+			<th><select style="width: 100% !important;" class="selectpicker" data-live-search="true" name="retiro[]" multiple="multiple">
 			<?php
 			for($i=0; $i<count($listatemporales);$i++){
 
@@ -106,13 +106,3 @@ $datossele =  explode(",",$procesoreq[0]['correosselecccion']);
 		  </div>
 		</div>
 </form>
-<script>
-$(document).ready(function() {
-    $('.js-example-basic-multiple').select2();
-});
-</script>
-<style>
-.select2-selection.select2-selection--multiple {
-    width: 831px;
-}
-</style>
