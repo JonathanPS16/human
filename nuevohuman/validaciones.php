@@ -227,7 +227,7 @@
                         $tipo_archivo = $_FILES['archivo1']['type'];
                         $tamano_archivo = $_FILES['archivo1']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';
                                 </script>";
                         }
@@ -263,7 +263,7 @@
                         $tipo_archivo = $_FILES['archivo']['type'];
                         $tamano_archivo = $_FILES['archivo']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';
                             </script>";
                     }
@@ -296,7 +296,7 @@
                         $tipo_archivo = $_FILES['archivofirmado']['type'];
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';
                                 </script>";
 
@@ -386,7 +386,7 @@
                         $tipo_archivo = $_FILES['archivo1']['type'];
                         $tamano_archivo = $_FILES['archivo1']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=proceso&acc=formproceso';
                                 </script>";
                     }
@@ -410,7 +410,7 @@
                         $tipo_archivo = $_FILES['archivo2']['type'];
                         $tamano_archivo = $_FILES['archivo2']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=proceso&acc=formproceso';
                                 </script>";
                         }
@@ -433,7 +433,7 @@
                         $tipo_archivo = $_FILES['archivo3']['type'];
                         $tamano_archivo = $_FILES['archivo3']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=proceso&acc=formproceso';
                                 </script>";
                         }
@@ -522,7 +522,7 @@
                         $tipo_archivo = $_FILES['archivofirmado']['type'];
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=proceso&acc=formacla';
                                 </script>";
                         }
@@ -577,7 +577,7 @@
                         $tipo_archivo = $_FILES['archivofirmado']['type'];
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=proceso&acc=formacla';
                             </script>";
                         }
@@ -622,7 +622,7 @@
                         $tipo_archivo = $_FILES['archivoliquidacion']['type'];
                         $tamano_archivo = $_FILES['archivoliquidacion']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=retiro&acc=controlre';
                             </script>";
                         }
@@ -906,7 +906,7 @@
                         $tipo_archivo = $_FILES['archivo1']['type'];
                         $tamano_archivo = $_FILES['archivo1']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=retiro&acc=listadoret';
                             </script>";
                         }
@@ -930,7 +930,7 @@
                         $tipo_archivo = $_FILES['archivo2']['type'];
                         $tamano_archivo = $_FILES['archivo2']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=retiro&acc=listadoret';
                             </script>";
                         }
@@ -968,7 +968,7 @@
                         $tipo_archivo = $_FILES['archivo']['type'];
                         $tamano_archivo = $_FILES['archivo']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=novedades&acc=incapacidades';
                             </script>";
                         }
@@ -1218,7 +1218,7 @@
                         $tipo_archivo = $_FILES['archivoincapacidad']['type'];
                         $tamano_archivo = $_FILES['archivoincapacidad']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
                             </script>";
                         }
@@ -1241,7 +1241,7 @@
                         $tipo_archivo = $_FILES['archivotranscri']['type'];
                         $tamano_archivo = $_FILES['archivotranscri']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
                             </script>";
                         }
@@ -1291,7 +1291,7 @@
                         $tipo_archivo = $_FILES['imagen']['type'];
                         $tamano_archivo = $_FILES['imagen']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=incapacidad&acc=trasncripcion';
                             </script>";
                         }
@@ -1366,7 +1366,7 @@
                         $tipo_archivo = $_FILES['archivo3']['type'];
                         $tamano_archivo = $_FILES['archivo3']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=accidentes&acc=formprocesogest';
                             </script>";
                         }
@@ -1493,7 +1493,7 @@
                         $tipo_archivo = $_FILES['archivofirmado']['type'];
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=proceso&acc=formacla';
                             </script>";
                         }
@@ -1931,7 +1931,7 @@
                         $tipo_archivo = $_FILES['archivo3']['type'];
                         $tamano_archivo = $_FILES['archivo3']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=accidentes&acc=formprocesogest';
                             </script>";
                         }
@@ -2017,7 +2017,7 @@
                         $tipo_archivo = $_FILES['archivofirmado']['type'];
                         $tamano_archivo = $_FILES['archivofirmado']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=proceso&acc=formacla';
                             </script>";
                         }
@@ -2087,7 +2087,7 @@
                     $tipo_archivo = $_FILES['archivo']['type'];
                     $tamano_archivo = $_FILES['archivo']['size'];
                     if($tamano_archivo>maxfilesize){
-                        echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                        echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                         window.location.href = 'home.php?ctr=carguemasivo&acc=certificados&tp=".$_POST['valor']."';
                         </script>";
                     }
@@ -2608,7 +2608,7 @@
                     $tipo_archivo = $_FILES['archivo']['type'];
                     $tamano_archivo = $_FILES['archivo']['size'];
                     if($tamano_archivo>maxfilesize){
-                        echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                        echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                         window.location.href = 'home.php?ctr=requisicion&acc=listadoReq';
                         </script>";
                     }
@@ -2674,7 +2674,7 @@
                     $tipo_archivo = $_FILES['filebutton']['type'];
                     $tamano_archivo = $_FILES['filebutton']['size'];
                     if($tamano_archivo>maxfilesize){
-                        echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                        echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                         window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$_POST['idreq']."';
                         </script>";
                     }
@@ -2728,7 +2728,7 @@
                         $tipo_archivo = $_FILES['contrato']['type'];
                         $tamano_archivo = $_FILES['contrato']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
                             </script>";
                         }
@@ -2746,7 +2746,7 @@
                         $tipo_archivo = $_FILES['archivoarl']['type'];
                         $tamano_archivo = $_FILES['archivoarl']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
                             </script>";
                         }
@@ -2764,7 +2764,7 @@
                         $tipo_archivo = $_FILES['archivoeps']['type'];
                         $tamano_archivo = $_FILES['archivoeps']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
                             </script>";
                         }
@@ -2782,7 +2782,7 @@
                         $tipo_archivo = $_FILES['archivocompensa']['type'];
                         $tamano_archivo = $_FILES['archivocompensa']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
                             </script>";
                         }
@@ -2800,7 +2800,7 @@
                         $tipo_archivo = $_FILES['archivofondo']['type'];
                         $tamano_archivo = $_FILES['archivofondo']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
                             </script>";
                         }
@@ -2818,7 +2818,7 @@
                         $tipo_archivo = $_FILES['archivobenediciarios']['type'];
                         $tamano_archivo = $_FILES['archivobenediciarios']['size'];
                         if($tamano_archivo>maxfilesize){
-                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                            echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                             window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
                             </script>";
                         }
@@ -2859,7 +2859,7 @@
                     $tipo_archivo = $_FILES['filebutton']['type'];
                     $tamano_archivo = $_FILES['filebutton']['size'];
                     if($tamano_archivo>maxfilesize){
-                        echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                        echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                         window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$_POST['idreq']."';
                                 </script>";
 
@@ -2894,7 +2894,7 @@
                     $tipo_archivo = $_FILES['filebutton']['type'];
                     $tamano_archivo = $_FILES['filebutton']['size'];
                     if($tamano_archivo>maxfilesize){
-                        echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ';
+                        echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
                         window.location.href = 'home.php?ctr=requisicion&acc=listaCandidatos&id=".$_POST['idreq']."';
                                 </script>";
                     }
