@@ -2086,11 +2086,6 @@
                     $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     $tipo_archivo = $_FILES['archivo']['type'];
                     $tamano_archivo = $_FILES['archivo']['size'];
-                    if($tamano_archivo>maxfilesize){
-                        echo "<script>alert('Tamaño supera el permitido ".maxfilesizelabel." ');
-                        window.location.href = 'home.php?ctr=carguemasivo&acc=certificados&tp=".$_POST['valor']."';
-                        </script>";
-                    }
                     $mensaje = "";    
                     $idempresaprestadora=$_POST['empresaprestadora'];
                     //compruebo si las características del archivo son las que deseo
