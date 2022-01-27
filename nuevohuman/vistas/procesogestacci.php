@@ -54,7 +54,7 @@
 			<input type ="hidden" name="id" id ="id" value="'.$id.'">
 			<div class="custom-file">
 			<input type="file" class="custom-file-input" id="archivo3" name="archivo3" required="required">
-			<label class="custom-file-label" for="archivo3">Documento  Max(2 Mb)</label>
+			<label class="custom-file-label" for="archivo3">Documento  Max(<?php echo maxfilesizelabel; ?>)</label>
 		  </div>
 		  <br>
 		  <br>
@@ -188,7 +188,7 @@ $(".custom-file-input").on("change", function() {
   
   <div class="custom-file">
     <input type="file" class="custom-file-input" id="archivofirmado" name="archivofirmado" required="required">
-    <label class="custom-file-label" for="archivo3">Archivo Firmado  Max(2 Mb)</label>
+    <label class="custom-file-label" for="archivo3">Archivo Firmado  Max(<?php echo maxfilesizelabel; ?>)</label>
   </div>
 <bt><br><br>
   <div class="form-group row">

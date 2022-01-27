@@ -265,7 +265,7 @@ if($listatemporales[$i]['enviocorreot']!="")
 $ordeningreso ='<a href="archivosgenerales/'.$listatemporales[$i]['ordeningreso'].'" target="_black" class="btn btn-primary">Orden Ingreso</a><br>';
 
 $contratocode = '<div class="form-group row">
-<label for="contrato" class="col-4 col-form-label">Contrato  Max(2 Mb)</label> 
+<label for="contrato" class="col-4 col-form-label">Contrato  Max(<?php echo maxfilesizelabel; ?>)</label> 
 <div class="col-8">
   <input id="contrato" name="contrato" type="file" class="form-control">
 </div>
@@ -274,7 +274,7 @@ $contratocode = '<div class="form-group row">
 
 
 $archivoarlcode = '<div class="form-group row">
-<label for="archivoarl" class="col-4 col-form-label">Archivo ARL  Max(2 Mb)</label> 
+<label for="archivoarl" class="col-4 col-form-label">Archivo ARL  Max(<?php echo maxfilesizelabel; ?>)</label> 
 <div class="col-8">
   <input id="archivoarl" name="archivoarl" type="file" class="form-control">
 </div>
@@ -284,7 +284,7 @@ $archivoarlcode = '<div class="form-group row">
 
 
 $archivoepscode = '<div class="form-group row">
-<label for="archivoeps" class="col-4 col-form-label">Archivo EPS  Max(2 Mb)</label> 
+<label for="archivoeps" class="col-4 col-form-label">Archivo EPS  Max(<?php echo maxfilesizelabel; ?>)</label> 
 <div class="col-8">
   <input id="archivoeps" name="archivoeps" type="file" class="form-control">
 </div>
@@ -295,7 +295,7 @@ if($listatemporales[$i]['archivoeps']!="No Aplica"){
 }
 
 $archivocompensacode = '<div class="form-group row">
-<label for="archivocompensa" class="col-4 col-form-label">Archivo Caja de Compensación  Max(2 Mb)</label> 
+<label for="archivocompensa" class="col-4 col-form-label">Archivo Caja de Compensación  Max(<?php echo maxfilesizelabel; ?>)</label> 
 <div class="col-8">
   <input id="archivocompensa" name="archivocompensa" type="file" class="form-control">
 </div>
@@ -304,7 +304,7 @@ $archivocompensacode = '<div class="form-group row">
 
 
 $archivofondocode = '<div class="form-group row">
-<label for="archivofondo" class="col-4 col-form-label">Archivo Fondo Pensiones  Max(2 Mb)</label> 
+<label for="archivofondo" class="col-4 col-form-label">Archivo Fondo Pensiones  Max(<?php echo maxfilesizelabel; ?>)</label> 
 <div class="col-8">
   <input id="archivofondo" name="archivofondo" type="file" class="form-control">
 </div>
@@ -313,7 +313,7 @@ $archivofondocode = '<div class="form-group row">
 
 
 $archivobenecode = '<div class="form-group row">
-<label for="archivobenediciarios" class="col-4 col-form-label">Archivo Beneficiarios  Max(2 Mb)</label> 
+<label for="archivobenediciarios" class="col-4 col-form-label">Archivo Beneficiarios  Max(<?php echo maxfilesizelabel; ?>)</label> 
 <div class="col-8">
   <input id="archivobenediciarios" name="archivobenediciarios" type="file" class="form-control">
 </div>

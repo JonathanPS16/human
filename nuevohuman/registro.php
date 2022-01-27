@@ -116,7 +116,7 @@ if(isset($_POST) && $_POST['vali']=='si')
     </div>
   </div>
   <div class="form-group row">
-    <label for="archivo" class="col-4 col-form-label">Archivo Adjunto  Max(2 Mb)</label> 
+    <label for="archivo" class="col-4 col-form-label">Archivo Adjunto  Max(<?php echo maxfilesizelabel; ?>)</label> 
     <div class="col-8">
       <input id="archivo" name="archivo" type="file" class="form-control">
     </div>

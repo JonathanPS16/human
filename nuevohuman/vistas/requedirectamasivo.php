@@ -104,7 +104,7 @@ for($a=0; $a<count($listausuariosgenerales);$a++){
     </div>
   </div>
 <div class="form-group row">
-    <label class="col-4 col-form-label" for="archivo">Archivo  Max(2 Mb)</label> 
+    <label class="col-4 col-form-label" for="archivo">Archivo  Max(<?php echo maxfilesizelabel; ?>)</label> 
     <div class="col-8">
       <input id="archivo" name="archivo"  type="file" class="form-control" required="required">
     </div>

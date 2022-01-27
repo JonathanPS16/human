@@ -370,7 +370,7 @@ for($i=0; $i<count($listadoreq);$i++){
           <fieldset>
           <!-- File Button --> 
           <div class="form-group">
-            <label class="col-md-4 control-label" for="hv">Hoja de Vida  Max(2 Mb)</label>
+            <label class="col-md-4 control-label" for="hv">Hoja de Vida  Max(<?php echo maxfilesizelabel; ?>)</label>
             <div class="col-md-4">
               <input id="hv" name="hv" class="input-file" type="file">
             </div>
@@ -378,7 +378,7 @@ for($i=0; $i<count($listadoreq);$i++){
 
           <!-- File Button --> 
           <div class="form-group">
-            <label class="col-md-4 control-label" for="orden">Orden Ingreso  Max(2 Mb)</label>
+            <label class="col-md-4 control-label" for="orden">Orden Ingreso  Max(<?php echo maxfilesizelabel; ?>)</label>
             <div class="col-md-4">
               <input id="orden" name="orden" class="input-file" type="file">
             </div>
@@ -386,7 +386,7 @@ for($i=0; $i<count($listadoreq);$i++){
 
           <!-- File Button --> 
           <div class="form-group">
-            <label class="col-md-4 control-label" for="documentacion">Documentacion  Max(2 Mb)</label>
+            <label class="col-md-4 control-label" for="documentacion">Documentacion  Max(<?php echo maxfilesizelabel; ?>)</label>
             <div class="col-md-4">
               <input id="documentacion" name="documentacion" class="input-file" type="file">
             </div>
@@ -427,7 +427,7 @@ for($i=0; $i<count($listadoreq);$i++){
 		<fieldset>
 		<!-- File Button --> 
 		<div class="form-group">
-		  <label class="col-md-4 control-label" for="filebutton"> Max(2 Mb)</label>
+		  <label class="col-md-4 control-label" for="filebutton"> Max(<?php echo maxfilesizelabel; ?>)</label>
 		  <div class="col-md-4">
       <input id="id" name="id" type="hidden" value="'.$idper.'">
       <input id="idreq" name="idreq" type="hidden" value="'.$idreq.'">
@@ -478,7 +478,7 @@ for($i=0; $i<count($listadoreq);$i++){
 		<fieldset>
 		<!-- File Button --> 
 		<div class="form-group">
-		  <label class="col-md-4 control-label" for="filebutton"> Max(2 Mb)</label>
+		  <label class="col-md-4 control-label" for="filebutton"> Max(<?php echo maxfilesizelabel; ?>)</label>
 		  <div class="col-md-4">
       <input id="id" name="id" type="hidden" value="'.$idper.'">
       <input id="idreq" name="idreq" type="hidden" value="'.$idreq.'">
@@ -1098,7 +1098,7 @@ $modalbotonextra ='<div class="modal fade" id="exampleModalextra'.$idper.'" tabi
 		<fieldset>
 		<!-- File Button --> 
 		<div class="form-group">
-		  <label class="col-md-4 control-label" for="filebutton"> Max(2 Mb)</label>
+		  <label class="col-md-4 control-label" for="filebutton"> Max(<?php echo maxfilesizelabel; ?>)</label>
 		  <div class="col-md-4">
       <input id="id" name="id" type="hidden" value="'.$idper.'">
       <input id="idreq" name="idreq" type="hidden" value="'.$idreq.'">

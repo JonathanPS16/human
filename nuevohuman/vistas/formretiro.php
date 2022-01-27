@@ -86,14 +86,14 @@ $datos= explode("|", $_POST['validacion']);
 
 
   <div class="form-group row">
-    <label for="archivo1" class="col-4 col-form-label">Renuncia  Max(2 Mb)</label> 
+    <label for="archivo1" class="col-4 col-form-label">Renuncia  Max(<?php echo maxfilesizelabel; ?>)</label> 
     <div class="col-8">
     <input type="file"  id="archivo1" name="archivo1">
     </div>
   </div> 
 
   <div class="form-group row">
-    <label for="archivo2" class="col-4 col-form-label">Paz y Salvo  Max(2 Mb)</label> 
+    <label for="archivo2" class="col-4 col-form-label">Paz y Salvo  Max(<?php echo maxfilesizelabel; ?>)</label> 
     <div class="col-8">
     <input type="file" id="archivo2" name="archivo2" >
     </div>

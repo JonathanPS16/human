@@ -165,13 +165,13 @@
 		  </div>
 		</div>
 		<div class="form-group row">
-		  <label for="archivoincapacidad" class="col-4 col-form-label">Archivo Incapacidad  Max(2 Mb)</label> 
+		  <label for="archivoincapacidad" class="col-4 col-form-label">Archivo Incapacidad  Max(<?php echo maxfilesizelabel; ?>)</label> 
 		  <div class="col-8">
 			<input id="archivoincapacidad" name="archivoincapacidad" type="file" class="form-control" required="required">
 		  </div>
 		</div>
 		<div class="form-group row">
-		  <label for="archivotranscri" class="col-4 col-form-label">Archivo Transcripcion  Max(2 Mb)</label> 
+		  <label for="archivotranscri" class="col-4 col-form-label">Archivo Transcripcion  Max(<?php echo maxfilesizelabel; ?>)</label> 
 		  <div class="col-8">
 			<input id="archivotranscri" name="archivotranscri" type="file" class="form-control" required="required">
 		  </div>
@@ -346,7 +346,7 @@
 		  </div>
 		</div>
 		<div class="form-group row">
-		  <label for="imagen" class="col-4 col-form-label">Imagen  Max(2 Mb)</label> 
+		  <label for="imagen" class="col-4 col-form-label">Imagen  Max(<?php echo maxfilesizelabel; ?>)</label> 
 		  <div class="col-8">
 			<input id="imagen" name="imagen" type="file" class="form-control" required="required">
 		  </div>
@@ -634,13 +634,13 @@
 		  </div>
 		</div>
 		<div class="form-group row">
-		  <label for="archivoincapacidad" class="col-4 col-form-label">Archivo Incapacidad  Max(2 Mb)</label> 
+		  <label for="archivoincapacidad" class="col-4 col-form-label">Archivo Incapacidad  Max(<?php echo maxfilesizelabel; ?>)</label> 
 		  <div class="col-8">
 			<input id="archivoincapacidad" name="archivoincapacidad" type="file" class="form-control" required="required">
 		  </div>
 		</div>
 		<div class="form-group row">
-		  <label for="archivotranscri" class="col-4 col-form-label">Archivo Transcripcion  Max(2 Mb)</label> 
+		  <label for="archivotranscri" class="col-4 col-form-label">Archivo Transcripcion  Max(<?php echo maxfilesizelabel; ?>)</label> 
 		  <div class="col-8">
 			<input id="archivotranscri" name="archivotranscri" type="file" class="form-control" required="required">
 		  </div>
