@@ -303,6 +303,14 @@ public function selectexternos(){
     return $consultas;   
 }
 
+public function selectexternoscorreos(){
+    $conn = $this->conec();
+    $dato=array();
+    $consultas = "SELECT * FROM configuraciones";
+    $consultas= $conn->Execute($consultas)-> getRows();
+    return $consultas;   
+}
+
 public function testcorreo(){
     $this->enviocorreo("kptzmusic@gmail.com","TEst");
 }
@@ -1579,7 +1587,13 @@ public function obtenerreqinfo($id){
       $tipo = $consultas[$i]['tipo'];
       return $nombreca."|".$tipo;
     }
+}
 
+
+public function guardarcorreodinamico($host,$puerto,$usuario,$clave,$correo,$label,$footer,$correos,$id){
+    $conn = $this->conec();
+    $SQL ="update configuraciones set host='$host',puerto='$puerto',usuario='$usuario',clave='$clave',correo='$correo',mensajecorreo='$label',footer='$footer',correosnoti='$correos' where idconfig=".$id;
+    $conn->Execute($SQL);
 
 }
 public function ajustarorden($id,$idreq,$tasa,$salario,$presentarse,$direccion,$fechainicio,$centrocostosor,$centrosucursal,$funcionarioaut,$cargofuncionarioaut,$opbservacioncontratacion,$funcionarioautorizath,$fechaautori,$cargofuncionarioth){

@@ -1852,6 +1852,22 @@
                     include('vistas/admonexternos.php');
                 break;
 
+                case "admincorreos":
+                    //$listamenus=$objconsulta->selectperfiles();
+                    $listatemporales=$objconsulta->selectexternoscorreos();
+                    
+                    include('vistas/admoncorreos.php');
+                break;
+
+                case "guardarconfigcorreo":
+                    //$listamenus=$objconsulta->selectperfiles();
+                    $listatemporales=$objconsulta->guardarcorreodinamico($_POST['host'],$_POST['puerto'],$_POST['usuario'],$_POST['clave'],$_POST['correo'],$_POST['label'],$_POST['footer'],$_POST['correos'],$_POST['id']);
+                    echo "<script>alert('Configuración Actualizada');";
+                          echo "window.location.href = 'home.php?ctr=admon&acc=admincorreos';";
+                          echo "</script>";
+                    include('vistas/admoncorreos.php');
+                break;
+
                 case "creacionusuarios":
                     $listamenus=$objconsulta->selectperfiles();
                     $listacentros=$objconsulta->listacentros();
