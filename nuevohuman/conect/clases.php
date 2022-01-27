@@ -2862,31 +2862,7 @@ public function enviardocumentacion($idper,$idreq){
     if($archivoexa!=""){
         $archivosgene.=$archivoexa."|";
     }
-    
-    
-
-    /*
-    $maildos = new PHPMailer();
-    $maildos->IsSMTP();
-    $maildos->SMTPAuth = true;
-    $maildos->SMTPSecure = "ssl"; 
-    $maildos->Host = Host; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
-    $maildos->Username = Username; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
-    $maildos->Password = Password; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
-    $maildos->Port = Port; // Puerto de conexión al servidor de envio. 
-    $maildos->SetFrom(correocor, mensajecorr);
-    $asunto = "=?UTF-8?B?".base64_encode($titulo2)."=?=";
-    $maildos->Subject = utf8_decode($asunto); // Este es el titulo del email. 
-    $maildos->AddAddress($correo, "Usuario");
-    //$maildos->AddAttachment($ordeningreso,"ordeningreso.docx");
-    $maildos->AddAttachment($hvhuman,"hojavidahuman.docx");
-    $maildos->AddAttachment($docdocumen,"documentacion.docx");
-    if($archivoexa!=""){
-        $maildos->AddAttachment($archivoexa,"ordenexamenes.pdf");
-    }
-    //$maildos->AddAttachment($archivoaper,"aperturacuenta.pdf");
-    $maildos->MsgHTML(utf8_decode($cuerpo2));
-    $maildos->Send();*/
+        
     $this->enviarcorreoadjuntosdinamico($correo,$archivosgene,$mensaje,$titulo);
     $this->enviarcorreoadjuntosdinamico("jorge.osorio@protección.com.co",$archivosgene,$mensaje,$titulo);
 
@@ -2960,22 +2936,6 @@ public function enviarcorreoadjuntos($correo,$documento,$mensaje,$titulo="Notifi
 }
 
 public function enviarcorreoadjuntosdinamico($correo,$documentos,$mensaje,$titulo="Notificacion Human"){
-  /* 
-    $explode = explode("|",$documentos);
-    //var_dump($explode);
-    for($i = 0 ; $i<count($explode); $i++){
-        if($explode[$i]!=""){
-            $docname=$explode[$i];
-            $archivoexa = "archivosgenerales/".$explode[$i];
-echo "<a href ='".$archivoexa."'>".$archivoexa."</a>";
-           // $maildos->AddAttachment($archivoexa,$explode[$i];);
-        }
-    }
-
-
-    
-    die();*/
-    // echo $documentos;
     $maildos = new PHPMailer();
     $maildos->IsSMTP();
     $maildos->SMTPAuth = true;
