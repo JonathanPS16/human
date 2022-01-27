@@ -2917,22 +2917,8 @@ public function enviarcorreocentromedico($id,$archivoexa,$nombrepersona,$nombree
 }
 
 public function enviarcorreoadjuntos($correo,$documento,$mensaje,$titulo="Notificacion Human"){
-    $maildos = new PHPMailer();
-    $maildos->IsSMTP();
-    $maildos->SMTPAuth = true;
-    $maildos->SMTPSecure = "ssl"; 
-    $maildos->Host = Host; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
-    $maildos->Username = Username; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
-    $maildos->Password = Password; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
-    $maildos->Port = Port; // Puerto de conexión al servidor de envio. 
-    $maildos->SetFrom(correocor, mensajecorr);
-    $asunto = "=?UTF-8?B?".base64_encode($titulo)."=?=";
-    $maildos->Subject = utf8_decode($asunto); // Este es el titulo del email. 
-    $maildos->AddAddress($correo, "Usuario");
-    $archivoexa = "archivosgenerales/".$documento;
-    $maildos->AddAttachment($archivoexa,$documento);
-    $maildos->MsgHTML(utf8_decode($mensaje));
-    $maildos->Send();
+    $documento = $documento."|";
+    $this->enviarcorreoadjuntosdinamico($correo,$documento,$mensaje,$titulo);
 }
 
 public function enviarcorreoadjuntosdinamico($correo,$documentos,$mensaje,$titulo="Notificacion Human"){
@@ -3129,20 +3115,8 @@ public function enviarCorreoReq($ide,$req){
 
   public function enviocorreo($correo,$mensaje,$asunto="Notificacion Gestión Human")
   {
-    $maildos = new PHPMailer();
-    $maildos->IsSMTP();
-    $maildos->SMTPAuth = true;
-    $maildos->SMTPSecure = "ssl"; 
-    $maildos->Host = Host; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
-    $maildos->Username = Username; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
-    $maildos->Password = Password; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
-    $maildos->Port = Port; // Puerto de conexión al servidor de envio. 
-    $maildos->SetFrom(correocor, mensajecorr);
-    $asunto = "=?UTF-8?B?".base64_encode($asunto)."=?=";
-    $maildos->Subject = $asunto;
-    $maildos->AddAddress($correo, "Usuario");
-    $maildos->MsgHTML(utf8_decode($mensaje));
-    $maildos->Send();
+    $adjuntos = "|";  
+    $this->enviarcorreoadjuntosdinamico($correo,$adjuntos,$mensaje,$asunto);  
   }
 }
 
