@@ -54,7 +54,7 @@ public function consultarempleado($usuario,$clave){
             Cordialmente,
             <br><br>
             Área Servicio al Cliente<br>
-            Human Talent SAS";
+            @empresa";
             $this->enviocorreo($correo,$mensaje,$asunto);
             return "creado";
         } else {
@@ -269,7 +269,7 @@ public function tomarasignacion($id){
     Cordialmente,
     <br><br>
     Área Servicio al Cliente <br>
-    Human Talent SAS
+    @empresa
     ";
 
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'retiro'";
@@ -1042,7 +1042,7 @@ public function guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingr
         Para visualizar dar click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$idreq}'><strong>AQUI</strong></a>
         <br><br>
         Cordialmente,<br>
-        Human Talent SAS<br>";
+        @empresa <br>";
       $consultas= $conn->Execute($consultas)-> getRows();
       for($i= 0; $i<count($consultas); $i++) {
         $correos = explode(",", $consultas[$i]['correosselecccion']);
@@ -1520,7 +1520,7 @@ public function enviarcorreoliquidacion($correo,$nombre,$nombre_archivo,$asunto,
     Cordialmente,
     <br><br>
     Área de Nómina <br>
-    Human Talent SAS";
+    @empresa";
           $this->enviarcorreoadjuntos($correo, $nombre_archivo, $mensaje, $asunto);
           $this->enviarcorreoadjuntos("nomina@humantalentsas.com", $nombre_archivo, $mensaje, "COPIA INFORMATIVA ".$asunto);
           $this->enviarcorreoadjuntos("servicioalcliente@humantalentsas.com", $nombre_archivo, $mensaje, "COPIA INFORMATIVA ".$asunto);
@@ -1565,7 +1565,7 @@ correos servicioalcliente@humantalentsas.com , areajuridica@humantalentsas.com.c
           Cordialmente,
           <br><br>
           Área Jurídica<br>
-          Human Talent SAS";
+          @empresa";
 
           $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
       }
@@ -1742,7 +1742,7 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
             Cordialmente,
             <br><br>
             Área de Selección<br>
-            Human Talent SAS";
+            @empresa";
             break;
         case "NUEVAREQ":
 
@@ -1780,7 +1780,7 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
             Cordialmente,
             <br><br>
             Área de Selección<br>
-            Human Talent SAS";
+            @empresa";
             break;
         case "NUEVOCANDIDATO2":
             $mesaje =  "i es igual a 2";
@@ -1842,7 +1842,7 @@ public function correopsico($id_req,$tipomen) {
             Cordialmente,
             <br><br>
             Área de Selección<br>
-            <br>Human Talent SAS
+            <br>@empresa
             ";
             $this->enviocorreo($correocli, $mensajedos, "Notificación Aprobacion Candidato");
 
@@ -1916,7 +1916,7 @@ public function notificarProcesosAccidente($id){
           Para visualizar dar click <a href='https://humantalentsas.com/human/home.php?ctr=accidentes&acc=listaaccidentes'>AQUI</a> 
           <br><br>
           Cordialmente,<br>
-          Human Talent SAS
+          @empresa
           <br><br>
           Para su Seguimiento y/o Gestión";
 
@@ -1950,7 +1950,7 @@ public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$func
           Cordialmente,
           <br><br>
           Área Servicio al Cliente 
-          <br>Human Talent SAS";
+          <br>@empresa";
             if($consultasresp[0]['correo']!=""){
                $this->enviocorreo($consultasresp[0]['correo'], $mensaje);
             }
@@ -1997,7 +1997,7 @@ public function guardarynotificarfinalproceso($id,$mensajeaa,$conclu , $efecto, 
           <br><br>
           Cordialmente,
           <br>
-          Human Talent SAS
+          @empresa
           <br>
           Para su Seguimiento y/o Gestión
           ";
@@ -2049,7 +2049,7 @@ public function editaraclaraciondisciplinariop($id,$efecto){
           Cordialmente,
           <br><br>
           Área Servicio al Cliente 
-          <br>Human Talent SAS";
+          <br>@empresa";
             if($consultasresp[0]['correo']!=""){
                 $envio = $this->enviocorreo($consultasresp[0]['correo'], $mensaje ,"Notificación de Ampliación Evento Disciplinario Empleado por la Empresa Usuaria");
             }
@@ -2086,7 +2086,7 @@ public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo,$fechain
     Cordialmente,
     <br><br>
     Área Jurídica  - 
-    Human Talent SAS";
+    @empresa";
     $envio = $this->enviarcorreoadjuntos($correousua, $nombre_archivo, $mensaje, "Notificacion Envio Conclusión Preliminar");
 
     $mensaje ="Apreciada Área Jurídica y Área Servicio al Cliente <br><br>
@@ -2095,7 +2095,7 @@ public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo,$fechain
     Cordialmente,
     <br><br>
     Área Jurídica  - 
-    Human Talent SAS";
+    @empresa";
 
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
     $consultas= $conn->Execute($consultas)-> getRows();
@@ -2153,7 +2153,7 @@ Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro P
 Cordialmente,
 <br>
 Área Jurídica <br>
-Human Talent SAS ";
+@empresa ";
     $envio = $this->enviarcorreoadjuntos($correo,$archivo,$mensaje,$titulo);
 
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
@@ -2197,7 +2197,7 @@ public function guardarfinretiro($id,$correo,$archivo){
     Cordialmente,
     <br><br>
     Área Servicio al Cliente 
-    <br>Human Talent SAS";
+    <br>@empresa";
     //var_dump(explode(";",$correo));
     $explo =explode(";",$correo);
     for($i=0; $i<=count($explo);$i++)
@@ -2234,7 +2234,7 @@ public function guardarfindisciplinarionotifica($id,$correo,$mensajef, $archivo,
                 Cordialmente,
                 <br>
                 Área Jurídica<br>
-                Human Talent SAS <br>
+                @empresa <br>
                 Para su Seguimiento y/o Gestión";
     //var_dump(explode(";",$correo));
     $explo =explode(";",$correo);
@@ -2288,7 +2288,7 @@ Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro P
 Cordialmente,
 <br>
 Área Jurídica<br>
-Human Talent SAS 
+@empresa 
 ";
 
 
@@ -2340,7 +2340,7 @@ Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro P
 Cordialmente,
 <br>
 Área Jurídica<br>
-Human Talent SAS 
+@empresa
 ";
 
 
@@ -2353,7 +2353,7 @@ Le informamos que la Empresa Usuaria $nombreEmpresausuaria, usuario $nombre ha r
 Cordialmente,
 <br>
 Área Jurídica<br>
-Human Talent SAS 
+@empresa 
 ";
 */
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
@@ -2397,7 +2397,7 @@ public function enviarsolicitudexplicacion($id,$correo,$fechacitacion,$tipo,$raz
     Cordialmente,
     <br><br>
     Área Jurídica  - 
-    Human Talent SAS";
+    @empresa";
 
     $mensaje2 = "CORREO INFORMATIVO - COPIA DE CORREO ENVIADO AL EMPLEADO ".$nombre." <br><br><br>Apreciado Empleado ".$nombre."<br><br>
     Le informamos que se le ha iniciado un proceso disciplinario, sobre un evento reportado por la Empresa Usuaria $empresau donde presta sus servicios, En el archivo anexo encontrará el  cuestionario sobre el evento reportado; el cual Usted deberá dar respuesta a cada una de las preguntas relacionadas en dicho documento y proceder a enviar sus aclaraciones y soportes que considere pertinente ingresando al siguiente <a href='".DIRWEB."registro.php?id=$id' target='_black'>LINK</a>, a mas tardar el día ".$fechacitacion."<br> 
@@ -2407,7 +2407,7 @@ public function enviarsolicitudexplicacion($id,$correo,$fechacitacion,$tipo,$raz
     Cordialmente,
     <br><br>
     Área Jurídica  - 
-    Human Talent SAS";
+    @empresa";
     $envio = $this->enviarcorreoadjuntos($correo,$archivo, $mensaje, "Solicitud Aclaración Empleado");
     $envio = $this->enviarcorreoadjuntos($correocliente,$archivo, $mensaje2, "Solicitud Aclaración Empleado Copia");
     $envio = $this->enviarcorreoadjuntos($testigo,$archivo, $mensaje2, "Solicitud Aclaración Empleado Copia");
@@ -2453,7 +2453,7 @@ public function guardarrespuestaempleado($id,$aclaracion,$archivo){
     <br><br>
     Cordialmente,
     <br>
-    Human Talent SAS 
+    @empresa 
         ";
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
     $consultas= $conn->Execute($consultas)-> getRows();
@@ -2579,7 +2579,7 @@ Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro P
 <br><br
 Cordialmente,
 <br>
-Área Jurídica - Human Talent SAS";
+Área Jurídica - @empresa";
     $this->enviarcorreoadjuntos($coreojefe,$archivodos,$mensaje,"Correo Notificación Confirmación de Recibido Diligencia de Descargo por parte del Empleado");
     $mensaje = "Apreciado(a) $nombreEmpleado<br>
 Apreciado(a) Testigo(a) $nombreTestigo<br><br>
@@ -2590,7 +2590,7 @@ Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro P
 <br><br
 Cordialmente,
 <br>
-Área Jurídica - Human Talent SAS";
+Área Jurídica - @empresa";
     $this->enviarcorreoadjuntos($correotestigo,$archivodos,$mensaje,"Correo Notificación Confirmación de Recibido Diligencia de Descargo por parte del Empleado");
     for($i= 0; $i<count($consultas); $i++) {
     $correos = explode(",", $consultas[$i]['usuarios']);
@@ -2609,7 +2609,7 @@ Cordialmente,
                     <br><br
                     Cordialmente,
                     <br>
-                    Área Jurídica - Human Talent SAS";
+                    Área Jurídica - @empresa";
 
                     $this->enviarcorreoadjuntos($consultasresp[0]['correo'],$archivodos,$mensaje,"Correo Notificación Confirmación de Recibido Diligencia de Descargo por parte del Empleado");
                 }
@@ -2626,7 +2626,7 @@ Cordialmente,
                     <br><br
                     Cordialmente,
                     <br>
-                    Área Jurídica - Human Talent SAS";
+                    Área Jurídica - @empresa";
    $this->enviarcorreoadjuntos($correoempleado,$archivodos,$mensaje,"Correo Notificación Confirmación de Recibido Diligencia de Descargo por parte del Empleado");
     $SQL ="UPDATE procesos  SET estado='V',conclucionentre='$entrevista',archivoconclusionproceso='$archivodos'  WHERE id_proceso=".$id;
     $conn->Execute($SQL);
@@ -2687,7 +2687,7 @@ Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro P
 Cordialmente,
 <br>
 Área de Selección<br>
-Human Talent SAS<br>
+@empresa<br>
 
 Para su Seguimiento y/o Gestión";
     $envio = $this->enviocorreo($correo, $mensaje,"Notificación citación entrevista Candidato");
@@ -2713,7 +2713,7 @@ Para su Seguimiento y/o Gestión";
       <br><br>Cordialmente,
       <br><br>
       Área de Selección<br>
-      Human Talent SAS
+      @empresa
       <br><br>
       Para su Seguimiento y/o Gestión
       ";
@@ -2845,7 +2845,7 @@ public function enviardocumentacion($idper,$idreq){
     Cordialmente,
     <br><br>
     Área de Selección<br>
-    Human Talent SAS
+    @empresa
     ";
 
     $docdocumen = "";
@@ -2904,7 +2904,7 @@ public function enviarcorreocentromedico($id,$archivoexa,$nombrepersona,$nombree
                 Cordialmente,
                 <br><br>
                 Área Selección de Personal <br>
-                Human Talent SAS
+                @empresa
                 ";
                 $this->enviarcorreoadjuntos($datosa[$i],$archivoexa,$mensaje,$titulo);
             }
@@ -2987,7 +2987,7 @@ public function rechazarcandidato($id_per,$id_req,$rechazo,$observacion)
     Cordialmente,
     <br><br><br>
     Área de Selección<br>
-    Human Talent SAS";
+    @empresa";
     $envio = $this->enviocorreo($correo, $mensaje, "Estado Proceso Seleccion");
     $consultas = "SELECT correosselecccion FROM empresasterporales WHERE id_temporal= ".$ide;
       //echo $consultas;
@@ -3001,7 +3001,7 @@ public function rechazarcandidato($id_per,$id_req,$rechazo,$observacion)
       <br><br>
       Cordialmente,
       <br>
-      Human Talent SAS";
+      @empresa";
       $consultas= $conn->Execute($consultas)-> getRows();
       for($i= 0; $i<count($consultas); $i++) {
         $correos = explode(",", $consultas[$i]['correosselecccion']);
@@ -3060,7 +3060,7 @@ public function enviarCorreoReq($ide,$req){
       Cordialmente,
       <br><br>
       Área de Selección<br>
-      Human Talent SAS";
+      @empresa";
       //echo $mensaje;
     
 
