@@ -1,12 +1,6 @@
 <?php 
 session_start();
 define("DIRWEB", "https://".$_SERVER["HTTP_HOST"]."/human/");
-define("Host", "smtp.zoho.com");
-define("Username", "info@humantalentsas.com.co");
-define("Password", "Th2220%Server$");
-define("Port", 465);
-define("correocor", "info@humantalentsas.com.co");
-define("mensajecorr", "Humantalentsas");
 define("maxfilesize", 2097152);
 define("maxfilesizelabel", "2 MB");
 require("phpmailer/class.phpmailer.php");
@@ -2922,29 +2916,32 @@ public function enviarcorreoadjuntos($correo,$documento,$mensaje,$titulo="Notifi
 }
 
 public function enviarcorreoadjuntosdinamico($correo,$documentos,$mensaje,$titulo="Notificacion Human"){
-    $maildos = new PHPMailer();
-    $maildos->IsSMTP();
-    $maildos->SMTPAuth = true;
-    $maildos->SMTPSecure = "ssl"; 
-    $maildos->Host = Host; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
-    $maildos->Username = Username; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
-    $maildos->Password = Password; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
-    $maildos->Port = Port; // Puerto de conexión al servidor de envio. 
-    $maildos->SetFrom(correocor, mensajecorr);
-    $asunto = "=?UTF-8?B?".base64_encode($titulo)."=?=";
-    $maildos->Subject = utf8_decode($asunto); // Este es el titulo del email. 
-    $maildos->AddAddress($correo, "Usuario");
-    $explode = "";
-    $explode = explode("|",$documentos);
-    $maildos->MsgHTML(utf8_decode($mensaje));
-    //var_dump($explode);
-    for($i = 0 ; $i<count($explode); $i++){
-        if($explode[$i]!=""){
-            //echo $explode[$i]."<br>";
-            $maildos->AddAttachment("archivosgenerales/".$explode[$i],$explode[$i]);
+    $conn = $this->conec();
+    $consultas = "SELECT * from configuraciones";
+    $config= $conn->Execute($consultas)-> getRows();
+    if(count($config)>0){    
+        $maildos = new PHPMailer();
+        $maildos->IsSMTP();
+        $maildos->SMTPAuth = true;
+        $maildos->SMTPSecure = "ssl"; 
+        $maildos->Host = $config[0]['host']; // A RELLENAR. Aquí pondremos el SMTP a utilizar. Por ej. mail.midominio.com
+        $maildos->Username = $config[0]['usuario']; // A RELLENAR. Email de la cuenta de correo. ej.info@midominio.com La cuenta de correo debe ser creada previamente. 
+        $maildos->Password = $config[0]['clave']; // A RELLENAR. Aqui pondremos la contraseña de la cuenta de correo
+        $maildos->Port = $config[0]['puerto']; // Puerto de conexión al servidor de envio. 
+        $maildos->SetFrom($config[0]['correo'], $config[0]['mensajecorreo']);
+        $asunto = "=?UTF-8?B?".base64_encode($titulo)."=?=";
+        $maildos->Subject = utf8_decode($asunto); // Este es el titulo del email. 
+        $maildos->AddAddress($correo, "Usuario");
+        $explode = "";
+        $explode = explode("|",$documentos);
+        $maildos->MsgHTML(utf8_decode($mensaje));
+        for($i = 0 ; $i<count($explode); $i++){
+            if($explode[$i]!=""){
+                $maildos->AddAttachment("archivosgenerales/".$explode[$i],$explode[$i]);
+            }
         }
+        $maildos->Send();
     }
-    $maildos->Send();
 }
 
 public function rechazarcandidato($id_per,$id_req,$rechazo,$observacion)
