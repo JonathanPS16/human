@@ -2509,7 +2509,7 @@
                     Cordialmente,
                     <br><br><br>
                     Área de Selección<br>
-                    Human Talent SAS";
+                    |empresa|";
                     $listatemporales=$objconsulta->enviocorreo($correo,$mensaje,"Notificacion Documentos Beneficiarios");
 
                     echo "<script>alert('Correo Enviado Correctamente');
@@ -2586,7 +2586,7 @@
                     Cordialmente,
                     <br><br><br>
                     Área de Selección<br>
-                    Human Talent SAS";
+                    |empresa|";
                     $listatemporales=$objconsulta->enviarcorreoadjuntosdinamico($correo,$documentos,$mensaje,"Documentación Contratación");
                     echo "<script>alert('Correo Enviado Correctamente');
                     window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
