@@ -111,10 +111,10 @@ private function _usuarioconectado($usuario,$clave) {
 public function conec(){
     $conn="";
     include('adodb/adodb.inc.php');    
-    $DBuser = "byvnilva_drupal";
-    $DBpass = "admByV$";
+    $DBuser = "root";
+    $DBpass = "";
     $DBserver="localhost";
-    $DBname = "byvnilva_humantalents";
+    $DBname = "esqueleto20220127";
     $conn = ADONewConnection('mysqli');  
 
     $conn->Connect($DBserver,$DBuser,$DBpass,$DBname) or die(header("location:../errores/msn_error.php"));
