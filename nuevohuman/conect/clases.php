@@ -1676,10 +1676,15 @@ public function guardanotificausu($proceso,$accidentes,$retiro,$seleccion){
     $conn->Execute($sqlcaliTe);
     $conn = $this->conec();
     $sqlcaliTe = "update notificaciones set  usuarios='$retiro' where grupo = 'retiro'";
+    $conn = $this->conec();
+    $conn->Execute($sqlcaliTe);
+    $sqlcaliTe = "update notificaciones set  usuarios='$seleccion' where grupo = 'seleccion'";
     $conn->Execute($sqlcaliTe);
     $conn = $this->conec();
     $sqlcaliTe = "update empresasterporales set  correosselecccion='$seleccion'";
     $conn->Execute($sqlcaliTe);
+
+
 }
 
 public function enviarcorreoClienteGen($idreq,$tipomen)
@@ -2841,11 +2846,6 @@ public function enviardocumentacion($idper,$idreq){
     Área de Selección<br>
     |empresa|
     ";
-
-    $docdocumen = "";
-    $hvhuman = "";
-    $archivoaper = "";
-    $archivoexa =  "";
     $archivosgene = "";
     if($docdocumen!=""){
         $archivosgene.=$docdocumen."|";
@@ -2860,7 +2860,7 @@ public function enviardocumentacion($idper,$idreq){
     $this->enviarcorreoadjuntosdinamico($correo,$archivosgene,$mensaje,$titulo);
     $this->enviarcorreoadjuntosdinamico("jorge.osorio@protección.com.co",$archivosgene,$mensaje,$titulo);
 
-    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'diciplinario'";
+    $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'seleccion'";
     $consultas= $conn->Execute($consultas)-> getRows();
     for($i= 0; $i<count($consultas); $i++) {
       $correos = explode(",", $consultas[$i]['usuarios']);
