@@ -233,7 +233,7 @@ public function consultarempleadosreapretiros($numero){
      return $consultas;
  }
 
-public function tomarasignacion($id){
+public function tomarasignacion($id,$tipo = ""){
     $conn = $this->conec();
     $dato=array();
     $datousuario = $_SESSION['usuario'];
@@ -242,8 +242,19 @@ public function tomarasignacion($id){
     $consultas= $conn->Execute($consultas)-> getRows();
     $grabador = $consultas[0]['nombre'];
     $now= date('Y-m-d');
-    $consultas = "update req set gestorasignado ='$grabador',fechatomado ='$now'  where id = ".$id;
-    $conn->Execute($consultas);
+
+    if($tipo=="contratacion"){
+        $consultas = "update req_candidatos set tomador ='$grabador',fechatomado ='$now'  where id = ".$id;
+        $conn->Execute($consultas);
+
+    } if($tipo=="disciplinario") {
+        $consultas = "update procesos set tomadorp ='$grabador',fechatomadop ='$now'  where id_proceso = ".$id;
+        $conn->Execute($consultas);
+    } else {
+        $consultas = "update req set gestorasignado ='$grabador',fechatomado ='$now'  where id = ".$id;
+        $conn->Execute($consultas);
+    } 
+    
 } 
 
 

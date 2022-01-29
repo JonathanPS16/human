@@ -13,6 +13,8 @@ if($_GET['acc']=="formacla"){
 	<thead>
 		<tr>
 			<th>ID</th>
+			<th>Gestor</th>
+      		<th>Fecha Asignación</th>
 			<th>Nombre de Funcionario</th>
 			<th>Correo</th>
 			<th>Cargo</th>
@@ -645,8 +647,14 @@ $(".custom-file-input").on("change", function() {
 			}
 			
 		}
+		$tomador = $listatemporales[$i]['tomadorp'];
+		if($listatemporales[$i]['tomadorp']==""){
+			$tomador = '<a href="home.php?ctr=requisicion&acc=tomarprocesodic&id='.$id.'" class="btn btn-info">Tomar Gestión</a>';
+		}
 		echo  '<tr>
 		<td>'.$val.'</td>
+		<td>'.$tomador.'</td>
+        <td>'.$listatemporales[$i]['fechatomadop'].'</td>
 		<td>'.$nombrefuncionario.'</td>
 		<td>'.$listatemporales[$i]['correoempleado'].'</td>
 		<td>'.$cargo.'</td>

@@ -4,6 +4,8 @@
 	<thead>
 		<tr>
 			<th>ID</th>
+      <th>Gestor</th>
+      <th>Fecha Asignación</th>
 			<th>Nombre</th>
 			<th>Cedula</th>
 			<th>Cargo</th>
@@ -456,10 +458,16 @@ $modalbotonenviarcorreo ='<div class="modal fade" id="exampleModalextraenvio'.$i
 $botonextraenviarcorreo =$modalbotonenviarcorreo.'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalextraenvio'.$id.'">
 Enviar Documentos
 </button>';	
+$tomador = $listatemporales[$i]['tomador'];
+if($listatemporales[$i]['tomador']==""){
+  $tomador = '<a href="home.php?ctr=requisicion&acc=tomargestioncontra&id='.$id.'" class="btn btn-info">Tomar Gestión</a>';
+}
 
     echo "<tr>
     		<td>".$id."</td>
-			<td>".$listatemporales[$i]['nombre']."</td>
+			<td>".$tomador."</td>
+      <td>".$listatemporales[$i]['fechatomado']."</td>
+      <td>".$listatemporales[$i]['nombre']."</td>
 			<td>".$listatemporales[$i]['cedula']."</td>
 			<td>".$listatemporales[$i]['cargo']."</td>
 			<td>".$listatemporales[$i]['correo']."</td>

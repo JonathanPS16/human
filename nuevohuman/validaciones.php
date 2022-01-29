@@ -2949,6 +2949,22 @@
                     </script>";
                 break;
 
+                case "tomargestioncontra":
+                    $id = $_GET["id"];
+                    $listadoreq=$objconsulta->tomarasignacion($id, "contratacion");
+                    echo "<script>alert('Tomada Correctamente');
+                    window.location.href = 'home.php?ctr=requisicion&acc=gestioncontratacion';
+                    </script>";
+                break;
+
+                case "tomarprocesodic":
+                    $id = $_GET["id"];
+                    $listadoreq=$objconsulta->tomarasignacion($id, "disciplinario");
+                    echo "<script>alert('Tomada Correctamente');
+                    window.location.href = 'home.php?ctr=proceso&acc=formprocesogest';
+                    </script>";
+                break;
+
                 
 
                 case "test":
