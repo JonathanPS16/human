@@ -46,6 +46,8 @@ public function consultarempleado($usuario,$clave){
             <br><br>
             Seguiremos trabajando para Usted,  para continuar mejorando nuestros canales de comunicación.
             <br><br>
+            |servicio|
+            <br><br>
             Cordialmente,
             <br><br>
             Área Servicio al Cliente<br>
@@ -303,7 +305,7 @@ public function tomarasignacion($id,$tipo = ""){
      <br><br>
     Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web www.humantalentsas.com ingresando con su usuario y clave.
     <br><br>
-    Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 601 214 2011, o Celular 318 335 2194 - 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, nomina@humantalentsas.com 
+    |servicio| 
      <br><br>
     Cordialmente,
     <br><br>
@@ -1080,6 +1082,8 @@ public function guardarProcesoDirecto($nombre,$cedula,$numerocontacto,$fechaingr
         <br><br>
         Para visualizar dar click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$idreq}'><strong>AQUI</strong></a>
         <br><br>
+        |servicio|
+        <br><br>
         Cordialmente,<br>
         |empresa| <br>";
       $consultas= $conn->Execute($consultas)-> getRows();
@@ -1555,7 +1559,7 @@ public function enviarcorreoliquidacion($correo,$nombre,$nombre_archivo,$asunto,
 
     En el archivo anexo encontrará la respectiva liquidación final de su contrato laboral, le agradecemos firmarla y remitirla a esta dependencia; para lo cual podrá realizarlo ingresando al siguiente <a href='".DIRWEB."liquidaciones.php?id=$id' target='_black'>LINK</a> adjuntado dicho documento debidamente firmado para proceder a efectuar el pago a su cuenta de nómina correspondiente.  
     <br><br>
-    Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 601 214 2011, o Celular 318 335 2194 o en los correos  nomina@humantalentsas.com o servicioalcliente@humantalentsas.com  
+    |servicio| 
     <br><br>
     Cordialmente,
     <br><br>
@@ -1600,8 +1604,9 @@ public function notificarProcesos($id,$correojefe=""){
           Le informamos que hemos recibido su solicitud para efectuar proceso disciplinario al empleado en misión ".$nombre.", y se le ha generado el consecutivo ".$id.".;  estaremos procediendo de manera inmediata a dar tramite a su solicitud.<br>
           <br>
           Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web www.humantalentsas.com ingresando con su usuario y clave.<br><br>
-          Cualquier inquietud  al respecto, con gusto, la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los 
-correos servicioalcliente@humantalentsas.com , areajuridica@humantalentsas.com.co<br><br>
+         <br><br>
+         |servicio|
+         <br><br>
           Cordialmente,
           <br><br>
           Área Jurídica<br>
@@ -1819,7 +1824,7 @@ public function enviarcorreoClienteGen($idreq,$tipomen)
             Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=verreqcan&id={$idreq}'>Aqui</a>
             <br>
             <br>
-            Cualquier inquietud  al respecto, con gusto, la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+           |servicio|
             <br>
             <bR>
             Cordialmente,
@@ -1880,7 +1885,7 @@ public function correopsico($id_req,$tipomen) {
             <br><br>
             Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
             <br>
-            Cualquier inquietud  al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+            |servicio| 
             <br><br>
             Para Completar Orden puede dar clic <a href='".DIRWEB."home.php?ctr=requisicion&acc=verreqcan&id={$id_req}'>Aqui</a>
             <br><br>
@@ -1960,6 +1965,8 @@ public function notificarProcesosAccidente($id){
           <br><br>
           Para visualizar dar click <a href='https://humantalentsas.com/human/home.php?ctr=accidentes&acc=listaaccidentes'>AQUI</a> 
           <br><br>
+          |servicio|
+          <br><br>
           Cordialmente,<br>
           |empresa|
           <br><br>
@@ -1990,7 +1997,7 @@ public function guardarretiro($archivouno,$archivodos,$retiro,$fecharetiro,$func
           <br><br>
           Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
           <br><br>
-          Cualquier inquietud  al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 318 335 2194 - 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, nomina@humantalentsas.com, contabilidad@humantalentsas.com  
+         |servicio|
           <br><br>
           Cordialmente,
           <br><br>
@@ -2039,6 +2046,8 @@ public function guardarynotificarfinalproceso($id,$mensajeaa,$conclu , $efecto, 
           <br><br>
           Conclusión:              $efecto <br>
           Fecha Inicio Medida:  $fechainimedida
+          <br><br>
+          |servicio|
           <br><br>
           Cordialmente,
           <br>
@@ -2091,6 +2100,8 @@ public function editaraclaraciondisciplinariop($id,$efecto){
 <br><br>
           Le informamos que la Empresa Usuaria $nombreEmpresausuaria, usuario $nombre ha realizado la ampliación del suceso del proceso disciplinario, con consecutivo No. $consecutivo, para el empleado en misión $nombreempleado.
 <br><br>
+          |servicio|
+          <br><br>
           Cordialmente,
           <br><br>
           Área Servicio al Cliente 
@@ -2126,7 +2137,7 @@ public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo,$fechain
 
     En relación con el proceso disciplinario No $id se a enviado la conclucion para su validacion puede acceder dando click en el siguiente <a href='https://humantalentsas.com/human/home.php?ctr=proceso&acc=formproceso'>Link</a>
     <br>
-    Cualquier inquietud  al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com  , areajuridica@humantalentsas.com.co 
+   |servicio|
     <br>
     Cordialmente,
     <br><br>
@@ -2137,6 +2148,8 @@ public function guardarProcesoFinal($id,$nombre_archivo,$efecto,$correo,$fechain
     $mensaje ="Apreciada Área Jurídica y Área Servicio al Cliente <br><br>
 
     Se a enviado la Conclusión preliminar del proceso disciplinario con No $id <br>
+    |servicio|
+    <br><br>
     Cordialmente,
     <br><br>
     Área Jurídica  - 
@@ -2193,7 +2206,7 @@ public function enviarcitacionproceso($id,$correo,$fechacitacion,$tipo,$justific
 - Metodología $modalidadcita .<br> 
 - Dirección o Link  $sedelugar  $extradata  <br>
 <br>
-Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, areajuridica@humantalentsas.com.co
+|servicio|
 <br><br>
 Cordialmente,
 <br>
@@ -2237,7 +2250,7 @@ public function guardarfinretiro($id,$correo,$archivo){
     $mensaje = "Apreciado Señor (a) ".$nombre."<br><br>
     En relación con el contrato de obra o labor que tiene suscrito con nuestra Empresa, en la comunicación anexa le estamos informando la terminación de este.
     <br><br>
-    Cualquier inquietud  al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 318 335 2194 - 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, 
+    |servicio| 
     <br><br>
     Cordialmente,
     <br><br>
@@ -2274,7 +2287,7 @@ public function guardarfindisciplinarionotifica($id,$correo,$mensajef, $archivo,
                 <br><br>
                 En relación con el proceso disciplinario que se le adelanta a Usted y una vez surtido el debido proceso de acuerdo con lo establecido por la Compañía, en el archivo anexo a continuación  le informamos la decisión que se ha tomado respecto al proceso tomada. 
                 <br>
-                Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com , areajuridica@humantalentsas.com.co
+               |servicio|
                 <br><br>
                 Cordialmente,
                 <br>
@@ -2328,7 +2341,7 @@ En relación con su solicitud del proceso disciplinario, con consecutivo No. $co
 <br><br>
 Consideraciones: $razon
 <br><br>
-Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, areajuridica@humantalentsas.com.co
+|servicio|
 <br><br>
 Cordialmente,
 <br>
@@ -2380,7 +2393,7 @@ Apreciado Cliente  $nombreEmpresausuaria<br><br>
 
 En relación con su solicitud del proceso disciplinario, con consecutivo No. $consecutivo, para el empleado en misión $nombreempleado; queremos solicitarle su colaboración para que nos amplié en detalle la descripción del proceso; lo anterior con el objetivo de analizar con mayor profundidad este proceso disciplinario. 
 <br><br>
-Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com, areajuridica@humantalentsas.com.co
+|servicio|
 <br><br>
 Cordialmente,
 <br>
@@ -2437,7 +2450,7 @@ public function enviarsolicitudexplicacion($id,$correo,$fechacitacion,$tipo,$raz
     $mensaje = "Apreciado Empleado ".$nombre."<br><br>
     Le informamos que se le ha iniciado un proceso disciplinario, sobre un evento reportado por la Empresa Usuaria $empresau donde presta sus servicios, En el archivo anexo encontrará el  cuestionario sobre el evento reportado; el cual Usted deberá dar respuesta a cada una de las preguntas relacionadas en dicho documento y proceder a enviar sus aclaraciones y soportes que considere pertinente ingresando al siguiente <a href='".DIRWEB."registro.php?id=$id' target='_black'>LINK</a>, a mas tardar el día ".$fechacitacion."<br> 
     <br>
-    Cualquier inquietud  al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com  , areajuridica@humantalentsas.com.co 
+    |servicio|
     <br>
     Cordialmente,
     <br><br>
@@ -2447,7 +2460,7 @@ public function enviarsolicitudexplicacion($id,$correo,$fechacitacion,$tipo,$raz
     $mensaje2 = "CORREO INFORMATIVO - COPIA DE CORREO ENVIADO AL EMPLEADO ".$nombre." <br><br><br>Apreciado Empleado ".$nombre."<br><br>
     Le informamos que se le ha iniciado un proceso disciplinario, sobre un evento reportado por la Empresa Usuaria $empresau donde presta sus servicios, En el archivo anexo encontrará el  cuestionario sobre el evento reportado; el cual Usted deberá dar respuesta a cada una de las preguntas relacionadas en dicho documento y proceder a enviar sus aclaraciones y soportes que considere pertinente ingresando al siguiente <a href='".DIRWEB."registro.php?id=$id' target='_black'>LINK</a>, a mas tardar el día ".$fechacitacion."<br> 
     <br>
-    Cualquier inquietud  al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos servicioalcliente@humantalentsas.com  , areajuridica@humantalentsas.com.co 
+   |servicio|
     <br>
     Cordialmente,
     <br><br>
@@ -2495,6 +2508,8 @@ public function guardarrespuestaempleado($id,$aclaracion,$archivo){
     $mensaje = "Apreciados señores  
     <br><br>
     Les informamos que el Empleado $nombreempleado, de la Empresa Usuaria $nombreEmpresausuaria,  a quien se le adelanta el proceso disciplinario con consecutivo $consecutivo ha enviado la respectiva aclaración solicitada. 
+    <br><br>
+    |servicio|
     <br><br>
     Cordialmente,
     <br>
@@ -2620,7 +2635,7 @@ Apreciado(a) Testigo(a) $nombreTestigo<br><br>
 
 En relación con el proceso disciplinario que se le adelanta y de acuerdo con la reunión de descargos realizada el día $fechaTestigo en el archivo anexo encontrará el acta de la diligencia efectuada, y en la que participó como testigo el señor(a) $nombreTestigo; agradecemos a usted dar la confirmación de recibido y de aceptación de este documento dando click el siguiente <a href='https://humantalentsas.com/human/apruebaenvio.php?id=$id&validate=$basejefe'>Link</a>.
 <br>
-Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los areajuridica@humantalentsas.com.co,  servicioalcliente@humantalentsas.com.co. 
+|servicio| 
 <br><br
 Cordialmente,
 <br>
@@ -2631,7 +2646,7 @@ Apreciado(a) Testigo(a) $nombreTestigo<br><br>
 
 En relación con el proceso disciplinario que se le adelanta y de acuerdo con la reunión de descargos realizada el día $fechaTestigo en el archivo anexo encontrará el acta de la diligencia efectuada, y en la que participó como testigo el señor(a) $nombreTestigo; agradecemos a usted dar la confirmación de recibido y de aceptación de este documento dando click el siguiente <a href='https://humantalentsas.com/human/apruebaenvio.php?id=$id&validate=$basetestigo'>Link</a>.
 <br>
-Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los areajuridica@humantalentsas.com.co,  servicioalcliente@humantalentsas.com.co. 
+|servicio| 
 <br><br
 Cordialmente,
 <br>
@@ -2650,7 +2665,7 @@ Cordialmente,
                     
                     En relación con el proceso disciplinario que se le adelanta y de acuerdo con la reunión de descargos realizada el día $fechaTestigo en el archivo anexo encontrará el acta de la diligencia efectuada, y en la que participó como testigo el señor(a) $nombreTestigo; agradecemos a usted dar la confirmación de recibido y de aceptación de este documento dando click el siguiente <a href='https://humantalentsas.com/human/apruebaenvio.php?id=$id&validate=$basevalidaex'>Link</a>.
                     <br>
-                    Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los areajuridica@humantalentsas.com.co,  servicioalcliente@humantalentsas.com.co. 
+                    |servicio|   
                     <br><br
                     Cordialmente,
                     <br>
@@ -2667,7 +2682,7 @@ Cordialmente,
                     
                     En relación con el proceso disciplinario que se le adelanta y de acuerdo con la reunión de descargos realizada el día $fechaTestigo en el archivo anexo encontrará el acta de la diligencia efectuada, y en la que participó como testigo el señor(a) $nombreTestigo; agradecemos a usted dar la confirmación de recibido y de aceptación de este documento dando click el siguiente <a href='https://humantalentsas.com/human/apruebaenvio.php?id=$id&validate=$basevalidaexemple'>Link</a>.
                     <br>
-                    Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los areajuridica@humantalentsas.com.co,  servicioalcliente@humantalentsas.com.co. 
+                    |servicio| 
                     <br><br
                     Cordialmente,
                     <br>
@@ -2727,7 +2742,7 @@ Le informamos que dentro del proceso de selección para el cargo ".$cargo.", en 
 - Dirección o Link	 $lugar<br>
 - Presentarse a		 $presenta<br><br>  
 
-Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com .
+|servicio|
 <br><br>
 Cordialmente,
 <br>
@@ -2754,8 +2769,9 @@ Para su Seguimiento y/o Gestión";
       <br><br>
       Para visualizar dar click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a>
       <br>
-      Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com .
-      <br><br>Cordialmente,
+     |servicio|
+      <br><br>
+      Cordialmente,
       <br><br>
       Área de Selección<br>
       |empresa|
@@ -2885,7 +2901,7 @@ public function enviardocumentacion($idper,$idreq){
     <br><br>
     Anexamos la orden de exámenes de ingreso,  para que Usted se realice dichos exámenes en el Laboratorio Clínico relacionado en dicha comunicación 
     <br><br>
-    Cualquier inquietud  al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011 , Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com . 
+    |servicio|
     <br><br>
     Cordialmente,
     <br><br>
@@ -2941,6 +2957,8 @@ public function enviarcorreocentromedico($id,$archivoexa,$nombrepersona,$nombree
                 $titulo="Notificación Carta Autorización Exámanes de Laboratorio";
                 $mensaje="Apreciados señores Laboratorio Clínico: ".$nombrelaboratorio."<br><br>
                 Para su conocimiento y Gestión respectiva, en el archivo anexo encontraran la autorización correspondiente para que le sean realizado los exámenes médicos a nuestro colaborador  $nombrepersona, de nuestra empresa Usuaria $nombreempresa<br><br>Cualquier inquietud  al respecto, con gusto, la atenderemos a través de nuestro PBX 214 2011, o Celular 315 612 9899 o en los correos seleccion@humantalentsas.com, analistaseleccion@humantalentsas.com, servicioalcliente@humantalentsas.com
+                <br><br>
+                |servicio|
                 <br><br>
                 Cordialmente,
                 <br><br>
@@ -3031,6 +3049,8 @@ public function rechazarcandidato($id_per,$id_req,$rechazo,$observacion)
     <br><br>
     Esperamos contar con su hoja de vida para próximos procesos de selección donde su perfil y experiencia se ajusten a las necesidades del cargo requerido.
     <br><br>
+    |servicio|
+    <br><br>
     Cordialmente,
     <br><br><br>
     Área de Selección<br>
@@ -3045,6 +3065,8 @@ public function rechazarcandidato($id_per,$id_req,$rechazo,$observacion)
       Recuerde que puede hacer seguimiento a su solicitud, para lo cual deberá iniciar sesión en nuestra pagina web  www.humantalentsas.com ingresando con su usuario y clave. 
       <br><br>
       Para visualizar dar  click <a href='".DIRWEB."home.php?ctr=requisicion&acc=listaCandidatos&id={$id_req}'><strong>AQUI</strong></a>
+      <br><br>
+      |servicio|
       <br><br>
       Cordialmente,
       <br>
@@ -3138,7 +3160,7 @@ Una vez ingrese a la plataforma le recomendamos cambiar esta contraseña, accedi
 <br><br>
 Si no solicitó un restablecimiento de contraseña, omita este correo y entra con su clave actual a nuestro aplicativo.
 <br><br>
-Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 318 335 2194 o al correo servicioalcliente@humantalentsas.com.
+|servicio|
 <br><br>
 Cordialmente,
 <br><bt>

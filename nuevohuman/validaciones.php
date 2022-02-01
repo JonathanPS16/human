@@ -2584,8 +2584,11 @@
                     <br><br>
                     Se adjuntan documentos en base a contratación. 
                     <br><br>
+                    |servicio|
+                    <br><br>
                     Cordialmente,
-                    <br><br><br>
+                    <br><br>
+                    <br>
                     Área de Selección<br>
                     |empresa|";
                     $listatemporales=$objconsulta->enviarcorreoadjuntosdinamico($correo,$documentos,$mensaje,"Documentación Contratación");
