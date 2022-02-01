@@ -9,7 +9,6 @@ class consultas {
 public function  consultarusuario($usuario,$clave) {
 	$this->_usuarioconectado($usuario,$clave);
 	$valid="NO";
-
 	if (isset($_SESSION['idusuario'])) {
 		$valid="SI";
 
