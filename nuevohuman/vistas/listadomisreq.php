@@ -337,7 +337,7 @@ for($i=0; $i<count($listadoreq);$i++){
 	$eliminar = "Registro Cancelado";
 	if($listadoreq[$i]['visible']!="N")
 	{
-		$eliminar = "<a href='home.php?ctr=requisicion&acc=listaCandidatos&id=".$id."' class='btn btn-primary'>Gestionar Solicitud</a><br><br><a href='home.php?ctr=requisicion&ges=2&acc=eliminarreq&id=".$id."' class='btn btn-danger'>Eliminar Solicitud</a>";
+		$eliminar = "<a href='home.php?ctr=requisicion&acc=listaCandidatos&id=".$id."' class='btn btn-primary'>Gestionar Solicitud</a><br><br><a href='home.php?ctr=requisicion&ges=2&acc=eliminarreq&id=".$id."' class='btn btn-danger'>Cancelar Solicitud</a>";
 	} else {
 		$gestorint = $listadoreq[$i]['gestorasignado'];
 	}

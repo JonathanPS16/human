@@ -1,7 +1,4 @@
 <?php 
-//print_r($_POST);
-//die();
-//die(var_export($_POST['g-recaptcha-response']));
 $secret = "6LfFENwZAAAAAGEDmDFtl3nsrJIhZRaJ75iO0YjG";
 $captcha = $_POST['g-recaptcha-response']; 
 $url = 'https://www.google.com/recaptcha/api/siteverify';
@@ -32,6 +29,9 @@ if (!$jsonResponse->success === true) {
 	$clave = $_POST['inputPassword'];
 	$reta = $_POST['tipore'];
 	require_once('conect/clases.php');
+	$objconsulta2= new consultas();
+	$empresas = $objconsulta2->consultarempresas();
+	
 	$objconsulta= new consultas();
 	if($reta == 1){
 		//echo "ACA";

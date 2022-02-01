@@ -12,6 +12,8 @@ if($mios=="S"){
 	<thead>
 		<tr>
 			<th>ID</th>
+			<th>Gestor</th>
+			<th>Fecha Asignación</th>
 			<th>Motivo</th>
 			<th>Fecha Solicitud</th>
 			<th>Fecha Retiro</th>
@@ -115,7 +117,7 @@ for($i=0; $i<count($listatemporales);$i++){
 	  <input id="motivo" name="motivo" type="hidden" value="'.$motivo.'">
 	  <input id="renuncia" name="renuncia" type="hidden" value="'.$renunciada.'">
 	  <input id="nombrecargo" name="nombrecargo" type="hidden" value="'.$nombrecargo.'">
-	  <input id="empresausuaria" name="empresausuaria" type="hidden" value="'.$empresausuaria.'">
+	  <input id="empresausuaria" name="empresausuaria" type="hidden" value="'.$listatemporales[$i]['nombretemporal'].'">
 	  <input id="fechasoli" name="fechasoli" type="hidden" value="'.$fechasoli.'">
 	  <input id="nombretemporal" name="nombretemporal" type="hidden" value="'.$nombretemporal.'">
 	  		    
@@ -218,9 +220,18 @@ if($listatemporales[$i]['visible']=="N"){
 	$botonextra = "";
 	$botoneliminacion = "Retiro Cancelado";
 }
-
+$tomador = $listatemporales[$i]['tomador'];
+if($listatemporales[$i]['tomador']=="")
+{
+	if($mios!="S"){
+		$tomador ='<a href="home.php?ctr=requisicion&acc=tomargestionretiro&id='.$id.'" class="btn btn-info">Tomar Gestión</a>';
+	}
+	
+}
     echo "<tr>
     		<td>".$id."</td>
+			<td>".$tomador."</td>
+			<td>".$listatemporales[$i]['fechatomado']."</td>
 			<td>".$motivo."</td>
 			<td>".$listatemporales[$i]['fechasolicitud']."</td>
 			<td>".$fecharetiro."</td>

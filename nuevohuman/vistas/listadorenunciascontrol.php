@@ -99,8 +99,9 @@ for($i=0; $i<count($listatemporales);$i++){
 if($listatemporales[$i]['liquidacionfirmada']!=""){
 	$listatemporales[$i]['liquidacionfirmada'] ="<a href ='archivosgenerales/".$listatemporales[$i]['liquidacionfirmada']."' target='_black' class='btn btn-primary'>Liquidación Firmada</a>";
 }
-
+$archivoliquida  = "";
 if($listatemporales[$i]['archivoliquidacion']!=""){
+	$archivoliquida = $listatemporales[$i]['archivoliquidacion'];
 	$listatemporales[$i]['archivoliquidacion'] ="<a href ='archivosgenerales/".$listatemporales[$i]['archivoliquidacion']."' target='_black' class='btn btn-primary'>Archivo Liquidación</a>";
 }
 
@@ -190,7 +191,7 @@ if($listatemporales[$i]['archivoliquidacion']!=""){
   
       <input id="id" name="id" type="hidden" value="'.$id.'">	
 	  <input id="correoempleado" name="correoempleado" type="hidden" value="'.$listatemporales[$i]['correoempleado'].'">
-	  <input id="archivoexiste" name="archivoexiste" type="hidden" value="'.$listatemporales[$i]['archivoliquidacion'].'">
+	  <input id="archivoexiste" name="archivoexiste" type="hidden" value="'.$archivoliquida.'">
 	  <input id="nombre" name="nombre" type="hidden" value="'.$nombre.'">		
 	  
 	  
@@ -215,11 +216,11 @@ if($listatemporales[$i]['archivoliquidacion']!=""){
     $botonextra ='<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalextra'.$id.'">
   Editar
 </button>';	
-
+/*
 if($listatemporales[$i]['fechapagoliqui']!=""){
 	$modalbotonextra="";
 	$botonextra="Proceso Cerrado";
-}
+}*/
 
     echo "<tr>
     		<td>".$id."</td>

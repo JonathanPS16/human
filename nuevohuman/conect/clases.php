@@ -5,6 +5,7 @@ define("maxfilesize", 2097152);
 define("maxfilesizelabel", "2 MB");
 require("phpmailer/class.phpmailer.php");
 class consultas {
+
 public function  consultarusuario($usuario,$clave) {
 	$this->_usuarioconectado($usuario,$clave);
 	$valid="NO";
@@ -95,6 +96,7 @@ private function _usuarioconectado($usuario,$clave) {
     	$_SESSION['idusuario'] = $uid;
         $_SESSION['id_perfil'] = $uperfil;
         $_SESSION['centrocostos'] = $centrocostos;
+        $_SESSION['conectdirect'] = "humantalents";
         
     }
 
@@ -108,13 +110,35 @@ private function _usuarioconectado($usuario,$clave) {
     $_SESSION['datosempresa'] = $empresa;
 } 
 
-public function conec(){
+public function conec($bd=""){
+    $conn="";
+    $bdse = "humantalents";
+    if($bd!=""){
+        $bdse = $bd;
+    }
+
+    include('adodb/adodb.inc.php');    
+    $DBuser = "byvnilva_drupal";
+    $DBpass = "admByV$";
+    $DBserver="localhost";
+    $DBname = "byvnilva_".$bdse;
+    $conn = ADONewConnection('mysqli');  
+
+    $conn->Connect($DBserver,$DBuser,$DBpass,$DBname) or die(header("location:../errores/msn_error.php"));
+    $conn->execute("SET NAMES utf8");
+    $conn->setCharset('utf8');
+
+
+    return $conn;
+}
+
+public function conec2(){
     $conn="";
     include('adodb/adodb.inc.php');    
     $DBuser = "byvnilva_drupal";
     $DBpass = "admByV$";
     $DBserver="localhost";
-    $DBname = "byvnilva_humantalents";
+    $DBname = "byvnilva_base";
     $conn = ADONewConnection('mysqli');  
 
     $conn->Connect($DBserver,$DBuser,$DBpass,$DBname) or die(header("location:../errores/msn_error.php"));
@@ -233,6 +257,13 @@ public function consultarempleadosreapretiros($numero){
      return $consultas;
  }
 
+ public function consultarempresas(){
+     $conn2 = $this->conec2();
+     $consultas = "SELECT * from basesdatos";
+     $consultas= $conn2->Execute($consultas)-> getRows();
+     return $consultas; 
+ }
+
 public function tomarasignacion($id,$tipo = ""){
     $conn = $this->conec();
     $dato=array();
@@ -247,10 +278,13 @@ public function tomarasignacion($id,$tipo = ""){
         $consultas = "update req_candidatos set tomador ='$grabador',fechatomado ='$now'  where id = ".$id;
         $conn->Execute($consultas);
 
-    } if($tipo=="disciplinario") {
+    } else if($tipo=="disciplinario") {
         $consultas = "update procesos set tomadorp ='$grabador',fechatomadop ='$now'  where id_proceso = ".$id;
         $conn->Execute($consultas);
-    } else {
+    } else if($tipo=="retiro"){
+        $consultas = "update renuncias set tomador ='$grabador',fechatomado ='$now'  where id_renuncia = ".$id;
+        $conn->Execute($consultas);
+    }else{
         $consultas = "update req set gestorasignado ='$grabador',fechatomado ='$now'  where id = ".$id;
         $conn->Execute($consultas);
     } 
@@ -1296,7 +1330,7 @@ public function obteneRes($ide=0,$clientesol=""){
     if(($_SESSION['id_perfil']==1 || $_SESSION['id_perfil']==4)  && $ide == 0){
         $where =" "; 
     }
-
+    $where .=" and req.visible in ('S','N')";
     $consultas = "select centrocostos.empresausuaria as nombreempresausu,empresasterporales.nombretemporal,req.*,(select count(*) from req_candidatos where id_requisision = req.id and estado ='F') as cantidadapro from req INNER join empresasterporales on empresasterporales.id_temporal=req.empresaclientet inner JOIN centrocostos on centrocostos.id_centro=req.empresacliente and centrocostos.id_empresapres=empresasterporales.id_temporal where 1=1 ".$where." ORDER BY 1 ASC";
     //echo $consultas;
      $consultas= $conn->Execute($consultas)-> getRows();
@@ -1309,7 +1343,7 @@ public function obteneMisRes($ide=0,$mis=""){
   //echo $ide;
     $conn = $this->conec();
     $dato=array();
-    $where="";
+    $where="and req.visible='S'";
     if ($ide != 0) {
       $where .="and id= ".$ide;
     } 
@@ -1320,6 +1354,7 @@ public function obteneMisRes($ide=0,$mis=""){
     if($_SESSION['id_perfil']!="1"){
         $where .="and centrocostos.id_centro in(".$_SESSION['centrocostos'].")";   
     }
+
 
     //$consultas = "SELECT  empresasusuarias.nombreempresausu, empresasterporales.nombretemporal,req.*,(select count(*) from req_candidatos where id_requisision = req.id and estado ='F') as cantidadapro FROM req inner join empresasterporales on empresasterporales.id_temporal=req.empresaclientet INNER join empresasusuarias on empresasusuarias.ideempresatemporal=empresasterporales.id_temporal and req.empresacliente=empresasusuarias.id_empresausuaria where 1=1 ".$where." ORDER BY 1 ASC";
     $consultas = "select centrocostos.empresausuaria as nombreempresausu,empresasterporales.nombretemporal,req.*,(select count(*) from req_candidatos where id_requisision = req.id and estado ='F') as cantidadapro,(select count(*) from req_candidatos where id_requisision = req.id and estado ='R') as cantidadrechazados,(select count(*) from req_candidatos where id_requisision = req.id) as cantidadtotal from req INNER join empresasterporales on empresasterporales.id_temporal=req.empresaclientet inner JOIN centrocostos on centrocostos.id_centro=req.empresacliente and centrocostos.id_empresapres=empresasterporales.id_temporal where 1=1 ".$where." ORDER BY req.id DESC";
@@ -2867,9 +2902,10 @@ public function enviardocumentacion($idper,$idreq){
     if($archivoexa!=""){
         $archivosgene.=$archivoexa."|";
     }
-        
+    $correojorge = "jorge.osorio@proteccion.com.co";    
+    $this->enviarcorreoadjuntosdinamico($correojorge,$archivosgene,$mensaje,$titulo);
     $this->enviarcorreoadjuntosdinamico($correo,$archivosgene,$mensaje,$titulo);
-    $this->enviarcorreoadjuntosdinamico("jorge.osorio@protección.com.co",$archivosgene,$mensaje,$titulo);
+    
 
     $consultas = "SELECT usuarios FROM notificaciones WHERE grupo= 'seleccion'";
     $consultas= $conn->Execute($consultas)-> getRows();
@@ -3091,7 +3127,32 @@ public function enviarCorreoReq($ide,$req){
     $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
     $clavenueva = substr(str_shuffle($permitted_chars), 0, 10);
     $calve = base64_encode($clavenueva);
-    $mensaje = "Le informamos la clave temporal con la cual usted podra acceder a la plataforma.Se recomienda cambiar la clave<br>Clave :".$clavenueva."<br>";
+    $mensaje = "
+    Apreciado(a) ".$consultas[0]['nombre']." 
+<br><br>
+Hemos recibido su solicitud de restablecer su contraseña; para lo cual lo invitamos a ingresar a nuestra pagina, con la siguiente contraseña: 
+<br><br>
+Contraseña:  ".$clavenueva."
+<br><br>
+Una vez ingrese a la plataforma le recomendamos cambiar esta contraseña, accediendo a la opción del menú “Usuario / Cambiar Clave “ 
+<br><br>
+Si no solicitó un restablecimiento de contraseña, omita este correo y entra con su clave actual a nuestro aplicativo.
+<br><br>
+Cualquier inquietud al respecto, con gusto la atenderemos a través de nuestro PBX 214 2011, o Celular 318 335 2194 o al correo servicioalcliente@humantalentsas.com.
+<br><br>
+Cordialmente,
+<br><bt>
+Área Servicio al Cliente<br>
+|empresa|
+    
+    
+    
+    
+    
+    
+    
+    
+    Le informamos la clave temporal con la cual usted podra acceder a la plataforma.Se recomienda cambiar la clave<br>Clave :".$clavenueva."<br>";
     for($i= 0; $i<count($consultas); $i++) {
       $correo = $consultas[0]['correo'];
       $id_usuario = $consultas[0]['id_usuario'];

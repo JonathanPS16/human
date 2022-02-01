@@ -1,5 +1,7 @@
 <?php
 require_once('conect/clases.php');
+$objconsulta2= new consultas();
+$empresas = $objconsulta2->consultarempresas();
 if (isset($_SESSION['idusuario'])) {
             header("Location: ".DIRWEB."home.php?ctr=home");
         }
@@ -57,6 +59,14 @@ if (isset($_SESSION['idusuario'])) {
   <input type="number" id="inputEmail" name="inputEmail" class="form-control" placeholder="Usuario" required autofocus>
   <label for="inputPassword" class="sr-only">Password</label>
   <br><input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Clave" required>
+  <br>
+  <select id="empresa" name="empresa" class="form-control" >
+    <?php 
+    for($i=0;$i<count($empresas);$i++){
+      echo '<option value="'.$empresas[$i]['id_base'].'">'.$empresas[$i]['titulobase'].'</option>';
+    }
+    ?>
+  </select>
   <div class="checkbox mb-3">
   <p class="text-center"> </p>
   </div>

@@ -607,7 +607,6 @@
 
 
                 case "guardarconsolidado":
-
                     $valida = $_POST['archivoexiste'];
                     $validacarga = "no";
                     $sl = "update renuncias set cambiopagoadci ='',fechaentregacarpeta  ='".$_POST['fechaentregacarpeta']."', 
@@ -618,6 +617,7 @@
                     $nombre_archivo = date('YmdHms').$_FILES['archivoliquidacion']['name'];
                     $nombre_archivo =preg_replace("/\s+/", "", $nombre_archivo);
                     $filena =$valida;
+                    $archivocargado = "";
                     if($_FILES['archivoliquidacion']['name']!="") {
                         $tipo_archivo = $_FILES['archivoliquidacion']['type'];
                         $tamano_archivo = $_FILES['archivoliquidacion']['size'];
@@ -636,6 +636,7 @@
                                 $validacarga = "si";
                                 $sl.= ",archivoliquidacion= '$nombre_archivo'";
                                 $filena = $nombre_archivo;
+                                $archivocargado = $nombre_archivo;
                             }else{
                                 $mensaje =  "Ocurrió algún error al subir el fichero. No pudo guardarse.";
                             }
@@ -867,7 +868,7 @@
                     
                 break;
                 case "listaretiros":
-                    $listatemporales = $objconsulta->obtenerretiros(" AND renuncias.estado = 'C'");
+                    $listatemporales = $objconsulta->obtenerretiros(" AND renuncias.estado = 'C' and renuncias.visible='S'");
                     include('vistas/listadorenuncias.php');
                 break;
 
@@ -2946,6 +2947,13 @@
                     $listadoreq=$objconsulta->tomarasignacion($id);
                     echo "<script>alert('Tomada Correctamente');
                     window.location.href = 'home.php?ctr=requisicion&acc=milistadoReq';
+                    </script>";
+                break;
+                case "tomargestionretiro":
+                    $id = $_GET["id"];
+                    $listadoreq=$objconsulta->tomarasignacion($id, "retiro");
+                    echo "<script>alert('Tomada Correctamente');
+                    window.location.href = 'home.php?ctr=retiro&acc=listaretiros';
                     </script>";
                 break;
 
